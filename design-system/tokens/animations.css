@@ -1,0 +1,24 @@
+/* ==========================================================================
+   DESIGN TOKENS - ANIMATIONS
+   ========================================================================== */
+
+:root {
+  /* Durations */
+  --duration-fast: 200ms;
+  --duration-normal: 400ms;
+  --duration-slow: 800ms;
+  --duration-slower: 1200ms;
+
+  /* Easing Curves (Cubic Bezier) */
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-out: cubic-bezier(0.33, 1, 0.68, 1);
+  --ease-in: cubic-bezier(0.32, 0, 0.67, 0);
+  
+  /* Standard Luxury Spring (Soft) */
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Combined Transitions */
+  --transition-fast: all var(--duration-fast) var(--ease-out);
+  --transition-normal: all var(--duration-normal) var(--ease-out);
+  --transition-slow: all var(--duration-slow) var(--ease-spring);
+}

@@ -1,0 +1,110 @@
+/* ==========================================================================
+   STYLING BANNER SECTION
+   ========================================================================== */
+
+.styling-banner {
+  background-color: var(--color-bg-secondary);
+  padding: var(--space-12) var(--space-6);
+  text-align: center;
+  border-top: 1px solid rgba(0,0,0,0.05);
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .styling-banner {
+    padding: var(--space-16) var(--space-12);
+  }
+}
+
+.styling-banner-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.styling-banner-title {
+  font-family: var(--font-heading);
+  font-size: var(--text-h3);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-2);
+  opacity: 0; /* GSAP */
+  transform: translateY(20px);
+}
+
+.styling-banner-subtitle {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-8);
+  opacity: 0; /* GSAP */
+  transform: translateY(20px);
+}
+
+.styling-banner-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-bottom: var(--space-10);
+  list-style: none;
+  padding: 0;
+  justify-content: center;
+  opacity: 0; /* GSAP */
+  transform: translateY(20px);
+}
+
+@media (min-width: 768px) {
+  .styling-banner-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--space-8);
+  }
+}
+
+.styling-banner-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-size: var(--text-small);
+  color: var(--color-text-primary);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+}
+
+.styling-banner-item i {
+  color: var(--color-accent); /* Gold */
+  width: 16px;
+  height: 16px;
+}
+
+.styling-banner-btn-wrapper {
+  opacity: 0; /* GSAP */
+  transform: translateY(20px);
+}
+
+.btn-whatsapp-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: 1rem 2.5rem;
+  background-color: transparent;
+  border: 1px solid #25D366; /* WhatsApp Green */
+  color: #25D366;
+  font-family: var(--font-body);
+  font-size: var(--text-button);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-widest);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+.btn-whatsapp-outline:hover {
+  background-color: #25D366;
+  color: #ffffff;
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+

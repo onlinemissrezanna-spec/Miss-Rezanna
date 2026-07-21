@@ -1,0 +1,38 @@
+/* ==========================================================================
+   LAYOUT - CONTAINERS
+   ========================================================================== */
+
+:root {
+  --container-max: 1440px;
+  --container-lg: 1280px;
+  --container-md: 960px;
+  --container-sm: 640px;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--space-6);
+  padding-right: var(--space-6);
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding-left: var(--space-12);
+    padding-right: var(--space-12);
+  }
+}
+
+.container-fluid {
+  width: 100%;
+  padding-left: var(--space-6);
+  padding-right: var(--space-6);
+}
+
+.container-narrow {
+  width: 100%;
+  max-width: var(--container-md);
+  margin: 0 auto;
+}

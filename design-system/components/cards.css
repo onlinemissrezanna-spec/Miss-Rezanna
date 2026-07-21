@@ -1,0 +1,68 @@
+/* ==========================================================================
+   COMPONENTS - CARDS
+   ========================================================================== */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--transition-slow), box-shadow var(--transition-slow);
+}
+
+.card-image-wrapper {
+  overflow: hidden;
+  margin-bottom: var(--space-16);
+  background-color: var(--color-bg-secondary);
+  position: relative;
+}
+
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+
+.card:hover .card-image {
+  transform: scale(1.03);
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.card-title {
+  font-family: var(--font-heading);
+  font-size: var(--text-h4);
+  margin-bottom: var(--space-4);
+}
+
+.card-subtitle {
+  font-family: var(--font-body);
+  font-size: var(--text-caption);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-8);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+}
+
+.card-price {
+  font-family: var(--font-body);
+  font-size: var(--text-body-md);
+  color: var(--color-text-primary);
+  margin-top: auto;
+}
+
+/* Specific Card Types */
+.product-card .card-image-wrapper { aspect-ratio: 3/4; }
+.editorial-card .card-image-wrapper { aspect-ratio: 4/5; }
+.journal-card .card-image-wrapper { aspect-ratio: 16/9; }
+
+.journal-card {
+  padding: var(--space-24);
+  background-color: var(--color-bg-primary);
+}
+.journal-card:hover {
+  box-shadow: var(--shadow-hover);
+}

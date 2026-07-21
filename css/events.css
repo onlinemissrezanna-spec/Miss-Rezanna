@@ -1,0 +1,201 @@
+/* ==========================================================================
+   EXHIBITIONS & EVENTS SECTION
+   ========================================================================== */
+
+.events-section {
+  position: relative;
+  background-color: var(--color-bg-primary); /* Ivory */
+  /* Subtle linen texture */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+  padding: var(--space-16) var(--space-6);
+  overflow: hidden;
+}
+
+@media (min-width: 1024px) {
+  .events-section {
+    padding: var(--space-32) var(--space-12);
+  }
+}
+
+.events-container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+}
+
+@media (min-width: 1024px) {
+  .events-container {
+    flex-direction: row;
+    align-items: stretch;
+    gap: var(--space-24);
+  }
+}
+
+/* Left: Image Slider Column (60%) */
+.events-slider-col {
+  width: 100%;
+  position: relative;
+  opacity: 0; /* GSAP */
+}
+
+@media (min-width: 1024px) {
+  .events-slider-col {
+    width: 60%;
+  }
+}
+
+.events-slider-wrapper {
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+@media (min-width: 768px) {
+  .events-slider-wrapper {
+    min-height: 500px;
+  }
+}
+
+.slider-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  z-index: 1;
+}
+
+.slider-img.active {
+  opacity: 1;
+  z-index: 2;
+}
+
+/* Right: Content Column (40%) */
+.events-content-col {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media (min-width: 1024px) {
+  .events-content-col {
+    width: 40%;
+  }
+}
+
+.event-label {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--text-caption);
+  color: var(--color-accent); /* Gold */
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-widest);
+  margin-bottom: var(--space-4);
+  opacity: 0; /* GSAP */
+}
+
+.event-title {
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-6);
+  opacity: 0; /* GSAP */
+}
+
+.event-copy {
+  color: var(--color-text-primary);
+  font-size: var(--text-body-large);
+  line-height: var(--lh-relaxed);
+  margin-bottom: var(--space-12);
+  opacity: 0; /* GSAP */
+}
+
+/* Event Card (Floating) */
+.event-card {
+  background-color: #ffffff;
+  padding: var(--space-8);
+  box-shadow: var(--shadow-md);
+  position: relative;
+  /* Gentle floating animation */
+  animation: floatCard 6s ease-in-out infinite;
+  opacity: 0; /* GSAP */
+}
+
+@keyframes floatCard {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
+
+.event-card-header {
+  font-family: var(--font-heading);
+  font-size: var(--text-h4);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-6);
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: var(--space-4);
+}
+
+.event-details {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+  margin-bottom: var(--space-8);
+}
+
+@media (min-width: 768px) {
+  .event-details {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-label {
+  font-size: var(--text-caption);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  margin-bottom: var(--space-1);
+}
+
+.detail-value {
+  font-size: var(--text-body);
+  color: var(--color-text-primary);
+  font-weight: 500;
+}
+
+.btn-event {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 1rem 2rem;
+  background-color: var(--color-text-primary);
+  color: var(--color-bg-primary);
+  border: 1px solid var(--color-text-primary);
+  font-family: var(--font-body);
+  font-size: var(--text-button);
+  font-weight: 500;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.btn-event:hover {
+  background-color: #B5335B; /* Signature Magenta */
+  color: #ffffff;
+  border-color: #B5335B;
+}
+

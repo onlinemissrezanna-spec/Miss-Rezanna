@@ -1,0 +1,175 @@
+/* ==========================================================================
+   CAMPAIGN PAGE STYLES
+   ========================================================================== */
+
+/* Campaign Hub (List of all campaigns) */
+.campaign-hub-hero {
+  padding: var(--space-32) var(--space-6) var(--space-16);
+  text-align: center;
+  background-color: var(--color-bg-primary);
+}
+
+.campaign-hub-title {
+  font-family: var(--font-heading);
+  font-size: var(--text-display);
+  margin-bottom: var(--space-4);
+}
+
+.campaign-hub-subtitle {
+  font-family: var(--font-body);
+  font-size: var(--text-large);
+  color: var(--color-text-secondary);
+}
+
+.campaign-list {
+  padding: 0 var(--space-6) var(--space-32);
+  background-color: var(--color-bg-primary);
+  max-width: var(--container-max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-12);
+}
+
+@media (min-width: 768px) {
+  .campaign-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.campaign-card {
+  display: block;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 3/4;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.campaign-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+
+.campaign-card:hover .campaign-card-img {
+  transform: scale(1.05);
+}
+
+.campaign-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: var(--space-8);
+  color: var(--color-bg-primary);
+}
+
+.campaign-card-title {
+  font-family: var(--font-heading);
+  font-size: var(--text-h3);
+  margin-bottom: var(--space-2);
+}
+
+/* Individual Campaign Pages */
+
+/* Split Hero */
+.campaign-hero {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--color-bg-primary);
+}
+
+@media (min-width: 1024px) {
+  .campaign-hero {
+    flex-direction: row;
+  }
+}
+
+.campaign-hero-img-col {
+  flex: 1;
+  min-height: 50vh;
+  position: relative;
+  overflow: hidden;
+}
+
+@media (min-width: 1024px) {
+  .campaign-hero-img-col {
+    min-height: 100vh;
+  }
+}
+
+.campaign-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  inset: 0;
+}
+
+.campaign-hero-content-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--space-16) var(--space-6);
+  background-color: var(--color-bg-secondary);
+}
+
+@media (min-width: 1024px) {
+  .campaign-hero-content-col {
+    padding: var(--space-24) var(--space-16);
+  }
+}
+
+.campaign-label {
+  font-family: var(--font-body);
+  font-size: var(--text-caption);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-widest);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-6);
+  opacity: 0;
+}
+
+.campaign-title {
+  font-family: var(--font-heading);
+  font-size: clamp(3rem, 5vw, 5rem);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-8);
+  line-height: 1.1;
+  opacity: 0;
+}
+
+.campaign-desc {
+  font-family: var(--font-body);
+  font-size: var(--text-large);
+  color: var(--color-text-secondary);
+  line-height: var(--lh-relaxed);
+  max-width: 600px;
+  opacity: 0;
+}
+
+/* Shop the Edit Section */
+.edit-shop-section {
+  padding: var(--space-24) var(--space-6);
+  background-color: var(--color-bg-primary);
+}
+
+.edit-shop-header {
+  text-align: center;
+  margin-bottom: var(--space-16);
+}
+
+.edit-shop-title {
+  font-family: var(--font-heading);
+  font-size: var(--text-h2);
+}
+
+/* Re-using collection-grid styles from collection-page.css for products */
+

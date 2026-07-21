@@ -1,0 +1,29 @@
+/* ==========================================================================
+   DESIGN TOKENS - COLORS
+   ========================================================================== */
+
+:root {
+  /* Core Backgrounds */
+  --color-bg-primary: #F8F6F2;   /* Ivory */
+  --color-bg-secondary: #E9E1D6; /* Warm Linen */
+  --color-bg-white: #FFFFFF;     /* Pure White */
+
+  /* Core Text */
+  --color-text-primary: #2F2F2F;   /* Charcoal / Almost Black */
+  --color-text-secondary: #6A6A6A; /* Soft Grey */
+  --color-text-inverse: #FFFFFF;   /* White text on dark bg */
+
+  /* Brand Accents */
+  --color-accent-magenta: #B71D53; /* Official MISS REZANNA Magenta */
+  --color-accent-gold: #C9A25E;    /* Official Logo Gold */
+  
+  /* Borders & Dividers */
+  --color-border-light: #DDD7CF;
+  --color-border-dark: #2F2F2F;
+
+  /* State Colors (Muted for Luxury) */
+  --color-success: #7A8A73;
+  --color-error: #9B4A4A;
+  --color-warning: #C29B52;
+  --color-info: #6A6A6A;
+}

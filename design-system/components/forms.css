@@ -1,0 +1,55 @@
+/* ==========================================================================
+   COMPONENTS - FORMS
+   ========================================================================== */
+
+.form-group {
+  margin-bottom: var(--space-24);
+  position: relative;
+}
+
+.form-label {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--text-caption);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-8);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: var(--text-body-md);
+  color: var(--color-text-primary);
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid var(--color-border-light);
+  padding: var(--space-12) 0;
+  transition: border-color var(--transition-fast);
+  border-radius: var(--radius-none);
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  outline: none;
+  border-bottom-color: var(--color-accent-magenta);
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: var(--color-text-secondary);
+  opacity: 0.5;
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+/* Validation */
+.has-error .form-input { border-bottom-color: var(--color-error); }
+.error-message { font-size: var(--text-caption); color: var(--color-error); margin-top: var(--space-4); }

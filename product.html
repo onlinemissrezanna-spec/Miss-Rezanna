@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Midnight Silk Kurti - MISS REZANNA</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/product.css">
+  <link rel="stylesheet" href="css/mobile-nav.css">
+  
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- Floating Logo (for immersive scroll) -->
+  <a href="index.html" class="brand-logo" style="position:fixed; top:20px; left:50%; transform:translateX(-50%); z-index:1001;"><img src="images/logo.png" alt="MISS REZANNA" style="height: 72px; width: auto; display: block;"></a>
+  
+  <!-- Back Button (Mobile) -->
+  <a href="index.html" style="position:fixed; top:20px; left:20px; z-index:1001; mix-blend-mode:difference; color:white;">
+    <i data-lucide="arrow-left"></i>
+  </a>
+
+  <main class="pdp-main">
+    <div class="pdp-container">
+      
+      <!-- Left: Swipeable Gallery -->
+      <div class="pdp-gallery-container">
+        <div class="pdp-gallery" id="pdpGallery">
+          <div class="pdp-img-wrapper">
+            <img src="images/A.jpeg" alt="Midnight Silk Kurti Front" class="pdp-img">
+          </div>
+          <div class="pdp-img-wrapper">
+            <img src="images/L.jpeg" alt="Midnight Silk Kurti Detail" class="pdp-img">
+          </div>
+          <div class="pdp-img-wrapper">
+            <img src="images/N.jpeg" alt="Midnight Silk Kurti Back" class="pdp-img">
+          </div>
+        </div>
+        
+        <!-- Swipe Dots -->
+        <div class="pdp-gallery-dots">
+          <div class="pdp-dot active"></div>
+          <div class="pdp-dot"></div>
+          <div class="pdp-dot"></div>
+        </div>
+      </div>
+
+      <!-- Right: Sticky Product Info -->
+      <div class="pdp-info">
+        <span class="pdp-label" id="pdp-label">Festive Edit</span>
+        <h1 class="pdp-title" id="pdp-title">Midnight Silk Kurti</h1>
+        <p class="pdp-price" id="pdp-price">₹ 3,000</p>
+
+        <!-- Sizing -->
+        <div class="pdp-sizes">
+          <div class="size-header">
+            <span>Select Size</span>
+            <span class="size-guide-link">Size Guide</span>
+          </div>
+          <div class="size-grid">
+            <button class="size-btn">XS</button>
+            <button class="size-btn">S</button>
+            <button class="size-btn active">M</button>
+            <button class="size-btn">L</button>
+            <button class="size-btn">XL</button>
+            <button class="size-btn">XXL</button>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="pdp-actions" id="mainActions">
+          <button class="btn-pdp btn-add">Add to Bag</button>
+          <button class="btn-pdp btn-buy">Buy it Now</button>
+        </div>
+
+        <!-- Details Accordion -->
+        <div class="pdp-accordion">
+          <div class="accordion-item">
+            <button class="accordion-header" onclick="toggleAccordion(this)">
+              Product Details <i data-lucide="plus"></i>
+            </button>
+            <div class="accordion-content" id="pdp-desc" style="display:block">
+              An uncompromising statement of elegance. Crafted from pure, ethically sourced Mulberry silk, the Midnight Kurti offers a silhouette that moves like liquid dusk.
+            </div>
+          </div>
+          
+          <div class="accordion-item">
+            <button class="accordion-header" onclick="toggleAccordion(this)">
+              Fit & Sizing <i data-lucide="plus"></i>
+            </button>
+            <div class="accordion-content">
+              Designed for a fluid, flattering drape that gracefully contours the body without clinging. True to size. We recommend selecting your standard size for the intended relaxed fit, or sizing down for a more structured silhouette.
+            </div>
+          </div>
+          
+          <div class="accordion-item">
+            <button class="accordion-header" onclick="toggleAccordion(this)">
+              Shipping & Returns <i data-lucide="plus"></i>
+            </button>
+            <div class="accordion-content">
+              Complimentary express shipping across India. Returns are accepted within 14 days of delivery provided the item is unworn with tags attached.
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </main>
+
+  <!-- Sticky Bottom Action Bar -->
+  <div class="sticky-add-bar" id="stickyActionBar">
+    <div class="sticky-info">
+      <span class="sticky-title" id="sticky-title">Midnight Silk Kurti</span>
+      <span class="sticky-price" id="sticky-price">₹ 3,000</span>
+    </div>
+    <button class="btn-pdp btn-add">Add to Bag</button>
+    <button class="btn-pdp btn-buy">Buy it Now</button>
+  </div>
+
+  <script src="js/catalog.js"></script>
+  <script src="js/product.js"></script>
+  <script src="js/cart.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+

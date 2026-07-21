@@ -1,0 +1,20 @@
+{
+  "info": {
+    "name": "MISS REZANNA API - Phase 8",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Customer Portal",
+      "item": [
+        { "name": "Get Customer Dashboard", "request": { "method": "GET", "header": [ { "key": "Authorization", "value": "Bearer TOKEN" } ], "url": { "raw": "http://localhost:5005/api/v1/customer/dashboard", "protocol": "http", "host": [ "localhost" ], "port": "5005", "path": [ "api", "v1", "customer", "dashboard" ] } } },
+        { "name": "Change Password", "request": { "method": "POST", "header": [ { "key": "Authorization", "value": "Bearer TOKEN" }, { "key": "Content-Type", "value": "application/json" } ], "url": { "raw": "http://localhost:5005/api/v1/customer/change-password", "protocol": "http", "host": [ "localhost" ], "port": "5005", "path": [ "api", "v1", "customer", "change-password" ] }, "body": { "mode": "raw", "raw": "{\\n  \\"currentPassword\\": \\"oldpass123\\",\\n  \\"newPassword\\": \\"newpass456\\"\\n}" } } },
+        { "name": "Track Order", "request": { "method": "GET", "header": [ { "key": "Authorization", "value": "Bearer TOKEN" } ], "url": { "raw": "http://localhost:5005/api/v1/customer/orders/1/track", "protocol": "http", "host": [ "localhost" ], "port": "5005", "path": [ "api", "v1", "customer", "orders", "1", "track" ] } } },
+        { "name": "Cancel Order", "request": { "method": "POST", "header": [ { "key": "Authorization", "value": "Bearer TOKEN" }, { "key": "Content-Type", "value": "application/json" } ], "url": { "raw": "http://localhost:5005/api/v1/customer/orders/1/cancel", "protocol": "http", "host": [ "localhost" ], "port": "5005", "path": [ "api", "v1", "customer", "orders", "1", "cancel" ] }, "body": { "mode": "raw", "raw": "{\\n  \\"reason\\": \\"Found a better price elsewhere\\"\\n}" } } },
+        { "name": "Request Return", "request": { "method": "POST", "header": [ { "key": "Authorization", "value": "Bearer TOKEN" }, { "key": "Content-Type", "value": "application/json" } ], "url": { "raw": "http://localhost:5005/api/v1/customer/returns", "protocol": "http", "host": [ "localhost" ], "port": "5005", "path": [ "api", "v1", "customer", "returns" ] }, "body": { "mode": "raw", "raw": "{\\n  \\"orderId\\": 1,\\n  \\"orderItemId\\": 1,\\n  \\"reason\\": \\"Wrong Size\\",\\n  \\"notes\\": \\"The sleeves are way too long.\\"\\n}" } } },
+        { "name": "Get Notifications", "request": { "method": "GET", "header": [ { "key": "Authorization", "value": "Bearer TOKEN" } ], "url": { "raw": "http://localhost:5005/api/v1/customer/notifications", "protocol": "http", "host": [ "localhost" ], "port": "5005", "path": [ "api", "v1", "customer", "notifications" ] } } },
+        { "name": "Mark All Notifications Read", "request": { "method": "PUT", "header": [ { "key": "Authorization", "value": "Bearer TOKEN" } ], "url": { "raw": "http://localhost:5005/api/v1/customer/notifications/read-all", "protocol": "http", "host": [ "localhost" ], "port": "5005", "path": [ "api", "v1", "customer", "notifications", "read-all" ] } } }
+      ]
+    }
+  ]
+}

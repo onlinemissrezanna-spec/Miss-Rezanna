@@ -1,0 +1,261 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exhibitions & Events - MISS REZANNA</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/hero.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/exhibitions-page.css">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- HEADER -->
+    <header class="site-header" id="site-header">
+    <div class="header-container">
+      
+      <!-- Logo -->
+      <a href="index.html" class="brand-logo h3"><img src="images/logo.png" alt="MISS REZANNA" style="height: 60px; width: auto; display: inline-block; vertical-align: middle;"></a>
+      
+      <!-- Desktop Navigation -->
+      <nav class="desktop-nav">
+        <ul class="nav-list text-button">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="index.html#new-arrivals" class="nav-link">New Arrivals</a></li>
+          <li><a href="collection.html" class="nav-link">Collections</a></li>
+          <li><a href="about.html" class="nav-link">About</a></li>
+          <li><a href="journal.html" class="nav-link">Journal</a></li>
+          <li><a href="exhibitions.html" class="nav-link">Exhibitions</a></li>
+          <li><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+      
+      <!-- Icons Navigation -->
+      <div class="header-actions">
+        <button class="icon-btn" aria-label="Search"><i data-lucide="search"></i></button>
+        <button class="icon-btn" aria-label="Wishlist"><i data-lucide="heart"></i></button>
+        <button class="icon-btn" aria-label="Account"><i data-lucide="user"></i></button>
+        <a href="cart.html" class="icon-btn" aria-label="Cart" style="color: inherit; text-decoration: none;"><i data-lucide="shopping-bag"></i></a>
+      </div>
+
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section class="exhibition-hero">
+      <img src="images/exhibition_booth.png" alt="Exhibitions Hero" class="exhibition-hero-img">
+      <div class="exhibition-hero-overlay"></div>
+      <div class="exhibition-hero-content hero-anim">
+        <h1 class="exhibition-hero-title">Exhibitions & Showcases</h1>
+        <p class="exhibition-hero-subtitle">Experience MISS REZANNA craftsmanship in person.</p>
+      </div>
+    </section>
+
+    <!-- UPCOMING EVENT -->
+    <section class="event-split-section">
+      <div class="event-split-container">
+        
+        <!-- Left: Details -->
+        <div class="event-details split-anim">
+          <span class="event-label">Upcoming Showcase</span>
+          <h2 class="event-title">The Spring Heritage Edition</h2>
+          
+          <div class="event-meta">
+            <div class="meta-item">
+              <i data-lucide="calendar"></i>
+              <div class="meta-text">
+                <strong>March 15 - 17, 2027</strong>
+                <span>10:00 AM - 8:00 PM</span>
+              </div>
+            </div>
+            <div class="meta-item">
+              <i data-lucide="map-pin"></i>
+              <div class="meta-text">
+                <strong>Taj Palace Convention Center</strong>
+                <span>Sardar Patel Marg, Diplomatic Enclave, New Delhi</span>
+              </div>
+            </div>
+            <div class="meta-item">
+              <i data-lucide="ticket"></i>
+              <div class="meta-text">
+                <strong>Entry by Registration</strong>
+                <span>Exclusive styling sessions available upon request.</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="event-map">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3502.8256338870196!2d77.16912301508204!3d28.591244082433994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d1d6a7d5fb703%3A0xc3b83b381534ec48!2sTaj%20Palace%2C%20New%20Delhi!5e0!3m2!1sen!2sin!4v1684305886311!5m2!1sen!2sin" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
+
+        <!-- Right: RSVP Form -->
+        <div class="event-registration split-anim">
+          <h3 class="reg-form-title">Visitor Registration</h3>
+          <p class="reg-form-desc">Secure your priority entry and opt-in for a complimentary personal styling session.</p>
+          
+          <form class="reg-form" onsubmit="event.preventDefault(); alert('Thank you for registering. We look forward to seeing you.');">
+            <div class="reg-input-group">
+              <label>Full Name</label>
+              <input type="text" class="reg-input" placeholder="Enter your full name" required>
+            </div>
+            
+            <div class="reg-input-group">
+              <label>Email Address</label>
+              <input type="email" class="reg-input" placeholder="Enter your email" required>
+            </div>
+            
+            <div class="reg-input-group">
+              <label>Phone Number</label>
+              <input type="tel" class="reg-input" placeholder="Enter your phone number">
+            </div>
+
+            <div class="reg-input-group">
+              <label>Styling Appointment (Optional)</label>
+              <select class="reg-select">
+                <option value="">No appointment needed</option>
+                <option value="day1">March 15 - Morning Session</option>
+                <option value="day1-aft">March 15 - Afternoon Session</option>
+                <option value="day2">March 16 - Morning Session</option>
+                <option value="day2-aft">March 16 - Afternoon Session</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn-rsvp">Confirm Attendance</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- HIGHLIGHTS -->
+    <section class="highlights-section">
+      <h2 class="highlights-title highlight-anim">What To Expect</h2>
+      <div class="highlights-grid">
+        <div class="highlight-item highlight-anim">
+          <i data-lucide="gem" class="highlight-icon"></i>
+          <h4 class="highlight-heading">Exclusive Launches</h4>
+          <p class="highlight-desc">Be the first to discover and purchase pieces from our unreleased Spring Heritage collection.</p>
+        </div>
+        <div class="highlight-item highlight-anim">
+          <i data-lucide="scissors" class="highlight-icon"></i>
+          <h4 class="highlight-heading">Personal Styling</h4>
+          <p class="highlight-desc">Work directly with our lead stylists to curate looks tailored perfectly to your silhouette.</p>
+        </div>
+        <div class="highlight-item highlight-anim">
+          <i data-lucide="users" class="highlight-icon"></i>
+          <h4 class="highlight-heading">Meet The Founders</h4>
+          <p class="highlight-desc">Engage in conversations about craftsmanship, fabric selection, and the art of elegant living.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAST GALLERY -->
+    <section class="past-gallery-section">
+      <div class="gallery-header gallery-anim">
+        <h2 class="gallery-title">Past Exhibitions</h2>
+        <p class="gallery-desc">A look back at the beautiful spaces and wonderful patrons from our previous showcases.</p>
+      </div>
+
+      <div class="gallery-grid">
+        <div class="gallery-item gallery-anim">
+          <img src="images/exhibition_booth.png" alt="Booth Design" class="gallery-img">
+        </div>
+        <div class="gallery-item gallery-anim">
+          <img src="images/exhibition_details.png" alt="Fabric Details" class="gallery-img">
+        </div>
+        <div class="gallery-item gallery-anim">
+          <img src="images/exhibition_exploring.png" alt="Visitor Exploring" class="gallery-img">
+        </div>
+        <div class="gallery-item gallery-anim">
+          <img src="images/B.jpeg" alt="Model Showcase" class="gallery-img">
+        </div>
+        <div class="gallery-item gallery-anim">
+          <img src="images/N.jpeg" alt="The Collection" class="gallery-img">
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="index.html" class="brand-logo h3"><img src="images/logo.png" alt="MISS REZANNA" style="height: 60px; width: auto; display: inline-block; vertical-align: middle;"></a>
+          <p class="footer-brand-desc">
+            Thoughtfully crafted for women who appreciate timeless elegance, refined craftsmanship and everyday luxury.
+          </p>
+          <div class="footer-social">
+            <a href="https://instagram.com/missrezanna" target="_blank" class="social-link" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+            <a href="https://facebook.com/missrezanna" target="_blank" class="social-link" aria-label="Facebook"><i data-lucide="facebook"></i></a>
+            <a href="https://linkedin.com/company/missrezanna" target="_blank" class="social-link" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
+            <a href="https://youtube.com/@missrezanna" target="_blank" class="social-link" aria-label="YouTube"><i data-lucide="youtube"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-nav">
+          <h4 class="footer-heading">Shop</h4>
+          <ul class="footer-links">
+            <li><a href="index.html#new-arrivals">New Arrivals</a></li>
+            <li><a href="index.html#collections">Kurti Sets</a></li>
+            <li><a href="index.html#collections">Co-ord Sets</a></li>
+            <li><a href="index.html#collections">Festive Collection</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-nav">
+          <h4 class="footer-heading">About</h4>
+          <ul class="footer-links">
+            <li><a href="about.html">Our Story</a></li>
+            <li><a href="journal.html">Journal</a></li>
+            <li><a href="exhibitions.html">Exhibitions</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-nav">
+          <h4 class="footer-heading">Customer Care</h4>
+          <ul class="footer-links">
+            <li><a href="#">Size Guide</a></li>
+            <li><a href="#">Shipping</a></li>
+            <li><a href="#">Returns</a></li>
+            <li><a href="#">FAQs</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>&copy; 2026 MISS REZANNA. All Rights Reserved.</span>
+        <span>Designed with elegance in India.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- GSAP & JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="js/exhibitions.js"></script>
+<script src="js/cart.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+

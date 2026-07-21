@@ -1,0 +1,169 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editorial Journal - MISS REZANNA</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/hero.css">
+  <link rel="stylesheet" href="css/footer.css">
+  
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .journal-hero {
+      padding: 120px 24px 60px;
+      text-align: center;
+      background-color: var(--color-bg-primary);
+    }
+    .journal-title {
+      font-size: var(--text-h1);
+      margin-bottom: var(--space-4);
+    }
+    .journal-subtitle {
+      font-size: var(--text-body-large);
+      color: var(--color-text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .journal-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 40px;
+      padding: 0 24px 80px;
+      max-width: var(--container-max);
+      margin: 0 auto;
+    }
+    .journal-card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+    }
+    .journal-card-img-wrapper {
+      width: 100%;
+      aspect-ratio: 4/5;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+    .journal-card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s ease;
+    }
+    .journal-card:hover .journal-card-img {
+      transform: scale(1.05);
+    }
+    .journal-meta {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-text-secondary);
+      margin-bottom: 12px;
+    }
+    .journal-card-title {
+      font-size: 24px;
+      margin-bottom: 12px;
+      font-family: var(--font-heading);
+    }
+    .journal-card-excerpt {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--color-text-secondary);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header scrolled" id="site-header">
+    <div class="header-container">
+      
+      <a href="index.html" class="brand-logo"><img src="images/logo.png" alt="MISS REZANNA" style="height: 60px; width: auto; display: inline-block; vertical-align: middle;"></a>
+      
+      <nav class="desktop-nav">
+        <ul class="nav-list text-button">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="index.html#new-arrivals" class="nav-link">New Arrivals</a></li>
+          <li><a href="collection.html" class="nav-link">Collections</a></li>
+          <li><a href="about.html" class="nav-link">About</a></li>
+          <li><a href="journal.html" class="nav-link">Journal</a></li>
+          <li><a href="exhibitions.html" class="nav-link">Exhibitions</a></li>
+          <li><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+      
+      <div class="header-actions">
+        <button class="icon-btn" aria-label="Search"><i data-lucide="search"></i></button>
+        <button class="icon-btn" aria-label="Wishlist"><i data-lucide="heart"></i></button>
+        <button class="icon-btn" aria-label="Account"><i data-lucide="user"></i></button>
+        <a href="cart.html" class="icon-btn" aria-label="Cart" style="color: inherit; text-decoration: none;"><i data-lucide="shopping-bag"></i></a>
+      </div>
+
+    </div>
+  </header>
+
+  <main>
+    <section class="journal-hero">
+      <h1 class="journal-title">The Editorial Journal</h1>
+      <p class="journal-subtitle">Explorations in craftsmanship, styling advice, and stories of the modern Indian woman.</p>
+    </section>
+
+    <section class="journal-grid">
+      
+      <!-- Article 1 -->
+      <a href="blog-1.html" class="journal-card">
+        <div class="journal-card-img-wrapper">
+          <img src="images/A.jpeg" alt="The Art of Craftsmanship" class="journal-card-img">
+        </div>
+        <div class="journal-meta">Craftsmanship • 4 Min Read</div>
+        <h3 class="journal-card-title">The Art of True Craftsmanship</h3>
+        <p class="journal-card-excerpt">Discover the intricate processes and generations of skill that go into weaving the fabrics of our signature collections.</p>
+      </a>
+
+      <!-- Article 2 -->
+      <a href="blog-2.html" class="journal-card">
+        <div class="journal-card-img-wrapper">
+          <img src="images/B.jpeg" alt="Styling the Transition" class="journal-card-img">
+        </div>
+        <div class="journal-meta">Styling Guide • 3 Min Read</div>
+        <h3 class="journal-card-title">Seamless Day-to-Night Styling</h3>
+        <p class="journal-card-excerpt">A comprehensive guide on elevating your daytime silhouettes into striking evening wear with minimal effort.</p>
+      </a>
+
+      <!-- Article 3 -->
+      <a href="blog-3.html" class="journal-card">
+        <div class="journal-card-img-wrapper">
+          <img src="images/C.jpeg" alt="The Modern Indian Woman" class="journal-card-img">
+        </div>
+        <div class="journal-meta">Editorial • 5 Min Read</div>
+        <h3 class="journal-card-title">Moments That Matter</h3>
+        <p class="journal-card-excerpt">Celebrating the quiet strength, effortless elegance, and multifaceted lives of the modern Indian woman.</p>
+      </a>
+
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="index.html" class="brand-logo"><img src="images/logo.png" alt="MISS REZANNA" style="height: 60px; width: auto; display: inline-block; vertical-align: middle;"></a>
+          <p class="footer-brand-desc">Thoughtfully crafted for women who appreciate timeless elegance.</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 MISS REZANNA. All Rights Reserved.</span>
+      </div>
+    </div>
+  </footer>
+<script src="js/cart.js"></script>
+</body>
+</html>
+
+

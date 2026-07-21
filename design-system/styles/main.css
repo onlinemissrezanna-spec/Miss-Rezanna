@@ -1,0 +1,54 @@
+/* ==========================================================================
+   MISS REZANNA - MASTER DESIGN SYSTEM
+   ========================================================================== */
+
+/* 1. Theme & Tokens */
+@import url('../theme/variables.css');
+
+/* 2. Global Resets & Utilities */
+@import url('../components/utilities.css');
+
+/* 3. Layout Systems */
+@import url('../layout/grid.css');
+@import url('../layout/containers.css');
+
+/* 4. Core Components */
+@import url('../components/buttons.css');
+@import url('../components/forms.css');
+@import url('../components/cards.css');
+@import url('../components/navigation.css');
+@import url('../components/product.css');
+
+/* 5. Responsive Overrides (Must be last) */
+@import url('../layout/responsive.css');
+
+/* Global Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  font-size: 16px; /* 1rem base */
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: var(--weight-regular);
+  line-height: var(--lh-heading);
+  margin-bottom: var(--space-16);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}

@@ -1,0 +1,36 @@
+/* ==========================================================================
+   LAYOUT - RESPONSIVE RULES & MEDIA QUERIES
+   ========================================================================== */
+
+/* 
+  Mobile First Approach
+  Default styles are for mobile. Min-width overrides for larger screens.
+*/
+
+:root {
+  --bp-mobile: 390px;
+  --bp-tablet: 768px;
+  --bp-laptop: 1024px;
+  --bp-desktop: 1280px;
+  --bp-desktop-lg: 1440px;
+}
+
+/* Tablet Overrides */
+@media (min-width: 768px) {
+  .grid-mobile-1 { grid-template-columns: repeat(2, 1fr) !important; }
+}
+
+/* Laptop Overrides */
+@media (min-width: 1024px) {
+  .hide-on-desktop { display: none !important; }
+}
+
+/* Mobile Only Overrides */
+@media (max-width: 1023px) {
+  .hide-on-mobile { display: none !important; }
+  
+  /* Fallback grid behavior for mobile */
+  .grid-12, .grid-6, .grid-4, .grid-3 {
+    grid-template-columns: 1fr; /* Stack by default on mobile */
+  }
+}

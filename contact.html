@@ -1,0 +1,160 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - MISS REZANNA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/hero.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .contact-hero { padding: 120px 24px 60px; text-align: center; background-color: var(--color-bg-primary); }
+    .contact-title { font-size: var(--text-h1); font-family: var(--font-heading); margin-bottom: 16px; }
+    .contact-subtitle { font-size: var(--text-body-large); color: var(--color-text-secondary); max-width: 600px; margin: 0 auto; }
+    
+    .contact-container { max-width: 1200px; margin: 0 auto; padding: 0 24px 100px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
+    @media (max-width: 768px) { .contact-container { grid-template-columns: 1fr; gap: 40px; } }
+    
+    .contact-form-col h3 { font-family: var(--font-heading); font-size: 32px; margin-bottom: 24px; }
+    .contact-form { display: flex; flex-direction: column; gap: 24px; }
+    .form-group { display: flex; flex-direction: column; gap: 8px; }
+    .form-group label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-secondary); }
+    .form-control { padding: 16px; border: 1px solid var(--color-border); background: transparent; font-family: var(--font-body); font-size: 16px; outline: none; transition: border-color 0.3s ease; }
+    .form-control:focus { border-color: var(--color-text-primary); }
+    textarea.form-control { resize: vertical; min-height: 150px; }
+    
+    .contact-info-col h3 { font-family: var(--font-heading); font-size: 32px; margin-bottom: 24px; }
+    .info-item { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 32px; }
+    .info-icon { color: var(--color-accent-magenta); margin-top: 4px; }
+    .info-text strong { display: block; font-size: 14px; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+    .info-text p, .info-text a { color: var(--color-text-secondary); font-size: 16px; line-height: 1.6; text-decoration: none; }
+    .info-text a:hover { color: var(--color-accent-magenta); }
+    
+    .map-container { width: 100%; height: 300px; background: #eee; margin-top: 48px; }
+    .map-container iframe { width: 100%; height: 100%; border: 0; }
+  </style>
+</head>
+<body>
+
+  <header class="site-header scrolled" id="site-header">
+    <div class="header-container">
+      <a href="index.html" class="brand-logo"><img src="images/logo.png" alt="MISS REZANNA" style="height: 60px; width: auto; display: inline-block; vertical-align: middle;"></a>
+      <nav class="desktop-nav">
+        <ul class="nav-list text-button">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="index.html#new-arrivals" class="nav-link">New Arrivals</a></li>
+          <li><a href="collection.html" class="nav-link">Collections</a></li>
+          <li><a href="about.html" class="nav-link">About</a></li>
+          <li><a href="journal.html" class="nav-link">Journal</a></li>
+          <li><a href="exhibitions.html" class="nav-link">Exhibitions</a></li>
+          <li><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <button class="icon-btn" aria-label="Search"><i data-lucide="search"></i></button>
+        <button class="icon-btn" aria-label="Wishlist"><i data-lucide="heart"></i></button>
+        <button class="icon-btn" aria-label="Account"><i data-lucide="user"></i></button>
+        <a href="cart.html" class="icon-btn" aria-label="Cart" style="color: inherit; text-decoration: none;"><i data-lucide="shopping-bag"></i></a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="contact-hero">
+      <h1 class="contact-title">Get in Touch</h1>
+      <p class="contact-subtitle">Whether you have a question about our collections, sizing, or styling advice, our team is here to assist you.</p>
+    </section>
+
+    <section class="contact-container">
+      <div class="contact-form-col">
+        <h3>Send a Message</h3>
+        <form class="contact-form" onsubmit="event.preventDefault(); alert('Your message has been sent to Support@missrezanna.com. We will reply shortly.');">
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" class="form-control" required placeholder="Enter your full name">
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" class="form-control" required placeholder="Enter your email address">
+          </div>
+          <div class="form-group">
+            <label>Subject</label>
+            <select class="form-control" required>
+              <option value="">Select an inquiry type</option>
+              <option value="order">Order Status</option>
+              <option value="styling">Styling Advice</option>
+              <option value="returns">Returns & Exchanges</option>
+              <option value="wholesale">Wholesale Inquiry</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea class="form-control" required placeholder="How can we help you?"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Send Message</button>
+        </form>
+      </div>
+
+      <div class="contact-info-col">
+        <h3>Contact Information</h3>
+        
+        <div class="info-item">
+          <i data-lucide="map-pin" class="info-icon"></i>
+          <div class="info-text">
+            <strong>Visit Us</strong>
+            <p>St. No.3, Kinshu Knitwears<br>E-2/2680/1, Rahon Rd, Guru Vihar<br>Jodhewal, Ludhiana<br>Punjab 141007</p>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <i data-lucide="mail" class="info-icon"></i>
+          <div class="info-text">
+            <strong>Email Us</strong>
+            <a href="mailto:Support@missrezanna.com">Support@missrezanna.com</a>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <i data-lucide="phone" class="info-icon"></i>
+          <div class="info-text">
+            <strong>Call Us</strong>
+            <a href="tel:+919877327186">+91-9877327186</a>
+            <p style="font-size: 12px; margin-top: 4px;">Monday - Saturday, 10:00 AM - 6:00 PM IST</p>
+          </div>
+        </div>
+
+        <div class="map-container">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d109741.02912911311!2d75.76629910419087!3d30.900965005898863!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391a837462345a7d%3A0x681102348ec60610!2sLudhiana%2C%20Punjab!5e0!3m2!1sen!2sin!4v1691234567890!5m2!1sen!2sin" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="index.html" class="brand-logo"><img src="images/logo.png" alt="MISS REZANNA" style="height: 60px; width: auto; display: inline-block; vertical-align: middle;"></a>
+          <p class="footer-brand-desc">Thoughtfully crafted for women who appreciate timeless elegance.</p>
+          <div class="footer-social">
+            <!-- Socials placeholder, waiting for links -->
+            <a href="https://instagram.com/missrezanna" target="_blank" class="social-link" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+            <a href="https://facebook.com/missrezanna" target="_blank" class="social-link" aria-label="Facebook"><i data-lucide="facebook"></i></a>
+            <a href="https://linkedin.com/company/missrezanna" target="_blank" class="social-link" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
+            <a href="https://youtube.com/@missrezanna" target="_blank" class="social-link" aria-label="YouTube"><i data-lucide="youtube"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom"><span>&copy; 2026 MISS REZANNA. All Rights Reserved.</span></div>
+    </div>
+  </footer>
+<script src="js/cart.js"></script>
+</body>
+</html>
+
+

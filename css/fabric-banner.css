@@ -1,0 +1,103 @@
+/* ==========================================================================
+   FABRIC BANNER SECTION
+   ========================================================================== */
+
+.fabric-banner {
+  background-color: #2F2F2F; /* Charcoal */
+  color: var(--color-bg-primary); /* Ivory */
+  padding: var(--space-16) var(--space-6);
+  text-align: center;
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .fabric-banner {
+    padding: var(--space-20) var(--space-12);
+  }
+}
+
+.fabric-banner-container {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .fabric-banner-container {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+    gap: var(--space-12);
+  }
+}
+
+.fabric-banner-left, .fabric-banner-right {
+  opacity: 0; /* GSAP */
+  transform: translateY(20px);
+}
+
+.fabric-label {
+  font-family: var(--font-body);
+  font-size: var(--text-caption);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-widest);
+  color: var(--color-accent); /* Gold looks great on dark */
+  margin-bottom: var(--space-4);
+  display: block;
+}
+
+.fabric-title {
+  font-family: var(--font-heading);
+  font-size: var(--text-h2);
+  line-height: var(--lh-heading);
+  margin: 0;
+  color: var(--color-bg-primary);
+}
+
+.fabric-ratings {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.fabric-rating-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+}
+
+@media (min-width: 768px) {
+  .fabric-rating-item {
+    justify-content: flex-start;
+  }
+}
+
+.stars {
+  color: var(--color-accent); /* Gold stars */
+  display: flex;
+  gap: 2px;
+}
+
+.stars i {
+  width: 16px;
+  height: 16px;
+  fill: var(--color-accent);
+}
+
+.fabric-desc {
+  font-family: var(--font-body);
+  font-size: var(--text-large);
+  font-style: italic;
+  color: rgba(248, 246, 242, 0.8);
+  margin: 0;
+}
+

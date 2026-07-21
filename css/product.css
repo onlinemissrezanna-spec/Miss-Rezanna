@@ -1,0 +1,325 @@
+/* ==========================================================================
+   PRODUCT DETAIL PAGE (PDP)
+   ========================================================================== */
+
+.pdp-main {
+  background-color: var(--color-bg-primary);
+}
+
+.pdp-container {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 1024px) {
+  .pdp-container {
+    flex-direction: row;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding-top: var(--space-8);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   SWIPEABLE IMAGE GALLERY
+   -------------------------------------------------------------------------- */
+.pdp-gallery-container {
+  position: relative;
+}
+
+@media (min-width: 1024px) {
+  .pdp-gallery-container {
+    flex: 1.2;
+    padding: 0 var(--space-8);
+  }
+}
+
+.pdp-gallery {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+  height: 100vh; /* Full screen on mobile */
+}
+
+.pdp-gallery::-webkit-scrollbar {
+  display: none; /* Chrome */
+}
+
+@media (min-width: 1024px) {
+  .pdp-gallery {
+    flex-direction: column;
+    overflow-x: visible;
+    height: auto;
+    gap: var(--space-6);
+  }
+}
+
+.pdp-img-wrapper {
+  flex: 0 0 100vw;
+  scroll-snap-align: start;
+  height: 100vh;
+  position: relative;
+}
+
+@media (min-width: 1024px) {
+  .pdp-img-wrapper {
+    flex: none;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4/5;
+  }
+}
+
+.pdp-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Mobile swipe dots */
+.pdp-gallery-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+@media (min-width: 1024px) {
+  .pdp-gallery-dots {
+    display: none;
+  }
+}
+
+.pdp-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: rgba(255,255,255,0.4);
+}
+.pdp-dot.active {
+  background-color: white;
+}
+
+/* --------------------------------------------------------------------------
+   PRODUCT INFO
+   -------------------------------------------------------------------------- */
+.pdp-info {
+  padding: var(--space-8) var(--space-6) var(--space-32);
+}
+
+@media (min-width: 1024px) {
+  .pdp-info {
+    flex: 1;
+    padding: 0 var(--space-8);
+    position: sticky;
+    top: 100px;
+    height: calc(100vh - 100px);
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+  .pdp-info::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.pdp-label {
+  font-family: var(--font-body);
+  font-size: var(--text-caption);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-widest);
+  color: var(--color-text-secondary);
+  display: block;
+  margin-bottom: var(--space-4);
+}
+
+.pdp-title {
+  font-family: var(--font-heading);
+  font-size: var(--text-h2);
+  margin-bottom: var(--space-2);
+}
+
+.pdp-price {
+  font-family: var(--font-body);
+  font-size: var(--text-large);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-8);
+}
+
+/* Sizing Options */
+.pdp-sizes {
+  margin-bottom: var(--space-8);
+}
+
+.size-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+  font-family: var(--font-body);
+  font-size: var(--text-small);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+}
+
+.size-guide-link {
+  color: var(--color-accent); /* Gold */
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.size-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-2);
+}
+
+.size-btn {
+  padding: var(--space-4);
+  border: 1px solid rgba(0,0,0,0.1);
+  background: transparent;
+  font-family: var(--font-body);
+  cursor: pointer;
+  min-height: 48px; /* Large tap target */
+  transition: all var(--transition-fast);
+}
+
+.size-btn:hover, .size-btn.active {
+  border-color: var(--color-text-primary);
+  background-color: var(--color-bg-secondary);
+}
+
+/* Action Buttons (Large Tap Targets) */
+.pdp-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-bottom: var(--space-12);
+}
+
+.btn-pdp {
+  width: 100%;
+  padding: 1.25rem;
+  font-family: var(--font-body);
+  font-size: var(--text-button);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-widest);
+  cursor: pointer;
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.btn-add {
+  background-color: var(--color-text-primary);
+  color: var(--color-bg-primary);
+  border: 1px solid var(--color-text-primary);
+}
+
+.btn-add:hover {
+  background-color: #000;
+}
+
+.btn-buy {
+  background-color: #B5335B; /* Signature Magenta */
+  color: white;
+  border: 1px solid #B5335B;
+}
+
+.btn-buy:hover {
+  background-color: #922749;
+}
+
+/* Details Accordion */
+.pdp-accordion {
+  border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+.accordion-item {
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.accordion-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-6) 0;
+  background: transparent;
+  border: none;
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  cursor: pointer;
+  min-height: 48px;
+}
+
+.accordion-content {
+  font-family: var(--font-body);
+  font-size: var(--text-small);
+  color: var(--color-text-secondary);
+  line-height: var(--lh-relaxed);
+  padding-bottom: var(--space-6);
+  display: none;
+}
+
+/* --------------------------------------------------------------------------
+   STICKY BOTTOM ACTION BAR (Triggers on scroll)
+   -------------------------------------------------------------------------- */
+.sticky-add-bar {
+  position: fixed;
+  bottom: -150px; /* hidden initially */
+  left: 0;
+  width: 100%;
+  background-color: var(--color-bg-primary);
+  padding: var(--space-3) var(--space-4) calc(var(--space-3) + env(safe-area-inset-bottom));
+  box-shadow: 0 -10px 30px rgba(0,0,0,0.05);
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+  z-index: 1100;
+  transition: bottom 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+.sticky-add-bar.visible {
+  bottom: 0;
+}
+
+.sticky-info {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .sticky-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  
+  .sticky-title {
+    font-family: var(--font-heading);
+    font-weight: 500;
+  }
+  
+  .sticky-price {
+    font-family: var(--font-body);
+    font-size: var(--text-small);
+    color: var(--color-text-secondary);
+  }
+}
+
+.sticky-add-bar .btn-pdp {
+  flex: 1;
+  min-height: 48px; /* Slightly smaller than main buttons for sticky bar */
+  padding: 1rem;
+}
+
