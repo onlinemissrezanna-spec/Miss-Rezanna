@@ -74,13 +74,18 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Load Product Data from URL ID
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  // Wait for the products to load from the live API
+  let currentProductCatalog = {};
+  if (typeof fetchProducts === 'function') {
+      currentProductCatalog = await fetchProducts();
+  }
+
   const urlParams = new URLSearchParams(window.location.search);
   const productId = urlParams.get('id') || 'midnight-kurti'; // Default if none
   
-  // Use catalog if available (requires catalog.js to be loaded)
-  if (typeof productCatalog !== 'undefined' && productCatalog[productId]) {
-      const product = productCatalog[productId];
+  if (currentProductCatalog && currentProductCatalog[productId]) {
+      const product = currentProductCatalog[productId];
       
       // Update Title & Meta
       document.title = `${product.name} - MISS REZANNA`;
@@ -97,17 +102,21 @@ document.addEventListener('DOMContentLoaded', () => {
       
       // Images
       const gallery = document.getElementById('pdpGallery');
-      gallery.innerHTML = product.images.map(img => `
-          <div class="pdp-img-wrapper">
-            <img src="${img}" alt="${product.name}" class="pdp-img">
-          </div>
-      `).join('');
+      if (gallery) {
+        gallery.innerHTML = product.images.map(img => `
+            <div class="pdp-img-wrapper">
+              <img src="${img}" alt="${product.name}" class="pdp-img">
+            </div>
+        `).join('');
+      }
       
       // Dots
       const dotsContainer = document.querySelector('.pdp-gallery-dots');
-      dotsContainer.innerHTML = product.images.map((_, i) => `
-          <div class="pdp-dot ${i === 0 ? 'active' : ''}"></div>
-      `).join('');
+      if (dotsContainer) {
+        dotsContainer.innerHTML = product.images.map((_, i) => `
+            <div class="pdp-dot ${i === 0 ? 'active' : ''}"></div>
+        `).join('');
+      }
 
       // Add to Cart Button Logic Update
       const updateCartButtons = () => {
@@ -115,7 +124,11 @@ document.addEventListener('DOMContentLoaded', () => {
           const size = activeSizeBtn ? activeSizeBtn.innerText : 'M';
           
           document.querySelectorAll('.btn-add, .btn-buy').forEach(btn => {
-              btn.onclick = (e) => addToCart(e, product.name, product.price, product.images[0], size, 'Standard');
+              btn.onclick = (e) => {
+                  if (typeof addToCart === 'function') {
+                      addToCart(e, product.name, product.price, product.images[0], size, 'Standard');
+                  }
+              };
           });
       };
       
@@ -125,7 +138,6 @@ document.addEventListener('DOMContentLoaded', () => {
       // Listen for size changes
       document.querySelectorAll('.size-btn').forEach(btn => {
           btn.addEventListener('click', () => {
-              // Wait a tick for active class to apply
               setTimeout(updateCartButtons, 10); 
           });
       });
