@@ -1,0 +1,9 @@
+[project]
+root = "backend"
+
+[build]
+builder = "nixpacks"
+buildCommand = "npm install && npx prisma generate"
+
+[deploy]
+startCommand = "npm start"
