@@ -139,4 +139,27 @@ const seedDatabase = asyncHandler(async (req, res) => {
     res.status(200).json(new ApiResponse(200, { inserted: insertedProducts.length }, 'Database seeded successfully.'));
 });
 
-module.exports = { seedDatabase };
+const initDatabase = async (req, res, next) => {
+    try {
+        const { execSync } = require('child_process');
+        const output = execSync('npx prisma db push --accept-data-loss', { encoding: 'utf-8' });
+        res.status(200).json({
+            status: 200,
+            message: "Database initialized successfully.",
+            output: output
+        });
+    } catch (error) {
+        res.status(500).json({
+            status: 500,
+            message: "Failed to initialize database.",
+            error: error.message,
+            stdout: error.stdout ? error.stdout.toString() : null,
+            stderr: error.stderr ? error.stderr.toString() : null
+        });
+    }
+};
+
+module.exports = {
+    seedDatabase,
+    initDatabase
+};
