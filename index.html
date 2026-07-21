@@ -53,6 +53,13 @@
           <li><a href="journal.html" class="nav-link">Journal</a></li>
           <li><a href="exhibitions.html" class="nav-link">Exhibitions</a></li>
           <li><a href="#" class="nav-link">Contact</a></li>
+          <!-- TEMPORARY SEED BUTTON -->
+          <li>
+              <button onclick="fetch('https://miss-rezanna-production.up.railway.app/api/v1/seed').then(r => r.json()).then(d => alert('Seeded: ' + d.message)).catch(e => alert('Error: ' + e.message))" 
+                      style="background: red; color: white; padding: 5px 15px; border-radius: 5px; cursor: pointer; border: none; font-weight: bold;">
+                  Seed Database
+              </button>
+          </li>
         </ul>
       </nav>
       
