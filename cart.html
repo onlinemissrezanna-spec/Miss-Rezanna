@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -128,7 +128,7 @@
           <span>₹ 3,000</span>
         </div>
         
-        <a href="#" class="checkout-btn" onclick="event.preventDefault(); alert('Redirecting to secure checkout...');">Proceed to Checkout</a>
+        <a href="#" class="checkout-btn" id="razorpay-checkout-btn">Proceed to Checkout</a>
         <a href="index.html" class="continue-btn">Continue Shopping</a>
       </div>
     </div>
@@ -151,7 +151,11 @@
       <div class="footer-bottom"><span>&copy; 2026 MISS REZANNA. All Rights Reserved.</span></div>
     </div>
   </footer>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script src="js/cart.js"></script>
+<script>
+  lucide.createIcons();
+</script>
 </body>
 </html>
 

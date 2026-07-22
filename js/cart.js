@@ -146,8 +146,98 @@ function renderCart() {
     });
 }
 
+// Razorpay Checkout Integration
+async function handleCheckout(event) {
+    event.preventDefault();
+    if (cart.length === 0) {
+        alert('Your cart is empty!');
+        return;
+    }
+
+    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+    const checkoutBtn = document.getElementById('razorpay-checkout-btn');
+    checkoutBtn.innerText = 'Processing...';
+    checkoutBtn.style.opacity = '0.7';
+    checkoutBtn.style.pointerEvents = 'none';
+
+    try {
+        // 1. Call Backend to create Razorpay Order
+        const API_BASE_URL = 'https://miss-rezanna-production.up.railway.app/api/v1';
+        const response = await fetch(`${API_BASE_URL}/payment/guest-checkout`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ amount: subtotal })
+        });
+
+        const data = await response.json();
+        
+        if (!response.ok || !data.success) {
+            throw new Error(data.message || 'Failed to create order');
+        }
+
+        const orderData = data.data;
+
+        // 2. Initialize Razorpay Options
+        const options = {
+            key: orderData.key,
+            amount: orderData.amount,
+            currency: orderData.currency,
+            name: orderData.name,
+            description: orderData.description,
+            order_id: orderData.order_id,
+            handler: async function (response) {
+                try {
+                    // 3. Verify Payment
+                    const verifyResponse = await fetch(`${API_BASE_URL}/payment/guest-verify`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            razorpayPaymentId: response.razorpay_payment_id,
+                            razorpayOrderId: response.razorpay_order_id,
+                            razorpaySignature: response.razorpay_signature
+                        })
+                    });
+
+                    const verifyData = await verifyResponse.json();
+                    
+                    if (verifyResponse.ok) {
+                        alert('Payment Successful! Thank you for your order.');
+                        localStorage.removeItem('mr_cart');
+                        window.location.href = 'index.html';
+                    } else {
+                        alert('Payment verification failed: ' + verifyData.message);
+                    }
+                } catch (err) {
+                    alert('Error verifying payment: ' + err.message);
+                }
+            },
+            theme: {
+                color: "#111111" // Matches the site's primary text color
+            }
+        };
+
+        const rzp = new Razorpay(options);
+        rzp.on('payment.failed', function (response){
+            alert('Payment Failed: ' + response.error.description);
+        });
+        rzp.open();
+
+    } catch (error) {
+        alert('Checkout error: ' + error.message);
+    } finally {
+        checkoutBtn.innerText = 'Proceed to Checkout';
+        checkoutBtn.style.opacity = '1';
+        checkoutBtn.style.pointerEvents = 'auto';
+    }
+}
+
 // On Page Load
 document.addEventListener('DOMContentLoaded', () => {
     updateCartBadge();
     renderCart();
+
+    const checkoutBtn = document.getElementById('razorpay-checkout-btn');
+    if (checkoutBtn) {
+        checkoutBtn.addEventListener('click', handleCheckout);
+    }
 });
