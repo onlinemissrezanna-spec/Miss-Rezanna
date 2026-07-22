@@ -7,6 +7,10 @@ const { protect } = require('../../middlewares/auth.middleware');
 // but for simplicity we rely on standard JSON parser.
 router.post('/webhook', paymentController.handleWebhook);
 
+// Guest checkout routes (Unprotected)
+router.post('/guest-checkout', paymentController.guestCheckout);
+router.post('/guest-verify', paymentController.verifyGuestCheckout);
+
 // Protected routes
 router.use(protect);
 router.post('/create-order', paymentController.createOrder);

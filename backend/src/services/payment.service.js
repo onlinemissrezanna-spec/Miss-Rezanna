@@ -122,4 +122,47 @@ const verifyPayment = async (orderId, paymentId, razorpayPaymentId, razorpayOrde
     return true;
 };
 
-module.exports = { createPaymentOrder, verifyPayment };
+const createGuestPaymentOrder = async (amountInINR) => {
+    // Amount in paise
+    const amountInPaise = Math.round(parseFloat(amountInINR) * 100);
+    let gatewayOrderId = null;
+
+    if (process.env.RAZORPAY_KEY_ID && process.env.RAZORPAY_KEY_ID !== 'rzp_test_mock') {
+        const rzpOrder = await razorpay.orders.create({
+            amount: amountInPaise,
+            currency: 'INR',
+            receipt: `guest_receipt_${Date.now()}`,
+            payment_capture: 1
+        });
+        gatewayOrderId = rzpOrder.id;
+    } else {
+        // Mock gateway order ID for local testing if Razorpay keys aren't set
+        gatewayOrderId = `mock_guest_order_${Date.now()}`;
+    }
+
+    return {
+        key: process.env.RAZORPAY_KEY_ID,
+        amount: amountInPaise,
+        currency: 'INR',
+        name: 'MISS REZANNA',
+        description: `Guest Checkout`,
+        order_id: gatewayOrderId
+    };
+};
+
+const verifyGuestPayment = async (razorpayPaymentId, razorpayOrderId, razorpaySignature) => {
+    if (process.env.RAZORPAY_KEY_SECRET && process.env.RAZORPAY_KEY_SECRET !== 'mock_secret') {
+        const body = razorpayOrderId + "|" + razorpayPaymentId;
+        const expectedSignature = crypto
+            .createHmac('sha256', process.env.RAZORPAY_KEY_SECRET)
+            .update(body.toString())
+            .digest('hex');
+
+        if (expectedSignature !== razorpaySignature) {
+            throw new ApiError(400, 'Payment verification failed');
+        }
+    }
+    return true;
+};
+
+module.exports = { createPaymentOrder, verifyPayment, createGuestPaymentOrder, verifyGuestPayment };
