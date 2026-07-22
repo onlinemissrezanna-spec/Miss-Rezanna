@@ -9,7 +9,10 @@
     "build": "npx prisma generate",
     "postinstall": "npx prisma generate",
     "db:migrate": "npx prisma migrate dev",
-    "db:generate": "npx prisma generate"
+    "db:generate": "npx prisma generate",
+    "db:seed": "node prisma/seed.js",
+    "lint": "eslint .",
+    "format": "prettier --write \"**/*.{js,json}\""
   },
   "dependencies": {
     "@prisma/client": "^5.0.0",
