@@ -1,0 +1,8 @@
+{
+  "name": "miss-rezanna-root",
+  "version": "1.0.0",
+  "description": "Dummy package.json to trigger Nixpacks Node provider",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
