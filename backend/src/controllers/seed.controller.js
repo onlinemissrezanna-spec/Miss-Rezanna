@@ -136,7 +136,38 @@ const seedDatabase = asyncHandler(async (req, res) => {
         }
     }
 
-    res.status(200).json(new ApiResponse(200, { inserted: insertedProducts.length }, 'Database seeded successfully.'));
+    // 3. Create default Admin role & user
+    let adminRole = await prisma.role.findFirst({ where: { name: 'Admin' } });
+    if (!adminRole) {
+        adminRole = await prisma.role.create({ data: { name: 'Admin' } });
+    }
+
+    const { hashPassword } = require('../utils/password');
+    const hashedPassword = await hashPassword('admin123');
+
+    let adminUser = await prisma.user.findFirst({ where: { email: 'admin@missrezanna.com' } });
+    if (!adminUser) {
+        // Create read/write permissions for dashboard, products, etc.
+        adminUser = await prisma.user.create({
+            data: {
+                firstName: 'Admin',
+                lastName: 'User',
+                email: 'admin@missrezanna.com',
+                password: hashedPassword,
+                roleId: adminRole.id,
+                isVerified: true,
+                status: 'active'
+            }
+        });
+    }
+
+    res.status(200).json(new ApiResponse(200, { 
+        inserted: insertedProducts.length,
+        adminUser: {
+            email: 'admin@missrezanna.com',
+            password: 'admin123'
+        }
+    }, 'Database seeded successfully.'));
 });
 
 const initDatabase = async (req, res, next) => {
