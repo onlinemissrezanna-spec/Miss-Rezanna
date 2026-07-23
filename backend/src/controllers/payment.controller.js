@@ -66,17 +66,17 @@ const handleWebhook = asyncHandler(async (req, res) => {
 });
 
 const guestCheckout = asyncHandler(async (req, res) => {
-    const { amount } = req.body;
+    const { amount, customer, items } = req.body;
     if (!amount) throw new ApiError(400, 'Amount is required');
     
-    const razorpayData = await paymentService.createGuestPaymentOrder(amount);
+    const razorpayData = await paymentService.createGuestPaymentOrder(amount, customer, items);
     res.status(200).json(new ApiResponse(200, razorpayData, 'Guest Razorpay order created'));
 });
 
 const verifyGuestCheckout = asyncHandler(async (req, res) => {
-    const { razorpayPaymentId, razorpayOrderId, razorpaySignature } = req.body;
+    const { razorpayPaymentId, razorpayOrderId, razorpaySignature, customer, items, amount } = req.body;
     
-    await paymentService.verifyGuestPayment(razorpayPaymentId, razorpayOrderId, razorpaySignature);
+    await paymentService.verifyGuestPayment(razorpayPaymentId, razorpayOrderId, razorpaySignature, customer, items, amount);
     
     res.status(200).json(new ApiResponse(200, null, 'Guest payment verified successfully'));
 });
