@@ -30,6 +30,14 @@ async function connectDB(retries = 10) {
 
 connectDB();
 
+process.on('unhandledRejection', (err) => {
+    console.error('Unhandled Rejection:', err);
+});
+
+process.on('uncaughtException', (err) => {
+    console.error('Uncaught Exception:', err);
+});
+
 // Graceful shutdown
 process.on('SIGINT', async () => {
     if (server) {

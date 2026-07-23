@@ -48,6 +48,10 @@ const limiter = rateLimit({
 });
 app.use('/api', limiter);
 
+// Root & Health check routes for Railway / Load balancers
+app.get('/', (req, res) => res.status(200).send('MISS REZANNA Backend API Server is Live'));
+app.get('/health', (req, res) => res.status(200).json({ status: 'ok', message: 'API is running successfully' }));
+
 // v1 API routes
 app.use('/api/v1', routes);
 
