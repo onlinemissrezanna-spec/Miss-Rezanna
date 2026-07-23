@@ -2,11 +2,13 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-COPY package*.json ./
+# Copy package files from backend directory
+COPY backend/package*.json ./
 
 RUN npm install
 
-COPY . .
+# Copy backend source code
+COPY backend/ ./
 
 RUN npx prisma generate
 
