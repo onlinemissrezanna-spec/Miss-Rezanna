@@ -19,7 +19,7 @@ const protect = asyncHandler(async (req, res, next) => {
         
         const user = await prisma.user.findUnique({
             where: { id: decoded.id },
-            select: { id: true, email: true, roleId: true, isVerified: true, status: true }
+            include: { role: true },
         });
 
         if (!user) return next(new ApiError(401, 'User no longer exists'));

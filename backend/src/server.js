@@ -6,23 +6,29 @@ const PORT = process.env.PORT || 5000;
 
 let server;
 
-async function bootstrap() {
-    try {
-        // Test DB Connection
-        await prisma.$connect();
-        console.log('Successfully connected to the database.');
+// Start HTTP server immediately so Railway health checks pass
+server = app.listen(PORT, () => {
+    console.log('Server running in ' + (process.env.NODE_ENV || 'development') + ' mode on port ' + PORT);
+});
 
-        server = app.listen(PORT, () => {
-            console.log('Server running in ' + process.env.NODE_ENV + ' mode on port ' + PORT);
-        });
-
-    } catch (error) {
-        console.error('Failed to connect to the database:', error);
-        process.exit(1);
+async function connectDB(retries = 10) {
+    for (let i = 1; i <= retries; i++) {
+        try {
+            await prisma.$connect();
+            console.log('Successfully connected to the database.');
+            return;
+        } catch (error) {
+            console.error(`DB connection attempt ${i}/${retries} failed:`, error.message);
+            if (i < retries) {
+                await new Promise(r => setTimeout(r, 5000));
+            } else {
+                console.error('All DB connection attempts failed. Server continues running.');
+            }
+        }
     }
 }
 
-bootstrap();
+connectDB();
 
 // Graceful shutdown
 process.on('SIGINT', async () => {

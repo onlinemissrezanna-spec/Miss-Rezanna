@@ -1,7 +1,11 @@
 // MISS REZANNA — Admin Portal JavaScript
 // Connects to all backend API endpoints
 
-const API = 'https://miss-rezanna-production.up.railway.app/api/v1';
+// Auto-detect backend URL: if serving from Railway, use same origin. Otherwise use Railway production URL.
+const BACKEND_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    ? 'http://localhost:5000'
+    : 'https://miss-rezanna-production.up.railway.app';
+const API = `${BACKEND_BASE}/api/v1`;
 let adminToken = localStorage.getItem('mr_admin_token') || null;
 let allOrders = [];
 let currentOrderPage = 1;
@@ -53,8 +57,9 @@ async function handleLogin(e) {
 
     if (res.ok && data.success) {
       const user = data.data.user;
-      if (!user.role || user.role.name !== 'Admin') {
-        throw new Error('Access denied. Admin privileges required.');
+      const roleName = user.role?.name || '';
+      if (roleName !== 'Admin') {
+        throw new Error('Access denied. Admin privileges required. Make sure you seeded the database first at: /api/v1/seed');
       }
       adminToken = data.data.accessToken;
       localStorage.setItem('mr_admin_token', adminToken);
