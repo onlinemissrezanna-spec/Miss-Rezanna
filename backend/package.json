@@ -4,7 +4,7 @@
   "description": "Enterprise Node.js Backend for MISS REZANNA",
   "main": "src/server.js",
   "scripts": {
-    "start": "npx prisma db push --accept-data-loss && node src/server.js",
+    "start": "(npx prisma db push --accept-data-loss || true) && node src/server.js",
     "dev": "nodemon src/server.js",
     "build": "npx prisma generate",
     "postinstall": "npx prisma generate",
