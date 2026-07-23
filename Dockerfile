@@ -2,14 +2,16 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-# Copy package files from backend directory
+# Copy package files
 COPY backend/package*.json ./
 
-RUN npm install
+# Install without running postinstall scripts
+RUN npm install --ignore-scripts
 
-# Copy backend source code
+# Copy all backend source code (including prisma/)
 COPY backend/ ./
 
+# Now generate Prisma client (schema.prisma is available)
 RUN npx prisma generate
 
 EXPOSE 5000
