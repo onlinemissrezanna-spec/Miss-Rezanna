@@ -34,17 +34,17 @@ app.use(cookieParser());
 app.use(morgan('combined', { stream: { write: message => logger.info(message.trim()) } }));
 
 // Direct in-memory Admin Portal routes (Guarantees 200 OK without filesystem dependencies)
-app.get(['/admin', '/admin.html'], (req, res) => {
+app.get(['/admin', '/admin.html', '/api/v1/admin-portal', '/api/v1/admin.html'], (req, res) => {
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
     res.status(200).send(adminHtml);
 });
 
-app.get(['/js/admin.js', '/admin.js'], (req, res) => {
+app.get(['/js/admin.js', '/admin.js', '/api/v1/js/admin.js', '/api/v1/admin.js'], (req, res) => {
     res.setHeader('Content-Type', 'application/javascript; charset=utf-8');
     res.status(200).send(adminJs);
 });
 
-app.get(['/css/admin.css', '/admin.css'], (req, res) => {
+app.get(['/css/admin.css', '/admin.css', '/api/v1/css/admin.css', '/api/v1/admin.css'], (req, res) => {
     res.setHeader('Content-Type', 'text/css; charset=utf-8');
     res.status(200).send(adminCss);
 });
