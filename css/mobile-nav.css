@@ -1,57 +1,15 @@
-/* ==========================================================================
-   MOBILE BOTTOM NAVIGATION & HEADER OVERRIDES
-   ========================================================================== */
+/* Hide mobile bottom navigation bar completely */
+.mobile-bottom-nav, .mobile-nav-item {
+  display: none !important;
+}
 
-/* Hide top actions on mobile to clear clutter */
+/* Ensure header action icons (Cart, Search) are accessible on mobile */
 @media (max-width: 1023px) {
   .header-actions {
-    display: none !important;
+    display: flex !important;
+    align-items: center;
+    gap: 16px;
   }
-}
-
-.mobile-bottom-nav {
-  display: flex;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background-color: var(--color-bg-primary);
-  border-top: 1px solid rgba(0,0,0,0.05);
-  z-index: 1000;
-  justify-content: space-around;
-  padding: var(--space-3) 0 calc(var(--space-3) + env(safe-area-inset-bottom, 16px));
-  box-shadow: 0 -4px 12px rgba(0,0,0,0.02);
-}
-
-@media (min-width: 1024px) {
-  .mobile-bottom-nav {
-    display: none !important;
-  }
-}
-
-.mobile-nav-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  color: var(--color-text-secondary);
-  text-decoration: none;
-  font-family: var(--font-body);
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-wide);
-  min-height: 48px; /* Large tap target */
-  min-width: 60px;
-  justify-content: center;
-}
-
-.mobile-nav-item i {
-  width: 20px;
-  height: 20px;
-}
-
-.mobile-nav-item.active, .mobile-nav-item:hover {
-  color: var(--color-text-primary);
 }
 
 /* ==========================================================================
@@ -191,16 +149,34 @@ img, video, iframe {
   border: none;
   color: var(--color-text-primary, #111111);
   cursor: pointer;
-  padding: 8px;
-  display: flex;
+  padding: 8px 10px;
+  margin-right: 12px;
+  display: flex !important;
   align-items: center;
   justify-content: center;
   transition: transform 0.2s ease, color 0.2s ease;
+  z-index: 1002;
 }
 
 .hamburger-toggle-btn:hover {
   color: #c3a167;
   transform: scale(1.08);
+}
+
+.hamburger-lines {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 22px;
+  height: 15px;
+}
+
+.hamburger-lines span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: currentColor;
+  border-radius: 2px;
 }
 
 .slide-bar-backdrop {
