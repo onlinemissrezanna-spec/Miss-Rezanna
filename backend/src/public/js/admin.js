@@ -591,6 +591,7 @@ async function confirmDeleteProduct(productId, productName) {
   } catch (err) {
     alert('Failed to delete product: ' + err.message);
   }
+}
 
 // =============================================
 // CUSTOMERS
