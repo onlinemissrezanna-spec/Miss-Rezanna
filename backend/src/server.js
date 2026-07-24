@@ -6,7 +6,7 @@ require('dotenv').config({ path: path.join(process.cwd(), 'backend/.env') });
 
 const app = require('./app');
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5005;
 
 // Start HTTP server immediately on 0.0.0.0 so Railway health checks ALWAYS pass
 const server = app.listen(PORT, '0.0.0.0', () => {
