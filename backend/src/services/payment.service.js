@@ -298,6 +298,16 @@ const verifyGuestPayment = async (razorpayPaymentId, razorpayOrderId, razorpaySi
                 }
             });
             console.log('Successfully created guest order in DB:', order.orderNumber);
+
+            // Send Order Confirmation Email from admin@missrezanna.com
+            try {
+                await emailService.sendOrderConfirmationEmail(user.email, order.orderNumber, {
+                    customerName: customer.name || `${user.firstName} ${user.lastName}`,
+                    grandTotal: amount
+                });
+            } catch (emailErr) {
+                console.error('Failed to send guest order confirmation email:', emailErr.message);
+            }
         } catch (err) {
             console.error('Failed to create guest order database record:', err.message);
         }

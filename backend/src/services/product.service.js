@@ -68,6 +68,12 @@ const createProduct = async (data, uploadedImages = []) => {
         include: { images: true, category: true, variants: true }
     });
 
+    // Automatically send email announcement to all registered customers
+    try {
+        const { broadcastNewProductEmail } = require('./email.service');
+        broadcastNewProductEmail(newProduct).catch(e => console.error('Broadcast notice:', e.message));
+    } catch (e) {}
+
     return newProduct;
 };
 
