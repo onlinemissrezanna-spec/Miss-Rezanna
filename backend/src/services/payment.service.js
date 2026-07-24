@@ -17,40 +17,46 @@ const createPaymentOrder = async (orderId, userId) => {
 
     // Amount in paise
     const amountInPaise = Math.round(parseFloat(order.grandTotal) * 100);
-
     let gatewayOrderId = null;
+    let isRealKey = false;
 
-    if (process.env.RAZORPAY_KEY_ID && process.env.RAZORPAY_KEY_ID !== 'rzp_test_mock') {
-        const rzpOrder = await razorpay.orders.create({
-            amount: amountInPaise,
-            currency: 'INR',
-            receipt: `receipt_${order.orderNumber}`,
-            payment_capture: 1
-        });
-        gatewayOrderId = rzpOrder.id;
+    if (process.env.RAZORPAY_KEY_ID && process.env.RAZORPAY_KEY_SECRET && process.env.RAZORPAY_KEY_ID !== 'rzp_test_mock') {
+        try {
+            const rzpOrder = await razorpay.orders.create({
+                amount: amountInPaise,
+                currency: 'INR',
+                receipt: `receipt_${order.orderNumber}`,
+                payment_capture: 1
+            });
+            gatewayOrderId = rzpOrder.id;
+            isRealKey = true;
+        } catch (error) {
+            console.warn('Razorpay order creation failed, fallback to mock:', error.message);
+            gatewayOrderId = `order_${Date.now()}`;
+            isRealKey = false;
+        }
     } else {
-        // Mock gateway order ID for local testing if Razorpay keys aren't set
-        gatewayOrderId = `mock_order_${Date.now()}`;
+        gatewayOrderId = `order_${Date.now()}`;
     }
 
     const payment = await prisma.payment.create({
         data: {
             orderId: order.id,
             userId,
-            gatewayOrderId,
+            gatewayOrderId: gatewayOrderId || `order_${Date.now()}`,
             amount: order.grandTotal,
             status: 'Pending'
         }
     });
 
     return {
-        key: process.env.RAZORPAY_KEY_ID,
+        key: isRealKey ? process.env.RAZORPAY_KEY_ID : 'rzp_test_mock',
         amount: amountInPaise,
         currency: 'INR',
         name: 'MISS REZANNA',
         description: `Order ${order.orderNumber}`,
         order_id: gatewayOrderId,
-        payment_id: payment.id // internal reference
+        payment_id: payment.id
     };
 };
 
@@ -125,8 +131,9 @@ const verifyPayment = async (orderId, paymentId, razorpayPaymentId, razorpayOrde
 const createGuestPaymentOrder = async (amountInINR, customer, items) => {
     const amountInPaise = Math.round(parseFloat(amountInINR) * 100);
     let gatewayOrderId = null;
+    let isRealKey = false;
 
-    if (process.env.RAZORPAY_KEY_ID && process.env.RAZORPAY_KEY_ID !== 'rzp_test_mock') {
+    if (process.env.RAZORPAY_KEY_ID && process.env.RAZORPAY_KEY_SECRET && process.env.RAZORPAY_KEY_ID !== 'rzp_test_mock') {
         try {
             const rzpOrder = await razorpay.orders.create({
                 amount: amountInPaise,
@@ -135,16 +142,16 @@ const createGuestPaymentOrder = async (amountInINR, customer, items) => {
                 payment_capture: 1
             });
             gatewayOrderId = rzpOrder.id;
+            isRealKey = true;
         } catch (error) {
-            console.warn('Razorpay order creation fallback to mock:', error.message);
-            gatewayOrderId = `mock_guest_order_${Date.now()}`;
+            console.warn('Razorpay order creation fallback to mock UI:', error.message);
+            gatewayOrderId = null;
+            isRealKey = false;
         }
-    } else {
-        gatewayOrderId = `mock_guest_order_${Date.now()}`;
     }
 
     return {
-        key: process.env.RAZORPAY_KEY_ID || 'rzp_test_mock',
+        key: isRealKey ? process.env.RAZORPAY_KEY_ID : 'rzp_test_mock',
         amount: amountInPaise,
         currency: 'INR',
         name: 'MISS REZANNA',
