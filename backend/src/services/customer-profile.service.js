@@ -1,6 +1,6 @@
 const prisma = require('../config/db');
 const ApiError = require('../utils/ApiError');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 const logActivity = async (userId, action, details = {}, ipAddress = null) => {
     await prisma.customerActivity.create({
