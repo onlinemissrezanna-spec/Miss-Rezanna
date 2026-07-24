@@ -1,0 +1,10 @@
+{
+  "name": "miss-rezanna-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "postinstall": "cd backend && npm install && npx prisma generate",
+    "build": "cd backend && npx prisma generate",
+    "start": "cd backend && node src/server.js"
+  }
+}
