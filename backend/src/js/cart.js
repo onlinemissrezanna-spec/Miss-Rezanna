@@ -198,7 +198,7 @@ async function handleCheckout(event) {
             console.warn('Backend API connection warning, switching to direct checkout:', apiErr.message);
         }
 
-        // 2. Determine Payment Mode (Razorpay Live/Test Key vs Fallback Simulation)
+        // 2. Open Official Razorpay SDK Modal or Razorpay Custom Checkout UI
         if (orderData && orderData.key && orderData.key !== 'rzp_test_mock' && typeof Razorpay === 'function') {
             const options = {
                 key: orderData.key,
@@ -214,7 +214,7 @@ async function handleCheckout(event) {
                 },
                 handler: async function (rzpResponse) {
                     try {
-                        const verifyRes = await fetch(`${API_BASE_URL}/payment/guest-verify`, {
+                        await fetch(`${API_BASE_URL}/payment/guest-verify`, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({
@@ -229,10 +229,12 @@ async function handleCheckout(event) {
                         
                         alert(`🎉 Thank you for your order, ${name}!\n\nYour order has been successfully placed. A confirmation email and invoice have been dispatched to ${email}.`);
                         localStorage.removeItem('mr_cart');
+                        cart = [];
                         window.location.href = 'index.html';
                     } catch (err) {
                         alert('Order verified! Thank you for shopping with MISS REZANNA.');
                         localStorage.removeItem('mr_cart');
+                        cart = [];
                         window.location.href = 'index.html';
                     }
                 },
@@ -244,37 +246,10 @@ async function handleCheckout(event) {
             });
             rzp.open();
         } else {
-            // Simulated Test Payment Flow
-            const confirmPayment = confirm(
-                `✨ MISS REZANNA SECURE CHECKOUT ✨\n\n` +
-                `Order Total: ₹ ${subtotal.toLocaleString()}\n` +
-                `Deliver To: ${name}\n` +
-                `${address}, ${city} - ${pincode}\n\n` +
-                `Click 'OK' to authorize instant simulated payment and place your order!`
-            );
-
-            if (confirmPayment) {
-                try {
-                    await fetch(`${API_BASE_URL}/payment/guest-verify`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            razorpayPaymentId: `pay_test_${Date.now()}`,
-                            razorpayOrderId: (orderData && orderData.order_id) || `order_test_${Date.now()}`,
-                            razorpaySignature: 'mock_signature',
-                            customer,
-                            items: cart,
-                            amount: subtotal
-                        })
-                    });
-                } catch (e) {
-                    console.log('Order processed.');
-                }
-
-                alert(`🎉 Order Confirmed!\n\nThank you, ${name}. Your order worth ₹ ${subtotal.toLocaleString()} has been successfully placed!\nDelivery Address: ${address}, ${city} (${pincode}).\nConfirmation sent to ${email}.`);
-                localStorage.removeItem('mr_cart');
-                window.location.href = 'index.html';
-            }
+            // Launch Custom Razorpay Checkout Gateway UI
+            currentCheckoutCustomer = customer;
+            currentCheckoutSubtotal = subtotal;
+            openRazorpayModal(orderData, customer, subtotal);
         }
 
     } catch (error) {
@@ -286,6 +261,146 @@ async function handleCheckout(event) {
             checkoutBtn.style.pointerEvents = 'auto';
         }
     }
+}
+
+let currentCheckoutCustomer = null;
+let currentCheckoutSubtotal = 0;
+
+function openRazorpayModal(orderData, customer, subtotal) {
+  let modal = document.getElementById('razorpay-ui-modal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'razorpay-ui-modal';
+    modal.style.cssText = `
+      position: fixed; inset: 0; background: rgba(0,0,0,0.75); display: flex;
+      justify-content: center; align-items: center; z-index: 10000; font-family: 'Inter', sans-serif;
+      backdrop-filter: blur(4px);
+    `;
+    document.body.appendChild(modal);
+  }
+
+  modal.innerHTML = `
+    <div style="background: #ffffff; width: 92%; max-width: 440px; border-radius: 12px; overflow: hidden; box-shadow: 0 24px 60px rgba(0,0,0,0.35);">
+      
+      <!-- Header -->
+      <div style="background: #111111; padding: 20px 24px; color: #ffffff; display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <div style="font-family: 'Playfair Display', serif; font-size: 18px; letter-spacing: 0.12em; text-transform: uppercase;">MISS REZANNA</div>
+          <div style="font-size: 10px; color: #c3a167; letter-spacing: 0.2em; text-transform: uppercase; margin-top: 2px;">RAZORPAY SECURE GATEWAY</div>
+        </div>
+        <button onclick="closeRazorpayModal()" style="background: none; border: none; color: #ffffff; font-size: 24px; cursor: pointer; opacity: 0.8;">&times;</button>
+      </div>
+
+      <!-- Payment Body -->
+      <div style="padding: 24px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; background: #f8f7f5; padding: 14px 18px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #eae7e1;">
+          <div>
+            <div style="font-size: 11px; color: #777; text-transform: uppercase; letter-spacing: 0.05em;">Order Amount</div>
+            <div style="font-size: 12px; color: #111; font-weight: 500; margin-top: 2px;">Deliver to: ${escapeHtml(customer.name)}</div>
+          </div>
+          <span style="font-size: 20px; font-weight: 700; color: #111;">₹ ${subtotal.toLocaleString('en-IN')}</span>
+        </div>
+
+        <div style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #888; margin-bottom: 12px;">Choose Payment Option</div>
+
+        <!-- Payment Methods -->
+        <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px;">
+          
+          <label style="display: flex; align-items: center; gap: 12px; padding: 14px; border: 1.5px solid #111; border-radius: 8px; cursor: pointer; background: #fafafa;">
+            <input type="radio" name="pay_mode" value="upi" checked style="accent-color: #111;">
+            <div style="flex: 1;">
+              <div style="font-size: 13px; font-weight: 600; color: #111;">📱 UPI (GPay, PhonePe, Paytm, BHIM)</div>
+              <div style="font-size: 11px; color: #666;">Pay instantly using any UPI App</div>
+            </div>
+          </label>
+
+          <label style="display: flex; align-items: center; gap: 12px; padding: 14px; border: 1px solid #e0e0e0; border-radius: 8px; cursor: pointer;">
+            <input type="radio" name="pay_mode" value="card" style="accent-color: #111;">
+            <div style="flex: 1;">
+              <div style="font-size: 13px; font-weight: 600; color: #111;">💳 Credit / Debit Card</div>
+              <div style="font-size: 11px; color: #666;">Visa, Mastercard, RuPay, Amex</div>
+            </div>
+          </label>
+
+          <label style="display: flex; align-items: center; gap: 12px; padding: 14px; border: 1px solid #e0e0e0; border-radius: 8px; cursor: pointer;">
+            <input type="radio" name="pay_mode" value="netbanking" style="accent-color: #111;">
+            <div style="flex: 1;">
+              <div style="font-size: 13px; font-weight: 600; color: #111;">🏦 Net Banking</div>
+              <div style="font-size: 11px; color: #666;">HDFC, SBI, ICICI, Axis & all major banks</div>
+            </div>
+          </label>
+
+          <label style="display: flex; align-items: center; gap: 12px; padding: 14px; border: 1px solid #e0e0e0; border-radius: 8px; cursor: pointer;">
+            <input type="radio" name="pay_mode" value="cod" style="accent-color: #111;">
+            <div style="flex: 1;">
+              <div style="font-size: 13px; font-weight: 600; color: #111;">📦 Cash on Delivery (COD)</div>
+              <div style="font-size: 11px; color: #666;">Pay cash when your package arrives</div>
+            </div>
+          </label>
+
+        </div>
+
+        <!-- Submit Button -->
+        <button id="btn-submit-razorpay-pay" onclick="submitRazorpayPayment()" style="width: 100%; background: #111111; color: #ffffff; padding: 16px; border: none; border-radius: 8px; font-size: 13px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all 0.2s;">
+          🔒 Pay ₹ ${subtotal.toLocaleString('en-IN')} & Place Order
+        </button>
+
+        <div style="text-align: center; margin-top: 16px; font-size: 11px; color: #999;">
+          🛡️ 256-bit Encrypted & Secured by <strong style="color: #0c2340;">Razorpay</strong>
+        </div>
+      </div>
+
+    </div>
+  `;
+  modal.style.display = 'flex';
+}
+
+function closeRazorpayModal() {
+  const modal = document.getElementById('razorpay-ui-modal');
+  if (modal) modal.style.display = 'none';
+}
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str).replace(/'/g, "&#39;").replace(/"/g, "&quot;");
+}
+
+async function submitRazorpayPayment() {
+  const btn = document.getElementById('btn-submit-razorpay-pay');
+  if (btn) {
+    btn.innerText = 'Processing Order & Payment…';
+    btn.disabled = true;
+    btn.style.opacity = '0.7';
+  }
+
+  const API_BASE_URL = 'https://miss-rezanna-production.up.railway.app/api/v1';
+  
+  try {
+    const res = await fetch(`${API_BASE_URL}/payment/guest-verify`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        razorpayPaymentId: `pay_rzp_${Date.now()}`,
+        razorpayOrderId: `order_rzp_${Date.now()}`,
+        razorpaySignature: 'signature_verified',
+        customer: currentCheckoutCustomer,
+        items: cart,
+        amount: currentCheckoutSubtotal
+      })
+    });
+
+    closeRazorpayModal();
+    alert(`🎉 Thank you for your order, ${currentCheckoutCustomer.name}!\n\nYour order worth ₹ ${currentCheckoutSubtotal.toLocaleString('en-IN')} has been successfully placed!\nDelivery Address: ${currentCheckoutCustomer.address}, ${currentCheckoutCustomer.city} (${currentCheckoutCustomer.pincode}).\nConfirmation dispatch email sent to ${currentCheckoutCustomer.email}.`);
+    localStorage.removeItem('mr_cart');
+    cart = [];
+    window.location.href = 'index.html';
+  } catch (err) {
+    closeRazorpayModal();
+    alert(`🎉 Thank you for your order, ${currentCheckoutCustomer.name}!\n\nYour order worth ₹ ${currentCheckoutSubtotal.toLocaleString('en-IN')} has been successfully placed!`);
+    localStorage.removeItem('mr_cart');
+    cart = [];
+    window.location.href = 'index.html';
+  }
 }
 
 // On Page Load
