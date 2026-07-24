@@ -48,8 +48,29 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, '..')));
 app.use(express.static(process.cwd()));
 
-// Direct in-memory Admin Portal routes for root / and /admin.html (Guarantees 200 OK)
-app.get(['/', '/admin', '/admin.html', '/api/v1/admin-portal', '/api/v1/admin.html'], (req, res) => {
+const fs = require('fs');
+
+// Serve storefront index.html for root path '/'
+app.get(['/', '/index.html'], (req, res) => {
+    const rootIndexPath = path.join(process.cwd(), 'index.html');
+    const parentIndexPath = path.join(__dirname, '../index.html');
+    const grandParentIndexPath = path.join(__dirname, '../../index.html');
+
+    if (fs.existsSync(rootIndexPath)) {
+        return res.sendFile(rootIndexPath);
+    }
+    if (fs.existsSync(parentIndexPath)) {
+        return res.sendFile(parentIndexPath);
+    }
+    if (fs.existsSync(grandParentIndexPath)) {
+        return res.sendFile(grandParentIndexPath);
+    }
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.status(200).send(adminHtml);
+});
+
+// Direct in-memory Admin Portal routes for /admin and /admin.html (Guarantees 200 OK)
+app.get(['/admin', '/admin.html', '/api/v1/admin-portal', '/api/v1/admin.html'], (req, res) => {
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
     res.status(200).send(adminHtml);
 });
