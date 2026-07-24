@@ -543,4 +543,109 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Re-initialize Lucide Icons for dynamically added content if needed
   lucide.createIcons();
+
+  // Initialize Luxury Slide Bar Navigation Drawer
+  initSlideBar();
 });
+
+function initSlideBar() {
+  if (!document.getElementById('slideBarDrawer')) {
+    const isHome = window.location.pathname.endsWith('index.html') || window.location.pathname === '/';
+    const isCol = window.location.pathname.includes('collection');
+    const isAbout = window.location.pathname.includes('about');
+    const isJour = window.location.pathname.includes('journal');
+    const isExh = window.location.pathname.includes('exhibitions');
+    const isCont = window.location.pathname.includes('contact');
+
+    const slideBarHtml = `
+      <div class="slide-bar-backdrop" id="slideBarBackdrop" onclick="closeSlideBar()"></div>
+      <div class="slide-bar-drawer" id="slideBarDrawer">
+        <div class="slide-bar-header">
+          <div>
+            <a href="index.html" class="slide-bar-brand">MISS REZANNA</a>
+            <div class="slide-bar-subbrand">Luxury Couture</div>
+          </div>
+          <button class="slide-bar-close-btn" onclick="closeSlideBar()" aria-label="Close menu">✕</button>
+        </div>
+
+        <ul class="slide-bar-menu">
+          <li class="slide-bar-item">
+            <a href="index.html" class="slide-bar-link ${isHome ? 'active' : ''}">
+              <span>Home</span>
+              <svg class="item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 00-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+            </a>
+          </li>
+          <li class="slide-bar-item">
+            <a href="index.html#new-arrivals" class="slide-bar-link" onclick="closeSlideBar()">
+              <span>New Arrivals</span>
+              <svg class="item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+            </a>
+          </li>
+          <li class="slide-bar-item">
+            <a href="collection.html" class="slide-bar-link ${isCol ? 'active' : ''}">
+              <span>Collections</span>
+              <svg class="item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+            </a>
+          </li>
+          <li class="slide-bar-item">
+            <a href="about.html" class="slide-bar-link ${isAbout ? 'active' : ''}">
+              <span>About</span>
+              <svg class="item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </a>
+          </li>
+          <li class="slide-bar-item">
+            <a href="journal.html" class="slide-bar-link ${isJour ? 'active' : ''}">
+              <span>Journal</span>
+              <svg class="item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6m-6 4h6"/></svg>
+            </a>
+          </li>
+          <li class="slide-bar-item">
+            <a href="exhibitions.html" class="slide-bar-link ${isExh ? 'active' : ''}">
+              <span>Exhibitions</span>
+              <svg class="item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"/></svg>
+            </a>
+          </li>
+          <li class="slide-bar-item">
+            <a href="contact.html" class="slide-bar-link ${isCont ? 'active' : ''}">
+              <span>Contact</span>
+              <svg class="item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            </a>
+          </li>
+        </ul>
+
+        <div class="slide-bar-footer">
+          <a href="cart.html" class="slide-bar-cta-btn">🛍️ View Shopping Bag</a>
+        </div>
+      </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', slideBarHtml);
+  }
+
+  // Hook hamburger buttons
+  document.querySelectorAll('.hamburger-toggle-btn, .mobile-menu-toggle, [data-slide-toggle]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      openSlideBar();
+    });
+  });
+}
+
+function openSlideBar() {
+  const backdrop = document.getElementById('slideBarBackdrop');
+  const drawer = document.getElementById('slideBarDrawer');
+  if (backdrop && drawer) {
+    backdrop.classList.add('active');
+    drawer.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeSlideBar() {
+  const backdrop = document.getElementById('slideBarBackdrop');
+  const drawer = document.getElementById('slideBarDrawer');
+  if (backdrop && drawer) {
+    backdrop.classList.remove('active');
+    drawer.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+}
