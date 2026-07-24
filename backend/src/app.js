@@ -1,3 +1,4 @@
+const fs = require('fs');
 const path = require('path');
 const express = require('express');
 const helmet = require('helmet');
@@ -18,7 +19,7 @@ const app = express();
 // Swagger API Documentation
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
-// Set security HTTP headers (disable contentSecurityPolicy for inline scripts and embeds)
+// Set security HTTP headers
 app.use(helmet({ contentSecurityPolicy: false }));
 
 // GZIP compression
@@ -49,16 +50,25 @@ const limiter = rateLimit({
 });
 app.use('/api', limiter);
 
-// Serve static website & admin files from repository root
-const rootPath = path.join(__dirname, '../..');
-app.use(express.static(rootPath));
+// Serve static frontend files from both __dirname/public and root
+const publicDir = path.resolve(__dirname, 'public');
+const rootDir = path.resolve(__dirname, '../..');
+
+app.use(express.static(publicDir));
+app.use(express.static(rootDir));
 
 // Health check
 app.get('/health', (req, res) => res.status(200).json({ status: 'ok', message: 'API is running successfully' }));
 
 // Dedicated route for admin portal
 app.get('/admin.html', (req, res) => {
-    res.sendFile(path.join(rootPath, 'admin.html'));
+    const p1 = path.join(publicDir, 'admin.html');
+    const p2 = path.join(rootDir, 'admin.html');
+    
+    if (fs.existsSync(p1)) return res.sendFile(p1);
+    if (fs.existsSync(p2)) return res.sendFile(p2);
+    
+    res.status(404).send('Admin page file not found');
 });
 
 // v1 API routes

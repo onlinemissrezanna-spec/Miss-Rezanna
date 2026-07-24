@@ -1,0 +1,174 @@
+/* ==========================================================================
+   THE ART OF CRAFTSMANSHIP SECTION
+   ========================================================================== */
+
+.craftsmanship-section {
+  position: relative;
+  background-color: var(--color-bg-primary);
+  /* Very subtle linen texture - generated via SVG */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+  padding: var(--space-16) var(--space-6);
+  overflow: hidden;
+}
+
+@media (min-width: 1024px) {
+  .craftsmanship-section {
+    padding: var(--space-32) var(--space-12);
+  }
+}
+
+.craftsmanship-container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+}
+
+@media (min-width: 1024px) {
+  .craftsmanship-container {
+    flex-direction: row;
+    align-items: stretch;
+    gap: var(--space-24);
+  }
+}
+
+/* Left: Image Column (55%) */
+.craftsmanship-image-col {
+  width: 100%;
+  position: relative;
+  opacity: 0; /* GSAP */
+}
+
+@media (min-width: 1024px) {
+  .craftsmanship-image-col {
+    width: 55%;
+  }
+}
+
+.craftsmanship-image-wrapper {
+  width: 100%;
+  height: 100%;
+  min-height: 500px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.craftsmanship-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Right: Content Column (45%) */
+.craftsmanship-content-col {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media (min-width: 1024px) {
+  .craftsmanship-content-col {
+    width: 45%;
+    padding-right: var(--space-8);
+  }
+}
+
+.craft-label {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--text-caption);
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-widest);
+  margin-bottom: var(--space-4);
+  opacity: 0; /* GSAP */
+}
+
+.craft-title {
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-6);
+  opacity: 0; /* GSAP */
+}
+
+.craft-copy {
+  color: var(--color-text-primary);
+  font-size: var(--text-body-large);
+  line-height: var(--lh-relaxed);
+  margin-bottom: var(--space-12);
+  opacity: 0; /* GSAP */
+}
+
+/* Features */
+.craft-features {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  margin-bottom: var(--space-12);
+}
+
+.craft-feature {
+  display: flex;
+  gap: var(--space-4);
+  align-items: flex-start;
+  opacity: 0; /* GSAP */
+}
+
+.craft-feature-icon {
+  color: var(--color-text-primary);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: var(--space-1);
+}
+
+.craft-feature-icon svg {
+  width: 24px;
+  height: 24px;
+  stroke-width: 1.2;
+}
+
+.craft-feature-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.craft-feature-title {
+  font-family: var(--font-heading);
+  font-size: var(--text-h5);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-1);
+}
+
+.craft-feature-desc {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  color: var(--color-text-secondary);
+  line-height: var(--lh-body);
+}
+
+/* Button */
+.btn-craft {
+  align-self: flex-start;
+  background-color: var(--color-bg-primary); /* Ivory */
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-text-primary); /* Charcoal border */
+  padding: 1rem 2.5rem;
+  font-family: var(--font-body);
+  font-size: var(--text-button);
+  font-weight: 500;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  opacity: 0; /* GSAP */
+}
+
+.btn-craft:hover {
+  background-color: #B5335B; /* Signature Magenta */
+  color: #ffffff;
+  border-color: #B5335B;
+}
+
