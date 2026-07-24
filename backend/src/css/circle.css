@@ -1,0 +1,206 @@
+/* ==========================================================================
+   THE CIRCLE SECTION (MEMBERSHIP / NEWSLETTER)
+   ========================================================================== */
+
+.circle-section {
+  background-color: var(--color-bg-primary); /* Ivory */
+  padding: var(--space-16) var(--space-6);
+  text-align: center;
+  position: relative;
+  border-top: 1px solid var(--color-bg-secondary);
+}
+
+@media (min-width: 1024px) {
+  .circle-section {
+    padding: var(--space-32) var(--space-12);
+  }
+}
+
+.circle-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.circle-label {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--text-caption);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-widest);
+  margin-bottom: var(--space-4);
+  opacity: 0; /* GSAP */
+  transform: translateY(20px);
+}
+
+.circle-title {
+  color: var(--color-text-primary);
+  font-family: var(--font-heading);
+  font-size: var(--text-h2);
+  line-height: var(--lh-heading);
+  margin: 0 0 var(--space-4);
+  opacity: 0; /* GSAP */
+  transform: translateY(20px);
+}
+
+@media (min-width: 768px) {
+  .circle-title {
+    font-size: var(--text-h1);
+  }
+}
+
+.circle-desc {
+  font-family: var(--font-body);
+  font-size: var(--text-large);
+  color: var(--color-text-secondary);
+  line-height: var(--lh-relaxed);
+  max-width: 700px;
+  margin: 0 auto var(--space-12);
+  opacity: 0; /* GSAP */
+  transform: translateY(20px);
+}
+
+/* Thin Gold Divider */
+.circle-divider {
+  width: 60px;
+  height: 1px;
+  background-color: var(--color-accent); /* Luxury Gold */
+  margin: 0 auto var(--space-12);
+  opacity: 0; /* GSAP */
+}
+
+/* Benefits Grid */
+.circle-benefits {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+  margin-bottom: var(--space-16);
+  text-align: left;
+}
+
+@media (min-width: 768px) {
+  .circle-benefits {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-12);
+  }
+}
+
+@media (min-width: 1024px) {
+  .circle-benefits {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-6);
+  }
+}
+
+.circle-benefit-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  opacity: 0; /* GSAP */
+  transform: translateY(20px);
+}
+
+.benefit-icon {
+  font-size: 1.25rem;
+  color: var(--color-accent); /* Gold */
+  margin-bottom: var(--space-3);
+  user-select: none;
+}
+
+.benefit-title {
+  font-family: var(--font-heading);
+  font-size: var(--text-h5);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-2);
+}
+
+.benefit-desc {
+  font-family: var(--font-body);
+  font-size: var(--text-small);
+  color: var(--color-text-secondary);
+  line-height: var(--lh-relaxed);
+}
+
+/* Form */
+.circle-form-wrapper {
+  max-width: 600px;
+  margin: 0 auto;
+  opacity: 0; /* GSAP */
+  transform: translateY(20px);
+}
+
+.circle-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+@media (min-width: 768px) {
+  .circle-form {
+    flex-direction: row;
+    gap: 0;
+  }
+}
+
+.circle-input {
+  flex-grow: 1;
+  padding: 1.25rem 1.5rem;
+  background-color: transparent;
+  border: 1px solid var(--color-text-secondary);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  color: var(--color-text-primary);
+  outline: none;
+  transition: border-color var(--transition-fast);
+}
+
+@media (min-width: 768px) {
+  .circle-input {
+    border-right: none;
+  }
+}
+
+.circle-input:focus {
+  border-color: var(--color-text-primary);
+}
+
+.circle-input::placeholder {
+  color: var(--color-text-secondary);
+  font-weight: 300;
+  letter-spacing: 1px;
+}
+
+.btn-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem 2.5rem;
+  background-color: transparent;
+  border: 1px solid var(--color-text-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  font-size: var(--text-button);
+  font-weight: 500;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn-circle:hover {
+  background-color: #B5335B; /* Signature Magenta */
+  color: #ffffff;
+  border-color: #B5335B;
+}
+
+.circle-note {
+  font-family: var(--font-body);
+  font-size: var(--text-caption);
+  color: var(--color-text-secondary);
+  font-style: italic;
+  letter-spacing: 0.5px;
+}
+

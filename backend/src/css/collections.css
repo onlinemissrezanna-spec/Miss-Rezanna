@@ -1,0 +1,167 @@
+/* ==========================================================================
+   SIGNATURE COLLECTIONS SECTION
+   ========================================================================== */
+
+.collections-section {
+  padding: var(--space-16) var(--space-6);
+  background-color: var(--color-bg-primary);
+  text-align: center;
+}
+
+@media (min-width: 1024px) {
+  .collections-section {
+    padding: var(--space-32) var(--space-12);
+  }
+}
+
+.collections-header {
+  margin-bottom: var(--space-12);
+  opacity: 0; /* GSAP initial state */
+  transform: translateY(20px);
+}
+
+@media (min-width: 1024px) {
+  .collections-header {
+    margin-bottom: var(--space-16);
+  }
+}
+
+.collections-subtitle {
+  font-family: var(--font-body);
+  font-size: var(--text-caption);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-widest);
+  margin-bottom: var(--space-4);
+  display: block;
+}
+
+.collections-title {
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.collections-grid {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+}
+
+@media (min-width: 768px) {
+  .collections-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .collections-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-12);
+  }
+}
+
+/* Collection Card */
+.collection-card {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff; /* Luxury ivory / white */
+  border-radius: var(--radius-none);
+  box-shadow: var(--shadow-sm);
+  text-align: left;
+  transition: transform var(--transition-slow), background-color var(--transition-slow), box-shadow var(--transition-slow);
+  
+  /* GSAP initial state */
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.collection-card:hover {
+  transform: translateY(-8px);
+  background-color: #FEFCFB; /* Warmer white */
+  box-shadow: var(--shadow-hover);
+}
+
+.collection-image-wrapper {
+  width: 100%;
+  aspect-ratio: 3 / 4; /* Tall editorial cards */
+  overflow: hidden;
+  position: relative;
+}
+
+.collection-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+
+.collection-card:hover .collection-img {
+  transform: scale(1.03);
+}
+
+.collection-content {
+  padding: var(--space-8) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.collection-title {
+  font-family: var(--font-heading);
+  font-size: var(--text-h4);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-2);
+}
+
+.collection-desc {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  color: var(--color-text-secondary);
+  line-height: var(--lh-relaxed);
+  margin-bottom: var(--space-8);
+  flex-grow: 1;
+}
+
+/* Button with underline animation */
+.collection-link {
+  align-self: flex-start;
+  font-family: var(--font-body);
+  font-size: var(--text-button);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-widest);
+  color: var(--color-text-primary);
+  position: relative;
+  padding-bottom: var(--space-1);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  transition: color var(--transition-fast);
+  text-decoration: none;
+}
+
+.collection-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: var(--color-text-primary);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), background-color 0.4s ease;
+}
+
+.collection-card:hover .collection-link {
+  color: #B5335B; /* Signature Magenta */
+}
+
+.collection-card:hover .collection-link::after {
+  transform: scaleX(1);
+  transform-origin: left;
+  background-color: #B5335B; /* Signature Magenta */
+}
+

@@ -50,10 +50,12 @@ const limiter = rateLimit({
 });
 app.use('/api', limiter);
 
-// Serve static frontend files from both __dirname/public and root
+// Serve static frontend files from __dirname, __dirname/public, and root
+const srcDir = __dirname;
 const publicDir = path.resolve(__dirname, 'public');
 const rootDir = path.resolve(__dirname, '../..');
 
+app.use(express.static(srcDir));
 app.use(express.static(publicDir));
 app.use(express.static(rootDir));
 
@@ -62,15 +64,22 @@ app.get('/health', (req, res) => res.status(200).json({ status: 'ok', message: '
 
 // Dedicated route for admin portal
 app.get(['/admin', '/admin.html'], (req, res) => {
+    const p0 = path.resolve(__dirname, 'admin.html');
     const p1 = path.resolve(__dirname, 'public/admin.html');
     const p2 = path.resolve(__dirname, '../../admin.html');
     const p3 = path.resolve(process.cwd(), 'admin.html');
     
+    if (fs.existsSync(p0)) return res.sendFile(p0);
     if (fs.existsSync(p1)) return res.sendFile(p1);
     if (fs.existsSync(p2)) return res.sendFile(p2);
     if (fs.existsSync(p3)) return res.sendFile(p3);
     
-    res.status(404).send('Admin page file not found');
+    res.status(404).json({
+        error: 'Admin page file not found',
+        dirname: __dirname,
+        cwd: process.cwd(),
+        checkedPaths: [p0, p1, p2, p3]
+    });
 });
 
 // v1 API routes
