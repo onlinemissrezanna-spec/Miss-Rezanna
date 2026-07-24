@@ -1,17 +1,20 @@
 const nodemailer = require('nodemailer');
 const prisma = require('../config/db');
 
+const SMTP_USER = process.env.SMTP_USER || 'online.missrezanna@gmail.com';
+const SMTP_PASS = process.env.SMTP_PASS || 'ybuhuvndmcvbsnrg';
+
 const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST || 'smtp.gmail.com',
     port: parseInt(process.env.SMTP_PORT || '587'),
     secure: process.env.SMTP_SECURE === 'true',
     auth: {
-        user: process.env.SMTP_USER || 'admin@missrezanna.com',
-        pass: process.env.SMTP_PASS || '',
+        user: SMTP_USER,
+        pass: SMTP_PASS,
     }
 });
 
-const DEFAULT_FROM = process.env.SMTP_FROM || '"MISS REZANNA" <admin@missrezanna.com>';
+const DEFAULT_FROM = process.env.SMTP_FROM || '"MISS REZANNA" <online.missrezanna@gmail.com>';
 
 const sendEmail = async (options) => {
     const mailOptions = {
@@ -20,11 +23,6 @@ const sendEmail = async (options) => {
         subject: options.subject,
         html: options.html,
     };
-    
-    if (!process.env.SMTP_PASS || process.env.SMTP_USER === 'test') {
-        console.log(`[EMAIL LOG] From: ${DEFAULT_FROM} -> To: ${options.email} | Subject: "${options.subject}"`);
-        return true;
-    }
 
     try {
         await transporter.sendMail(mailOptions);
