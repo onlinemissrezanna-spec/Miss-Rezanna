@@ -146,7 +146,7 @@ const createGuestPaymentOrder = async (amountInINR, customer, items) => {
             gatewayOrderId = rzpOrder.id;
             isRealKey = true;
         } catch (error) {
-            rzpErrDetail = error?.message || String(error);
+            rzpErrDetail = typeof error === 'object' ? (error.description || error.error?.description || JSON.stringify(error)) : String(error);
             console.error('Razorpay order creation error:', rzpErrDetail);
             gatewayOrderId = null;
             isRealKey = false;
