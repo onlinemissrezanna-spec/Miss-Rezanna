@@ -191,10 +191,18 @@
         <h1 class="page-title">Product Catalogue</h1>
         <p class="page-subtitle">Manage, edit, add photos, YouTube videos, and remove products</p>
       </div>
-      <div style="display:flex;gap:10px;">
-        <button class="btn-action primary" onclick="openAddProductModal()">+ Add New Product</button>
+      <div style="display:flex;gap:12px;align-items:center;">
+        <button class="btn-action primary" onclick="openAddProductModal()" style="background:#C3A167;color:#000;font-weight:700;padding:12px 20px;font-size:13px;border-radius:4px;box-shadow:0 4px 12px rgba(195,161,103,0.3);">✨ + ADD NEW PRODUCT</button>
         <button class="btn-action" onclick="loadProducts()">Refresh</button>
       </div>
+    </div>
+
+    <!-- Prominent Action Bar -->
+    <div style="background:rgba(195,161,103,0.08);border:1px solid rgba(195,161,103,0.3);padding:16px 20px;border-radius:6px;margin-bottom:24px;display:flex;justify-content:space-between;align-items:center;">
+      <div style="font-size:14px;color:var(--admin-text);font-weight:500;">
+        🛍️ Ready to add new items to your luxury collection?
+      </div>
+      <button class="btn-action primary" onclick="openAddProductModal()" style="background:#000;color:#fff;font-weight:600;padding:10px 18px;font-size:12px;">+ Add Product</button>
     </div>
 
     <div id="products-grid-container" class="products-grid">
