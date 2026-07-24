@@ -1,0 +1,172 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Story - MISS REZANNA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/hero.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .about-hero {
+      position: relative;
+      height: 70vh;
+      min-height: 500px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fff;
+    }
+    .about-hero-img {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: -2;
+    }
+    .about-hero-overlay {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.4);
+      z-index: -1;
+    }
+    .about-hero-title {
+      font-size: var(--text-display);
+      font-family: var(--font-heading);
+      margin-bottom: 16px;
+    }
+    .about-section {
+      padding: 120px 24px;
+      max-width: var(--container-max);
+      margin: 0 auto;
+    }
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    @media (max-width: 992px) {
+      .story-grid { grid-template-columns: 1fr; gap: 40px; }
+      .story-grid.reverse .story-content { grid-row: 1; }
+    }
+    .story-img-wrapper {
+      width: 100%;
+      aspect-ratio: 4/5;
+      overflow: hidden;
+    }
+    .story-img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    .story-content h2 {
+      font-family: var(--font-heading);
+      font-size: var(--text-h2);
+      margin-bottom: 24px;
+    }
+    .story-content p {
+      font-size: var(--text-body-large);
+      line-height: var(--lh-relaxed);
+      color: var(--color-text-secondary);
+      margin-bottom: 24px;
+    }
+    .founder-quote {
+      margin-top: 48px;
+      padding-left: 24px;
+      border-left: 2px solid var(--color-accent-magenta);
+      font-style: italic;
+      font-family: var(--font-heading);
+      font-size: 24px;
+      color: var(--color-text-primary);
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header scrolled" id="site-header">
+    <div class="header-container">
+      <a href="index.html" class="brand-logo"><img src="images/logo.png" alt="MISS REZANNA" style="height: 60px; width: auto; display: inline-block; vertical-align: middle;"></a>
+      <nav class="desktop-nav">
+        <ul class="nav-list text-button">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="index.html#new-arrivals" class="nav-link">New Arrivals</a></li>
+          <li><a href="collection.html" class="nav-link">Collections</a></li>
+          <li><a href="about.html" class="nav-link">About</a></li>
+          <li><a href="journal.html" class="nav-link">Journal</a></li>
+          <li><a href="exhibitions.html" class="nav-link">Exhibitions</a></li>
+          <li><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <button class="icon-btn" aria-label="Search"><i data-lucide="search"></i></button>
+        <button class="icon-btn" aria-label="Wishlist"><i data-lucide="heart"></i></button>
+        <button class="icon-btn" aria-label="Account"><i data-lucide="user"></i></button>
+        <a href="cart.html" class="icon-btn" aria-label="Cart" style="color: inherit; text-decoration: none;"><i data-lucide="shopping-bag"></i></a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="about-hero">
+      <img src="images/Q.jpeg" alt="MISS REZANNA Legacy" class="about-hero-img">
+      <div class="about-hero-overlay"></div>
+      <div class="about-hero-content">
+        <h1 class="about-hero-title">A Legacy of Elegance</h1>
+      </div>
+    </section>
+
+    <section class="about-section">
+      <div class="story-grid">
+        <div class="story-content">
+          <h2>Rooted in Heritage</h2>
+          <p>MISS REZANNA was born out of a profound respect for the artistry of Indian textiles and a vision to redefine modern luxury. As the premier luxury brand born from the esteemed <strong>Kinshu Knitwear</strong> legacy, we carry forward decades of unparalleled expertise in fabric mastery and garment construction.</p>
+          <p>Guided by our founder, <strong>Pravel Setia</strong>, MISS REZANNA was established to bridge the gap between traditional, intricate Indian craftsmanship and the fluid, contemporary silhouettes demanded by the modern woman.</p>
+        </div>
+        <div class="story-img-wrapper">
+          <img src="images/F.jpeg" alt="Heritage Craftsmanship" class="story-img">
+        </div>
+      </div>
+    </section>
+
+    <section class="about-section" style="background-color: var(--color-bg-secondary);">
+      <div class="story-grid reverse">
+        <div class="story-img-wrapper">
+          <img src="images/Z.jpeg" alt="The Modern Silhouette" class="story-img">
+        </div>
+        <div class="story-content">
+          <h2>The Vision of Pravel Setia</h2>
+          <p>Under the visionary leadership of Pravel Setia, MISS REZANNA operates on a simple yet powerful philosophy: clothing should amplify a woman's inherent grace without ever overshadowing it.</p>
+          <p>From our headquarters at Kinshu Knitwears in Ludhiana, Punjab, every collection is conceptualized with the dynamic, multifaceted lifestyle of our patrons in mind. We source the finest silks, breathable linens, and sheer organzas to ensure that every garment feels as luxurious as it looks.</p>
+          <div class="founder-quote">
+            "True luxury is not just in the aesthetic, but in the feeling of absolute confidence it provides the moment you put it on." <br><br>— Pravel Setia
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="index.html" class="brand-logo"><img src="images/logo.png" alt="MISS REZANNA" style="height: 60px; width: auto; display: inline-block; vertical-align: middle;"></a>
+          <p class="footer-brand-desc">Thoughtfully crafted for women who appreciate timeless elegance.</p>
+          <div class="footer-social">
+            <a href="https://instagram.com/missrezanna" target="_blank" class="social-link" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+            <a href="https://facebook.com/missrezanna" target="_blank" class="social-link" aria-label="Facebook"><i data-lucide="facebook"></i></a>
+            <a href="https://linkedin.com/company/missrezanna" target="_blank" class="social-link" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
+            <a href="https://youtube.com/@missrezanna" target="_blank" class="social-link" aria-label="YouTube"><i data-lucide="youtube"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom"><span>&copy; 2026 MISS REZANNA. All Rights Reserved.</span></div>
+    </div>
+  </footer>
+<script src="js/cart.js"></script>
+</body>
+</html>
+
+

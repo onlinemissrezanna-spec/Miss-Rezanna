@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MISS REZANNA | Official Store</title>
+  
+  <!-- Core Design System CSS -->
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Hero Section Specific CSS -->
+  <link rel="stylesheet" href="css/hero.css">
+  <link rel="stylesheet" href="css/our-story.css">
+  <link rel="stylesheet" href="css/collections.css">
+  <link rel="stylesheet" href="css/craftsmanship.css">
+  <link rel="stylesheet" href="css/fabric-banner.css">
+  <link rel="stylesheet" href="css/new-arrivals.css">
+  <link rel="stylesheet" href="css/complete-look.css">
+  <link rel="stylesheet" href="css/size-guide.css">
+  <link rel="stylesheet" href="css/events.css">
+  <link rel="stylesheet" href="css/journal.css">
+  <link rel="stylesheet" href="css/lookbook.css">
+  <link rel="stylesheet" href="css/testimonials.css">
+  <link rel="stylesheet" href="css/unboxing.css">
+  <link rel="stylesheet" href="css/experience.css">
+  <link rel="stylesheet" href="css/styling-banner.css">
+  <link rel="stylesheet" href="css/circle.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/mobile-nav.css">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- GSAP for Animations -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header" id="site-header">
+    <div class="header-container">
+      
+      <!-- Logo -->
+      <a href="#" class="brand-logo h3"><img src="images/logo.png" alt="MISS REZANNA" style="height: 60px; width: auto; display: inline-block; vertical-align: middle;"></a>
+      
+      <!-- Desktop Navigation -->
+      <nav class="desktop-nav">
+        <ul class="nav-list text-button">
+          <li><a href="#" class="nav-link">Home</a></li>
+          <li><a href="#new-arrivals" class="nav-link">New Arrivals</a></li>
+          <li><a href="collection.html" class="nav-link">Collections</a></li>
+          <li><a href="about.html" class="nav-link">About</a></li>
+          <li><a href="journal.html" class="nav-link">Journal</a></li>
+          <li><a href="exhibitions.html" class="nav-link">Exhibitions</a></li>
+          <li><a href="#" class="nav-link">Contact</a></li>
+          <!-- TEMPORARY SEED BUTTON -->
+          <li>
+              <button onclick="fetch('https://miss-rezanna-production.up.railway.app/api/v1/seed').then(r => r.json()).then(d => alert('Seeded: ' + d.message)).catch(e => alert('Error: ' + e.message))" 
+                      style="background: red; color: white; padding: 5px 15px; border-radius: 5px; cursor: pointer; border: none; font-weight: bold;">
+                  Seed Database
+              </button>
+          </li>
+        </ul>
+      </nav>
+      
+      <!-- Icons Navigation -->
+      <div class="header-actions">
+        <button class="icon-btn" aria-label="Search"><i data-lucide="search"></i></button>
+        <button class="icon-btn" aria-label="Wishlist"><i data-lucide="heart"></i></button>
+        <button class="icon-btn" aria-label="Account"><i data-lucide="user"></i></button>
+        <a href="cart.html" class="icon-btn" aria-label="Cart" style="color: inherit; text-decoration: none;"><i data-lucide="shopping-bag"></i></a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <main>
+    <section class="hero-section">
+      
+      <!-- Right/Mobile Top: Hero Image -->
+      <div class="hero-image-col">
+        <div class="hero-image-wrapper">
+          <img src="images/F.jpeg" alt="Miss Rezanna New Collection Campaign" class="hero-image">
+        </div>
+      </div>
+
+      <!-- Left/Mobile Bottom: Content -->
+      <div class="hero-content-col">
+        <div class="hero-content-inner">
+          <span class="hero-label text-caption">New Collection</span>
+          
+          <h1 class="hero-title display">
+            Crafted for the<br>Moments That Matter
+          </h1>
+          
+          <p class="hero-subtitle text-large">
+            Thoughtfully designed silhouettes that blend timeless elegance, premium craftsmanship, and effortless confidence for the modern Indian woman.
+          </p>
+          
+          <div class="hero-actions">
+            <button class="btn btn-primary hero-btn" onclick="window.location.href='collection.html'">Explore Collection</button>
+            <button class="btn btn-secondary hero-btn" onclick="window.location.href='about.html'">Our Story</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scroll Indicator -->
+      <div class="scroll-indicator">
+        <span class="scroll-text text-caption">Scroll</span>
+        <div class="scroll-line"></div>
+      </div>
+
+    </section>
+
+    <!-- OUR STORY SECTION -->
+    <section class="our-story-section" id="our-story">
+      <div class="our-story-container">
+        <!-- Left: Image -->
+        <div class="our-story-image-col">
+          <div class="our-story-image-wrapper">
+            <img src="images/N.jpeg" alt="Elegant Indian woman in MISS REZANNA embroidered kurti" class="our-story-img">
+          </div>
+        </div>
+        
+        <!-- Right: Content -->
+        <div class="our-story-content-col">
+          <span class="our-story-label">Since 2026</span>
+          <h2 class="our-story-title h2">Designed for Grace.<br>Made to Last.</h2>
+          <p class="our-story-copy">
+            At MISS REZANNA, every silhouette begins with thoughtful design and refined craftsmanship. We create elegant pieces that celebrate confidence, comfort and timeless style, allowing every woman to feel effortlessly beautiful for every occasion.
+          </p>
+          
+          <ul class="our-story-highlights">
+            <li class="highlight-item">
+              <span class="highlight-icon"><i data-lucide="gem"></i></span>
+              Premium Fabrics
+            </li>
+            <li class="highlight-item">
+              <span class="highlight-icon"><i data-lucide="scissors"></i></span>
+              Intricate Embroidery
+            </li>
+            <li class="highlight-item">
+              <span class="highlight-icon"><i data-lucide="hourglass"></i></span>
+              Timeless Silhouettes
+            </li>
+          </ul>
+          
+          <button class="btn btn-story" onclick="window.location.href='about.html'">Discover Our Story</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SIGNATURE COLLECTIONS -->
+    <section class="collections-section" id="collections">
+      <div class="collections-header">
+        <span class="collections-subtitle">Designed for every graceful moment.</span>
+        <h2 class="collections-title h2">Signature Collections</h2>
+      </div>
+      
+      <div class="collections-grid">
+        <!-- Card 1 -->
+        <article class="collection-card">
+          <div class="collection-image-wrapper">
+            <img src="images/design 1 col 2.jpeg" alt="Floral Grace Collection" class="collection-img">
+          </div>
+          <div class="collection-content">
+            <h3 class="collection-title">Floral Grace</h3>
+            <p class="collection-desc">Intricate floral embroidery inspired by timeless elegance.</p>
+            <a href="collection.html" class="collection-link">Explore &rarr;</a>
+          </div>
+        </article>
+        
+        <!-- Card 2 -->
+        <article class="collection-card">
+          <div class="collection-image-wrapper">
+            <img src="images/design 1 col 2.jpeg" alt="Botanical Bloom Collection" class="collection-img">
+          </div>
+          <div class="collection-content">
+            <h3 class="collection-title">Botanical Bloom</h3>
+            <p class="collection-desc">Contemporary silhouettes with handcrafted floral detailing.</p>
+            <a href="collection.html" class="collection-link">Explore &rarr;</a>
+          </div>
+        </article>
+        
+        <!-- Card 3 -->
+        <article class="collection-card">
+          <div class="collection-image-wrapper">
+            <img src="images/NN.jpeg" alt="Summer Heritage Collection" class="collection-img">
+          </div>
+          <div class="collection-content">
+            <h3 class="collection-title">Summer Heritage</h3>
+            <p class="collection-desc">Premium summer essentials designed for effortless sophistication.</p>
+            <a href="collection.html" class="collection-link">Explore &rarr;</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- THE ART OF CRAFTSMANSHIP SECTION -->
+    <section class="craftsmanship-section" id="craftsmanship">
+      <div class="craftsmanship-container">
+        <!-- Left: Image -->
+        <div class="craftsmanship-image-col">
+          <div class="craftsmanship-image-wrapper">
+            <img src="images/B.jpeg" alt="MISS REZANNA intricate embroidery and craftsmanship" class="craftsmanship-img">
+          </div>
+        </div>
+
+        <!-- Right: Content -->
+        <div class="craftsmanship-content-col">
+          <span class="craft-label">Crafted With Care</span>
+          <h2 class="craft-title h2">Luxury Begins With Every Detail</h2>
+          <p class="craft-copy">
+            Every MISS REZANNA piece is thoughtfully designed with premium fabrics, intricate embroidery and timeless silhouettes. Our attention to detail ensures every garment delivers comfort, elegance and confidence for years to come.
+          </p>
+
+          <div class="craft-features">
+            <!-- Feature 1 -->
+            <div class="craft-feature">
+              <div class="craft-feature-icon">
+                <i data-lucide="feather"></i>
+              </div>
+              <div class="craft-feature-content">
+                <h4 class="craft-feature-title">Premium Fabrics</h4>
+                <p class="craft-feature-desc">Soft, breathable fabrics selected for all-day comfort.</p>
+              </div>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="craft-feature">
+              <div class="craft-feature-icon">
+                <i data-lucide="pen-tool"></i>
+              </div>
+              <div class="craft-feature-content">
+                <h4 class="craft-feature-title">Handcrafted Embroidery</h4>
+                <p class="craft-feature-desc">Intricate embroidery inspired by timeless artistry.</p>
+              </div>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="craft-feature">
+              <div class="craft-feature-icon">
+                <i data-lucide="scissors"></i>
+              </div>
+              <div class="craft-feature-content">
+                <h4 class="craft-feature-title">Perfect Tailoring</h4>
+                <p class="craft-feature-desc">Designed to flatter every silhouette with effortless elegance.</p>
+              </div>
+            </div>
+
+            <!-- Feature 4 -->
+            <div class="craft-feature">
+              <div class="craft-feature-icon">
+                <i data-lucide="check-circle"></i>
+              </div>
+              <div class="craft-feature-content">
+                <h4 class="craft-feature-title">Quality Finish</h4>
+                <p class="craft-feature-desc">Every stitch is carefully inspected to ensure premium craftsmanship.</p>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn-craft" onclick="window.location.href='collection.html'">Explore Our Collection</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- FABRIC BANNER SECTION -->
+    <section class="fabric-banner" id="fabric">
+      <div class="fabric-banner-container">
+        <div class="fabric-banner-left">
+          <span class="fabric-label">Feel The Difference</span>
+          <h2 class="fabric-title">Cotton Blend</h2>
+        </div>
+        
+        <div class="fabric-banner-right">
+          <div class="fabric-ratings">
+            <div class="fabric-rating-item">
+              <span class="stars">
+                <i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i>
+              </span>
+              Softness
+            </div>
+            <div class="fabric-rating-item">
+              <span class="stars">
+                <i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i>
+              </span>
+              Breathability
+            </div>
+            <div class="fabric-rating-item">
+              <span class="stars">
+                <i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i>
+              </span>
+              Comfort
+            </div>
+          </div>
+          <p class="fabric-desc">Designed for effortless all-day wear.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW ARRIVALS SECTION -->
+    <section class="new-arrivals-section" id="new-arrivals">
+      <div class="arrivals-header">
+        <span class="arrivals-subtitle">Timeless silhouettes created for the modern woman.</span>
+        <h2 class="arrivals-title h2">New Arrivals</h2>
+      </div>
+
+      <div class="arrivals-grid">
+        <!-- Card 1 -->
+        <article class="product-item">
+          <div class="product-image-wrapper">
+            <div class="product-badges">
+              <span class="badge-gold">New</span>
+            </div>
+            <img src="images/A.jpeg" alt="Embroidered Kurti" class="product-img">
+            
+            <div class="quick-view-overlay">
+              <button class="quick-action-btn" title="Quick View"><i data-lucide="eye"></i></button>
+              <button class="quick-action-btn" title="Add to Wishlist"><i data-lucide="heart"></i></button>
+              <button class="quick-action-btn" title="Compare"><i data-lucide="bar-chart-2"></i></button>
+            </div>
+          </div>
+          <div class="product-content">
+            <h3 class="product-title">Ethereal Embroidered Kurti</h3>
+            <p class="product-desc">Intricate threadwork with a relaxed silhouette.</p>
+            <span class="product-price">₹ 3,000</span>
+            <button class="btn-view-details" onclick="window.location.href='product.html?id=ethereal-kurti'">View Details</button>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="product-item">
+          <div class="product-image-wrapper">
+            <div class="product-badges">
+              <span class="badge-gold">Bestseller</span>
+            </div>
+            <img src="images/B.jpeg" alt="Contemporary Fusion Wear" class="product-img">
+            
+            <div class="quick-view-overlay">
+              <button class="quick-action-btn" title="Quick View" onclick="window.location.href='product.html?id=ivory-fusion'"><i data-lucide="eye"></i></button>
+              <button class="quick-action-btn" title="Add to Wishlist"><i data-lucide="heart"></i></button>
+              <button class="quick-action-btn" title="Compare"><i data-lucide="bar-chart-2"></i></button>
+            </div>
+          </div>
+          <div class="product-content">
+            <h3 class="product-title">Ivory Fusion Set</h3>
+            <p class="product-desc">A modern take on traditional elegance.</p>
+            <span class="product-price">₹ 3,500</span>
+            <button class="btn-view-details" onclick="window.location.href='product.html?id=ivory-fusion'">View Details</button>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="product-item">
+          <div class="product-image-wrapper">
+            <div class="product-badges">
+              <span class="badge-gold">Limited Edition</span>
+            </div>
+            <img src="images/C.jpeg" alt="Modern Silk Tunic" class="product-img">
+            
+            <div class="quick-view-overlay">
+              <button class="quick-action-btn" title="Quick View" onclick="window.location.href='product.html?id=signature-tunic'"><i data-lucide="eye"></i></button>
+              <button class="quick-action-btn" title="Add to Wishlist"><i data-lucide="heart"></i></button>
+              <button class="quick-action-btn" title="Compare"><i data-lucide="bar-chart-2"></i></button>
+            </div>
+          </div>
+          <div class="product-content">
+            <h3 class="product-title">Signature Silk Tunic</h3>
+            <p class="product-desc">Flowing lines rendered in pure mulberry silk.</p>
+            <span class="product-price">₹ 4,000</span>
+            <button class="btn-view-details" onclick="window.location.href='product.html?id=signature-tunic'">View Details</button>
+          </div>
+        </article>
+
+        <!-- Card 4 -->
+        <article class="product-item">
+          <div class="product-image-wrapper">
+            <img src="images/A.jpeg" alt="Classic Embroidered Pantsuit" class="product-img">
+            
+            <div class="quick-view-overlay">
+              <button class="quick-action-btn" title="Quick View" onclick="window.location.href='product.html?id=heritage-pantsuit'"><i data-lucide="eye"></i></button>
+              <button class="quick-action-btn" title="Add to Wishlist"><i data-lucide="heart"></i></button>
+              <button class="quick-action-btn" title="Compare"><i data-lucide="bar-chart-2"></i></button>
+            </div>
+          </div>
+          <div class="product-content">
+            <h3 class="product-title">Heritage Pantsuit</h3>
+            <p class="product-desc">Tailored perfection for the confident woman.</p>
+            <span class="product-price">₹ 5,000</span>
+            <button class="btn-view-details" onclick="window.location.href='product.html?id=heritage-pantsuit'">View Details</button>
+          </div>
+        </article>
+      </div>
+
+      <div class="arrivals-footer">
+        <button class="btn-outline-luxury" onclick="window.location.href='collection.html'">View All Collections</button>
+      </div>
+    </section>
+
+    <!-- COMPLETE THE LOOK SECTION -->
+    <section class="complete-look-section" id="complete-look">
+      <div class="complete-look-container">
+        <!-- Left: Image -->
+        <div class="complete-look-image-col">
+          <div class="complete-look-image-wrapper">
+            <img src="images/A.jpeg" alt="Complete The Look" class="complete-look-img">
+          </div>
+        </div>
+
+        <!-- Right: Content -->
+        <div class="complete-look-content-col">
+          <div class="complete-look-header">
+            <h2 class="complete-look-title">Complete The Look</h2>
+          </div>
+
+          <div class="look-stepper">
+            <div class="look-step">
+              <span class="step-number">01</span>
+              <span class="step-name">Kurti</span>
+              <div class="step-divider"></div>
+            </div>
+            
+            <div class="look-step">
+              <span class="step-number">02</span>
+              <span class="step-name">Matching Pant</span>
+              <div class="step-divider"></div>
+            </div>
+
+            <div class="look-step">
+              <span class="step-number">03</span>
+              <span class="step-name">Earrings</span>
+              <div class="step-divider"></div>
+            </div>
+
+            <div class="look-step">
+              <span class="step-number">04</span>
+              <span class="step-name">Dupatta</span>
+              <div class="step-divider"></div>
+            </div>
+
+            <div class="look-step">
+              <span class="step-number">05</span>
+              <span class="step-name">Handbag</span>
+              <div class="step-divider"></div>
+            </div>
+          </div>
+
+          <div class="complete-look-action">
+            <button class="btn-shop-look" onclick="window.location.href='product.html?id=ethereal-kurti'">Shop Entire Look</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SIZE GUIDE SECTION -->
+    <section class="size-guide-section" id="size-guide">
+      <div class="size-guide-container">
+        <div class="size-guide-header">
+          <h2 class="size-guide-title">Find Your Perfect Fit</h2>
+          <p class="size-guide-subtitle">Our intelligent recommender ensures the perfect drape.</p>
+        </div>
+        
+        <form class="size-guide-form" onsubmit="event.preventDefault(); document.getElementById('size-result').style.opacity = '1';">
+          <div class="input-group">
+            <label>Height (cm)</label>
+            <input type="number" placeholder="165" class="size-input" required>
+          </div>
+          <div class="input-group">
+            <label>Weight (kg)</label>
+            <input type="number" placeholder="55" class="size-input" required>
+          </div>
+          <div class="input-group">
+            <label>Fit Preference</label>
+            <select class="size-input" required>
+              <option value="regular">Regular</option>
+              <option value="relaxed">Relaxed</option>
+              <option value="fitted">Fitted</option>
+            </select>
+          </div>
+          <div class="input-group btn-group">
+            <button type="submit" class="btn-calculate">Find Size</button>
+          </div>
+        </form>
+        
+        <div class="size-result" id="size-result">
+          <span class="result-label">Recommended Size</span>
+          <h3 class="result-value">Medium (M)</h3>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION REMOVED FOR FLOW ADJUSTMENT -->
+
+    <!-- EXHIBITIONS & EVENTS SECTION -->
+    <section class="events-section" id="events">
+      <div class="events-container">
+        <!-- Left: Image Slider -->
+        <div class="events-slider-col">
+          <div class="events-slider-wrapper">
+            <img src="images/F.jpeg" alt="MISS REZANNA luxury exhibition booth" class="slider-img active">
+            <img src="images/G.jpeg" alt="Customers exploring MISS REZANNA collections" class="slider-img">
+            <img src="images/C.jpeg" alt="Intricate embroidery at fashion showcase" class="slider-img">
+          </div>
+        </div>
+
+        <!-- Right: Content & Card -->
+        <div class="events-content-col">
+          <span class="event-label">Meet Us</span>
+          <h2 class="event-title h2">Where Elegance Meets You</h2>
+          <p class="event-copy">
+            Experience the craftsmanship of MISS REZANNA in person at our exclusive exhibitions and fashion showcases. Discover our latest collections, feel the premium fabrics, and receive personalized styling guidance from our team.
+          </p>
+
+          <!-- Floating Event Card -->
+          <div class="event-card">
+            <h3 class="event-card-header">Upcoming Exhibition</h3>
+            
+            <div class="event-details">
+              <div class="detail-item">
+                <span class="detail-label">Venue</span>
+                <span class="detail-value">Regenta Central Klassik</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">City</span>
+                <span class="detail-value">Ludhiana</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Date</span>
+                <span class="detail-value">19&ndash;21 July</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Time</span>
+                <span class="detail-value">10:00 AM &ndash; 7:00 PM</span>
+              </div>
+            </div>
+
+            <button class="btn-event">Visit Exhibition</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EDITORIAL JOURNAL SECTION -->
+    <section class="journal-section" id="journal">
+      <div class="journal-header">
+        <span class="journal-subtitle">Stories inspired by timeless elegance.</span>
+        <h2 class="journal-title h2">The Journal</h2>
+      </div>
+
+      <div class="journal-grid">
+        <!-- Card 1 -->
+        <article class="journal-card">
+          <div class="journal-image-wrapper">
+            <img src="images/A.jpeg" alt="How to Style Embroidered Kurtis" class="journal-img">
+          </div>
+          <div class="journal-content">
+            <span class="journal-category">Style</span>
+            <h3 class="journal-card-title">How to Style Embroidered Kurtis for Every Occasion</h3>
+            <p class="journal-desc">Elegant styling inspiration for work, celebrations and everyday luxury.</p>
+            <a href="#" class="journal-link">Read Story &rarr;</a>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="journal-card">
+          <div class="journal-image-wrapper">
+            <img src="images/B.jpeg" alt="The Art Behind Every Stitch" class="journal-img">
+          </div>
+          <div class="journal-content">
+            <span class="journal-category">Craftsmanship</span>
+            <h3 class="journal-card-title">The Art Behind Every Stitch</h3>
+            <p class="journal-desc">Discover the craftsmanship that defines every MISS REZANNA creation.</p>
+            <a href="#" class="journal-link">Read Story &rarr;</a>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="journal-card">
+          <div class="journal-image-wrapper">
+            <img src="images/F.jpeg" alt="Behind Our Latest Fashion Showcase" class="journal-img">
+          </div>
+          <div class="journal-content">
+            <span class="journal-category">Exhibitions</span>
+            <h3 class="journal-card-title">Behind Our Latest Fashion Showcase</h3>
+            <p class="journal-desc">A closer look at the people, moments and inspiration behind the exhibition.</p>
+            <a href="#" class="journal-link">Read Story &rarr;</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- THE LOOKBOOK SECTION -->
+    <section class="lookbook-section" id="lookbook">
+      <div class="lookbook-header">
+        <span class="lookbook-subtitle">A curated visual journey through timeless elegance.</span>
+        <h2 class="lookbook-title h2">The Lookbook</h2>
+      </div>
+
+      <div class="lookbook-grid">
+        <!-- 1: Hero Image (50%) -->
+        <article class="lookbook-item lookbook-item-hero">
+          <img src="images/F.jpeg" alt="Campaign Hero" class="lookbook-media">
+          <div class="lookbook-overlay">
+            <div class="overlay-content">
+              <h3 class="overlay-title">The Summer Heritage</h3>
+              <span class="overlay-link">View Editorial &rarr;</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- 2: Medium Image 1 -->
+        <article class="lookbook-item lookbook-item-med1">
+          <img src="images/design 1 col 2.jpeg" alt="Editorial Details" class="lookbook-media">
+          <div class="lookbook-overlay">
+            <div class="overlay-content">
+              <h3 class="overlay-title">Floral Grace</h3>
+              <span class="overlay-link">View Editorial &rarr;</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- 3: Vertical Image -->
+        <article class="lookbook-item lookbook-item-vertical">
+          <img src="images/N.jpeg" alt="Tall Editorial" class="lookbook-media">
+          <div class="lookbook-overlay">
+            <div class="overlay-content">
+              <h3 class="overlay-title">Modern Silhouettes</h3>
+              <span class="overlay-link">View Editorial &rarr;</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- 4: Medium Image 2 -->
+        <article class="lookbook-item lookbook-item-med2">
+          <img src="images/B.jpeg" alt="Editorial Focus" class="lookbook-media">
+          <div class="lookbook-overlay">
+            <div class="overlay-content">
+              <h3 class="overlay-title">Ivory Fusion</h3>
+              <span class="overlay-link">View Editorial &rarr;</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- 5: Horizontal Campaign Video -->
+        <article class="lookbook-item lookbook-item-video">
+          <!-- Video element with poster -->
+          <video class="lookbook-media" autoplay muted loop playsinline poster="assets/A.jpeg"></video>
+          <div class="lookbook-overlay">
+            <div class="overlay-content">
+              <h3 class="overlay-title">Campaign Film</h3>
+              <span class="overlay-link">Play Film &rarr;</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- 6: Detail Image -->
+        <article class="lookbook-item lookbook-item-detail">
+          <img src="images/B.jpeg" alt="Craftsmanship Detail" class="lookbook-media">
+          <div class="lookbook-overlay">
+            <div class="overlay-content">
+              <h3 class="overlay-title">Embroidery Focus</h3>
+              <span class="overlay-link">View Editorial &rarr;</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- 7: Lifestyle Image -->
+        <article class="lookbook-item lookbook-item-lifestyle">
+          <img src="images/design 1 col 2.jpeg" alt="Lifestyle Campaign" class="lookbook-media">
+          <div class="lookbook-overlay">
+            <div class="overlay-content">
+              <h3 class="overlay-title">Botanical Bloom</h3>
+              <span class="overlay-link">View Editorial &rarr;</span>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="lookbook-footer">
+        <button class="btn-lookbook">Discover More Stories</button>
+      </div>
+    </section>
+
+    <!-- STYLING BANNER -->
+    <section class="styling-banner" id="styling">
+      <div class="styling-banner-container">
+        <h2 class="styling-banner-title">Need Styling Advice?</h2>
+        <p class="styling-banner-subtitle">Our styling team is here to help.</p>
+        
+        <ul class="styling-banner-list">
+          <li class="styling-banner-item"><i data-lucide="check"></i> Find your perfect fit</li>
+          <li class="styling-banner-item"><i data-lucide="check"></i> Outfit recommendations</li>
+          <li class="styling-banner-item"><i data-lucide="check"></i> Festive styling</li>
+          <li class="styling-banner-item"><i data-lucide="check"></i> Fabric guidance</li>
+        </ul>
+
+        <div class="styling-banner-btn-wrapper">
+          <a href="https://wa.me/" target="_blank" class="btn-whatsapp-outline">
+            <i data-lucide="message-circle"></i>
+            Chat on WhatsApp
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- UNBOXING SECTION -->
+    <section class="unboxing-section" id="unboxing">
+      <div class="unboxing-container">
+        <div class="unboxing-image-col">
+          <div class="unboxing-img-wrapper">
+            <img src="images/exhibition_details.png" alt="Unboxing Experience" class="unboxing-img">
+          </div>
+        </div>
+        
+        <div class="unboxing-content-col">
+          <div class="unboxing-header">
+            <h2 class="unboxing-title">The Unboxing Experience</h2>
+          </div>
+          
+          <div class="unboxing-list">
+            <div class="unboxing-item">
+              <i data-lucide="gift" class="unboxing-icon"></i>
+              <span class="unboxing-text">Elegant tissue wrapping</span>
+            </div>
+            <div class="unboxing-item">
+              <i data-lucide="mail" class="unboxing-icon"></i>
+              <span class="unboxing-text">Personalized thank-you card</span>
+            </div>
+            <div class="unboxing-item">
+              <i data-lucide="box" class="unboxing-icon"></i>
+              <span class="unboxing-text">Premium branded packaging</span>
+            </div>
+            <div class="unboxing-item">
+              <i data-lucide="layers" class="unboxing-icon"></i>
+              <span class="unboxing-text">Garment folded neatly with care</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- THE MISS REZANNA EXPERIENCE SECTION -->
+    <section class="experience-section" id="experience">
+      <div class="experience-header">
+        <span class="experience-label">The Miss Rezanna Experience</span>
+        <h2 class="experience-title">More than clothing.<br>An experience crafted with elegance.</h2>
+      </div>
+
+      <div class="experience-grid">
+        <!-- Card 1 -->
+        <div class="experience-card">
+          <div class="experience-icon">
+            <i data-lucide="feather"></i>
+          </div>
+          <div class="card-divider"></div>
+          <h3 class="experience-item-title">Premium Fabrics</h3>
+          <p class="experience-item-desc">Soft, breathable fabrics selected for everyday elegance.</p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="experience-card">
+          <div class="experience-icon">
+            <i data-lucide="gift"></i>
+          </div>
+          <div class="card-divider"></div>
+          <h3 class="experience-item-title">Elegant Packaging</h3>
+          <p class="experience-item-desc">Every order is beautifully presented for a premium unboxing experience.</p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="experience-card">
+          <div class="experience-icon">
+            <i data-lucide="scissors"></i>
+          </div>
+          <div class="card-divider"></div>
+          <h3 class="experience-item-title">Personal Styling</h3>
+          <p class="experience-item-desc">Helping every customer choose timeless pieces with confidence.</p>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="experience-card">
+          <div class="experience-icon">
+            <i data-lucide="truck"></i>
+          </div>
+          <div class="card-divider"></div>
+          <h3 class="experience-item-title">Pan India Delivery</h3>
+          <p class="experience-item-desc">Luxury delivered safely across India with exceptional care.</p>
+        </div>
+      </div>
+
+      <div class="experience-footer">
+        <button class="btn-experience">Explore Our Collection</button>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS SECTION -->
+    <section class="testimonials-section" id="testimonials">
+      <div class="testimonials-container">
+        <div class="testimonials-header">
+          <h2 class="testimonials-title">Worn Beautifully</h2>
+          <p class="testimonials-subtitle">Real MISS REZANNA customers</p>
+        </div>
+
+        <div class="testimonials-grid">
+          
+          <div class="testimonial-card">
+            <div class="testimonial-img-wrapper">
+              <img src="images/exhibition_exploring.png" alt="Customer in Ludhiana" class="testimonial-img">
+            </div>
+            <p class="testimonial-quote">"Beautiful craftsmanship. The fabric feels incredible."</p>
+            <span class="testimonial-location">Ludhiana</span>
+            <div class="testimonial-stars">
+              <i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-img-wrapper">
+              <img src="images/C.jpeg" alt="Customer in Delhi" class="testimonial-img">
+            </div>
+            <p class="testimonial-quote">"A perfect fit for the festive season. Utterly timeless."</p>
+            <span class="testimonial-location">New Delhi</span>
+            <div class="testimonial-stars">
+              <i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-img-wrapper">
+              <img src="images/A.jpeg" alt="Customer in Mumbai" class="testimonial-img">
+            </div>
+            <p class="testimonial-quote">"Received countless compliments. Elegance redefined."</p>
+            <span class="testimonial-location">Mumbai</span>
+            <div class="testimonial-stars">
+              <i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- THE MISS REZANNA CIRCLE SECTION -->
+    <section class="circle-section" id="circle">
+      <div class="circle-container">
+        <!-- Header -->
+        <span class="circle-label">Private Access</span>
+        <h2 class="circle-title">Become Part of the<br>MISS REZANNA Circle</h2>
+        <p class="circle-desc">
+          Receive early access to new collections, private exhibition invitations, styling inspiration and beautifully curated stories from the world of MISS REZANNA.
+        </p>
+        
+        <div class="circle-divider"></div>
+
+        <!-- Benefits -->
+        <div class="circle-benefits">
+          <div class="circle-benefit-item">
+            <span class="benefit-icon">◇</span>
+            <h3 class="benefit-title">Early Collection Access</h3>
+            <p class="benefit-desc">Be the first to discover every new launch.</p>
+          </div>
+          <div class="circle-benefit-item">
+            <span class="benefit-icon">◇</span>
+            <h3 class="benefit-title">Exclusive Invitations</h3>
+            <p class="benefit-desc">Receive invitations to exhibitions and special showcases.</p>
+          </div>
+          <div class="circle-benefit-item">
+            <span class="benefit-icon">◇</span>
+            <h3 class="benefit-title">Style Journal</h3>
+            <p class="benefit-desc">Curated styling advice and seasonal lookbooks.</p>
+          </div>
+          <div class="circle-benefit-item">
+            <span class="benefit-icon">◇</span>
+            <h3 class="benefit-title">Limited Editions</h3>
+            <p class="benefit-desc">Access exclusive collections before public release.</p>
+          </div>
+        </div>
+
+        <!-- Form -->
+        <div class="circle-form-wrapper">
+          <form class="circle-form" onsubmit="event.preventDefault();">
+            <input type="email" class="circle-input" placeholder="Enter your email address" required>
+            <button type="submit" class="btn-circle">Join the Circle</button>
+          </form>
+          <span class="circle-note">No spam. Only beautifully curated updates.</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-top">
+        <!-- Col 1: Brand -->
+        <div class="footer-brand">
+          <a href="#" class="brand-logo h3"><img src="images/logo.png" alt="MISS REZANNA" style="height: 60px; width: auto; display: inline-block; vertical-align: middle;"></a>
+          <p class="footer-brand-desc">
+            Thoughtfully crafted for women who appreciate timeless elegance, refined craftsmanship and everyday luxury.
+          </p>
+          <div class="footer-social">
+            <a href="https://instagram.com/missrezanna" target="_blank" class="social-link" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+            <a href="https://facebook.com/missrezanna" target="_blank" class="social-link" aria-label="Facebook"><i data-lucide="facebook"></i></a>
+            <a href="https://linkedin.com/company/missrezanna" target="_blank" class="social-link" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
+            <a href="https://youtube.com/@missrezanna" target="_blank" class="social-link" aria-label="YouTube"><i data-lucide="youtube"></i></a>
+          </div>
+        </div>
+
+        <!-- Col 2: Shop -->
+        <div class="footer-nav">
+          <h4 class="footer-heading">Shop</h4>
+          <ul class="footer-links">
+            <li><a href="#">New Arrivals</a></li>
+            <li><a href="#">Kurti Sets</a></li>
+            <li><a href="#">Co-ord Sets</a></li>
+            <li><a href="#">Festive Collection</a></li>
+            <li><a href="#">Sale</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: About -->
+        <div class="footer-nav">
+          <h4 class="footer-heading">About</h4>
+          <ul class="footer-links">
+            <li><a href="about.html">Our Story</a></li>
+            <li><a href="journal.html">Journal</a></li>
+            <li><a href="exhibitions.html">Exhibitions</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Careers</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Customer Care -->
+        <div class="footer-nav">
+          <h4 class="footer-heading">Customer Care</h4>
+          <ul class="footer-links">
+            <li><a href="#">Size Guide</a></li>
+            <li><a href="#">Shipping</a></li>
+            <li><a href="#">Returns</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms & Conditions</a></li>
+            <li><a href="#">FAQs</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>&copy; 2026 MISS REZANNA. All Rights Reserved.</span>
+        <span>Designed with elegance in India.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Actions -->
+  <div class="floating-actions">
+    <a href="https://wa.me/" target="_blank" class="float-btn btn-whatsapp" aria-label="WhatsApp">
+      <i data-lucide="message-circle"></i>
+    </a>
+    <button class="float-btn btn-totop" id="backToTop" aria-label="Back to Top">
+      <i data-lucide="chevron-up"></i>
+    </button>
+  </div>
+
+  <!-- MOBILE BOTTOM NAVIGATION -->
+  <nav class="mobile-bottom-nav">
+    <a href="index.html" class="mobile-nav-item active">
+      <i data-lucide="home"></i>
+      <span>Home</span>
+    </a>
+    <a href="#" class="mobile-nav-item">
+      <i data-lucide="search"></i>
+      <span>Search</span>
+    </a>
+    <a href="#" class="mobile-nav-item">
+      <i data-lucide="heart"></i>
+      <span>Wishlist</span>
+    </a>
+    <a href="product.html" class="mobile-nav-item">
+      <i data-lucide="shopping-bag"></i>
+      <span>Bag (2)</span>
+    </a>
+  </nav>
+
+  <script src="js/main.js"></script>
+<script src="js/cart.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

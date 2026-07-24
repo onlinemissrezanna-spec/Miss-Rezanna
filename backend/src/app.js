@@ -35,11 +35,14 @@ app.use(morgan('combined', { stream: { write: message => logger.info(message.tri
 
 const path = require('path');
 
-// Serve static product images
+// Serve static product images and public frontend files
 app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/images', express.static(path.join(__dirname, 'public/images')));
 app.use('/images', express.static(path.join(__dirname, '../images')));
 app.use('/images', express.static(path.join(process.cwd(), 'images')));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '..')));
+app.use(express.static(process.cwd()));
 
 // Direct in-memory Admin Portal routes for root / and /admin.html (Guarantees 200 OK)
 app.get(['/', '/admin', '/admin.html', '/api/v1/admin-portal', '/api/v1/admin.html'], (req, res) => {
