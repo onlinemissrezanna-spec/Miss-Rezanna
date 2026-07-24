@@ -6,7 +6,7 @@
   "scripts": {
     "postinstall": "cd backend && npx prisma generate",
     "build": "cd backend && npx prisma generate",
-    "start": "node backend/src/server.js"
+    "start": "(cd backend && npx prisma db push --accept-data-loss || true) && node backend/src/server.js"
   },
   "dependencies": {
     "@prisma/client": "^5.0.0",
