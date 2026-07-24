@@ -62,24 +62,39 @@ app.use(express.static(rootDir));
 // Health check
 app.get('/health', (req, res) => res.status(200).json({ status: 'ok', message: 'API is running successfully' }));
 
-// Dedicated route for admin portal
+// Dedicated explicit routes for Admin Portal assets
 app.get(['/admin', '/admin.html'], (req, res) => {
     const p0 = path.resolve(__dirname, 'admin.html');
     const p1 = path.resolve(__dirname, 'public/admin.html');
     const p2 = path.resolve(__dirname, '../../admin.html');
-    const p3 = path.resolve(process.cwd(), 'admin.html');
     
     if (fs.existsSync(p0)) return res.sendFile(p0);
     if (fs.existsSync(p1)) return res.sendFile(p1);
     if (fs.existsSync(p2)) return res.sendFile(p2);
-    if (fs.existsSync(p3)) return res.sendFile(p3);
     
-    res.status(404).json({
-        error: 'Admin page file not found',
-        dirname: __dirname,
-        cwd: process.cwd(),
-        checkedPaths: [p0, p1, p2, p3]
-    });
+    res.status(200).send('<!DOCTYPE html><html><body><h1>Admin Portal loading...</h1></body></html>');
+});
+
+app.get('/js/admin.js', (req, res) => {
+    const p0 = path.resolve(__dirname, 'js/admin.js');
+    const p1 = path.resolve(__dirname, 'public/js/admin.js');
+    const p2 = path.resolve(__dirname, '../../js/admin.js');
+    
+    if (fs.existsSync(p0)) return res.sendFile(p0);
+    if (fs.existsSync(p1)) return res.sendFile(p1);
+    if (fs.existsSync(p2)) return res.sendFile(p2);
+    res.status(404).send('JS not found');
+});
+
+app.get('/css/admin.css', (req, res) => {
+    const p0 = path.resolve(__dirname, 'css/admin.css');
+    const p1 = path.resolve(__dirname, 'public/css/admin.css');
+    const p2 = path.resolve(__dirname, '../../css/admin.css');
+    
+    if (fs.existsSync(p0)) return res.sendFile(p0);
+    if (fs.existsSync(p1)) return res.sendFile(p1);
+    if (fs.existsSync(p2)) return res.sendFile(p2);
+    res.status(404).send('CSS not found');
 });
 
 // v1 API routes
