@@ -12,20 +12,35 @@ server.on('error', (err) => {
     console.error('Server HTTP socket error:', err.message);
 });
 
-// Safely connect to database in background
+// Safely connect to database and push schema in background
 async function connectDB(retries = 10) {
     const prisma = require('./config/db');
     for (let i = 1; i <= retries; i++) {
         try {
             await prisma.$connect();
             console.log('Successfully connected to the database.');
+            
+            // Push Prisma schema asynchronously once connected
+            try {
+                const { exec } = require('child_process');
+                exec('npx prisma db push --accept-data-loss', (err, stdout, stderr) => {
+                    if (err) {
+                        console.log('Prisma DB push notice:', err.message);
+                    } else {
+                        console.log('Database schema synchronized successfully.');
+                    }
+                });
+            } catch (e) {
+                console.log('Schema push execution notice:', e.message);
+            }
+            
             return;
         } catch (error) {
             console.error(`DB connection attempt ${i}/${retries} failed:`, error.message);
             if (i < retries) {
                 await new Promise(r => setTimeout(r, 5000));
             } else {
-                console.error('All DB connection attempts failed. Server continues running.');
+                console.error('Database connection unestablished. HTTP server remains active.');
             }
         }
     }
