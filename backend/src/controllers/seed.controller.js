@@ -149,7 +149,21 @@ const initDatabase = async (req, res, next) => {
     }
 };
 
+const clearOrders = asyncHandler(async (req, res) => {
+    try { await prisma.paymentAudit.deleteMany({}); } catch(e){}
+    try { await prisma.payment.deleteMany({}); } catch(e){}
+    try { await prisma.invoice.deleteMany({}); } catch(e){}
+    try { await prisma.couponUsage.deleteMany({}); } catch(e){}
+    try { await prisma.returnRequest.deleteMany({}); } catch(e){}
+    try { await prisma.exchangeRequest.deleteMany({}); } catch(e){}
+    try { await prisma.orderItem.deleteMany({}); } catch(e){}
+    const deleted = await prisma.order.deleteMany({});
+
+    res.status(200).json(new ApiResponse(200, { deletedCount: deleted.count }, 'All orders cleared successfully'));
+});
+
 module.exports = {
     seedDatabase,
-    initDatabase
+    initDatabase,
+    clearOrders
 };
