@@ -20,18 +20,18 @@ const seedRoutes = require('./seed.routes');
 
 const router = express.Router();
 
-// Admin Portal Web Pages inside API router
-router.get(['/admin-portal', '/admin.html', '/admin-page'], (req, res) => {
+// Public Admin Portal Web Pages (No auth required to load initial login UI page!)
+router.get(['/portal', '/portal/admin', '/admin-ui', '/admin.html'], (req, res) => {
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
     res.status(200).send(adminHtml);
 });
 
-router.get(['/js/admin.js', '/admin.js'], (req, res) => {
+router.get(['/portal/js/admin.js', '/portal/admin.js'], (req, res) => {
     res.setHeader('Content-Type', 'application/javascript; charset=utf-8');
     res.status(200).send(adminJs);
 });
 
-router.get(['/css/admin.css', '/admin.css'], (req, res) => {
+router.get(['/portal/css/admin.css', '/portal/admin.css'], (req, res) => {
     res.setHeader('Content-Type', 'text/css; charset=utf-8');
     res.status(200).send(adminCss);
 });
