@@ -1,5 +1,3 @@
-const fs = require('fs');
-const path = require('path');
 const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
@@ -8,6 +6,7 @@ const compression = require('compression');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const logger = require('./utils/logger');
+const { html: adminHtml, js: adminJs, css: adminCss } = require('./adminHtmlContent');
 
 const routes = require('./routes/v1');
 const { errorHandler } = require('./middlewares/errorHandler');
@@ -34,28 +33,20 @@ app.use(cookieParser());
 // HTTP request logger
 app.use(morgan('combined', { stream: { write: message => logger.info(message.trim()) } }));
 
-// Serve static frontend files from __dirname, __dirname/public, and root
-const srcDir = __dirname;
-const publicDir = path.resolve(__dirname, 'public');
-const rootDir = path.resolve(__dirname, '../..');
+// Direct in-memory Admin Portal routes (Guarantees 200 OK without filesystem dependencies)
+app.get(['/admin', '/admin.html'], (req, res) => {
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.status(200).send(adminHtml);
+});
 
-app.use(express.static(srcDir));
-app.use(express.static(publicDir));
-app.use(express.static(rootDir));
+app.get(['/js/admin.js', '/admin.js'], (req, res) => {
+    res.setHeader('Content-Type', 'application/javascript; charset=utf-8');
+    res.status(200).send(adminJs);
+});
 
-// Global Interceptor for Admin Portal Requests (Guarantees 200 OK for admin.html)
-app.use((req, res, next) => {
-    const url = req.url.toLowerCase();
-    if (url === '/admin.html' || url === '/admin' || url === '/admin/' || url.startsWith('/admin.html?')) {
-        const p0 = path.resolve(__dirname, 'admin.html');
-        const p1 = path.resolve(__dirname, 'public/admin.html');
-        const p2 = path.resolve(__dirname, '../../admin.html');
-        
-        if (fs.existsSync(p0)) return res.sendFile(p0);
-        if (fs.existsSync(p1)) return res.sendFile(p1);
-        if (fs.existsSync(p2)) return res.sendFile(p2);
-    }
-    next();
+app.get(['/css/admin.css', '/admin.css'], (req, res) => {
+    res.setHeader('Content-Type', 'text/css; charset=utf-8');
+    res.status(200).send(adminCss);
 });
 
 // Swagger API Documentation
