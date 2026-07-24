@@ -61,12 +61,14 @@ app.use(express.static(rootDir));
 app.get('/health', (req, res) => res.status(200).json({ status: 'ok', message: 'API is running successfully' }));
 
 // Dedicated route for admin portal
-app.get('/admin.html', (req, res) => {
-    const p1 = path.join(publicDir, 'admin.html');
-    const p2 = path.join(rootDir, 'admin.html');
+app.get(['/admin', '/admin.html'], (req, res) => {
+    const p1 = path.resolve(__dirname, 'public/admin.html');
+    const p2 = path.resolve(__dirname, '../../admin.html');
+    const p3 = path.resolve(process.cwd(), 'admin.html');
     
     if (fs.existsSync(p1)) return res.sendFile(p1);
     if (fs.existsSync(p2)) return res.sendFile(p2);
+    if (fs.existsSync(p3)) return res.sendFile(p3);
     
     res.status(404).send('Admin page file not found');
 });
