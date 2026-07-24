@@ -15,14 +15,18 @@ const { swaggerUi, specs } = require('./config/swagger');
 
 const app = express();
 
-// Set security HTTP headers
-app.use(helmet({ contentSecurityPolicy: false }));
+// Set security HTTP headers permissively for admin portal and mobile access
+app.use(helmet({
+    contentSecurityPolicy: false,
+    crossOriginResourcePolicy: false,
+    crossOriginEmbedderPolicy: false
+}));
 
 // GZIP compression
 app.use(compression());
 
 // Enable CORS
-app.use(cors());
+app.use(cors({ origin: '*', credentials: true }));
 app.options('*', cors());
 
 // Parse JSON & urlencoded request body
