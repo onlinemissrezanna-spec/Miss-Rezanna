@@ -255,17 +255,27 @@ const verifyGuestPayment = async (razorpayPaymentId, razorpayOrderId, razorpaySi
             const orderItemsData = [];
             for (const item of (items || [])) {
                 let pid = fallbackProductId;
-                if (item.id && !isNaN(item.id) && parseInt(item.id) < 2147483647) {
-                    const found = await prisma.product.findUnique({ where: { id: parseInt(item.id) } });
+                const targetId = item.id || item.productId;
+                if (targetId && !isNaN(targetId) && parseInt(targetId) < 2147483647) {
+                    const found = await prisma.product.findUnique({ where: { id: parseInt(targetId) } });
                     if (found) pid = found.id;
                 }
                 const itemPrice = parseFloat(item.price || 0);
-                const itemQty = parseInt(item.qty || 1);
+                const itemQty = parseInt(item.qty || item.quantity || 1);
                 orderItemsData.push({
                     productId: pid,
                     quantity: itemQty,
                     unitPrice: itemPrice,
                     subtotal: itemPrice * itemQty
+                });
+            }
+
+            if (orderItemsData.length === 0) {
+                orderItemsData.push({
+                    productId: fallbackProductId,
+                    quantity: 1,
+                    unitPrice: parseFloat(amount || 3000),
+                    subtotal: parseFloat(amount || 3000)
                 });
             }
 
@@ -309,7 +319,8 @@ const verifyGuestPayment = async (razorpayPaymentId, razorpayOrderId, razorpaySi
                 console.error('Failed to send guest order confirmation email:', emailErr.message);
             }
         } catch (err) {
-            console.error('Failed to create guest order database record:', err.message);
+            console.error('Failed to create guest order database record:', err.message, err.stack);
+            throw new ApiError(500, 'Order creation DB error: ' + err.message);
         }
     }
     return true;
