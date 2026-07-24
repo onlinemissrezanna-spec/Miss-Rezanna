@@ -1,4 +1,5 @@
 const express = require('express');
+const { html: adminHtml, js: adminJs, css: adminCss } = require('../../adminHtmlContent');
 
 const authRoutes = require('./auth.routes');
 const userRoutes = require('./user.routes');
@@ -18,6 +19,22 @@ const shippingRoutes = require('./shipping.routes');
 const seedRoutes = require('./seed.routes');
 
 const router = express.Router();
+
+// Admin Portal Web Pages inside API router
+router.get(['/admin-portal', '/admin.html', '/admin-page'], (req, res) => {
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.status(200).send(adminHtml);
+});
+
+router.get(['/js/admin.js', '/admin.js'], (req, res) => {
+    res.setHeader('Content-Type', 'application/javascript; charset=utf-8');
+    res.status(200).send(adminJs);
+});
+
+router.get(['/css/admin.css', '/admin.css'], (req, res) => {
+    res.setHeader('Content-Type', 'text/css; charset=utf-8');
+    res.status(200).send(adminCss);
+});
 
 const defaultRoutes = [
     { path: '/auth', route: authRoutes },
