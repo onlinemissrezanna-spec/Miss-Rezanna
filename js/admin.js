@@ -323,91 +323,274 @@ async function viewOrderDetail(orderId) {
 }
 
 // =============================================
-// PRODUCTS
+// PRODUCTS MANAGEMENT (Add, Edit, Delete, Photos, YouTube)
 // =============================================
+let currentEditPhotos = [];
+
 async function loadProducts() {
   const container = document.getElementById('products-grid-container');
   container.innerHTML = '<div class="loading-text">Loading products…</div>';
 
   try {
-    const data = await api('/products?limit=50');
+    const data = await api('/products?limit=100');
     const products = data.products || [];
 
     if (!products.length) {
-      container.innerHTML = '<div class="loading-text">No products found. Seed the database first.</div>';
+      container.innerHTML = `
+        <div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--admin-text-secondary);">
+          <svg width="48" height="48" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="opacity:0.3;margin-bottom:12px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+          <p style="font-size:16px;margin-bottom:12px;">No products found in catalogue.</p>
+          <button class="btn-action primary" onclick="openAddProductModal()">+ Add Your First Product</button>
+        </div>`;
       return;
     }
 
     container.innerHTML = products.map(p => {
-      // Parse images
       let imgSrc = 'images/A.jpeg';
       try {
         const imgs = typeof p.images === 'string' ? JSON.parse(p.images) : p.images;
-        if (Array.isArray(imgs) && imgs.length > 0) imgSrc = imgs[0];
-        else if (p.images && Array.isArray(p.images) && p.images.length > 0) imgSrc = p.images[0].imageUrl || imgs[0];
+        if (Array.isArray(imgs) && imgs.length > 0) {
+          imgSrc = typeof imgs[0] === 'string' ? imgs[0] : (imgs[0].imageUrl || imgSrc);
+        }
       } catch (e) { }
 
       const price = p.basePrice || p.price || 0;
       const status = p.status || 'active';
+      const hasYoutube = p.youtubeUrl ? true : false;
 
-      return `<div class="product-admin-card" onclick="viewProductDetail(${p.id})">
-        <img src="${imgSrc}" class="product-admin-img" alt="${p.name}" onerror="this.src='images/A.jpeg'">
+      return `<div class="product-admin-card">
+        <div style="position:relative;">
+          <img src="${imgSrc}" class="product-admin-img" alt="${escapeHtml(p.name)}" onerror="this.src='images/A.jpeg'">
+          ${hasYoutube ? `<span class="badge" style="position:absolute;top:8px;right:8px;background:#FF0000;color:#fff;font-size:10px;">▶ YouTube Video</span>` : ''}
+        </div>
         <div class="product-admin-info">
-          <div class="product-admin-name">${p.name}</div>
+          <div class="product-admin-name">${escapeHtml(p.name)}</div>
           <div class="product-admin-price">₹ ${parseFloat(price).toLocaleString('en-IN')}</div>
           <div class="product-admin-meta">
-            <span>${p.category?.name || 'Uncategorised'}</span>
+            <span>${p.category?.name || 'Collection'}</span>
             <span class="badge badge-${status}">${status}</span>
+          </div>
+          
+          <div class="product-card-actions">
+            <button class="btn-card-edit" onclick="openEditProductModal(${p.id})">
+              <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+              Edit Details
+            </button>
+            <button class="btn-card-delete" onclick="confirmDeleteProduct(${p.id}, '${escapeHtml(p.name)}')">
+              🗑️
+            </button>
           </div>
         </div>
       </div>`;
     }).join('');
   } catch (err) {
-    container.innerHTML = `<div class="loading-text" style="color:var(--admin-red)">Error: ${err.message}</div>`;
+    container.innerHTML = `<div class="loading-text" style="color:var(--admin-red)">Error loading products: ${err.message}</div>`;
   }
 }
 
-async function viewProductDetail(productId) {
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str).replace(/'/g, "&#39;").replace(/"/g, "&quot;");
+}
+
+function parseYouTubeEmbed(url) {
+  if (!url || typeof url !== 'string') return null;
+  const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
+  return match ? `https://www.youtube.com/embed/${match[1]}` : null;
+}
+
+function openAddProductModal() {
+  currentEditPhotos = ['images/A.jpeg'];
+  renderProductFormModal(null, {
+    name: '',
+    price: '',
+    sku: `MR-KU-${Math.floor(100 + Math.random() * 900)}`,
+    description: '',
+    youtubeUrl: '',
+    status: 'active'
+  });
+}
+
+async function openEditProductModal(productId) {
   const modal = document.getElementById('productModal');
   const body = document.getElementById('productModalBody');
   const title = document.getElementById('modalProductTitle');
   modal.classList.add('visible');
-  body.innerHTML = '<div class="loading-text">Loading product…</div>';
+  title.innerText = 'Edit Product';
+  body.innerHTML = '<div class="loading-text">Loading product details…</div>';
 
   try {
     const p = await api(`/products/${productId}`);
-    title.innerText = p.name;
+    let photos = [];
+    if (p.images && Array.isArray(p.images)) {
+      photos = p.images.map(img => typeof img === 'string' ? img : (img.imageUrl || 'images/A.jpeg'));
+    }
+    if (photos.length === 0) photos = ['images/A.jpeg'];
+    currentEditPhotos = photos;
 
-    let imgSrc = 'images/A.jpeg';
-    try {
-      const imgs = typeof p.images === 'string' ? JSON.parse(p.images) : p.images;
-      if (Array.isArray(imgs) && imgs.length) imgSrc = imgs[0];
-      else if (Array.isArray(p.images) && p.images.length) imgSrc = p.images[0].imageUrl || imgSrc;
-    } catch (e) {}
+    renderProductFormModal(productId, p);
+  } catch (err) {
+    body.innerHTML = `<div style="color:var(--admin-red);padding:20px;">Error: ${err.message}</div>`;
+  }
+}
 
-    body.innerHTML = `
-      <img src="${imgSrc}" onerror="this.src='images/A.jpeg'" alt="${p.name}" style="width:100%;max-height:300px;object-fit:cover;border-radius:2px;margin-bottom:20px;">
-      <div class="detail-grid">
-        <div class="detail-group">
-          <div class="detail-label">Price</div>
-          <div class="detail-value">₹ ${parseFloat(p.basePrice || p.price || 0).toLocaleString('en-IN')}</div>
+function renderProductFormModal(productId, data) {
+  const modal = document.getElementById('productModal');
+  const body = document.getElementById('productModalBody');
+  const title = document.getElementById('modalProductTitle');
+  modal.classList.add('visible');
+  title.innerText = productId ? `Edit Product: ${data.name}` : 'Add New Product';
+
+  const embedUrl = parseYouTubeEmbed(data.youtubeUrl || '');
+
+  body.innerHTML = `
+    <form id="productForm" onsubmit="handleProductFormSubmit(event, ${productId})">
+      <div class="form-group">
+        <label>Product Name *</label>
+        <input type="text" id="pf-name" class="form-control" value="${escapeHtml(data.name || '')}" placeholder="e.g. Royal Silk Kurti Set" required>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Price (₹) *</label>
+          <input type="number" id="pf-price" class="form-control" value="${data.price || ''}" placeholder="3500" required step="0.01">
         </div>
-        <div class="detail-group">
-          <div class="detail-label">Status</div>
-          <div class="detail-value"><span class="badge badge-${p.status || 'active'}">${p.status || 'Active'}</span></div>
-        </div>
-        <div class="detail-group">
-          <div class="detail-label">Category</div>
-          <div class="detail-value">${p.category?.name || '—'}</div>
-        </div>
-        <div class="detail-group">
-          <div class="detail-label">SKU</div>
-          <div class="detail-value" style="font-size:12px">${p.sku || '—'}</div>
+        <div class="form-group">
+          <label>SKU Code *</label>
+          <input type="text" id="pf-sku" class="form-control" value="${escapeHtml(data.sku || '')}" placeholder="MR-KU-001" required>
         </div>
       </div>
-      <div class="detail-label" style="margin-bottom:8px">Description</div>
-      <div class="detail-value" style="font-size:13px;color:var(--admin-text-secondary);line-height:1.6">${p.description || p.shortDescription || '—'}</div>
-    `;
+
+      <div class="form-group">
+        <label>Description</label>
+        <textarea id="pf-description" class="form-control" rows="3" placeholder="Intricate threadwork with ethically sourced Mulberry silk drape...">${escapeHtml(data.description || '')}</textarea>
+      </div>
+
+      <!-- YOUTUBE VIDEO INTEGRATION -->
+      <div class="form-group" style="background:rgba(255,0,0,0.03);padding:14px;border:1px solid rgba(255,0,0,0.15);border-radius:6px;">
+        <label style="color:#d32f2f;display:flex;align-items:center;gap:6px;">
+          <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
+          YouTube Video Link (Optional)
+        </label>
+        <input type="url" id="pf-youtube" class="form-control" value="${escapeHtml(data.youtubeUrl || '')}" placeholder="Paste YouTube link (e.g. https://www.youtube.com/watch?v=VIDEO_ID)" oninput="updateYouTubePreview(this.value)">
+        <div style="font-size:11px;color:var(--admin-text-secondary);margin-top:4px;">Paste any YouTube video link to display embedded video on product page.</div>
+        
+        <div id="youtube-preview-container" class="youtube-preview-box" style="${embedUrl ? 'display:block;' : 'display:none;'}">
+          <iframe id="youtube-iframe" src="${embedUrl || ''}" allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <!-- PHOTOS MANAGEMENT SECTION -->
+      <div class="form-group">
+        <label style="display:flex;justify-content:space-between;align-items:center;">
+          <span>Product Photos Gallery</span>
+          <span style="font-size:11px;color:var(--admin-text-secondary);">${currentEditPhotos.length} photo(s)</span>
+        </label>
+        
+        <div style="display:flex;gap:8px;margin-bottom:10px;">
+          <input type="text" id="pf-new-photo-url" class="form-control" placeholder="Enter Photo Image URL (e.g. images/A.jpeg or https://...)">
+          <button type="button" class="btn-action primary" onclick="addPhotoUrl()" style="white-space:nowrap;padding:8px 14px;">+ Add Photo</button>
+        </div>
+
+        <div class="photo-gallery-preview" id="photoGalleryContainer">
+          ${renderPhotoThumbsHTML()}
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:24px;">
+        <button type="button" class="btn-action" onclick="closeModal('productModal')">Cancel</button>
+        <button type="submit" class="btn-action primary" id="btnSaveProduct">${productId ? 'Save Changes' : 'Create Product'}</button>
+      </div>
+    </form>
+  `;
+}
+
+function renderPhotoThumbsHTML() {
+  if (!currentEditPhotos.length) {
+    return `<div style="grid-column:1/-1;font-size:12px;color:var(--admin-text-secondary);text-align:center;padding:12px;">No photos added yet. Add an image URL above.</div>`;
+  }
+  return currentEditPhotos.map((url, idx) => `
+    <div class="photo-thumb-box">
+      <img src="${escapeHtml(url)}" onerror="this.src='images/A.jpeg'" alt="Photo ${idx + 1}">
+      <button type="button" class="btn-remove-photo" onclick="removePhoto(${idx})" title="Remove photo">&times;</button>
+    </div>
+  `).join('');
+}
+
+function addPhotoUrl() {
+  const input = document.getElementById('pf-new-photo-url');
+  const url = (input.value || '').trim();
+  if (!url) return;
+  currentEditPhotos.push(url);
+  input.value = '';
+  document.getElementById('photoGalleryContainer').innerHTML = renderPhotoThumbsHTML();
+}
+
+function removePhoto(index) {
+  currentEditPhotos.splice(index, 1);
+  document.getElementById('photoGalleryContainer').innerHTML = renderPhotoThumbsHTML();
+}
+
+function updateYouTubePreview(url) {
+  const container = document.getElementById('youtube-preview-container');
+  const iframe = document.getElementById('youtube-iframe');
+  const embed = parseYouTubeEmbed(url);
+
+  if (embed) {
+    iframe.src = embed;
+    container.style.display = 'block';
+  } else {
+    iframe.src = '';
+    container.style.display = 'none';
+  }
+}
+
+async function handleProductFormSubmit(e, productId) {
+  e.preventDefault();
+  const btn = document.getElementById('btnSaveProduct');
+  btn.innerText = 'Saving…';
+  btn.disabled = true;
+
+  const payload = {
+    name: document.getElementById('pf-name').value.trim(),
+    price: parseFloat(document.getElementById('pf-price').value),
+    sku: document.getElementById('pf-sku').value.trim(),
+    description: document.getElementById('pf-description').value.trim(),
+    youtubeUrl: document.getElementById('pf-youtube').value.trim() || null,
+    imageUrls: currentEditPhotos
+  };
+
+  try {
+    if (productId) {
+      await api(`/products/${productId}`, 'PUT', payload);
+      alert('Product updated successfully!');
+    } else {
+      await api('/products', 'POST', payload);
+      alert('Product created successfully!');
+    }
+    closeModal('productModal');
+    loadProducts();
+  } catch (err) {
+    alert('Failed to save product: ' + err.message);
+  } finally {
+    btn.innerText = productId ? 'Save Changes' : 'Create Product';
+    btn.disabled = false;
+  }
+}
+
+async function confirmDeleteProduct(productId, productName) {
+  if (!confirm(`Are you sure you want to delete "${productName}" from the catalogue?`)) {
+    return;
+  }
+
+  try {
+    await api(`/products/${productId}`, 'DELETE');
+    alert(`"${productName}" deleted successfully.`);
+    loadProducts();
+  } catch (err) {
+    alert('Failed to delete product: ' + err.message);
+  }
+}
   } catch (err) {
     body.innerHTML = `<div style="color:var(--admin-red);padding:20px">Error: ${err.message}</div>`;
   }

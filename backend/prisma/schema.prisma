@@ -136,6 +136,7 @@ model Product {
   fabric           String?
   fit              String?
   careInstructions String?            @db.Text
+  youtubeUrl       String?
   price            Decimal            @db.Decimal(10, 2)
   salePrice        Decimal?           @db.Decimal(10, 2)
   costPrice        Decimal?           @db.Decimal(10, 2)
