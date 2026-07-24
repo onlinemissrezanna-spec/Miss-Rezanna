@@ -353,8 +353,8 @@ async function loadProducts() {
         const imgs = typeof p.images === 'string' ? JSON.parse(p.images) : p.images;
         if (Array.isArray(imgs) && imgs.length > 0) {
           const first = typeof imgs[0] === 'string' ? imgs[0] : (imgs[0].imageUrl || '');
-          if (first && (first.startsWith('http') || first.startsWith('data:'))) {
-            imgSrc = first;
+          if (first && first.trim()) {
+            imgSrc = first.trim();
           }
         }
       } catch (e) { }

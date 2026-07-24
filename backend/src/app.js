@@ -33,6 +33,14 @@ app.use(cookieParser());
 // HTTP request logger
 app.use(morgan('combined', { stream: { write: message => logger.info(message.trim()) } }));
 
+const path = require('path');
+
+// Serve static product images
+app.use('/images', express.static(path.join(__dirname, 'images')));
+app.use('/images', express.static(path.join(__dirname, 'public/images')));
+app.use('/images', express.static(path.join(__dirname, '../images')));
+app.use('/images', express.static(path.join(process.cwd(), 'images')));
+
 // Direct in-memory Admin Portal routes for root / and /admin.html (Guarantees 200 OK)
 app.get(['/', '/admin', '/admin.html', '/api/v1/admin-portal', '/api/v1/admin.html'], (req, res) => {
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
