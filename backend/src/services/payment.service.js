@@ -134,18 +134,20 @@ const createGuestPaymentOrder = async (amountInINR, customer, items) => {
     let gatewayOrderId = null;
     let isRealKey = false;
 
+    let rzpErrDetail = null;
     if (RAZORPAY_KEY_ID && RAZORPAY_KEY_SECRET && RAZORPAY_KEY_ID !== 'rzp_test_mock') {
         try {
             const rzpOrder = await razorpay.orders.create({
                 amount: amountInPaise,
                 currency: 'INR',
-                receipt: `guest_receipt_${Date.now()}`,
+                receipt: `guest_rcpt_${Date.now()}`,
                 payment_capture: 1
             });
             gatewayOrderId = rzpOrder.id;
             isRealKey = true;
         } catch (error) {
-            console.warn('Razorpay order creation fallback to mock UI:', error.message);
+            rzpErrDetail = error?.message || String(error);
+            console.error('Razorpay order creation error:', rzpErrDetail);
             gatewayOrderId = null;
             isRealKey = false;
         }
@@ -157,7 +159,8 @@ const createGuestPaymentOrder = async (amountInINR, customer, items) => {
         currency: 'INR',
         name: 'MISS REZANNA',
         description: `Guest Checkout`,
-        order_id: gatewayOrderId
+        order_id: gatewayOrderId,
+        errorDetail: rzpErrDetail
     };
 };
 
