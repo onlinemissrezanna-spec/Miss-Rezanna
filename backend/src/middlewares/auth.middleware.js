@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken');
+const { verifyToken } = require('../utils/jwt');
 const ApiError = require('../utils/ApiError');
 const prisma = require('../config/db');
 const asyncHandler = require('./asyncHandler');
@@ -15,7 +15,7 @@ const protect = asyncHandler(async (req, res, next) => {
     }
 
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const decoded = verifyToken(token);
         
         const user = await prisma.user.findUnique({
             where: { id: decoded.id },
