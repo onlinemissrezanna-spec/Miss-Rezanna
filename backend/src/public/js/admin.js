@@ -6,6 +6,7 @@ const BACKEND_BASE = window.location.hostname === 'localhost' || window.location
     ? 'http://localhost:5000'
     : 'https://miss-rezanna-production.up.railway.app';
 const API = `${BACKEND_BASE}/api/v1`;
+const PLACEHOLDER_IMG = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='400' viewBox='0 0 300 400'><rect width='100%' height='100%' fill='%23f4f1ea'/><text x='50%' y='45%' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='18' fill='%23c3a167' font-weight='bold'>MISS REZANNA</text><text x='50%' y='55%' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='12' fill='%23999999'>Luxury Product</text></svg>";
 let adminToken = localStorage.getItem('mr_admin_token') || null;
 let allOrders = [];
 let currentOrderPage = 1;
@@ -347,11 +348,14 @@ async function loadProducts() {
     }
 
     container.innerHTML = products.map(p => {
-      let imgSrc = 'images/A.jpeg';
+      let imgSrc = PLACEHOLDER_IMG;
       try {
         const imgs = typeof p.images === 'string' ? JSON.parse(p.images) : p.images;
         if (Array.isArray(imgs) && imgs.length > 0) {
-          imgSrc = typeof imgs[0] === 'string' ? imgs[0] : (imgs[0].imageUrl || imgSrc);
+          const first = typeof imgs[0] === 'string' ? imgs[0] : (imgs[0].imageUrl || '');
+          if (first && (first.startsWith('http') || first.startsWith('data:'))) {
+            imgSrc = first;
+          }
         }
       } catch (e) { }
 
@@ -361,7 +365,7 @@ async function loadProducts() {
 
       return `<div class="product-admin-card">
         <div style="position:relative;">
-          <img src="${imgSrc}" class="product-admin-img" alt="${escapeHtml(p.name)}" onerror="this.src='images/A.jpeg'">
+          <img src="${imgSrc}" class="product-admin-img" alt="${escapeHtml(p.name)}" onerror="this.onerror=null;this.src=PLACEHOLDER_IMG">
           ${hasYoutube ? `<span class="badge" style="position:absolute;top:8px;right:8px;background:#FF0000;color:#fff;font-size:10px;">▶ YouTube Video</span>` : ''}
         </div>
         <div class="product-admin-info">
@@ -512,7 +516,7 @@ function renderPhotoThumbsHTML() {
   }
   return currentEditPhotos.map((url, idx) => `
     <div class="photo-thumb-box">
-      <img src="${escapeHtml(url)}" onerror="this.src='images/A.jpeg'" alt="Photo ${idx + 1}">
+      <img src="${escapeHtml(url)}" onerror="this.onerror=null;this.src=PLACEHOLDER_IMG" alt="Photo ${idx + 1}">
       <button type="button" class="btn-remove-photo" onclick="removePhoto(${idx})" title="Remove photo">&times;</button>
     </div>
   `).join('');
