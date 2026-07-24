@@ -5,8 +5,8 @@ const ApiError = require('../utils/ApiError');
 const invoiceService = require('./invoice.service');
 const emailService = require('./email.service');
 
-const RAZORPAY_KEY_ID = process.env.RAZORPAY_KEY_ID || 'rzp_test_THMHYLikeuEJLO';
-const RAZORPAY_KEY_SECRET = process.env.RAZORPAY_KEY_SECRET || 'Gbz78NMVIWKuWoTdVaD5D22S';
+const RAZORPAY_KEY_ID = 'rzp_test_THMHYLikeuEJLO';
+const RAZORPAY_KEY_SECRET = 'Gbz78NMVIWKuWoTdVaD5D22S';
 
 const razorpay = new Razorpay({
     key_id: RAZORPAY_KEY_ID,
