@@ -16,39 +16,23 @@ const { swaggerUi, specs } = require('./config/swagger');
 
 const app = express();
 
-// Swagger API Documentation
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
-
 // Set security HTTP headers
 app.use(helmet({ contentSecurityPolicy: false }));
 
 // GZIP compression
 app.use(compression());
 
-// Parse JSON request body
-app.use(express.json());
-
-// Parse urlencoded request body
-app.use(express.urlencoded({ extended: true }));
-
-// Parse cookies
-app.use(cookieParser());
-
 // Enable CORS
 app.use(cors());
 app.options('*', cors());
 
+// Parse JSON & urlencoded request body
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+
 // HTTP request logger
 app.use(morgan('combined', { stream: { write: message => logger.info(message.trim()) } }));
-
-// Rate Limiting
-const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000,
-    max: 100,
-    standardHeaders: true,
-    legacyHeaders: false,
-});
-app.use('/api', limiter);
 
 // Serve static frontend files from __dirname, __dirname/public, and root
 const srcDir = __dirname;
@@ -59,43 +43,35 @@ app.use(express.static(srcDir));
 app.use(express.static(publicDir));
 app.use(express.static(rootDir));
 
+// Global Interceptor for Admin Portal Requests (Guarantees 200 OK for admin.html)
+app.use((req, res, next) => {
+    const url = req.url.toLowerCase();
+    if (url === '/admin.html' || url === '/admin' || url === '/admin/' || url.startsWith('/admin.html?')) {
+        const p0 = path.resolve(__dirname, 'admin.html');
+        const p1 = path.resolve(__dirname, 'public/admin.html');
+        const p2 = path.resolve(__dirname, '../../admin.html');
+        
+        if (fs.existsSync(p0)) return res.sendFile(p0);
+        if (fs.existsSync(p1)) return res.sendFile(p1);
+        if (fs.existsSync(p2)) return res.sendFile(p2);
+    }
+    next();
+});
+
+// Swagger API Documentation
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+
 // Health check
 app.get('/health', (req, res) => res.status(200).json({ status: 'ok', message: 'API is running successfully' }));
 
-// Dedicated explicit routes for Admin Portal assets
-app.get(['/admin', '/admin.html'], (req, res) => {
-    const p0 = path.resolve(__dirname, 'admin.html');
-    const p1 = path.resolve(__dirname, 'public/admin.html');
-    const p2 = path.resolve(__dirname, '../../admin.html');
-    
-    if (fs.existsSync(p0)) return res.sendFile(p0);
-    if (fs.existsSync(p1)) return res.sendFile(p1);
-    if (fs.existsSync(p2)) return res.sendFile(p2);
-    
-    res.status(200).send('<!DOCTYPE html><html><body><h1>Admin Portal loading...</h1></body></html>');
+// Rate Limiting for API routes
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 100,
+    standardHeaders: true,
+    legacyHeaders: false,
 });
-
-app.get('/js/admin.js', (req, res) => {
-    const p0 = path.resolve(__dirname, 'js/admin.js');
-    const p1 = path.resolve(__dirname, 'public/js/admin.js');
-    const p2 = path.resolve(__dirname, '../../js/admin.js');
-    
-    if (fs.existsSync(p0)) return res.sendFile(p0);
-    if (fs.existsSync(p1)) return res.sendFile(p1);
-    if (fs.existsSync(p2)) return res.sendFile(p2);
-    res.status(404).send('JS not found');
-});
-
-app.get('/css/admin.css', (req, res) => {
-    const p0 = path.resolve(__dirname, 'css/admin.css');
-    const p1 = path.resolve(__dirname, 'public/css/admin.css');
-    const p2 = path.resolve(__dirname, '../../css/admin.css');
-    
-    if (fs.existsSync(p0)) return res.sendFile(p0);
-    if (fs.existsSync(p1)) return res.sendFile(p1);
-    if (fs.existsSync(p2)) return res.sendFile(p2);
-    res.status(404).send('CSS not found');
-});
+app.use('/api', limiter);
 
 // v1 API routes
 app.use('/api/v1', routes);
