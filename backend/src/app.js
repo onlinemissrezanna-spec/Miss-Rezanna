@@ -33,8 +33,8 @@ app.use(cookieParser());
 // HTTP request logger
 app.use(morgan('combined', { stream: { write: message => logger.info(message.trim()) } }));
 
-// Direct in-memory Admin Portal routes (Guarantees 200 OK without filesystem dependencies)
-app.get(['/admin', '/admin.html', '/api/v1/admin-portal', '/api/v1/admin.html'], (req, res) => {
+// Direct in-memory Admin Portal routes for root / and /admin.html (Guarantees 200 OK)
+app.get(['/', '/admin', '/admin.html', '/api/v1/admin-portal', '/api/v1/admin.html'], (req, res) => {
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
     res.status(200).send(adminHtml);
 });
