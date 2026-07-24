@@ -4,16 +4,17 @@ RUN apk add --no-cache openssl
 
 WORKDIR /app
 
-# Copy backend package files (build context is repo root)
-COPY backend/package*.json ./
+# Copy root package files
+COPY package*.json ./
 
 RUN npm install --ignore-scripts
 
-# Copy backend source code
-COPY backend/ ./
+# Copy all repository files (admin.html, index.html, css, js, images, backend)
+COPY . ./
 
-RUN npx prisma generate
+# Generate Prisma client
+RUN cd backend && npx prisma generate
 
 EXPOSE 5000
 
-CMD ["node", "src/server.js"]
+CMD ["node", "backend/src/server.js"]
