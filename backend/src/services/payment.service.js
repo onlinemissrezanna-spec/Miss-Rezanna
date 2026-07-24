@@ -165,10 +165,10 @@ const createGuestPaymentOrder = async (amountInINR, customer, items) => {
 };
 
 const verifyGuestPayment = async (razorpayPaymentId, razorpayOrderId, razorpaySignature, customer, items, amount) => {
-    if (process.env.RAZORPAY_KEY_SECRET && process.env.RAZORPAY_KEY_SECRET !== 'mock_secret') {
+    if (RAZORPAY_KEY_SECRET && RAZORPAY_KEY_SECRET !== 'mock_secret') {
         const body = (razorpayOrderId || '') + "|" + (razorpayPaymentId || '');
         const expectedSignature = crypto
-            .createHmac('sha256', process.env.RAZORPAY_KEY_SECRET)
+            .createHmac('sha256', RAZORPAY_KEY_SECRET)
             .update(body.toString())
             .digest('hex');
 
