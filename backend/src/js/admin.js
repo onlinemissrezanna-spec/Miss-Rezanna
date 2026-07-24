@@ -30,8 +30,8 @@ function checkAuth() {
   const overlay = document.getElementById('loginOverlay');
   if (adminToken) {
     overlay.classList.add('hidden');
-    // Open Products tab by default right after login
-    switchTab('products', document.querySelector('.nav-item[onclick*="products"]'));
+    // Open Dashboard tab by default on login
+    switchTab('dashboard', document.querySelector('.nav-item[data-tab="dashboard"]'));
   } else {
     overlay.classList.remove('hidden');
   }
