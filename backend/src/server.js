@@ -6,8 +6,8 @@ const PORT = process.env.PORT || 5000;
 
 let server;
 
-// Start HTTP server immediately so Railway health checks pass
-server = app.listen(PORT, () => {
+// Start HTTP server immediately on 0.0.0.0 so Railway health checks pass
+server = app.listen(PORT, '0.0.0.0', () => {
     console.log('Server running in ' + (process.env.NODE_ENV || 'development') + ' mode on port ' + PORT);
 });
 
