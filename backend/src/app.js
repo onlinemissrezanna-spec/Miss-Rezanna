@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
@@ -17,8 +18,8 @@ const app = express();
 // Swagger API Documentation
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
-// Set security HTTP headers
-app.use(helmet());
+// Set security HTTP headers (disable contentSecurityPolicy for inline scripts and embeds)
+app.use(helmet({ contentSecurityPolicy: false }));
 
 // GZIP compression
 app.use(compression());
@@ -41,16 +42,24 @@ app.use(morgan('combined', { stream: { write: message => logger.info(message.tri
 
 // Rate Limiting
 const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100, // Limit each IP to 100 requests per window (here, per 15 minutes)
+    windowMs: 15 * 60 * 1000,
+    max: 100,
     standardHeaders: true,
     legacyHeaders: false,
 });
 app.use('/api', limiter);
 
-// Root & Health check routes for Railway / Load balancers
-app.get('/', (req, res) => res.status(200).send('MISS REZANNA Backend API Server is Live'));
+// Serve static website & admin files from repository root
+const rootPath = path.join(__dirname, '../..');
+app.use(express.static(rootPath));
+
+// Health check
 app.get('/health', (req, res) => res.status(200).json({ status: 'ok', message: 'API is running successfully' }));
+
+// Dedicated route for admin portal
+app.get('/admin.html', (req, res) => {
+    res.sendFile(path.join(rootPath, 'admin.html'));
+});
 
 // v1 API routes
 app.use('/api/v1', routes);
