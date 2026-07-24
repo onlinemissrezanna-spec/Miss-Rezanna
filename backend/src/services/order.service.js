@@ -32,15 +32,17 @@ const getOrderById = async (userId, id, isAdmin = false) => {
 
 // Admin
 const getAllOrders = async (page = 1, limit = 10, status) => {
-    const skip = (page - 1) * limit;
+    const p = Math.max(1, parseInt(page) || 1);
+    const l = Math.max(1, parseInt(limit) || 10);
+    const skip = (p - 1) * l;
     const where = status ? { orderStatus: status } : {};
 
     const [total, orders] = await Promise.all([
         prisma.order.count({ where }),
         prisma.order.findMany({
             where,
-            skip: parseInt(skip),
-            take: parseInt(limit),
+            skip,
+            take: l,
             orderBy: { createdAt: 'desc' },
             include: { user: { select: { firstName: true, lastName: true, email: true } } }
         })
@@ -50,9 +52,9 @@ const getAllOrders = async (page = 1, limit = 10, status) => {
         orders,
         pagination: {
             total,
-            page: parseInt(page),
-            pages: Math.ceil(total / limit),
-            limit: parseInt(limit)
+            page: p,
+            pages: Math.ceil(total / l),
+            limit: l
         }
     };
 };

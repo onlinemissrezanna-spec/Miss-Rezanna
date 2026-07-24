@@ -1,10 +1,10 @@
 // MISS REZANNA — Admin Portal JavaScript
 // Connects to all backend API endpoints
 
-// Auto-detect backend URL: if serving from Railway, use same origin. Otherwise use Railway production URL.
-const BACKEND_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+// Auto-detect backend URL: relative to current origin on deployed servers or localhost
+const BACKEND_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && window.location.port === '5500'
     ? 'http://localhost:5000'
-    : 'https://miss-rezanna-production.up.railway.app';
+    : window.location.origin;
 const API = `${BACKEND_BASE}/api/v1`;
 const PLACEHOLDER_IMG = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='400' viewBox='0 0 300 400'><rect width='100%' height='100%' fill='%23f4f1ea'/><text x='50%' y='45%' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='18' fill='%23c3a167' font-weight='bold'>MISS REZANNA</text><text x='50%' y='55%' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='12' fill='%23999999'>Luxury Product</text></svg>";
 let adminToken = localStorage.getItem('mr_admin_token') || null;
@@ -15,9 +15,12 @@ let currentOrderPage = 1;
 // INITIALIZATION
 // =============================================
 document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('dashDate').innerText = new Date().toLocaleDateString('en-IN', {
-    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-  });
+  const dashDate = document.getElementById('dashDate');
+  if (dashDate) {
+    dashDate.innerText = new Date().toLocaleDateString('en-IN', {
+      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+    });
+  }
   checkAuth();
 
   const loginForm = document.getElementById('loginForm');
@@ -30,11 +33,11 @@ document.addEventListener('DOMContentLoaded', () => {
 function checkAuth() {
   const overlay = document.getElementById('loginOverlay');
   if (adminToken) {
-    overlay.classList.add('hidden');
+    if (overlay) overlay.classList.add('hidden');
     // Open Dashboard tab by default on login
     switchTab('dashboard', document.querySelector('.nav-item[data-tab="dashboard"]'));
   } else {
-    overlay.classList.remove('hidden');
+    if (overlay) overlay.classList.remove('hidden');
   }
 }
 
@@ -44,10 +47,12 @@ async function handleLogin(e) {
   const password = document.getElementById('loginPassword').value;
   const btn = document.getElementById('btnLogin');
   const errorEl = document.getElementById('loginError');
-  errorEl.innerText = '';
+  if (errorEl) errorEl.innerText = '';
 
-  btn.innerText = 'Verifying…';
-  btn.disabled = true;
+  if (btn) {
+    btn.innerText = 'Verifying…';
+    btn.disabled = true;
+  }
 
   try {
     const res = await fetch(`${API}/auth/login`, {
@@ -70,10 +75,12 @@ async function handleLogin(e) {
       throw new Error(data.message || 'Invalid credentials. Please try again.');
     }
   } catch (err) {
-    errorEl.innerText = err.message;
+    if (errorEl) errorEl.innerText = err.message;
   } finally {
-    btn.innerText = 'Sign In Securely';
-    btn.disabled = false;
+    if (btn) {
+      btn.innerText = 'Sign In Securely';
+      btn.disabled = false;
+    }
   }
 }
 
@@ -97,6 +104,10 @@ async function api(path, method = 'GET', body = null) {
   if (body) opts.body = JSON.stringify(body);
   const res = await fetch(`${API}${path}`, opts);
   const data = await res.json();
+  if (res.status === 401 || res.status === 403) {
+    logoutAdmin();
+    throw new Error(data.message || 'Session expired. Please log in again.');
+  }
   if (!res.ok) throw new Error(data.message || 'API Error');
   return data.data;
 }
