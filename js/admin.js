@@ -2,9 +2,12 @@
 // Connects to all backend API endpoints
 
 // Auto-detect backend URL: relative to current origin on deployed servers or localhost
-const BACKEND_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && window.location.port === '5500'
-    ? 'http://localhost:5000'
-    : window.location.origin;
+let BACKEND_BASE = window.location.origin;
+if (window.location.protocol === 'file:') {
+    BACKEND_BASE = 'https://miss-rezanna-production.up.railway.app';
+} else if ((window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && window.location.port === '5500') {
+    BACKEND_BASE = 'http://localhost:5000';
+}
 const API = `${BACKEND_BASE}/api/v1`;
 const PLACEHOLDER_IMG = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='400' viewBox='0 0 300 400'><rect width='100%' height='100%' fill='%23f4f1ea'/><text x='50%' y='45%' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='18' fill='%23c3a167' font-weight='bold'>MISS REZANNA</text><text x='50%' y='55%' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='12' fill='%23999999'>Luxury Product</text></svg>";
 let adminToken = localStorage.getItem('mr_admin_token') || null;
