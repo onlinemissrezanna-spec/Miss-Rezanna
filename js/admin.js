@@ -100,11 +100,16 @@ async function api(path, method = 'GET', body = null) {
   const opts = {
     method,
     headers: {
-      'Content-Type': 'application/json',
       'Authorization': `Bearer ${adminToken}`
     }
   };
-  if (body) opts.body = JSON.stringify(body);
+  
+  if (body instanceof FormData) {
+    opts.body = body;
+  } else {
+    opts.headers['Content-Type'] = 'application/json';
+    if (body) opts.body = JSON.stringify(body);
+  }
   const res = await fetch(`${API}${path}`, opts);
   const data = await res.json();
   if (res.status === 401 || res.status === 403) {
@@ -528,12 +533,12 @@ function renderProductFormModal(productId, data) {
       <div class="form-group">
         <label style="display:flex;justify-content:space-between;align-items:center;">
           <span>Product Photos Gallery</span>
-          <span style="font-size:11px;color:var(--admin-text-secondary);">${currentEditPhotos.length} photo(s)</span>
+          <span style="font-size:11px;color:var(--admin-text-secondary);">${currentEditPhotos.length} existing photo(s)</span>
         </label>
         
-        <div style="display:flex;gap:8px;margin-bottom:10px;">
-          <input type="text" id="pf-new-photo-url" class="form-control" placeholder="Enter Photo Image URL (e.g. images/A.jpeg or https://...)">
-          <button type="button" class="btn-action primary" onclick="addPhotoUrl()" style="white-space:nowrap;padding:8px 14px;">+ Add Photo</button>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px;">
+          <label style="font-size:12px;color:var(--admin-text-secondary);">Upload New Photos from Computer:</label>
+          <input type="file" id="pf-photo-upload" accept="image/*" multiple class="form-control" style="padding:8px;">
         </div>
 
         <div class="photo-gallery-preview" id="photoGalleryContainer">
@@ -595,16 +600,28 @@ async function handleProductFormSubmit(e, productId) {
   btn.innerText = 'Saving…';
   btn.disabled = true;
 
-  const payload = {
-    name: document.getElementById('pf-name').value.trim(),
-    price: parseFloat(document.getElementById('pf-price').value),
-    sku: document.getElementById('pf-sku').value.trim(),
-    description: document.getElementById('pf-description').value.trim(),
-    youtubeUrl: document.getElementById('pf-youtube').value.trim() || null,
-    stock: parseInt(document.getElementById('pf-stock').value),
-    taxPercentage: parseFloat(document.getElementById('pf-tax').value),
-    imageUrls: currentEditPhotos
-  };
+  const payload = new FormData();
+  payload.append('name', document.getElementById('pf-name').value.trim());
+  payload.append('price', document.getElementById('pf-price').value);
+  payload.append('sku', document.getElementById('pf-sku').value.trim());
+  payload.append('description', document.getElementById('pf-description').value.trim());
+  
+  const yt = document.getElementById('pf-youtube').value.trim();
+  if (yt) payload.append('youtubeUrl', yt);
+  
+  payload.append('stock', document.getElementById('pf-stock').value);
+  payload.append('taxPercentage', document.getElementById('pf-tax').value);
+
+  // Existing images to keep
+  payload.append('imageUrls', JSON.stringify(currentEditPhotos));
+
+  // New file uploads from computer
+  const fileInput = document.getElementById('pf-photo-upload');
+  if (fileInput && fileInput.files.length > 0) {
+    for (let i = 0; i < fileInput.files.length; i++) {
+      payload.append('images', fileInput.files[i]);
+    }
+  }
 
   try {
     if (productId) {
