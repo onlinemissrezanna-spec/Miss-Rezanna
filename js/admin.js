@@ -537,10 +537,10 @@ function renderProductFormModal(productId, data) {
         </label>
         
         <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px;background:rgba(195,161,103,0.08);padding:12px;border-radius:6px;border:1px dashed rgba(195,161,103,0.5);">
-          <label style="display:block; padding:16px; font-size:14px; width:100%; font-weight:bold; background:#000; color:#fff; text-align:center; border-radius:4px; cursor:pointer;">
+          <div style="position:relative; display:block; padding:16px; font-size:14px; width:100%; font-weight:bold; background:#000; color:#fff; text-align:center; border-radius:4px; cursor:pointer; overflow:hidden;">
             📁 CLICK HERE TO UPLOAD NEW PHOTOS FROM COMPUTER
-            <input type="file" id="pf-photo-upload" accept="image/*" multiple style="display:none;" onchange="updatePhotoPreviews()">
-          </label>
+            <input type="file" id="pf-photo-upload" accept="image/*" multiple onchange="updatePhotoPreviews()" style="position:absolute; top:0; left:0; width:100%; height:100%; opacity:0; cursor:pointer; font-size:100px;">
+          </div>
         </div>
 
         <div class="photo-gallery-preview" id="photoGalleryContainer">
