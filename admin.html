@@ -1799,13 +1799,44 @@ function updateSeoAudit() {
   updateSchemaJsonPreview();
 }
 
-function autoGenerateSlug(name) {
-  const slugInput = document.getElementById('pf-slug');
-  if (slugInput) {
-    const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
-    slugInput.value = slug;
-    updateSeoAudit();
+function updatePhotoPreviews() {
+  const container = document.getElementById('photoGalleryContainer');
+  if (container) container.innerHTML = renderPhotoThumbsHTML();
+}
+
+function renderPhotoThumbsHTML() {
+  const fileInput = document.getElementById('pf-photo-upload');
+  const newFiles = fileInput && fileInput.files ? Array.from(fileInput.files) : [];
+  
+  if (!currentEditPhotos.length && !newFiles.length) {
+    return `<div style="grid-column:1/-1;font-size:12px;color:var(--admin-text-secondary);text-align:center;padding:12px;">No photos added yet. Use the file selector above to upload images from your computer.</div>`;
   }
+  
+  let html = '';
+  
+  // Render existing photos
+  html += currentEditPhotos.map((url, idx) => `
+    <div class="photo-thumb-box">
+      <img src="${escapeHtml(url)}" onerror="this.onerror=null;this.src=PLACEHOLDER_IMG" alt="Photo ${idx + 1}">
+      <button type="button" class="btn-remove-photo" onclick="removePhoto(${idx})" title="Remove photo">&times;</button>
+    </div>
+  `).join('');
+
+  // Render new local files
+  html += newFiles.map((file, idx) => `
+    <div class="photo-thumb-box" style="border: 2px solid #C3A167;">
+      <img src="${URL.createObjectURL(file)}" alt="New File ${idx + 1}">
+      <div style="position:absolute;bottom:0;background:rgba(195,161,103,0.9);color:#fff;font-size:9px;width:100%;text-align:center;padding:2px;">NEW</div>
+    </div>
+  `).join('');
+
+  return html;
+}
+
+function removePhoto(index) {
+  currentEditPhotos.splice(index, 1);
+  const container = document.getElementById('photoGalleryContainer');
+  if (container) container.innerHTML = renderPhotoThumbsHTML();
 }
 
 function renderProductFormModal(productId, data) {
