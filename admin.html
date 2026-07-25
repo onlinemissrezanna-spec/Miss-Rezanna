@@ -7,7 +7,751 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/admin.css?v=2.1">
+  <style>/* MISS REZANNA - Admin Portal Design System */
+:root {
+  --admin-bg: #f8f7f5;
+  --admin-sidebar: #111111;
+  --admin-sidebar-hover: #1a1a1a;
+  --admin-card: #ffffff;
+  --admin-border: #e8e6e3;
+  --admin-text: #111111;
+  --admin-text-secondary: #777777;
+  --admin-gold: #c3a167;
+  --admin-gold-hover: #b28e54;
+  --admin-green: #137333;
+  --admin-green-bg: #e6f4ea;
+  --admin-orange: #b06000;
+  --admin-orange-bg: #fef7e0;
+  --admin-red: #c5221f;
+  --admin-red-bg: #fce8e6;
+  --admin-blue: #1a73e8;
+  --admin-blue-bg: #e8f0fe;
+  --admin-radius: 4px;
+  --admin-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  --admin-shadow-hover: 0 4px 12px rgba(0,0,0,0.12);
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body.admin-body {
+  font-family: var(--font-body);
+  background: var(--admin-bg);
+  color: var(--admin-text);
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ===== LOGIN OVERLAY ===== */
+.login-overlay {
+  position: fixed;
+  inset: 0;
+  background: #111;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.5s ease;
+}
+.login-overlay.hidden { display: none; }
+.login-card {
+  background: #fff;
+  padding: 56px 48px;
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+}
+.login-logo {
+  font-family: var(--font-heading);
+  font-size: 26px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.login-subtitle {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--admin-gold);
+  margin-bottom: 40px;
+}
+.login-form { display: flex; flex-direction: column; gap: 14px; }
+.login-form input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--admin-border);
+  font-family: var(--font-body);
+  font-size: 14px;
+  transition: border-color 0.3s;
+}
+.login-form input:focus {
+  outline: none;
+  border-color: var(--admin-text);
+}
+.login-form button {
+  width: 100%;
+  padding: 16px;
+  background: #111;
+  color: #fff;
+  border: none;
+  font-family: var(--font-body);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  transition: background 0.3s;
+  margin-top: 8px;
+}
+.login-form button:hover { background: var(--admin-gold); }
+.login-error {
+  color: var(--admin-red);
+  font-size: 13px;
+  min-height: 20px;
+  margin-top: 8px;
+}
+.login-hint {
+  margin-top: 32px;
+  font-size: 12px;
+  color: #999;
+  border-top: 1px solid #eee;
+  padding-top: 20px;
+  line-height: 1.6;
+}
+.login-hint code {
+  background: #f5f5f5;
+  padding: 2px 6px;
+  font-size: 11px;
+  border-radius: 2px;
+}
+
+/* ===== SIDEBAR ===== */
+.admin-sidebar {
+  width: 260px;
+  background: var(--admin-sidebar);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 100;
+  transition: transform 0.3s ease;
+}
+.sidebar-brand {
+  padding: 32px 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.sidebar-brand-name {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.sidebar-brand-label {
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--admin-gold);
+  margin-top: 4px;
+}
+.sidebar-nav {
+  flex: 1;
+  padding: 16px 0;
+  overflow-y: auto;
+}
+.sidebar-section-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: rgba(255,255,255,0.35);
+  padding: 20px 24px 8px;
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 24px;
+  color: rgba(255,255,255,0.65);
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+  border-left: 3px solid transparent;
+  text-decoration: none;
+}
+.nav-item:hover {
+  background: var(--admin-sidebar-hover);
+  color: #fff;
+}
+.nav-item.active {
+  color: #fff;
+  background: rgba(255,255,255,0.06);
+  border-left-color: var(--admin-gold);
+}
+.nav-item svg { width: 18px; height: 18px; flex-shrink: 0; }
+.sidebar-footer {
+  padding: 20px 24px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.btn-signout {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  background: none;
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.6);
+  padding: 10px 16px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.btn-signout:hover {
+  border-color: var(--admin-gold);
+  color: var(--admin-gold);
+}
+
+/* ===== MAIN CONTENT ===== */
+.admin-main {
+  flex: 1;
+  margin-left: 260px;
+  padding: 32px 40px;
+  min-height: 100vh;
+}
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+.page-title {
+  font-family: var(--font-heading);
+  font-size: 28px;
+  font-weight: 500;
+}
+.page-subtitle {
+  font-size: 13px;
+  color: var(--admin-text-secondary);
+  margin-top: 4px;
+}
+
+/* ===== METRICS ===== */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  margin-bottom: 32px;
+}
+.metric-card {
+  background: var(--admin-card);
+  padding: 28px;
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius);
+  box-shadow: var(--admin-shadow);
+  transition: box-shadow 0.3s;
+}
+.metric-card:hover { box-shadow: var(--admin-shadow-hover); }
+.metric-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+.metric-icon svg { width: 20px; height: 20px; }
+.metric-icon.gold { background: rgba(195,161,103,0.12); color: var(--admin-gold); }
+.metric-icon.green { background: var(--admin-green-bg); color: var(--admin-green); }
+.metric-icon.blue { background: var(--admin-blue-bg); color: var(--admin-blue); }
+.metric-icon.orange { background: var(--admin-orange-bg); color: var(--admin-orange); }
+.metric-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--admin-text-secondary);
+  margin-bottom: 8px;
+}
+.metric-value {
+  font-family: var(--font-heading);
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+/* ===== CARDS / SECTIONS ===== */
+.admin-card {
+  background: var(--admin-card);
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius);
+  box-shadow: var(--admin-shadow);
+  margin-bottom: 24px;
+}
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--admin-border);
+}
+.card-title {
+  font-family: var(--font-heading);
+  font-size: 18px;
+  font-weight: 500;
+}
+.card-body { padding: 24px; }
+.card-body.no-pad { padding: 0; }
+
+/* ===== TABLE ===== */
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.admin-table th {
+  text-align: left;
+  padding: 14px 20px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--admin-text-secondary);
+  font-weight: 600;
+  background: #fafaf8;
+  border-bottom: 1px solid var(--admin-border);
+}
+.admin-table td {
+  padding: 16px 20px;
+  font-size: 14px;
+  border-bottom: 1px solid var(--admin-border);
+  vertical-align: middle;
+}
+.admin-table tr:last-child td { border-bottom: none; }
+.admin-table tr:hover td { background: #fcfcfa; }
+.customer-name { font-weight: 500; }
+.customer-email { font-size: 12px; color: var(--admin-text-secondary); }
+
+/* ===== BADGES ===== */
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+.badge-paid, .badge-confirmed, .badge-delivered { background: var(--admin-green-bg); color: var(--admin-green); }
+.badge-pending { background: var(--admin-orange-bg); color: var(--admin-orange); }
+.badge-failed, .badge-cancelled { background: var(--admin-red-bg); color: var(--admin-red); }
+.badge-shipped { background: var(--admin-blue-bg); color: var(--admin-blue); }
+.badge-active { background: var(--admin-green-bg); color: var(--admin-green); }
+.badge-inactive { background: #f0f0f0; color: #666; }
+
+/* ===== FORM ELEMENTS ===== */
+.form-select {
+  padding: 8px 12px;
+  border: 1px solid var(--admin-border);
+  font-family: var(--font-body);
+  font-size: 13px;
+  background: #fff;
+  cursor: pointer;
+  border-radius: var(--admin-radius);
+  transition: border-color 0.2s;
+}
+.form-select:focus { outline: none; border-color: var(--admin-text); }
+.btn-action {
+  padding: 8px 16px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  border: 1px solid var(--admin-border);
+  background: #fff;
+  color: var(--admin-text);
+  border-radius: var(--admin-radius);
+  transition: all 0.2s;
+}
+.btn-action:hover { border-color: var(--admin-text); background: var(--admin-text); color: #fff; }
+.btn-action.primary { background: var(--admin-text); color: #fff; border-color: var(--admin-text); }
+.btn-action.primary:hover { background: var(--admin-gold); border-color: var(--admin-gold); }
+.btn-action.danger { color: var(--admin-red); border-color: var(--admin-red); }
+.btn-action.danger:hover { background: var(--admin-red); color: #fff; }
+
+/* ===== MODAL ===== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(2px);
+}
+.modal-overlay.visible { display: flex; }
+.modal-card {
+  background: #fff;
+  width: 90%;
+  max-width: 640px;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  border-radius: var(--admin-radius);
+}
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 28px;
+  border-bottom: 1px solid var(--admin-border);
+}
+.modal-title {
+  font-family: var(--font-heading);
+  font-size: 20px;
+}
+.btn-close-modal {
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  color: var(--admin-text-secondary);
+  transition: color 0.2s;
+}
+.btn-close-modal:hover { color: var(--admin-text); }
+.modal-body { padding: 28px; }
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+.detail-group {}
+.detail-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--admin-text-secondary);
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+.detail-value { font-size: 14px; line-height: 1.5; }
+.detail-divider {
+  border: none;
+  border-top: 1px solid var(--admin-border);
+  margin: 24px 0;
+}
+.order-item-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px dotted var(--admin-border);
+}
+.order-item-row:last-child { border-bottom: none; }
+.order-total-row {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-heading);
+  font-size: 18px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--admin-text);
+}
+
+/* ===== TAB VIEWS ===== */
+.tab-view { display: none; }
+.tab-view.active { display: block; }
+
+/* ===== EMPTY STATE ===== */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--admin-text-secondary);
+}
+.empty-state svg { width: 48px; height: 48px; margin-bottom: 16px; opacity: 0.3; }
+
+/* ===== LOADING ===== */
+.loading-text {
+  text-align: center;
+  padding: 40px;
+  color: var(--admin-text-secondary);
+  font-size: 14px;
+}
+
+/* ===== PRODUCT CARDS GRID ===== */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+.product-admin-card {
+  background: var(--admin-card);
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius);
+  overflow: hidden;
+  transition: box-shadow 0.3s;
+}
+.product-admin-card:hover { box-shadow: var(--admin-shadow-hover); }
+.product-admin-img {
+  width: 100%;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+  background: #f0f0f0;
+}
+.product-admin-info { padding: 16px; }
+.product-admin-name {
+  font-family: var(--font-heading);
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+.product-admin-price {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+.product-admin-meta {
+  font-size: 12px;
+  color: var(--admin-text-secondary);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .admin-sidebar { transform: translateX(-100%); }
+  .admin-sidebar.open { transform: translateX(0); }
+  .admin-main { margin-left: 0; padding: 24px 20px; }
+  .detail-grid { grid-template-columns: 1fr; }
+}
+
+/* ===== PRODUCT EDIT FORM & PHOTO GALLERY & YOUTUBE ===== */
+.form-group {
+  margin-bottom: 18px;
+}
+.form-group label {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  color: var(--admin-text-secondary);
+  margin-bottom: 6px;
+}
+.form-control {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius);
+  font-family: inherit;
+  font-size: 13px;
+  background: var(--admin-card);
+  color: var(--admin-text);
+  box-sizing: border-box;
+}
+.form-control:focus {
+  outline: none;
+  border-color: var(--admin-gold);
+}
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.photo-gallery-preview {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+.photo-thumb-box {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--admin-border);
+  background: #f8f8f8;
+}
+.photo-thumb-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.btn-remove-photo {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: rgba(197, 48, 48, 0.9);
+  color: #fff;
+  border: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+}
+.btn-remove-photo:hover {
+  transform: scale(1.15);
+}
+.youtube-preview-box {
+  margin-top: 10px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #000;
+  aspect-ratio: 16/9;
+  display: none;
+}
+.youtube-preview-box iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+.product-card-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--admin-border);
+}
+.btn-card-edit {
+  flex: 1;
+  padding: 8px;
+  font-size: 12px;
+  border: 1px solid var(--admin-border);
+  background: transparent;
+  color: var(--admin-text);
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  transition: all 0.2s;
+}
+.btn-card-edit:hover {
+  border-color: var(--admin-gold);
+  color: var(--admin-gold);
+}
+.btn-card-delete {
+  padding: 8px 12px;
+  font-size: 12px;
+  border: 1px solid rgba(197, 48, 48, 0.3);
+  background: rgba(197, 48, 48, 0.08);
+  color: var(--admin-red);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-card-delete:hover {
+  background: var(--admin-red);
+  color: #fff;
+}
+
+/* ==========================================================================
+   MOBILE & TABLET RESPONSIVE OVERRIDES
+   ========================================================================== */
+@media (max-width: 991px) {
+  .admin-sidebar {
+    width: 220px;
+  }
+  .admin-main {
+    margin-left: 220px;
+    padding: 20px;
+  }
+  .metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+}
+
+@media (max-width: 767px) {
+  .admin-app {
+    flex-direction: column;
+  }
+  .admin-sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--admin-border);
+    padding: 16px;
+  }
+  .sidebar-nav {
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    gap: 6px;
+  }
+  .nav-item {
+    white-space: nowrap;
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+  .admin-main {
+    margin-left: 0;
+    padding: 16px 12px;
+  }
+  .metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .metric-card {
+    padding: 14px;
+  }
+  .metric-val {
+    font-size: 20px;
+  }
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .topbar-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .table-card {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .admin-table {
+    min-width: 600px;
+  }
+  .modal-dialog {
+    width: 96% !important;
+    margin: 12px auto !important;
+    max-height: 92vh !important;
+    overflow-y: auto !important;
+  }
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .form-row {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .products-grid {
+    grid-template-columns: 1fr;
+  }
+  .metrics-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+</style>
 </head>
 <body class="admin-body">
 
@@ -286,6 +1030,759 @@
   </div>
 </div>
 
-<script src="js/admin.js?v=2.4"></script>
+<script>// MISS REZANNA — Admin Portal JavaScript
+// Connects to all backend API endpoints
+
+// Auto-detect backend URL: relative to current origin on deployed servers or localhost
+let BACKEND_BASE = window.location.origin;
+if (window.location.protocol === 'file:') {
+    BACKEND_BASE = 'https://miss-rezanna-production.up.railway.app';
+} else if ((window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && window.location.port === '5500') {
+    BACKEND_BASE = 'http://localhost:5000';
+}
+const API = `${BACKEND_BASE}/api/v1`;
+const PLACEHOLDER_IMG = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='400' viewBox='0 0 300 400'><rect width='100%' height='100%' fill='%23f4f1ea'/><text x='50%' y='45%' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='18' fill='%23c3a167' font-weight='bold'>MISS REZANNA</text><text x='50%' y='55%' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='12' fill='%23999999'>Luxury Product</text></svg>";
+let adminToken = localStorage.getItem('mr_admin_token') || null;
+let allOrders = [];
+let currentOrderPage = 1;
+
+// =============================================
+// INITIALIZATION
+// =============================================
+document.addEventListener('DOMContentLoaded', () => {
+  const dashDate = document.getElementById('dashDate');
+  if (dashDate) {
+    dashDate.innerText = new Date().toLocaleDateString('en-IN', {
+      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+    });
+  }
+  checkAuth();
+
+  const loginForm = document.getElementById('loginForm');
+  if (loginForm) loginForm.addEventListener('submit', handleLogin);
+});
+
+// =============================================
+// AUTH
+// =============================================
+function checkAuth() {
+  const overlay = document.getElementById('loginOverlay');
+  if (adminToken) {
+    if (overlay) overlay.classList.add('hidden');
+    // Open Dashboard tab by default on login
+    switchTab('dashboard', document.querySelector('.nav-item[data-tab="dashboard"]'));
+  } else {
+    if (overlay) overlay.classList.remove('hidden');
+  }
+}
+
+async function handleLogin(e) {
+  e.preventDefault();
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  const btn = document.getElementById('btnLogin');
+  const errorEl = document.getElementById('loginError');
+  if (errorEl) errorEl.innerText = '';
+
+  if (btn) {
+    btn.innerText = 'Verifying…';
+    btn.disabled = true;
+  }
+
+  try {
+    const res = await fetch(`${API}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+    const data = await res.json();
+
+    if (res.ok && data.success) {
+      const user = data.data.user;
+      const roleName = user.role?.name || '';
+      if (roleName !== 'Admin') {
+        throw new Error('Access denied. Admin privileges required. Make sure you seeded the database first at: /api/v1/seed');
+      }
+      adminToken = data.data.accessToken;
+      localStorage.setItem('mr_admin_token', adminToken);
+      checkAuth();
+    } else {
+      throw new Error(data.message || 'Invalid credentials. Please try again.');
+    }
+  } catch (err) {
+    if (errorEl) errorEl.innerText = err.message;
+  } finally {
+    if (btn) {
+      btn.innerText = 'Sign In Securely';
+      btn.disabled = false;
+    }
+  }
+}
+
+function logoutAdmin() {
+  localStorage.removeItem('mr_admin_token');
+  adminToken = null;
+  checkAuth();
+}
+
+// =============================================
+// API HELPER
+// =============================================
+async function api(path, method = 'GET', body = null) {
+  const opts = {
+    method,
+    headers: {
+      'Authorization': `Bearer ${adminToken}`
+    }
+  };
+  
+  if (body instanceof FormData) {
+    opts.body = body;
+  } else {
+    opts.headers['Content-Type'] = 'application/json';
+    if (body) opts.body = JSON.stringify(body);
+  }
+  const res = await fetch(`${API}${path}`, opts);
+  const data = await res.json();
+  if (res.status === 401 || res.status === 403) {
+    logoutAdmin();
+    throw new Error(data.message || 'Session expired. Please log in again.');
+  }
+  if (!res.ok) throw new Error(data.message || 'API Error');
+  return data.data;
+}
+
+// =============================================
+// TAB SWITCHING
+// =============================================
+function switchTab(tabName, el) {
+  document.querySelectorAll('.tab-view').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById(`tab-${tabName}`).classList.add('active');
+  if (el) el.classList.add('active');
+
+  if (tabName === 'dashboard') loadDashboard();
+  if (tabName === 'orders') loadOrders();
+  if (tabName === 'products') loadProducts();
+  if (tabName === 'customers') loadCustomers();
+}
+
+// =============================================
+// DASHBOARD
+// =============================================
+async function loadDashboard() {
+  try {
+    // Load orders and products in parallel
+    const [ordersData, productsData] = await Promise.all([
+      api('/orders?limit=100'),
+      api('/products?limit=100')
+    ]);
+
+    const orders = ordersData.orders || [];
+    const products = productsData.products || [];
+
+    allOrders = orders;
+
+    const revenue = orders
+      .filter(o => o.paymentStatus === 'Paid')
+      .reduce((s, o) => s + parseFloat(o.grandTotal || 0), 0);
+    const pending = orders.filter(o => o.orderStatus !== 'Delivered' && o.orderStatus !== 'Cancelled').length;
+
+    document.getElementById('m-revenue').innerText = `₹ ${revenue.toLocaleString('en-IN')}`;
+    document.getElementById('m-orders').innerText = orders.length;
+    document.getElementById('m-pending').innerText = pending;
+    document.getElementById('m-products').innerText = products.length;
+
+    renderRecentOrders(orders.slice(0, 5));
+  } catch (err) {
+    console.error('Dashboard load error:', err);
+  }
+}
+
+function refreshDashboard() { loadDashboard(); }
+
+function renderRecentOrders(orders) {
+  const tbody = document.getElementById('recent-orders-table');
+  if (!orders.length) {
+    tbody.innerHTML = '<tr><td colspan="6" class="loading-text">No orders yet</td></tr>';
+    return;
+  }
+  tbody.innerHTML = orders.map(o => {
+    const d = new Date(o.createdAt).toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' });
+    const cust = o.user ? `${o.user.firstName || 'Guest'} ${o.user.lastName || ''}`.trim() : 'Guest';
+    return `<tr>
+      <td><strong>${o.orderNumber}</strong></td>
+      <td>${cust}</td>
+      <td>${d}</td>
+      <td>₹ ${parseFloat(o.grandTotal).toLocaleString('en-IN')}</td>
+      <td><span class="badge badge-${(o.paymentStatus || 'pending').toLowerCase().replace(' ', '-')}">${o.paymentStatus || 'Pending'}</span></td>
+      <td><span class="badge badge-${(o.orderStatus || 'pending').toLowerCase().replace(' ', '-')}">${o.orderStatus || 'Pending'}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+// =============================================
+// ORDERS
+// =============================================
+async function loadOrders(page = 1) {
+  currentOrderPage = page;
+  const tbody = document.getElementById('orders-table-body');
+  tbody.innerHTML = '<tr><td colspan="7" class="loading-text">Loading orders…</td></tr>';
+
+  const statusFilter = document.getElementById('orderStatusFilter')?.value || '';
+  const statusParam = statusFilter ? `&status=${encodeURIComponent(statusFilter)}` : '';
+
+  try {
+    const data = await api(`/orders?page=${page}&limit=20${statusParam}`);
+    const orders = data.orders || [];
+    allOrders = orders;
+
+    if (!orders.length) {
+      tbody.innerHTML = '<tr><td colspan="7" class="loading-text">No orders found</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = orders.map(o => {
+      const dt = new Date(o.createdAt).toLocaleString('en-IN', {
+        day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
+      });
+      const cust = o.user ? `${o.user.firstName || 'Guest'} ${o.user.lastName || ''}`.trim() : 'Guest';
+      const email = o.user?.email || '';
+      const payBadge = getPayBadge(o.paymentStatus);
+      return `<tr>
+        <td><strong>${o.orderNumber}</strong></td>
+        <td style="font-size:12px;color:var(--admin-text-secondary)">${dt}</td>
+        <td>
+          <div class="customer-name">${cust}</div>
+          <div class="customer-email">${email}</div>
+        </td>
+        <td><strong>₹ ${parseFloat(o.grandTotal).toLocaleString('en-IN')}</strong></td>
+        <td>${payBadge}</td>
+        <td>
+          <select class="form-select" onchange="updateOrderStatus(${o.id}, this.value)" style="font-size:12px;padding:6px 10px;">
+            ${['Pending','Confirmed','Shipped','Delivered','Cancelled'].map(s =>
+              `<option value="${s}" ${o.orderStatus === s ? 'selected' : ''}>${s}</option>`
+            ).join('')}
+          </select>
+        </td>
+        <td>
+          <button class="btn-action" onclick="viewOrderDetail(${o.id})" style="font-size:11px;padding:6px 12px;">Details</button>
+        </td>
+      </tr>`;
+    }).join('');
+
+    // Pagination
+    const totalPages = data.pagination?.pages || 1;
+    renderPagination('orders-pagination', page, totalPages, loadOrders);
+  } catch (err) {
+    tbody.innerHTML = `<tr><td colspan="7" class="loading-text" style="color:var(--admin-red)">Error: ${err.message}</td></tr>`;
+  }
+}
+
+function getPayBadge(status) {
+  const s = (status || '').toLowerCase();
+  if (s === 'paid') return '<span class="badge badge-paid">Paid</span>';
+  if (s === 'failed') return '<span class="badge badge-failed">Failed</span>';
+  if (s === 'refunded') return '<span class="badge badge-shipped">Refunded</span>';
+  return '<span class="badge badge-pending">Pending</span>';
+}
+
+async function updateOrderStatus(orderId, status) {
+  try {
+    await api(`/orders/${orderId}/status`, 'PUT', { status });
+    // Update local copy
+    const o = allOrders.find(x => x.id === orderId);
+    if (o) o.orderStatus = status;
+  } catch (err) {
+    alert('Failed to update status: ' + err.message);
+  }
+}
+
+async function viewOrderDetail(orderId) {
+  const modal = document.getElementById('orderModal');
+  const body = document.getElementById('orderModalBody');
+  const title = document.getElementById('modalOrderTitle');
+  modal.classList.add('visible');
+  body.innerHTML = '<div class="loading-text">Retrieving order details…</div>';
+
+  try {
+    const order = await api(`/orders/${orderId}`);
+    title.innerText = `Order: ${order.orderNumber}`;
+    const addr = order.shippingAddress || {};
+    const items = order.items || [];
+
+    body.innerHTML = `
+      <div class="detail-grid">
+        <div class="detail-group">
+          <div class="detail-label">Customer</div>
+          <div class="detail-value">
+            ${order.user ? `${order.user.firstName || ''} ${order.user.lastName || ''}`.trim() : 'Guest'}<br>
+            <span style="color:var(--admin-text-secondary);font-size:12px">${order.user?.email || ''}</span>
+          </div>
+        </div>
+        <div class="detail-group">
+          <div class="detail-label">Order Placed</div>
+          <div class="detail-value">${new Date(order.createdAt).toLocaleString('en-IN')}</div>
+        </div>
+        <div class="detail-group">
+          <div class="detail-label">Payment Status</div>
+          <div class="detail-value">${getPayBadge(order.paymentStatus)}</div>
+        </div>
+        <div class="detail-group">
+          <div class="detail-label">Fulfillment Status</div>
+          <div class="detail-value">
+            <select class="form-select" onchange="updateOrderStatus(${order.id}, this.value)">
+              ${['Pending','Confirmed','Shipped','Delivered','Cancelled'].map(s =>
+                `<option value="${s}" ${order.orderStatus === s ? 'selected' : ''}>${s}</option>`
+              ).join('')}
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <hr class="detail-divider">
+      <div class="detail-label" style="margin-bottom:12px">Delivery Address</div>
+      <div class="detail-value" style="line-height:1.8;font-size:13px">
+        <strong>${addr.fullName || addr.name || 'N/A'}</strong><br>
+        ${addr.addressLine1 || ''} ${addr.addressLine2 ? ', ' + addr.addressLine2 : ''}<br>
+        ${addr.city || ''}, ${addr.state || ''} — ${addr.postalCode || ''}<br>
+        ${addr.country || 'India'} &nbsp;|&nbsp; 📞 ${addr.phone || '—'}
+      </div>
+
+      <hr class="detail-divider">
+      <div class="detail-label" style="margin-bottom:12px">Items Ordered (${items.length})</div>
+      ${items.map(item => {
+        const pName = item.product?.name || 'MISS REZANNA Product';
+        const size = item.size || item.variant?.size || 'M';
+        const color = item.color || item.variant?.color || 'Standard';
+        const price = parseFloat(item.price || item.unitPrice || 0);
+        return `<div class="order-item-row">
+          <div>
+            <div style="font-weight:500">${pName}</div>
+            <div style="font-size:12px;color:var(--admin-text-secondary)">Size: ${size} &nbsp;|&nbsp; Color: ${color} &nbsp;|&nbsp; Qty: ${item.quantity || 1}</div>
+          </div>
+          <div style="font-weight:500">₹ ${(price * (item.quantity || 1)).toLocaleString('en-IN')}</div>
+        </div>`;
+      }).join('')}
+
+      <div class="order-total-row">
+        <span>Grand Total</span>
+        <span>₹ ${parseFloat(order.grandTotal).toLocaleString('en-IN')}</span>
+      </div>
+    `;
+  } catch (err) {
+    body.innerHTML = `<div style="color:var(--admin-red);padding:20px">Error: ${err.message}</div>`;
+  }
+}
+
+// =============================================
+// PRODUCTS MANAGEMENT (Add, Edit, Delete, Photos, YouTube)
+// =============================================
+let currentEditPhotos = [];
+
+async function loadProducts() {
+  const container = document.getElementById('products-grid-container');
+  container.innerHTML = '<div class="loading-text">Loading products…</div>';
+
+  try {
+    const data = await api('/products?limit=100');
+    const products = data.products || [];
+
+    if (!products.length) {
+      container.innerHTML = `
+        <div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--admin-text-secondary);">
+          <svg width="48" height="48" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="opacity:0.3;margin-bottom:12px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+          <p style="font-size:16px;margin-bottom:12px;">No products found in catalogue.</p>
+          <button class="btn-action primary" onclick="openAddProductModal()">+ Add Your First Product</button>
+        </div>`;
+      return;
+    }
+
+    container.innerHTML = products.map(p => {
+      let imgSrc = PLACEHOLDER_IMG;
+      try {
+        const imgs = typeof p.images === 'string' ? JSON.parse(p.images) : p.images;
+        if (Array.isArray(imgs) && imgs.length > 0) {
+          const first = typeof imgs[0] === 'string' ? imgs[0] : (imgs[0].imageUrl || '');
+          if (first && first.trim()) {
+            imgSrc = first.trim();
+          }
+        }
+      } catch (e) { }
+
+      const price = p.basePrice || p.price || 0;
+      const status = p.status || 'active';
+      const hasYoutube = p.youtubeUrl ? true : false;
+      const tax = parseFloat(p.taxPercentage || 0);
+      let stock = 0;
+      if (p.variants && p.variants[0] && p.variants[0].inventory) {
+          stock = p.variants[0].inventory.stock || 0;
+      }
+
+      return `<div class="product-admin-card">
+        <div style="position:relative;">
+          <img src="${imgSrc}" class="product-admin-img" alt="${escapeHtml(p.name)}" onerror="this.onerror=null;this.src=PLACEHOLDER_IMG">
+          ${hasYoutube ? `<span class="badge" style="position:absolute;top:8px;right:8px;background:#FF0000;color:#fff;font-size:10px;">▶ YouTube Video</span>` : ''}
+        </div>
+        <div class="product-admin-info">
+          <div class="product-admin-name">${escapeHtml(p.name)}</div>
+          <div class="product-admin-price">₹ ${parseFloat(price).toLocaleString('en-IN')}</div>
+          <div class="product-admin-meta">
+            <span>${p.category?.name || 'Collection'}</span>
+            <span class="badge badge-${status}">${status}</span>
+            <div style="font-size:11px;color:var(--admin-text-secondary);margin-top:6px;font-weight:600;">Stock: ${stock} &nbsp;|&nbsp; Tax: ${tax}%</div>
+          </div>
+          
+          <div class="product-card-actions">
+            <button class="btn-card-edit" onclick="openEditProductModal(${p.id})">
+              <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+              Edit Details
+            </button>
+            <button class="btn-card-delete" onclick="confirmDeleteProduct(${p.id}, '${escapeHtml(p.name)}')">
+              🗑️
+            </button>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  } catch (err) {
+    container.innerHTML = `<div class="loading-text" style="color:var(--admin-red)">Error loading products: ${err.message}</div>`;
+  }
+}
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str).replace(/'/g, "&#39;").replace(/"/g, "&quot;");
+}
+
+function parseYouTubeEmbed(url) {
+  if (!url || typeof url !== 'string') return null;
+  const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
+  return match ? `https://www.youtube.com/embed/${match[1]}` : null;
+}
+
+function openAddProductModal() {
+  currentEditPhotos = ['images/A.jpeg'];
+  renderProductFormModal(null, {
+    name: '',
+    price: '',
+    sku: `MR-KU-${Math.floor(100 + Math.random() * 900)}`,
+    description: '',
+    youtubeUrl: '',
+    status: 'active',
+    stock: '',
+    taxPercentage: 0
+  });
+}
+
+async function openEditProductModal(productId) {
+  const modal = document.getElementById('productModal');
+  const body = document.getElementById('productModalBody');
+  const title = document.getElementById('modalProductTitle');
+  modal.classList.add('visible');
+  title.innerText = 'Edit Product';
+  body.innerHTML = '<div class="loading-text">Loading product details…</div>';
+
+  try {
+    const p = await api(`/products/${productId}`);
+    let photos = [];
+    if (p.images && Array.isArray(p.images)) {
+      photos = p.images.map(img => typeof img === 'string' ? img : (img.imageUrl || 'images/A.jpeg'));
+    }
+    if (photos.length === 0) photos = ['images/A.jpeg'];
+    currentEditPhotos = photos;
+
+    let stock = 0;
+    if (p.variants && p.variants[0] && p.variants[0].inventory) {
+        stock = p.variants[0].inventory.stock || 0;
+    }
+    p.stock = stock;
+
+    renderProductFormModal(productId, p);
+  } catch (err) {
+    body.innerHTML = `<div style="color:var(--admin-red);padding:20px;">Error: ${err.message}</div>`;
+  }
+}
+
+function renderProductFormModal(productId, data) {
+  const modal = document.getElementById('productModal');
+  const body = document.getElementById('productModalBody');
+  const title = document.getElementById('modalProductTitle');
+  modal.classList.add('visible');
+  title.innerText = productId ? `Edit Product: ${data.name}` : 'Add New Product';
+
+  const embedUrl = parseYouTubeEmbed(data.youtubeUrl || '');
+
+  body.innerHTML = `
+    <form id="productForm" onsubmit="handleProductFormSubmit(event, ${productId})">
+      <div class="form-group">
+        <label>Product Name *</label>
+        <input type="text" id="pf-name" class="form-control" value="${escapeHtml(data.name || '')}" placeholder="e.g. Royal Silk Kurti Set" required>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Price (₹) *</label>
+          <input type="number" id="pf-price" class="form-control" value="${data.price || ''}" placeholder="3500" required step="0.01">
+        </div>
+        <div class="form-group">
+          <label>SKU Code *</label>
+          <input type="text" id="pf-sku" class="form-control" value="${escapeHtml(data.sku || '')}" placeholder="MR-KU-001" required>
+        </div>
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label>Total Stock Qty *</label>
+          <input type="number" id="pf-stock" class="form-control" value="${data.stock !== undefined ? data.stock : ''}" placeholder="50" required min="0">
+        </div>
+        <div class="form-group">
+          <label>Tax Percentage (%) *</label>
+          <input type="number" id="pf-tax" class="form-control" value="${data.taxPercentage !== undefined ? data.taxPercentage : '0'}" placeholder="12" required step="0.1" min="0" max="100">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Description</label>
+        <textarea id="pf-description" class="form-control" rows="3" placeholder="Intricate threadwork with ethically sourced Mulberry silk drape...">${escapeHtml(data.description || '')}</textarea>
+      </div>
+
+      <!-- YOUTUBE VIDEO INTEGRATION -->
+      <div class="form-group" style="background:rgba(255,0,0,0.03);padding:14px;border:1px solid rgba(255,0,0,0.15);border-radius:6px;">
+        <label style="color:#d32f2f;display:flex;align-items:center;gap:6px;">
+          <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
+          YouTube Video Link (Optional)
+        </label>
+        <input type="url" id="pf-youtube" class="form-control" value="${escapeHtml(data.youtubeUrl || '')}" placeholder="Paste YouTube link (e.g. https://www.youtube.com/watch?v=VIDEO_ID)" oninput="updateYouTubePreview(this.value)">
+        <div style="font-size:11px;color:var(--admin-text-secondary);margin-top:4px;">Paste any YouTube video link to display embedded video on product page.</div>
+        
+        <div id="youtube-preview-container" class="youtube-preview-box" style="${embedUrl ? 'display:block;' : 'display:none;'}">
+          <iframe id="youtube-iframe" src="${embedUrl || ''}" allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <!-- PHOTOS MANAGEMENT SECTION -->
+      <div class="form-group">
+        <label style="display:flex;justify-content:space-between;align-items:center;">
+          <span>Product Photos Gallery</span>
+          <span style="font-size:11px;color:var(--admin-text-secondary);">${currentEditPhotos.length} existing photo(s)</span>
+        </label>
+        
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px;background:rgba(195,161,103,0.08);padding:12px;border-radius:6px;border:1px dashed rgba(195,161,103,0.5);">
+          <div style="position:relative; display:block; padding:16px; font-size:14px; width:100%; font-weight:bold; background:#000; color:#fff; text-align:center; border-radius:4px; cursor:pointer; overflow:hidden;">
+            📁 CLICK HERE TO UPLOAD NEW PHOTOS FROM COMPUTER
+            <input type="file" id="pf-photo-upload" accept="image/*" multiple onchange="updatePhotoPreviews()" style="position:absolute; top:0; left:0; width:100%; height:100%; opacity:0; cursor:pointer; font-size:100px;">
+          </div>
+        </div>
+
+        <div class="photo-gallery-preview" id="photoGalleryContainer">
+          ${renderPhotoThumbsHTML()}
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:24px;">
+        <button type="button" class="btn-action" onclick="closeModal('productModal')">Cancel</button>
+        <button type="submit" class="btn-action primary" id="btnSaveProduct">${productId ? 'Save Changes' : 'Create Product'}</button>
+      </div>
+    </form>
+  `;
+}
+
+function updatePhotoPreviews() {
+  document.getElementById('photoGalleryContainer').innerHTML = renderPhotoThumbsHTML();
+}
+
+function renderPhotoThumbsHTML() {
+  const fileInput = document.getElementById('pf-photo-upload');
+  const newFiles = fileInput && fileInput.files ? Array.from(fileInput.files) : [];
+  
+  if (!currentEditPhotos.length && !newFiles.length) {
+    return `<div style="grid-column:1/-1;font-size:12px;color:var(--admin-text-secondary);text-align:center;padding:12px;">No photos added yet. Use the file selector above to upload images from your computer.</div>`;
+  }
+  
+  let html = '';
+  
+  // Render existing photos
+  html += currentEditPhotos.map((url, idx) => `
+    <div class="photo-thumb-box">
+      <img src="${escapeHtml(url)}" onerror="this.onerror=null;this.src=PLACEHOLDER_IMG" alt="Photo ${idx + 1}">
+      <button type="button" class="btn-remove-photo" onclick="removePhoto(${idx})" title="Remove photo">&times;</button>
+    </div>
+  `).join('');
+
+  // Render new local files (preview only, cannot be individually removed easily via standard input type=file, so no X button)
+  html += newFiles.map((file, idx) => `
+    <div class="photo-thumb-box" style="border: 2px solid #C3A167;">
+      <img src="${URL.createObjectURL(file)}" alt="New File ${idx + 1}">
+      <div style="position:absolute;bottom:0;background:rgba(195,161,103,0.9);color:#fff;font-size:9px;width:100%;text-align:center;padding:2px;">NEW</div>
+    </div>
+  `).join('');
+
+  return html;
+}
+
+function addPhotoUrl() {
+  const input = document.getElementById('pf-new-photo-url');
+  const url = (input.value || '').trim();
+  if (!url) return;
+  currentEditPhotos.push(url);
+  input.value = '';
+  document.getElementById('photoGalleryContainer').innerHTML = renderPhotoThumbsHTML();
+}
+
+function removePhoto(index) {
+  currentEditPhotos.splice(index, 1);
+  document.getElementById('photoGalleryContainer').innerHTML = renderPhotoThumbsHTML();
+}
+
+function updateYouTubePreview(url) {
+  const container = document.getElementById('youtube-preview-container');
+  const iframe = document.getElementById('youtube-iframe');
+  const embed = parseYouTubeEmbed(url);
+
+  if (embed) {
+    iframe.src = embed;
+    container.style.display = 'block';
+  } else {
+    iframe.src = '';
+    container.style.display = 'none';
+  }
+}
+
+async function handleProductFormSubmit(e, productId) {
+  e.preventDefault();
+  const btn = document.getElementById('btnSaveProduct');
+  btn.innerText = 'Saving…';
+  btn.disabled = true;
+
+  const payload = new FormData();
+  payload.append('name', document.getElementById('pf-name').value.trim());
+  payload.append('price', document.getElementById('pf-price').value);
+  payload.append('sku', document.getElementById('pf-sku').value.trim());
+  payload.append('description', document.getElementById('pf-description').value.trim());
+  
+  const yt = document.getElementById('pf-youtube').value.trim();
+  if (yt) payload.append('youtubeUrl', yt);
+  
+  payload.append('stock', document.getElementById('pf-stock').value);
+  payload.append('taxPercentage', document.getElementById('pf-tax').value);
+
+  // Existing images to keep
+  payload.append('imageUrls', JSON.stringify(currentEditPhotos));
+
+  // New file uploads from computer
+  const fileInput = document.getElementById('pf-photo-upload');
+  if (fileInput && fileInput.files.length > 0) {
+    for (let i = 0; i < fileInput.files.length; i++) {
+      payload.append('images', fileInput.files[i]);
+    }
+  }
+
+  try {
+    if (productId) {
+      await api(`/products/${productId}`, 'PUT', payload);
+      alert('Product updated successfully!');
+    } else {
+      await api('/products', 'POST', payload);
+      alert('Product created successfully!');
+    }
+    closeModal('productModal');
+    loadProducts();
+  } catch (err) {
+    alert('Failed to save product: ' + err.message);
+  } finally {
+    btn.innerText = productId ? 'Save Changes' : 'Create Product';
+    btn.disabled = false;
+  }
+}
+
+async function confirmDeleteProduct(productId, productName) {
+  if (!confirm(`Are you sure you want to delete "${productName}" from the catalogue?`)) {
+    return;
+  }
+
+  try {
+    await api(`/products/${productId}`, 'DELETE');
+    alert(`"${productName}" deleted successfully.`);
+    loadProducts();
+  } catch (err) {
+    alert('Failed to delete product: ' + err.message);
+  }
+}
+
+// =============================================
+// CUSTOMERS
+// =============================================
+async function loadCustomers() {
+  const tbody = document.getElementById('customers-table-body');
+  tbody.innerHTML = '<tr><td colspan="6" class="loading-text">Loading customers…</td></tr>';
+
+  // The backend doesn't have a dedicated admin users endpoint,
+  // so we pull from orders and extract unique users
+  try {
+    const data = await api('/orders?limit=100');
+    const orders = data.orders || [];
+
+    const usersMap = {};
+    orders.forEach(o => {
+      if (o.user && o.user.email) {
+        const uid = o.user.email;
+        if (!usersMap[uid]) {
+          usersMap[uid] = { ...o.user, orderCount: 0, totalSpent: 0 };
+        }
+        usersMap[uid].orderCount++;
+        usersMap[uid].totalSpent += parseFloat(o.grandTotal || 0);
+      }
+    });
+
+    const customers = Object.values(usersMap);
+
+    if (!customers.length) {
+      tbody.innerHTML = '<tr><td colspan="6" class="loading-text">No registered customers yet</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = customers.map(u => {
+      const joined = u.createdAt ? new Date(u.createdAt).toLocaleDateString('en-IN') : '—';
+      return `<tr>
+        <td>
+          <div class="customer-name">${(u.firstName || 'Guest')} ${u.lastName || ''}</div>
+        </td>
+        <td>${u.email || '—'}</td>
+        <td>${u.phone || '—'}</td>
+        <td>${joined}</td>
+        <td><span class="badge badge-${(u.status || 'active')}">${u.status || 'Active'}</span></td>
+        <td>${u.orderCount} orders &nbsp;·&nbsp; ₹ ${u.totalSpent.toLocaleString('en-IN')}</td>
+      </tr>`;
+    }).join('');
+  } catch (err) {
+    tbody.innerHTML = `<tr><td colspan="6" class="loading-text" style="color:var(--admin-red)">Error: ${err.message}</td></tr>`;
+  }
+}
+
+// =============================================
+// UTILITIES
+// =============================================
+function closeModal(id) {
+  document.getElementById(id).classList.remove('visible');
+}
+
+// Close modal on overlay click
+document.addEventListener('click', (e) => {
+  if (e.target.classList.contains('modal-overlay')) {
+    e.target.classList.remove('visible');
+  }
+});
+
+function renderPagination(containerId, currentPage, totalPages, callback) {
+  const container = document.getElementById(containerId);
+  if (totalPages <= 1) { container.innerHTML = ''; return; }
+  let html = '';
+  for (let i = 1; i <= totalPages; i++) {
+    html += `<button class="btn-action ${i === currentPage ? 'primary' : ''}" onclick="${callback.name}(${i})" style="padding:6px 14px">${i}</button>`;
+  }
+  container.innerHTML = html;
+}
+</script>
 </body>
 </html>
