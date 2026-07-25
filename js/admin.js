@@ -536,9 +536,9 @@ function renderProductFormModal(productId, data) {
           <span style="font-size:11px;color:var(--admin-text-secondary);">${currentEditPhotos.length} existing photo(s)</span>
         </label>
         
-        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px;">
-          <label style="font-size:12px;color:var(--admin-text-secondary);">Upload New Photos from Computer:</label>
-          <input type="file" id="pf-photo-upload" accept="image/*" multiple class="form-control" style="padding:8px;">
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px;background:rgba(195,161,103,0.08);padding:12px;border-radius:6px;border:1px dashed rgba(195,161,103,0.5);">
+          <label style="font-size:13px;color:#000;font-weight:600;text-align:center;">📁 Upload New Photos directly from your computer</label>
+          <input type="file" id="pf-photo-upload" accept="image/*" multiple class="form-control" style="padding:10px;background:#fff;border:1px solid #ccc;cursor:pointer;">
         </div>
 
         <div class="photo-gallery-preview" id="photoGalleryContainer">
@@ -556,7 +556,7 @@ function renderProductFormModal(productId, data) {
 
 function renderPhotoThumbsHTML() {
   if (!currentEditPhotos.length) {
-    return `<div style="grid-column:1/-1;font-size:12px;color:var(--admin-text-secondary);text-align:center;padding:12px;">No photos added yet. Add an image URL above.</div>`;
+    return `<div style="grid-column:1/-1;font-size:12px;color:var(--admin-text-secondary);text-align:center;padding:12px;">No photos added yet. Use the file selector above to upload images from your computer.</div>`;
   }
   return currentEditPhotos.map((url, idx) => `
     <div class="photo-thumb-box">
