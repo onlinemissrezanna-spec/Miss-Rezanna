@@ -1125,8 +1125,10 @@ function checkAuth() {
   const overlay = document.getElementById('loginOverlay');
   if (adminToken) {
     if (overlay) overlay.classList.add('hidden');
-    // Open Dashboard tab by default on login
-    switchTab('dashboard', document.querySelector('.nav-item[data-tab="dashboard"]'));
+    // Restore active tab from URL hash or localStorage on page refresh
+    const hashTab = window.location.hash ? window.location.hash.replace('#', '') : null;
+    const savedTab = hashTab || localStorage.getItem('mr_admin_active_tab') || 'dashboard';
+    switchTab(savedTab);
   } else {
     if (overlay) overlay.classList.remove('hidden');
   }
@@ -1212,11 +1214,23 @@ async function api(path, method = 'GET', body = null) {
 // TAB SWITCHING
 // =============================================
 function switchTab(tabName, el) {
+  if (!tabName) return;
   document.querySelectorAll('.tab-view').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  
   const targetTab = document.getElementById(`tab-${tabName}`);
   if (targetTab) targetTab.classList.add('active');
-  if (el) el.classList.add('active');
+  
+  const navEl = el || document.querySelector(`.nav-item[data-tab="${tabName}"]`);
+  if (navEl) navEl.classList.add('active');
+
+  // Save tab state to localStorage & URL hash so browser refresh stays on current page
+  localStorage.setItem('mr_admin_active_tab', tabName);
+  try {
+    if (history.replaceState) {
+      history.replaceState(null, '', `#${tabName}`);
+    }
+  } catch (e) {}
 
   if (tabName === 'dashboard') loadDashboard();
   if (tabName === 'orders') loadOrders();
