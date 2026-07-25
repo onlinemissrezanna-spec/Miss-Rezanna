@@ -733,30 +733,19 @@ function renderProductFormModal(productId, data) {
 
   body.innerHTML = `
     <style>
-      .pform-tabs-bar { display:flex; gap:4px; border-bottom:1px solid #e0e0e0; margin-bottom:16px; overflow-x:auto; }
-      .pform-tab-btn { background:none; border:none; padding:10px 14px; font-size:12px; font-weight:600; color:#666; cursor:pointer; border-bottom:2px solid transparent; white-space:nowrap; }
-      .pform-tab-btn.active { color:#000; border-bottom-color:#C3A167; }
-      .pform-tab-content { display:none; }
+      .pform-section { background:#fafafa; border:1px solid #e2e8f0; border-radius:8px; padding:18px; margin-bottom:20px; }
+      .pform-section-title { font-size:14px; font-weight:700; color:#1a202c; margin-bottom:14px; padding-bottom:8px; border-bottom:2px solid #C3A167; display:flex; align-items:center; gap:8px; }
       .serp-card { background:#fff; border:1px solid #dfe1e5; border-radius:8px; padding:14px; font-family:arial,sans-serif; }
       .serp-title { color:#1a0dab; font-size:18px; line-height:1.2; text-decoration:hover; cursor:pointer; }
       .serp-url { color:#202124; font-size:13px; margin-top:2px; }
       .serp-desc { color:#4d5156; font-size:13px; margin-top:4px; line-height:1.48; }
     </style>
 
-    <div class="pform-tabs-bar">
-      <button type="button" class="pform-tab-btn active" id="tabbtn-basic" onclick="switchFormTab('basic')">📝 Basic Info</button>
-      <button type="button" class="pform-tab-btn" id="tabbtn-pricing" onclick="switchFormTab('pricing')">💰 Price & Stock</button>
-      <button type="button" class="pform-tab-btn" id="tabbtn-specs" onclick="switchFormTab('specs')">✨ Specs & Attributes</button>
-      <button type="button" class="pform-tab-btn" id="tabbtn-photos" onclick="switchFormTab('photos')">🖼️ Photos</button>
-      <button type="button" class="pform-tab-btn" id="tabbtn-seo" onclick="switchFormTab('seo')">🎯 SEO & Social</button>
-      <button type="button" class="pform-tab-btn" id="tabbtn-audit" onclick="switchFormTab('audit')">⚡ Live SEO Audit</button>
-      <button type="button" class="pform-tab-btn" id="tabbtn-schema" onclick="switchFormTab('schema')">📦 Schemas & FAQs</button>
-    </div>
-
     <form id="productForm" onsubmit="handleProductFormSubmit(event, ${productId})">
 
-      <!-- TAB 1: BASIC INFO -->
-      <div class="pform-tab-content" id="pformtab-basic" style="display:block;">
+      <!-- SECTION 1: BASIC INFO -->
+      <div class="pform-section">
+        <div class="pform-section-title">📝 1. Basic Product Info</div>
         <div class="form-group">
           <label>Product Title *</label>
           <input type="text" id="pf-name" class="form-control" value="${escapeHtml(data.name || '')}" placeholder="e.g. Royal Mulberry Silk Kurti Set" required oninput="autoGenerateSlug(this.value); updateSeoAudit();">
@@ -794,8 +783,9 @@ function renderProductFormModal(productId, data) {
         </div>
       </div>
 
-      <!-- TAB 2: PRICING & STOCK -->
-      <div class="pform-tab-content" id="pformtab-pricing">
+      <!-- SECTION 2: PRICING & STOCK -->
+      <div class="pform-section">
+        <div class="pform-section-title">💰 2. Pricing & Stock</div>
         <div class="form-row">
           <div class="form-group">
             <label>Product Price (₹) *</label>
@@ -830,8 +820,9 @@ function renderProductFormModal(productId, data) {
         </div>
       </div>
 
-      <!-- TAB 3: SPECS & ATTRIBUTES -->
-      <div class="pform-tab-content" id="pformtab-specs">
+      <!-- SECTION 3: SPECS & ATTRIBUTES -->
+      <div class="pform-section">
+        <div class="pform-section-title">✨ 3. Specifications & Attributes</div>
         <div class="form-row">
           <div class="form-group">
             <label>Fabric / Material</label>
@@ -860,8 +851,9 @@ function renderProductFormModal(productId, data) {
         </div>
       </div>
 
-      <!-- TAB 4: PHOTOS -->
-      <div class="pform-tab-content" id="pformtab-photos">
+      <!-- SECTION 4: PHOTOS -->
+      <div class="pform-section">
+        <div class="pform-section-title">🖼️ 4. Product Photos</div>
         <div class="form-group">
           <label style="display:flex;justify-content:space-between;align-items:center;">
             <span>Product Photos Gallery</span>
@@ -881,8 +873,9 @@ function renderProductFormModal(productId, data) {
         </div>
       </div>
 
-      <!-- TAB 5: SEO & SOCIAL -->
-      <div class="pform-tab-content" id="pformtab-seo">
+      <!-- SECTION 5: SEO & SOCIAL -->
+      <div class="pform-section">
+        <div class="pform-section-title">🎯 5. Search Engine Optimization (SEO)</div>
         <div class="form-row">
           <div class="form-group">
             <label>Focus Primary Keyword</label>
@@ -925,11 +918,12 @@ function renderProductFormModal(productId, data) {
         </div>
       </div>
 
-      <!-- TAB 6: LIVE SEO AUDIT & PREVIEWS -->
-      <div class="pform-tab-content" id="pformtab-audit">
-        <div style="background:#f4f6f8;padding:16px;border-radius:8px;margin-bottom:16px;border:1px solid #e1e4e8;">
+      <!-- SECTION 6: LIVE SEO AUDIT & PREVIEWS -->
+      <div class="pform-section">
+        <div class="pform-section-title">⚡ 6. Live Google SERP Preview & SEO Audit</div>
+        <div style="background:#fff;padding:16px;border-radius:8px;margin-bottom:16px;border:1px solid #e1e4e8;">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-            <span style="font-weight:700;font-size:14px;color:#111;">🎯 SEO Optimization Score</span>
+            <span style="font-weight:700;font-size:14px;color:#111;">🎯 Real-Time SEO Health Score</span>
             <span id="seo-score-num" style="font-size:18px;font-weight:800;color:#2e7d32;">0%</span>
           </div>
           <div style="background:#e0e0e0;height:10px;border-radius:5px;overflow:hidden;margin-bottom:14px;">
@@ -939,7 +933,7 @@ function renderProductFormModal(productId, data) {
         </div>
 
         <div style="margin-bottom:16px;">
-          <label style="font-weight:700;font-size:13px;display:block;margin-bottom:8px;">🔍 Google Search Result SERP Preview</label>
+          <label style="font-weight:700;font-size:13px;display:block;margin-bottom:8px;">🔍 Live Google Search Result SERP Preview</label>
           <div class="serp-card">
             <div class="serp-url" id="serp-preview-url">https://www.missrezanna.com › product</div>
             <div class="serp-title" id="serp-preview-title">Product Title Preview</div>
@@ -948,8 +942,9 @@ function renderProductFormModal(productId, data) {
         </div>
       </div>
 
-      <!-- TAB 7: SCHEMAS & FAQS -->
-      <div class="pform-tab-content" id="pformtab-schema">
+      <!-- SECTION 7: SCHEMAS & FAQS -->
+      <div class="pform-section">
+        <div class="pform-section-title">📦 7. FAQ Builder & JSON-LD Schemas</div>
         <div class="form-group">
           <label style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
             <span style="font-weight:700;">❓ Frequently Asked Questions (FAQ Schema)</span>
@@ -966,7 +961,7 @@ function renderProductFormModal(productId, data) {
 
       <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:24px;border-top:1px solid #eee;padding-top:16px;">
         <button type="button" class="btn-action" onclick="closeModal('productModal')">Cancel</button>
-        <button type="submit" class="btn-action primary" id="btnSaveProduct" style="background:#C3A167;color:#000;font-weight:700;">${productId ? 'Save Changes' : 'Create Product'}</button>
+        <button type="submit" class="btn-action primary" id="btnSaveProduct" style="background:#C3A167;color:#000;font-weight:700;padding:12px 24px;font-size:14px;">${productId ? 'Save Changes' : 'Create Product'}</button>
       </div>
     </form>
   `;
