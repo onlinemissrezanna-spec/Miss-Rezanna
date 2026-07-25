@@ -165,7 +165,11 @@ const updateProduct = async (id, data, uploadedImages = []) => {
 
     let imageList = [];
     if (uploadedImages && uploadedImages.length > 0) {
-        uploadedImages.forEach(img => imageList.push(img.path || img.filename || img));
+        uploadedImages.forEach(img => {
+            let p = img.path || img.filename || img;
+            if (typeof p === 'string') p = p.replace(/\\/g, '/');
+            imageList.push(p);
+        });
     }
     if (data.imageUrls !== undefined) {
         const urls = Array.isArray(data.imageUrls) ? data.imageUrls : (typeof data.imageUrls === 'string' ? JSON.parse(data.imageUrls) : []);
