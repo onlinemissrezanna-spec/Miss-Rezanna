@@ -18,12 +18,25 @@
 .size-guide-container {
   max-width: 800px;
   margin: 0 auto;
+  background: #ffffff;
+  border: 1px solid rgba(195, 161, 103, 0.35);
+  border-radius: 16px;
+  padding: 44px 36px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .size-guide-container {
+    padding: 28px 20px;
+  }
 }
 
 .size-guide-header {
-  margin-bottom: var(--space-12);
+  margin-bottom: var(--space-8);
   opacity: 0; /* GSAP */
   transform: translateY(20px);
+  text-align: center;
 }
 
 .size-guide-title {
@@ -31,12 +44,14 @@
   font-size: var(--text-h3);
   color: var(--color-text-primary);
   margin-bottom: var(--space-2);
+  text-align: center;
 }
 
 .size-guide-subtitle {
   font-family: var(--font-body);
   font-size: var(--text-body);
   color: var(--color-text-secondary);
+  text-align: center;
 }
 
 /* Form Layout */

@@ -26,7 +26,7 @@
   .complete-look-container {
     flex-direction: row;
     align-items: center;
-    gap: var(--space-20);
+    gap: 32px;
   }
 }
 
@@ -41,7 +41,9 @@
 .complete-look-image-wrapper {
   aspect-ratio: 3 / 4;
   overflow: hidden;
+  border-radius: 16px;
   background-color: var(--color-bg-secondary);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
 }
 
 .complete-look-img {
@@ -55,11 +57,25 @@
   transform: scale(1.05);
 }
 
-/* Right: Content */
+/* Right: Content Card Box */
 .complete-look-content-col {
   flex: 1;
   display: flex;
   flex-direction: column;
+}
+
+.complete-look-card {
+  background: #ffffff;
+  border: 1px solid rgba(195, 161, 103, 0.35);
+  border-radius: 16px;
+  padding: 40px 36px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+}
+
+@media (max-width: 768px) {
+  .complete-look-card {
+    padding: 24px 20px;
+  }
 }
 
 .complete-look-header {

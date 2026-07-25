@@ -20,10 +20,14 @@
   <!-- Floating Logo (for immersive scroll) -->
   <a href="index.html" class="brand-logo" style="position:fixed; top:20px; left:50%; transform:translateX(-50%); z-index:1001;"><img src="images/logo.png" alt="MISS REZANNA" style="height: 72px; width: auto; display: block;"></a>
   
-  <!-- Back Button (Mobile) -->
-  <a href="index.html" style="position:fixed; top:20px; left:20px; z-index:1001; mix-blend-mode:difference; color:white;">
-    <i data-lucide="arrow-left"></i>
-  </a>
+  <!-- 3-Line Shutter Panel Toggle Button (Just Left of Logo) -->
+  <button class="hamburger-toggle-btn" onclick="openSlideBar()" aria-label="Open Navigation Menu" style="position:fixed; top:20px; left:20px; z-index:1001; background:rgba(255,255,255,0.85); backdrop-filter:blur(4px); border-radius:50%; width:44px; height:44px; padding:0;">
+    <div class="hamburger-lines">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </button>
 
   <main class="pdp-main">
     <div class="pdp-container">
@@ -62,13 +66,16 @@
             <span>Select Size</span>
             <span class="size-guide-link">Size Guide</span>
           </div>
-          <div class="size-grid">
-            <button class="size-btn">XS</button>
-            <button class="size-btn">S</button>
-            <button class="size-btn active">M</button>
+          <div class="size-grid" style="grid-template-columns: repeat(5, 1fr); gap: 8px;">
+            <button class="size-btn active">S</button>
+            <button class="size-btn">M</button>
             <button class="size-btn">L</button>
             <button class="size-btn">XL</button>
-            <button class="size-btn">XXL</button>
+            <button class="size-btn">2XL</button>
+            <button class="size-btn">3XL</button>
+            <button class="size-btn">4XL</button>
+            <button class="size-btn">5XL</button>
+            <button class="size-btn">6XL</button>
           </div>
         </div>
 
@@ -125,6 +132,7 @@
   <script src="js/cart.js"></script>
   <script src="js/catalog.js"></script>
   <script src="js/product.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>
 

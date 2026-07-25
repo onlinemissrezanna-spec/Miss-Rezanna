@@ -59,6 +59,15 @@
 
   <header class="site-header" id="site-header">
     <div class="header-container">
+      <!-- 3-Line Shutter Panel Toggle Button (Just Left of Logo) -->
+      <button class="hamburger-toggle-btn" onclick="openSlideBar()" aria-label="Open Navigation Menu">
+        <div class="hamburger-lines">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </button>
+
       <a href="index.html" class="brand-logo"><img src="images/logo.png" alt="MISS REZANNA" style="height: 60px; width: auto; display: inline-block; vertical-align: middle;"></a>
       <nav class="desktop-nav">
         <ul class="nav-list text-button">
@@ -178,11 +187,34 @@
           </div>
         </div>
       </div>
-      <div class="footer-bottom"><span>&copy; 2026 MISS REZANNA. All Rights Reserved.</span></div>
-    </div>
-  </footer>
+  <!-- HIGH-LUXURY MOBILE APP DOCK -->
+  <nav class="mobile-app-dock">
+    <a href="index.html" class="mobile-dock-item">
+      <i data-lucide="home"></i>
+      <span>Home</span>
+    </a>
+    <a href="collection.html" class="mobile-dock-item">
+      <i data-lucide="grid"></i>
+      <span>Explore</span>
+    </a>
+    <a href="#" onclick="openSlideBar(); return false;" class="mobile-dock-item">
+      <i data-lucide="compass"></i>
+      <span>Menu</span>
+    </a>
+    <a href="#" class="mobile-dock-item">
+      <i data-lucide="heart"></i>
+      <span>Wishlist</span>
+    </a>
+    <a href="cart.html" class="mobile-dock-item active">
+      <i data-lucide="shopping-bag"></i>
+      <span>Bag</span>
+      <span class="mobile-dock-badge" id="mobile-cart-count">0</span>
+    </a>
+  </nav>
+
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script src="js/cart.js"></script>
+<script src="js/main.js"></script>
 <script>
   lucide.createIcons();
 </script>

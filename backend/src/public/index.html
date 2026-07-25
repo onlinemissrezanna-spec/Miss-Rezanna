@@ -6,26 +6,26 @@
   <title>MISS REZANNA | Official Store</title>
   
   <!-- Core Design System CSS -->
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=3.0">
   <!-- Hero Section Specific CSS -->
-  <link rel="stylesheet" href="css/hero.css">
-  <link rel="stylesheet" href="css/our-story.css">
-  <link rel="stylesheet" href="css/collections.css">
-  <link rel="stylesheet" href="css/craftsmanship.css">
-  <link rel="stylesheet" href="css/fabric-banner.css">
-  <link rel="stylesheet" href="css/new-arrivals.css">
-  <link rel="stylesheet" href="css/complete-look.css">
-  <link rel="stylesheet" href="css/size-guide.css">
-  <link rel="stylesheet" href="css/events.css">
-  <link rel="stylesheet" href="css/journal.css">
-  <link rel="stylesheet" href="css/lookbook.css">
-  <link rel="stylesheet" href="css/testimonials.css">
-  <link rel="stylesheet" href="css/unboxing.css">
-  <link rel="stylesheet" href="css/experience.css">
-  <link rel="stylesheet" href="css/styling-banner.css">
-  <link rel="stylesheet" href="css/circle.css">
-  <link rel="stylesheet" href="css/footer.css">
-  <link rel="stylesheet" href="css/mobile-nav.css">
+  <link rel="stylesheet" href="css/hero.css?v=3.0">
+  <link rel="stylesheet" href="css/our-story.css?v=3.0">
+  <link rel="stylesheet" href="css/collections.css?v=3.0">
+  <link rel="stylesheet" href="css/craftsmanship.css?v=3.0">
+  <link rel="stylesheet" href="css/fabric-banner.css?v=3.0">
+  <link rel="stylesheet" href="css/new-arrivals.css?v=3.0">
+  <link rel="stylesheet" href="css/complete-look.css?v=3.0">
+  <link rel="stylesheet" href="css/size-guide.css?v=3.0">
+  <link rel="stylesheet" href="css/events.css?v=3.0">
+  <link rel="stylesheet" href="css/journal.css?v=3.0">
+  <link rel="stylesheet" href="css/lookbook.css?v=3.0">
+  <link rel="stylesheet" href="css/testimonials.css?v=3.0">
+  <link rel="stylesheet" href="css/unboxing.css?v=3.0">
+  <link rel="stylesheet" href="css/experience.css?v=3.0">
+  <link rel="stylesheet" href="css/styling-banner.css?v=3.0">
+  <link rel="stylesheet" href="css/circle.css?v=3.0">
+  <link rel="stylesheet" href="css/footer.css?v=3.0">
+  <link rel="stylesheet" href="css/mobile-nav.css?v=3.0">
 
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -40,6 +40,15 @@
   <header class="site-header" id="site-header">
     <div class="header-container">
       
+      <!-- 3-Line Shutter Panel Toggle Button (Just Left of Logo) -->
+      <button class="hamburger-toggle-btn" onclick="openSlideBar()" aria-label="Open Navigation Menu">
+        <div class="hamburger-lines">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </button>
+
       <!-- Logo -->
       <a href="#" class="brand-logo h3"><img src="images/logo.png" alt="MISS REZANNA" style="height: 60px; width: auto; display: inline-block; vertical-align: middle;"></a>
       
@@ -103,12 +112,6 @@
             <button class="btn btn-secondary hero-btn" onclick="window.location.href='about.html'">Our Story</button>
           </div>
         </div>
-      </div>
-
-      <!-- Scroll Indicator -->
-      <div class="scroll-indicator">
-        <span class="scroll-text text-caption">Scroll</span>
-        <div class="scroll-line"></div>
       </div>
 
     </section>
@@ -411,44 +414,34 @@
 
         <!-- Right: Content -->
         <div class="complete-look-content-col">
-          <div class="complete-look-header">
-            <h2 class="complete-look-title">Complete The Look</h2>
-          </div>
-
-          <div class="look-stepper">
-            <div class="look-step">
-              <span class="step-number">01</span>
-              <span class="step-name">Kurti</span>
-              <div class="step-divider"></div>
-            </div>
-            
-            <div class="look-step">
-              <span class="step-number">02</span>
-              <span class="step-name">Matching Pant</span>
-              <div class="step-divider"></div>
+          <div class="complete-look-card">
+            <div class="complete-look-header">
+              <h2 class="complete-look-title">Complete The Look</h2>
             </div>
 
-            <div class="look-step">
-              <span class="step-number">03</span>
-              <span class="step-name">Earrings</span>
-              <div class="step-divider"></div>
+            <div class="look-stepper">
+              <div class="look-step">
+                <span class="step-number">01</span>
+                <span class="step-name">Kurti</span>
+                <div class="step-divider"></div>
+              </div>
+              
+              <div class="look-step">
+                <span class="step-number">02</span>
+                <span class="step-name">Matching Pant</span>
+                <div class="step-divider"></div>
+              </div>
+
+              <div class="look-step">
+                <span class="step-number">03</span>
+                <span class="step-name">Dupatta</span>
+                <div class="step-divider"></div>
+              </div>
             </div>
 
-            <div class="look-step">
-              <span class="step-number">04</span>
-              <span class="step-name">Dupatta</span>
-              <div class="step-divider"></div>
+            <div class="complete-look-action">
+              <button class="btn-shop-look" onclick="window.location.href='product.html?id=ethereal-kurti'">Shop Entire Look</button>
             </div>
-
-            <div class="look-step">
-              <span class="step-number">05</span>
-              <span class="step-name">Handbag</span>
-              <div class="step-divider"></div>
-            </div>
-          </div>
-
-          <div class="complete-look-action">
-            <button class="btn-shop-look" onclick="window.location.href='product.html?id=ethereal-kurti'">Shop Entire Look</button>
           </div>
         </div>
       </div>
@@ -963,23 +956,28 @@
     </button>
   </div>
 
-  <!-- MOBILE BOTTOM NAVIGATION -->
-  <nav class="mobile-bottom-nav">
-    <a href="index.html" class="mobile-nav-item active">
+  <!-- HIGH-LUXURY MOBILE APP DOCK -->
+  <nav class="mobile-app-dock">
+    <a href="index.html" class="mobile-dock-item active">
       <i data-lucide="home"></i>
       <span>Home</span>
     </a>
-    <a href="#" class="mobile-nav-item">
-      <i data-lucide="search"></i>
-      <span>Search</span>
+    <a href="collection.html" class="mobile-dock-item">
+      <i data-lucide="grid"></i>
+      <span>Explore</span>
     </a>
-    <a href="#" class="mobile-nav-item">
+    <a href="#" onclick="openSlideBar(); return false;" class="mobile-dock-item">
+      <i data-lucide="compass"></i>
+      <span>Menu</span>
+    </a>
+    <a href="#" class="mobile-dock-item">
       <i data-lucide="heart"></i>
       <span>Wishlist</span>
     </a>
-    <a href="product.html" class="mobile-nav-item">
+    <a href="cart.html" class="mobile-dock-item">
       <i data-lucide="shopping-bag"></i>
-      <span>Bag (2)</span>
+      <span>Bag</span>
+      <span class="mobile-dock-badge" id="mobile-cart-count">0</span>
     </a>
   </nav>
 

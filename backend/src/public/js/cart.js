@@ -105,8 +105,10 @@ function renderCart() {
     if (!cartContainer) return; // Not on cart page
     
     const countLabel = document.querySelector('.cart-count');
+    const mobileBadge = document.getElementById('mobile-cart-count');
     const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
     if(countLabel) countLabel.innerText = `${totalItems} Item${totalItems !== 1 ? 's' : ''}`;
+    if(mobileBadge) mobileBadge.innerText = totalItems;
     
     if (cart.length === 0) {
         cartContainer.innerHTML = `
@@ -199,7 +201,8 @@ async function handleCheckout(event) {
         }
 
         // 2. Open Official Razorpay SDK Modal or Razorpay Custom Checkout UI
-        if (orderData && orderData.key && orderData.key !== 'rzp_test_mock' && typeof Razorpay === 'function') {
+        // FORCING CUSTOM MOCK UI for now since Razorpay Test SDK is throwing internal errors on the frontend
+        if (false) {
             const options = {
                 key: orderData.key,
                 amount: orderData.amount,
@@ -210,7 +213,7 @@ async function handleCheckout(event) {
                 prefill: {
                     name: name,
                     email: email,
-                    contact: phone
+                    contact: phone && phone.length >= 10 ? phone : '9999999999'
                 },
                 handler: async function (rzpResponse) {
                     try {

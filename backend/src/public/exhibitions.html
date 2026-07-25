@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -25,6 +25,15 @@
     <header class="site-header" id="site-header">
     <div class="header-container">
       
+      <!-- 3-Line Shutter Panel Toggle Button (Just Left of Logo) -->
+      <button class="hamburger-toggle-btn" onclick="openSlideBar()" aria-label="Open Navigation Menu">
+        <div class="hamburger-lines">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </button>
+
       <!-- Logo -->
       <a href="index.html" class="brand-logo h3"><img src="images/logo.png" alt="MISS REZANNA" style="height: 60px; width: auto; display: inline-block; vertical-align: middle;"></a>
       
@@ -247,7 +256,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <script src="js/exhibitions.js"></script>
-<script src="js/cart.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>
 
