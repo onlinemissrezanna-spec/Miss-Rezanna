@@ -472,6 +472,173 @@ async function openEditProductModal(productId) {
   }
 }
 
+function switchFormTab(tabId) {
+  document.querySelectorAll('.pform-tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.pform-tab-content').forEach(c => c.style.display = 'none');
+  
+  const targetBtn = document.getElementById(`tabbtn-${tabId}`);
+  const targetContent = document.getElementById(`pformtab-${tabId}`);
+  if (targetBtn) targetBtn.classList.add('active');
+  if (targetContent) targetContent.style.display = 'block';
+}
+
+let pformFaqs = [];
+
+function addFaqItem(q = '', a = '') {
+  pformFaqs.push({ question: q, answer: a });
+  renderFaqsList();
+}
+
+function removeFaqItem(idx) {
+  pformFaqs.splice(idx, 1);
+  renderFaqsList();
+}
+
+function renderFaqsList() {
+  const container = document.getElementById('faqs-list-container');
+  if (!container) return;
+  if (!pformFaqs.length) {
+    container.innerHTML = `<div style="font-size:12px;color:var(--admin-text-secondary);text-align:center;padding:12px;border:1px dashed #ccc;border-radius:4px;">No FAQ questions added yet. Click "+ Add FAQ Item" below to build structured schema FAQs.</div>`;
+    return;
+  }
+  container.innerHTML = pformFaqs.map((faq, i) => `
+    <div style="background:#f8f7f5;padding:10px;border-radius:6px;margin-bottom:8px;border:1px solid #e5e0d8;">
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+        <strong style="font-size:12px;color:#111;">FAQ #${i + 1}</strong>
+        <button type="button" onclick="removeFaqItem(${i})" style="background:none;border:none;color:#d32f2f;cursor:pointer;font-size:12px;">Remove</button>
+      </div>
+      <input type="text" placeholder="Question (e.g. What is the fabric material?)" value="${escapeHtml(faq.question)}" oninput="pformFaqs[${i}].question = this.value; updateSchemaJsonPreview();" class="form-control" style="margin-bottom:6px;font-size:12px;">
+      <textarea placeholder="Answer..." oninput="pformFaqs[${i}].answer = this.value; updateSchemaJsonPreview();" class="form-control" rows="2" style="font-size:12px;">${escapeHtml(faq.answer)}</textarea>
+    </div>
+  `).join('');
+  updateSchemaJsonPreview();
+}
+
+function updateSchemaJsonPreview() {
+  const title = document.getElementById('pf-meta-title')?.value || document.getElementById('pf-name')?.value || 'Product Title';
+  const desc = document.getElementById('pf-meta-desc')?.value || document.getElementById('pf-description')?.value || '';
+  const price = document.getElementById('pf-price')?.value || '0.00';
+  const sku = document.getElementById('pf-sku')?.value || 'SKU-001';
+  const slug = document.getElementById('pf-slug')?.value || 'product-url';
+
+  const productSchema = {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": title,
+    "image": currentEditPhotos,
+    "description": desc,
+    "sku": sku,
+    "brand": { "@type": "Brand", "name": document.getElementById('pf-brand')?.value || "MISS REZANNA" },
+    "offers": {
+      "@type": "Offer",
+      "url": `https://www.missrezanna.com/product/${slug}`,
+      "priceCurrency": "INR",
+      "price": price,
+      "availability": "https://schema.org/InStock"
+    }
+  };
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": pformFaqs.filter(f => f.question.trim()).map(f => ({
+      "@type": "Question",
+      "name": f.question,
+      "acceptedAnswer": { "@type": "Answer", "text": f.answer }
+    }))
+  };
+
+  const codeEl = document.getElementById('schema-json-output');
+  if (codeEl) {
+    codeEl.innerText = JSON.stringify([productSchema, faqSchema], null, 2);
+  }
+}
+
+function updateSeoAudit() {
+  const name = document.getElementById('pf-name')?.value || '';
+  const slug = document.getElementById('pf-slug')?.value || '';
+  const mTitle = document.getElementById('pf-meta-title')?.value || name;
+  const mDesc = document.getElementById('pf-meta-desc')?.value || '';
+  const kw = (document.getElementById('pf-focus-kw')?.value || '').toLowerCase().trim();
+  const desc = document.getElementById('pf-description')?.value || '';
+
+  // Title character counter
+  const tCount = mTitle.length;
+  const tCounterEl = document.getElementById('mtitle-counter');
+  if (tCounterEl) {
+    tCounterEl.innerText = `${tCount} / 60 chars`;
+    tCounterEl.style.color = (tCount >= 50 && tCount <= 60) ? '#2e7d32' : (tCount > 60 ? '#c62828' : '#ef6c00');
+  }
+
+  // Desc character counter
+  const dCount = mDesc.length;
+  const dCounterEl = document.getElementById('mdesc-counter');
+  if (dCounterEl) {
+    dCounterEl.innerText = `${dCount} / 160 chars`;
+    dCounterEl.style.color = (dCount >= 140 && dCount <= 160) ? '#2e7d32' : (dCount > 160 ? '#c62828' : '#ef6c00');
+  }
+
+  // Google SERP Preview
+  const serpTitle = document.getElementById('serp-preview-title');
+  const serpUrl = document.getElementById('serp-preview-url');
+  const serpDesc = document.getElementById('serp-preview-desc');
+  if (serpTitle) serpTitle.innerText = mTitle || 'Product Title Placeholder — MISS REZANNA';
+  if (serpUrl) serpUrl.innerText = `https://www.missrezanna.com › product › ${slug || 'product-url-slug'}`;
+  if (serpDesc) serpDesc.innerText = mDesc || 'Your product search engine snippet meta description will appear right here as users search on Google...';
+
+  // Calculate SEO Score
+  let score = 0;
+  const checks = {
+    titleLen: tCount >= 40 && tCount <= 65,
+    descLen: dCount >= 120 && dCount <= 165,
+    kwTitle: kw && mTitle.toLowerCase().includes(kw),
+    kwSlug: kw && slug.toLowerCase().includes(kw),
+    kwDesc: kw && (mDesc.toLowerCase().includes(kw) || desc.toLowerCase().includes(kw)),
+    descExist: desc.length > 50,
+    hasPhotos: currentEditPhotos.length > 0
+  };
+
+  if (checks.titleLen) score += 15;
+  if (checks.descLen) score += 20;
+  if (checks.kwTitle) score += 20;
+  if (checks.kwSlug) score += 15;
+  if (checks.kwDesc) score += 15;
+  if (checks.descExist) score += 10;
+  if (checks.hasPhotos) score += 5;
+
+  const scoreEl = document.getElementById('seo-score-num');
+  const scoreBar = document.getElementById('seo-score-bar');
+  if (scoreEl) scoreEl.innerText = `${score}%`;
+  if (scoreBar) {
+    scoreBar.style.width = `${score}%`;
+    scoreBar.style.background = score > 80 ? '#2e7d32' : (score > 50 ? '#ef6c00' : '#c62828');
+  }
+
+  // Update Checklist HTML
+  const chkEl = document.getElementById('seo-checklist-box');
+  if (chkEl) {
+    chkEl.innerHTML = `
+      <div style="font-size:12px;display:flex;gap:6px;align-items:center;">${checks.titleLen ? '✅' : '❌'} Meta Title length (50-60 chars optimal)</div>
+      <div style="font-size:12px;display:flex;gap:6px;align-items:center;">${checks.descLen ? '✅' : '❌'} Meta Description length (140-160 chars optimal)</div>
+      <div style="font-size:12px;display:flex;gap:6px;align-items:center;">${checks.kwTitle ? '✅' : '⚠️'} Focus Keyword in Title</div>
+      <div style="font-size:12px;display:flex;gap:6px;align-items:center;">${checks.kwSlug ? '✅' : '⚠️'} Focus Keyword in URL Slug</div>
+      <div style="font-size:12px;display:flex;gap:6px;align-items:center;">${checks.kwDesc ? '✅' : '⚠️'} Focus Keyword in Meta Description</div>
+      <div style="font-size:12px;display:flex;gap:6px;align-items:center;">${checks.descExist ? '✅' : '❌'} Product Description detail (>50 words)</div>
+    `;
+  }
+
+  updateSchemaJsonPreview();
+}
+
+function autoGenerateSlug(name) {
+  const slugInput = document.getElementById('pf-slug');
+  if (slugInput) {
+    const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+    slugInput.value = slug;
+    updateSeoAudit();
+  }
+}
+
 function renderProductFormModal(productId, data) {
   const modal = document.getElementById('productModal');
   const body = document.getElementById('productModalBody');
@@ -479,142 +646,252 @@ function renderProductFormModal(productId, data) {
   modal.classList.add('visible');
   title.innerText = productId ? `Edit Product: ${data.name}` : 'Add New Product';
 
+  pformFaqs = data.faqs || [];
+
   const embedUrl = parseYouTubeEmbed(data.youtubeUrl || '');
 
   body.innerHTML = `
+    <style>
+      .pform-tabs-bar { display:flex; gap:4px; border-bottom:1px solid #e0e0e0; margin-bottom:16px; overflow-x:auto; }
+      .pform-tab-btn { background:none; border:none; padding:10px 14px; font-size:12px; font-weight:600; color:#666; cursor:pointer; border-bottom:2px solid transparent; white-space:nowrap; }
+      .pform-tab-btn.active { color:#000; border-bottom-color:#C3A167; }
+      .pform-tab-content { display:none; }
+      .serp-card { background:#fff; border:1px solid #dfe1e5; border-radius:8px; padding:14px; font-family:arial,sans-serif; }
+      .serp-title { color:#1a0dab; font-size:18px; line-height:1.2; text-decoration:hover; cursor:pointer; }
+      .serp-url { color:#202124; font-size:13px; margin-top:2px; }
+      .serp-desc { color:#4d5156; font-size:13px; margin-top:4px; line-height:1.48; }
+    </style>
+
+    <div class="pform-tabs-bar">
+      <button type="button" class="pform-tab-btn active" id="tabbtn-basic" onclick="switchFormTab('basic')">📝 Basic Info</button>
+      <button type="button" class="pform-tab-btn" id="tabbtn-pricing" onclick="switchFormTab('pricing')">💰 Price & Stock</button>
+      <button type="button" class="pform-tab-btn" id="tabbtn-specs" onclick="switchFormTab('specs')">✨ Specs & Attributes</button>
+      <button type="button" class="pform-tab-btn" id="tabbtn-photos" onclick="switchFormTab('photos')">🖼️ Photos</button>
+      <button type="button" class="pform-tab-btn" id="tabbtn-seo" onclick="switchFormTab('seo')">🎯 SEO & Social</button>
+      <button type="button" class="pform-tab-btn" id="tabbtn-audit" onclick="switchFormTab('audit')">⚡ Live SEO Audit</button>
+      <button type="button" class="pform-tab-btn" id="tabbtn-schema" onclick="switchFormTab('schema')">📦 Schemas & FAQs</button>
+    </div>
+
     <form id="productForm" onsubmit="handleProductFormSubmit(event, ${productId})">
-      <div class="form-group">
-        <label>Product Name *</label>
-        <input type="text" id="pf-name" class="form-control" value="${escapeHtml(data.name || '')}" placeholder="e.g. Royal Silk Kurti Set" required>
-      </div>
 
-      <div class="form-row">
+      <!-- TAB 1: BASIC INFO -->
+      <div class="pform-tab-content" id="pformtab-basic" style="display:block;">
         <div class="form-group">
-          <label>Price (₹) *</label>
-          <input type="number" id="pf-price" class="form-control" value="${data.price || ''}" placeholder="3500" required step="0.01">
+          <label>Product Title *</label>
+          <input type="text" id="pf-name" class="form-control" value="${escapeHtml(data.name || '')}" placeholder="e.g. Royal Mulberry Silk Kurti Set" required oninput="autoGenerateSlug(this.value); updateSeoAudit();">
         </div>
-        <div class="form-group">
-          <label>SKU Code *</label>
-          <input type="text" id="pf-sku" class="form-control" value="${escapeHtml(data.sku || '')}" placeholder="MR-KU-001" required>
-        </div>
-      </div>
-      
-      <div class="form-row">
-        <div class="form-group">
-          <label>Total Stock Qty *</label>
-          <input type="number" id="pf-stock" class="form-control" value="${data.stock !== undefined ? data.stock : ''}" placeholder="50" required min="0">
-        </div>
-        <div class="form-group">
-          <label>Tax Percentage (%) *</label>
-          <input type="number" id="pf-tax" class="form-control" value="${data.taxPercentage !== undefined ? data.taxPercentage : '0'}" placeholder="12" required step="0.1" min="0" max="100">
-        </div>
-      </div>
 
-      <div class="form-group">
-        <label>Description</label>
-        <textarea id="pf-description" class="form-control" rows="3" placeholder="Intricate threadwork with ethically sourced Mulberry silk drape...">${escapeHtml(data.description || '')}</textarea>
-      </div>
-
-      <!-- YOUTUBE VIDEO INTEGRATION -->
-      <div class="form-group" style="background:rgba(255,0,0,0.03);padding:14px;border:1px solid rgba(255,0,0,0.15);border-radius:6px;">
-        <label style="color:#d32f2f;display:flex;align-items:center;gap:6px;">
-          <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
-          YouTube Video Link (Optional)
-        </label>
-        <input type="url" id="pf-youtube" class="form-control" value="${escapeHtml(data.youtubeUrl || '')}" placeholder="Paste YouTube link (e.g. https://www.youtube.com/watch?v=VIDEO_ID)" oninput="updateYouTubePreview(this.value)">
-        <div style="font-size:11px;color:var(--admin-text-secondary);margin-top:4px;">Paste any YouTube video link to display embedded video on product page.</div>
-        
-        <div id="youtube-preview-container" class="youtube-preview-box" style="${embedUrl ? 'display:block;' : 'display:none;'}">
-          <iframe id="youtube-iframe" src="${embedUrl || ''}" allowfullscreen></iframe>
-        </div>
-      </div>
-
-      <!-- PHOTOS MANAGEMENT SECTION -->
-      <div class="form-group">
-        <label style="display:flex;justify-content:space-between;align-items:center;">
-          <span>Product Photos Gallery</span>
-          <span style="font-size:11px;color:var(--admin-text-secondary);">${currentEditPhotos.length} existing photo(s)</span>
-        </label>
-        
-        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px;background:rgba(195,161,103,0.08);padding:12px;border-radius:6px;border:1px dashed rgba(195,161,103,0.5);">
-          <div style="position:relative; display:block; padding:16px; font-size:14px; width:100%; font-weight:bold; background:#000; color:#fff; text-align:center; border-radius:4px; cursor:pointer; overflow:hidden;">
-            📁 CLICK HERE TO UPLOAD NEW PHOTOS FROM COMPUTER
-            <input type="file" id="pf-photo-upload" accept="image/*" multiple onchange="updatePhotoPreviews()" style="position:absolute; top:0; left:0; width:100%; height:100%; opacity:0; cursor:pointer; font-size:100px;">
+        <div class="form-row">
+          <div class="form-group">
+            <label>URL Slug *</label>
+            <input type="text" id="pf-slug" class="form-control" value="${escapeHtml(data.slug || '')}" placeholder="royal-mulberry-silk-kurti-set" required oninput="updateSeoAudit()">
+          </div>
+          <div class="form-group">
+            <label>Brand Name</label>
+            <input type="text" id="pf-brand" class="form-control" value="${escapeHtml(data.brand || 'MISS REZANNA')}" placeholder="MISS REZANNA">
           </div>
         </div>
 
-        <div class="photo-gallery-preview" id="photoGalleryContainer">
-          ${renderPhotoThumbsHTML()}
+        <div class="form-group">
+          <label>Product Description (Rich Content)</label>
+          <textarea id="pf-description" class="form-control" rows="4" placeholder="Handcrafted with Mulberry silk drape, detailed with Zari embroidery..." oninput="updateSeoAudit()">${escapeHtml(data.description || '')}</textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Publish Status</label>
+            <select id="pf-status" class="form-control">
+              <option value="active" ${data.status === 'active' ? 'selected' : ''}>Published (Active)</option>
+              <option value="draft" ${data.status === 'draft' ? 'selected' : ''}>Draft</option>
+              <option value="archived" ${data.status === 'archived' ? 'selected' : ''}>Archived</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Publish Schedule Date</label>
+            <input type="datetime-local" id="pf-schedule" class="form-control">
+          </div>
         </div>
       </div>
 
-      <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:24px;">
+      <!-- TAB 2: PRICING & STOCK -->
+      <div class="pform-tab-content" id="pformtab-pricing">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Product Price (₹) *</label>
+            <input type="number" id="pf-price" class="form-control" value="${data.price || ''}" placeholder="3500" required step="0.01" oninput="updateSeoAudit()">
+          </div>
+          <div class="form-group">
+            <label>Compare-at Price (MRP ₹)</label>
+            <input type="number" id="pf-compare-price" class="form-control" value="${data.compareAtPrice || ''}" placeholder="4999" step="0.01">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Total Inventory Stock *</label>
+            <input type="number" id="pf-stock" class="form-control" value="${data.stock !== undefined ? data.stock : '50'}" placeholder="50" required min="0">
+          </div>
+          <div class="form-group">
+            <label>Tax Percentage (%) *</label>
+            <input type="number" id="pf-tax" class="form-control" value="${data.taxPercentage !== undefined ? data.taxPercentage : '0'}" placeholder="12" required step="0.1">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>SKU Code *</label>
+            <input type="text" id="pf-sku" class="form-control" value="${escapeHtml(data.sku || '')}" placeholder="MR-KU-001" required>
+          </div>
+          <div class="form-group">
+            <label>Barcode / GTIN</label>
+            <input type="text" id="pf-barcode" class="form-control" value="${escapeHtml(data.barcode || '')}" placeholder="8901234567890">
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: SPECS & ATTRIBUTES -->
+      <div class="pform-tab-content" id="pformtab-specs">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Fabric / Material</label>
+            <input type="text" id="pf-fabric" class="form-control" value="${escapeHtml(data.fabric || '')}" placeholder="Pure Silk / Organic Cotton">
+          </div>
+          <div class="form-group">
+            <label>Fit Type</label>
+            <input type="text" id="pf-fit" class="form-control" value="${escapeHtml(data.fit || '')}" placeholder="Regular Fit / Slim Fit">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Care Instructions</label>
+          <input type="text" id="pf-care" class="form-control" value="${escapeHtml(data.careInstructions || '')}" placeholder="Dry Clean Only. Do not bleach.">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Weight (kg)</label>
+            <input type="text" id="pf-weight" class="form-control" value="${escapeHtml(data.weight || '')}" placeholder="0.5 kg">
+          </div>
+          <div class="form-group">
+            <label>Dimensions (cm)</label>
+            <input type="text" id="pf-dimensions" class="form-control" value="${escapeHtml(data.dimensions || '')}" placeholder="30 x 20 x 5 cm">
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 4: PHOTOS -->
+      <div class="pform-tab-content" id="pformtab-photos">
+        <div class="form-group">
+          <label style="display:flex;justify-content:space-between;align-items:center;">
+            <span>Product Photos Gallery</span>
+            <span style="font-size:11px;color:var(--admin-text-secondary);">${currentEditPhotos.length} photo(s)</span>
+          </label>
+          
+          <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px;background:rgba(195,161,103,0.08);padding:12px;border-radius:6px;border:1px dashed rgba(195,161,103,0.5);">
+            <div style="position:relative; display:block; padding:16px; font-size:14px; width:100%; font-weight:bold; background:#000; color:#fff; text-align:center; border-radius:4px; cursor:pointer; overflow:hidden;">
+              📁 CLICK HERE TO UPLOAD NEW PHOTOS FROM COMPUTER
+              <input type="file" id="pf-photo-upload" accept="image/*" multiple onchange="updatePhotoPreviews()" style="position:absolute; top:0; left:0; width:100%; height:100%; opacity:0; cursor:pointer; font-size:100px;">
+            </div>
+          </div>
+
+          <div class="photo-gallery-preview" id="photoGalleryContainer">
+            ${renderPhotoThumbsHTML()}
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 5: SEO & SOCIAL -->
+      <div class="pform-tab-content" id="pformtab-seo">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Focus Primary Keyword</label>
+            <input type="text" id="pf-focus-kw" class="form-control" value="${escapeHtml(data.focusKeyword || '')}" placeholder="e.g. Silk Kurti Set" oninput="updateSeoAudit()">
+          </div>
+          <div class="form-group">
+            <label>Secondary Keywords</label>
+            <input type="text" id="pf-seo-keywords" class="form-control" value="${escapeHtml(data.seoKeywords || '')}" placeholder="ethnic kurti, partywear silk" oninput="updateSeoAudit()">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label style="display:flex;justify-content:space-between;">
+            <span>SEO Meta Title</span>
+            <span id="mtitle-counter" style="font-size:11px;font-weight:600;">0 / 60 chars</span>
+          </label>
+          <input type="text" id="pf-meta-title" class="form-control" value="${escapeHtml(data.seoTitle || '')}" placeholder="Luxury Silk Kurti Set | MISS REZANNA" oninput="updateSeoAudit()">
+        </div>
+
+        <div class="form-group">
+          <label style="display:flex;justify-content:space-between;">
+            <span>SEO Meta Description</span>
+            <span id="mdesc-counter" style="font-size:11px;font-weight:600;">0 / 160 chars</span>
+          </label>
+          <textarea id="pf-meta-desc" class="form-control" rows="3" placeholder="Shop hand-woven silk kurti sets with zari details. Free shipping across India." oninput="updateSeoAudit()">${escapeHtml(data.seoDescription || '')}</textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Canonical URL</label>
+            <input type="url" id="pf-canonical" class="form-control" value="${escapeHtml(data.canonicalUrl || '')}" placeholder="https://www.missrezanna.com/product/slug">
+          </div>
+          <div class="form-group">
+            <label>Robots Indexing Meta</label>
+            <select id="pf-robots" class="form-control">
+              <option value="index, follow">index, follow (Default - Show on Google)</option>
+              <option value="noindex, nofollow">noindex, nofollow (Hide from Google)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 6: LIVE SEO AUDIT & PREVIEWS -->
+      <div class="pform-tab-content" id="pformtab-audit">
+        <div style="background:#f4f6f8;padding:16px;border-radius:8px;margin-bottom:16px;border:1px solid #e1e4e8;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+            <span style="font-weight:700;font-size:14px;color:#111;">🎯 SEO Optimization Score</span>
+            <span id="seo-score-num" style="font-size:18px;font-weight:800;color:#2e7d32;">0%</span>
+          </div>
+          <div style="background:#e0e0e0;height:10px;border-radius:5px;overflow:hidden;margin-bottom:14px;">
+            <div id="seo-score-bar" style="width:0%;height:100%;background:#c62828;transition:all 0.3s;"></div>
+          </div>
+          <div id="seo-checklist-box" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;"></div>
+        </div>
+
+        <div style="margin-bottom:16px;">
+          <label style="font-weight:700;font-size:13px;display:block;margin-bottom:8px;">🔍 Google Search Result SERP Preview</label>
+          <div class="serp-card">
+            <div class="serp-url" id="serp-preview-url">https://www.missrezanna.com › product</div>
+            <div class="serp-title" id="serp-preview-title">Product Title Preview</div>
+            <div class="serp-desc" id="serp-preview-desc">Product snippet description preview will appear right here...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 7: SCHEMAS & FAQS -->
+      <div class="pform-tab-content" id="pformtab-schema">
+        <div class="form-group">
+          <label style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+            <span style="font-weight:700;">❓ Frequently Asked Questions (FAQ Schema)</span>
+            <button type="button" onclick="addFaqItem()" class="btn-action primary" style="padding:4px 10px;font-size:11px;">+ Add FAQ Item</button>
+          </label>
+          <div id="faqs-list-container"></div>
+        </div>
+
+        <div class="form-group" style="margin-top:16px;">
+          <label style="font-weight:700;">📦 Auto-Generated Structured Data (JSON-LD)</label>
+          <pre id="schema-json-output" style="background:#1e1e1e;color:#4af626;padding:12px;border-radius:6px;font-size:11px;max-height:180px;overflow:auto;"></pre>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:24px;border-top:1px solid #eee;padding-top:16px;">
         <button type="button" class="btn-action" onclick="closeModal('productModal')">Cancel</button>
-        <button type="submit" class="btn-action primary" id="btnSaveProduct">${productId ? 'Save Changes' : 'Create Product'}</button>
+        <button type="submit" class="btn-action primary" id="btnSaveProduct" style="background:#C3A167;color:#000;font-weight:700;">${productId ? 'Save Changes' : 'Create Product'}</button>
       </div>
     </form>
   `;
-}
 
-function updatePhotoPreviews() {
-  document.getElementById('photoGalleryContainer').innerHTML = renderPhotoThumbsHTML();
-}
-
-function renderPhotoThumbsHTML() {
-  const fileInput = document.getElementById('pf-photo-upload');
-  const newFiles = fileInput && fileInput.files ? Array.from(fileInput.files) : [];
-  
-  if (!currentEditPhotos.length && !newFiles.length) {
-    return `<div style="grid-column:1/-1;font-size:12px;color:var(--admin-text-secondary);text-align:center;padding:12px;">No photos added yet. Use the file selector above to upload images from your computer.</div>`;
-  }
-  
-  let html = '';
-  
-  // Render existing photos
-  html += currentEditPhotos.map((url, idx) => `
-    <div class="photo-thumb-box">
-      <img src="${escapeHtml(url)}" onerror="this.onerror=null;this.src=PLACEHOLDER_IMG" alt="Photo ${idx + 1}">
-      <button type="button" class="btn-remove-photo" onclick="removePhoto(${idx})" title="Remove photo">&times;</button>
-    </div>
-  `).join('');
-
-  // Render new local files (preview only, cannot be individually removed easily via standard input type=file, so no X button)
-  html += newFiles.map((file, idx) => `
-    <div class="photo-thumb-box" style="border: 2px solid #C3A167;">
-      <img src="${URL.createObjectURL(file)}" alt="New File ${idx + 1}">
-      <div style="position:absolute;bottom:0;background:rgba(195,161,103,0.9);color:#fff;font-size:9px;width:100%;text-align:center;padding:2px;">NEW</div>
-    </div>
-  `).join('');
-
-  return html;
-}
-
-function addPhotoUrl() {
-  const input = document.getElementById('pf-new-photo-url');
-  const url = (input.value || '').trim();
-  if (!url) return;
-  currentEditPhotos.push(url);
-  input.value = '';
-  document.getElementById('photoGalleryContainer').innerHTML = renderPhotoThumbsHTML();
-}
-
-function removePhoto(index) {
-  currentEditPhotos.splice(index, 1);
-  document.getElementById('photoGalleryContainer').innerHTML = renderPhotoThumbsHTML();
-}
-
-function updateYouTubePreview(url) {
-  const container = document.getElementById('youtube-preview-container');
-  const iframe = document.getElementById('youtube-iframe');
-  const embed = parseYouTubeEmbed(url);
-
-  if (embed) {
-    iframe.src = embed;
-    container.style.display = 'block';
-  } else {
-    iframe.src = '';
-    container.style.display = 'none';
-  }
+  renderFaqsList();
+  updateSeoAudit();
 }
 
 async function handleProductFormSubmit(e, productId) {
@@ -625,15 +902,22 @@ async function handleProductFormSubmit(e, productId) {
 
   const payload = new FormData();
   payload.append('name', document.getElementById('pf-name').value.trim());
+  payload.append('slug', document.getElementById('pf-slug').value.trim());
   payload.append('price', document.getElementById('pf-price').value);
   payload.append('sku', document.getElementById('pf-sku').value.trim());
   payload.append('description', document.getElementById('pf-description').value.trim());
   
-  const yt = document.getElementById('pf-youtube').value.trim();
-  if (yt) payload.append('youtubeUrl', yt);
-  
   payload.append('stock', document.getElementById('pf-stock').value);
   payload.append('taxPercentage', document.getElementById('pf-tax').value);
+
+  // SEO Fields
+  payload.append('seoTitle', document.getElementById('pf-meta-title').value.trim());
+  payload.append('seoDescription', document.getElementById('pf-meta-desc').value.trim());
+  payload.append('seoKeywords', document.getElementById('pf-seo-keywords').value.trim());
+  payload.append('brand', document.getElementById('pf-brand').value.trim());
+  payload.append('fabric', document.getElementById('pf-fabric').value.trim());
+  payload.append('fit', document.getElementById('pf-fit').value.trim());
+  payload.append('careInstructions', document.getElementById('pf-care').value.trim());
 
   // Existing images to keep
   payload.append('imageUrls', JSON.stringify(currentEditPhotos));
@@ -649,10 +933,10 @@ async function handleProductFormSubmit(e, productId) {
   try {
     if (productId) {
       await api(`/products/${productId}`, 'PUT', payload);
-      alert('Product updated successfully!');
+      alert('Product & SEO Metadata updated successfully!');
     } else {
       await api('/products', 'POST', payload);
-      alert('Product created successfully!');
+      alert('Product & SEO Metadata created successfully!');
     }
     closeModal('productModal');
     loadProducts();

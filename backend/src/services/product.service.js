@@ -43,8 +43,13 @@ const createProduct = async (data, uploadedImages = []) => {
             price,
             taxPercentage,
             description: data.description || '',
-            shortDescription: data.shortDescription || '',
-            youtubeUrl: data.youtubeUrl || null,
+            seoTitle: data.seoTitle || null,
+            seoDescription: data.seoDescription || null,
+            seoKeywords: data.seoKeywords || null,
+            brand: data.brand || null,
+            fabric: data.fabric || null,
+            fit: data.fit || null,
+            careInstructions: data.careInstructions || null,
             categoryId,
             status: data.status || 'active',
             isFeatured: data.isFeatured === true || data.isFeatured === 'true',
@@ -162,6 +167,14 @@ const updateProduct = async (id, data, uploadedImages = []) => {
     if (data.status) updateData.status = data.status;
     if (data.categoryId) updateData.categoryId = parseInt(data.categoryId);
     if (data.taxPercentage !== undefined) updateData.taxPercentage = parseFloat(data.taxPercentage);
+    if (data.seoTitle !== undefined) updateData.seoTitle = data.seoTitle;
+    if (data.seoDescription !== undefined) updateData.seoDescription = data.seoDescription;
+    if (data.seoKeywords !== undefined) updateData.seoKeywords = data.seoKeywords;
+    if (data.brand !== undefined) updateData.brand = data.brand;
+    if (data.fabric !== undefined) updateData.fabric = data.fabric;
+    if (data.fit !== undefined) updateData.fit = data.fit;
+    if (data.careInstructions !== undefined) updateData.careInstructions = data.careInstructions;
+    if (data.slug !== undefined && data.slug.trim()) updateData.slug = data.slug.trim();
 
     let imageList = [];
     if (uploadedImages && uploadedImages.length > 0) {
