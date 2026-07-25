@@ -560,10 +560,11 @@ function initSlideBar() {
     const slideBarHtml = `
       <div class="slide-bar-backdrop" id="slideBarBackdrop" onclick="closeSlideBar()"></div>
       <div class="slide-bar-drawer" id="slideBarDrawer">
-        <div class="slide-bar-header">
-          <div>
-            <a href="index.html" class="slide-bar-brand">MISS REZANNA</a>
-            <div class="slide-bar-subbrand">Luxury Couture</div>
+        <div class="slide-bar-header" style="align-items:center;">
+          <div style="flex:1;">
+            <a href="index.html" class="slide-bar-brand" style="display:block;">
+              <img src="images/logo.png" alt="MISS REZANNA" style="height: 85px; max-height: 85px; width: auto; display: block;">
+            </a>
           </div>
           <button class="slide-bar-close-btn" onclick="closeSlideBar()" aria-label="Close menu">✕</button>
         </div>
