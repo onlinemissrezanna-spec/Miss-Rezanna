@@ -32,35 +32,8 @@ const createProduct = async (data, uploadedImages = []) => {
 
     const price = parseFloat(data.price || 0);
     const sku = data.sku || `SKU-${Date.now()}`;
-    const stock = data.stock !== undefined ? parseInt(data.stock) : 50;
     const taxPercentage = data.taxPercentage !== undefined ? parseFloat(data.taxPercentage) : 0;
 
-    const newProduct = await prisma.product.create({
-        data: {
-            name: data.name,
-            slug,
-            sku,
-            price,
-            taxPercentage,
-            description: data.description || '',
-            seoTitle: data.seoTitle || null,
-            seoDescription: data.seoDescription || null,
-            seoKeywords: data.seoKeywords || null,
-            brand: data.brand || null,
-            fabric: data.fabric || null,
-            fit: data.fit || null,
-            careInstructions: data.careInstructions || null,
-            categoryId,
-            status: data.status || 'active',
-            isFeatured: data.isFeatured === true || data.isFeatured === 'true',
-            isNewArrival: data.isNewArrival === true || data.isNewArrival === 'true',
-            images: {
-                create: imageList.map((url, i) => ({
-                    imageUrl: url,
-                    isPrimary: i === 0,
-                    sortOrder: i
-                }))
-            },
     // Handle size-wise stock breakdown map
     let sizeStockMap = { XS: 10, S: 10, M: 10, L: 10, XL: 10 };
     if (data.sizeStock) {
