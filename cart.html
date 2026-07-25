@@ -187,9 +187,31 @@
           </div>
         </div>
       </div>
-      <div class="footer-bottom"><span>&copy; 2026 MISS REZANNA. All Rights Reserved.</span></div>
-    </div>
-  </footer>
+  <!-- HIGH-LUXURY MOBILE APP DOCK -->
+  <nav class="mobile-app-dock">
+    <a href="index.html" class="mobile-dock-item">
+      <i data-lucide="home"></i>
+      <span>Home</span>
+    </a>
+    <a href="collection.html" class="mobile-dock-item">
+      <i data-lucide="grid"></i>
+      <span>Explore</span>
+    </a>
+    <a href="#" onclick="openSlideBar(); return false;" class="mobile-dock-item">
+      <i data-lucide="compass"></i>
+      <span>Menu</span>
+    </a>
+    <a href="#" class="mobile-dock-item">
+      <i data-lucide="heart"></i>
+      <span>Wishlist</span>
+    </a>
+    <a href="cart.html" class="mobile-dock-item active">
+      <i data-lucide="shopping-bag"></i>
+      <span>Bag</span>
+      <span class="mobile-dock-badge" id="mobile-cart-count">0</span>
+    </a>
+  </nav>
+
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script src="js/cart.js"></script>
 <script src="js/main.js"></script>

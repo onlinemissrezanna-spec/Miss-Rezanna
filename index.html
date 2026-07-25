@@ -972,23 +972,28 @@
     </button>
   </div>
 
-  <!-- MOBILE BOTTOM NAVIGATION -->
-  <nav class="mobile-bottom-nav">
-    <a href="index.html" class="mobile-nav-item active">
+  <!-- HIGH-LUXURY MOBILE APP DOCK -->
+  <nav class="mobile-app-dock">
+    <a href="index.html" class="mobile-dock-item active">
       <i data-lucide="home"></i>
       <span>Home</span>
     </a>
-    <a href="#" class="mobile-nav-item">
-      <i data-lucide="search"></i>
-      <span>Search</span>
+    <a href="collection.html" class="mobile-dock-item">
+      <i data-lucide="grid"></i>
+      <span>Explore</span>
     </a>
-    <a href="#" class="mobile-nav-item">
+    <a href="#" onclick="openSlideBar(); return false;" class="mobile-dock-item">
+      <i data-lucide="compass"></i>
+      <span>Menu</span>
+    </a>
+    <a href="#" class="mobile-dock-item">
       <i data-lucide="heart"></i>
       <span>Wishlist</span>
     </a>
-    <a href="product.html" class="mobile-nav-item">
+    <a href="cart.html" class="mobile-dock-item">
       <i data-lucide="shopping-bag"></i>
-      <span>Bag (2)</span>
+      <span>Bag</span>
+      <span class="mobile-dock-badge" id="mobile-cart-count">0</span>
     </a>
   </nav>
 

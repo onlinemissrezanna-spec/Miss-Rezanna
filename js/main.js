@@ -614,7 +614,8 @@ function initSlideBar() {
         </ul>
 
         <div class="slide-bar-footer">
-          <a href="cart.html" class="slide-bar-cta-btn">🛍️ View Shopping Bag</a>
+          <a href="cart.html" class="slide-bar-cta-btn" style="margin-bottom:10px;">🛍️ View Shopping Bag</a>
+          <a href="https://wa.me/919876543210?text=Hello%20Miss%20Rezanna,%20I%20would%20like%20personal%20styling%20assistance." target="_blank" class="slide-bar-cta-btn" style="background:#25D366;color:#fff;border:none;">💬 Chat with Personal VIP Stylist</a>
         </div>
       </div>
     `;

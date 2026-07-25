@@ -105,8 +105,10 @@ function renderCart() {
     if (!cartContainer) return; // Not on cart page
     
     const countLabel = document.querySelector('.cart-count');
+    const mobileBadge = document.getElementById('mobile-cart-count');
     const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
     if(countLabel) countLabel.innerText = `${totalItems} Item${totalItems !== 1 ? 's' : ''}`;
+    if(mobileBadge) mobileBadge.innerText = totalItems;
     
     if (cart.length === 0) {
         cartContainer.innerHTML = `
