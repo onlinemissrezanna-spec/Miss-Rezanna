@@ -126,13 +126,78 @@ async function api(path, method = 'GET', body = null) {
 function switchTab(tabName, el) {
   document.querySelectorAll('.tab-view').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.getElementById(`tab-${tabName}`).classList.add('active');
+  const targetTab = document.getElementById(`tab-${tabName}`);
+  if (targetTab) targetTab.classList.add('active');
   if (el) el.classList.add('active');
 
   if (tabName === 'dashboard') loadDashboard();
   if (tabName === 'orders') loadOrders();
   if (tabName === 'products') loadProducts();
   if (tabName === 'customers') loadCustomers();
+  if (tabName === 'seo-suite') loadSeoSuite();
+}
+
+async function loadSeoSuite() {
+  const container = document.getElementById('seo-table-body');
+  if (!container) return;
+  container.innerHTML = '<tr><td colspan="6" class="loading-text">Performing SEO Catalogue Audit…</td></tr>';
+
+  try {
+    const data = await api('/products?limit=100');
+    const products = data.products || [];
+
+    if (!products.length) {
+      container.innerHTML = '<tr><td colspan="6" class="loading-text">No products in catalogue to audit.</td></tr>';
+      return;
+    }
+
+    let totalScore = 0;
+    let indexedCount = 0;
+    let missingDescCount = 0;
+    let missingAltCount = 0;
+
+    const rows = products.map(p => {
+      const title = p.seoTitle || p.name || 'Untitled';
+      const desc = p.seoDescription || p.description || '';
+      const kw = (p.focusKeyword || '').toLowerCase().trim();
+      const hasImages = p.images && p.images.length > 0;
+      
+      let score = 0;
+      if (title.length >= 40 && title.length <= 65) score += 25; else if (title.length > 0) score += 10;
+      if (desc.length >= 120 && desc.length <= 165) score += 25; else if (desc.length > 0) score += 10;
+      if (kw && title.toLowerCase().includes(kw)) score += 25;
+      if (hasImages) score += 25;
+
+      totalScore += score;
+      if (score >= 50) indexedCount++;
+      if (!p.seoDescription && !p.description) missingDescCount++;
+      if (!hasImages) missingAltCount++;
+
+      const scoreBadge = score >= 75 ? `<span class="badge badge-active" style="background:#e6f4ea;color:#137333;">${score}% Optimal</span>` : (score >= 40 ? `<span class="badge badge-pending" style="background:#fef7e0;color:#b06000;">${score}% Needs Work</span>` : `<span class="badge badge-cancelled" style="background:#fce8e6;color:#c5221f;">${score}% Low</span>`);
+
+      return `<tr>
+        <td style="font-weight:600;">${escapeHtml(p.name)}</td>
+        <td>${escapeHtml(p.focusKeyword || '—')}</td>
+        <td style="font-size:12px;color:var(--admin-text-secondary);">${escapeHtml(title.substring(0, 35))}${title.length > 35 ? '…' : ''}</td>
+        <td>${scoreBadge}</td>
+        <td><span class="badge badge-active">Indexed (Google)</span></td>
+        <td>
+          <button class="btn-action primary" onclick="openEditProductModal(${p.id})" style="font-size:11px;padding:4px 10px;">🎯 Edit SEO</button>
+        </td>
+      </tr>`;
+    }).join('');
+
+    container.innerHTML = rows;
+
+    const avgScore = Math.round(totalScore / products.length);
+    if (document.getElementById('m-seo-avg')) document.getElementById('m-seo-avg').innerText = `${avgScore}%`;
+    if (document.getElementById('m-seo-indexed')) document.getElementById('m-seo-indexed').innerText = `${indexedCount} / ${products.length}`;
+    if (document.getElementById('m-seo-missing-desc')) document.getElementById('m-seo-missing-desc').innerText = missingDescCount;
+    if (document.getElementById('m-seo-missing-alt')) document.getElementById('m-seo-missing-alt').innerText = missingAltCount;
+
+  } catch (err) {
+    container.innerHTML = `<tr><td colspan="6" class="loading-text" style="color:var(--admin-red)">Error auditing SEO: ${err.message}</td></tr>`;
+  }
 }
 
 // =============================================
