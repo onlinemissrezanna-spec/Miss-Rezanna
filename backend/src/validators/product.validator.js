@@ -12,9 +12,10 @@ const createProductSchema = z.object({
         fit: z.string().optional(),
         careInstructions: z.string().optional(),
         price: z.preprocess((a) => (typeof a === 'number' ? a : (a ? parseFloat(String(a)) : undefined)), z.number().positive('Price must be greater than 0')),
-        salePrice: z.preprocess((a) => (a ? parseFloat(String(a)) : undefined), z.number().positive().optional()),
-        costPrice: z.preprocess((a) => (a ? parseFloat(String(a)) : undefined), z.number().positive().optional()),
-        taxPercentage: z.preprocess((a) => (a ? parseFloat(String(a)) : undefined), z.number().min(0).optional()),
+        salePrice: z.preprocess((a) => (typeof a === 'number' ? a : (a ? parseFloat(String(a)) : undefined)), z.number().positive().optional()),
+        costPrice: z.preprocess((a) => (typeof a === 'number' ? a : (a ? parseFloat(String(a)) : undefined)), z.number().positive().optional()),
+        taxPercentage: z.preprocess((a) => (typeof a === 'number' ? a : (a !== undefined && a !== '' ? parseFloat(String(a)) : undefined)), z.number().min(0).optional()),
+        stock: z.preprocess((a) => (typeof a === 'number' ? a : (a !== undefined && a !== '' ? parseInt(String(a), 10) : undefined)), z.number().int().min(0).optional()),
         status: z.enum(['active', 'draft', 'archived']).optional(),
         isFeatured: z.preprocess((a) => a === true || a === 'true', z.boolean().optional()),
         isNewArrival: z.preprocess((a) => a === true || a === 'true', z.boolean().optional()),
@@ -31,9 +32,11 @@ const createProductSchema = z.object({
 
 const updateProductSchema = z.object({
     body: z.object({
-        categoryId: z.preprocess((a) => (a ? parseInt(z.string().parse(a), 10) : undefined), z.number().int().positive().optional()),
+        categoryId: z.preprocess((a) => (typeof a === 'number' ? a : (a ? parseInt(String(a), 10) : undefined)), z.number().int().positive().optional()),
         name: z.string().min(3).optional(),
-        price: z.preprocess((a) => (a ? parseFloat(z.string().parse(a)) : undefined), z.number().positive().optional()),
+        price: z.preprocess((a) => (typeof a === 'number' ? a : (a ? parseFloat(String(a)) : undefined)), z.number().positive().optional()),
+        taxPercentage: z.preprocess((a) => (typeof a === 'number' ? a : (a !== undefined && a !== '' ? parseFloat(String(a)) : undefined)), z.number().min(0).optional()),
+        stock: z.preprocess((a) => (typeof a === 'number' ? a : (a !== undefined && a !== '' ? parseInt(String(a), 10) : undefined)), z.number().int().min(0).optional()),
         // Other fields omitted for brevity, logic identical to create schema but optional
         status: z.enum(['active', 'draft', 'archived']).optional()
     }).passthrough()
