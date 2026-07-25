@@ -538,7 +538,7 @@ function renderProductFormModal(productId, data) {
         
         <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px;background:rgba(195,161,103,0.08);padding:12px;border-radius:6px;border:1px dashed rgba(195,161,103,0.5);">
           <label style="font-size:13px;color:#000;font-weight:600;text-align:center;">📁 Upload New Photos directly from your computer</label>
-          <input type="file" id="pf-photo-upload" accept="image/*" multiple class="form-control" style="padding:10px;background:#fff;border:1px solid #ccc;cursor:pointer;">
+          <input type="file" id="pf-photo-upload" accept="image/*" multiple class="form-control" style="padding:10px;background:#fff;border:1px solid #ccc;cursor:pointer;" onchange="updatePhotoPreviews()">
         </div>
 
         <div class="photo-gallery-preview" id="photoGalleryContainer">
@@ -554,16 +554,37 @@ function renderProductFormModal(productId, data) {
   `;
 }
 
+function updatePhotoPreviews() {
+  document.getElementById('photoGalleryContainer').innerHTML = renderPhotoThumbsHTML();
+}
+
 function renderPhotoThumbsHTML() {
-  if (!currentEditPhotos.length) {
+  const fileInput = document.getElementById('pf-photo-upload');
+  const newFiles = fileInput && fileInput.files ? Array.from(fileInput.files) : [];
+  
+  if (!currentEditPhotos.length && !newFiles.length) {
     return `<div style="grid-column:1/-1;font-size:12px;color:var(--admin-text-secondary);text-align:center;padding:12px;">No photos added yet. Use the file selector above to upload images from your computer.</div>`;
   }
-  return currentEditPhotos.map((url, idx) => `
+  
+  let html = '';
+  
+  // Render existing photos
+  html += currentEditPhotos.map((url, idx) => `
     <div class="photo-thumb-box">
       <img src="${escapeHtml(url)}" onerror="this.onerror=null;this.src=PLACEHOLDER_IMG" alt="Photo ${idx + 1}">
       <button type="button" class="btn-remove-photo" onclick="removePhoto(${idx})" title="Remove photo">&times;</button>
     </div>
   `).join('');
+
+  // Render new local files (preview only, cannot be individually removed easily via standard input type=file, so no X button)
+  html += newFiles.map((file, idx) => `
+    <div class="photo-thumb-box" style="border: 2px solid #C3A167;">
+      <img src="${URL.createObjectURL(file)}" alt="New File ${idx + 1}">
+      <div style="position:absolute;bottom:0;background:rgba(195,161,103,0.9);color:#fff;font-size:9px;width:100%;text-align:center;padding:2px;">NEW</div>
+    </div>
+  `).join('');
+
+  return html;
 }
 
 function addPhotoUrl() {
