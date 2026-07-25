@@ -774,14 +774,13 @@ function getSizeStock(data, sizeName, defaultVal = 0) {
 }
 
 function calculateTotalSizeStock() {
-  const xs = parseInt(document.getElementById('pf-stock-xs')?.value || 0);
-  const s = parseInt(document.getElementById('pf-stock-s')?.value || 0);
-  const m = parseInt(document.getElementById('pf-stock-m')?.value || 0);
-  const l = parseInt(document.getElementById('pf-stock-l')?.value || 0);
-  const xl = parseInt(document.getElementById('pf-stock-xl')?.value || 0);
-  const xxl = parseInt(document.getElementById('pf-stock-xxl')?.value || 0);
+  const sizes = ['S', 'M', 'L', 'XL', '2XL', '3XL', '4XL', '5XL', '6XL'];
+  let total = 0;
+  sizes.forEach(sz => {
+    const inputId = `pf-stock-${sz.toLowerCase()}`;
+    total += parseInt(document.getElementById(inputId)?.value || 0);
+  });
 
-  const total = xs + s + m + l + xl + xxl;
   const label = document.getElementById('pf-total-stock-label');
   const hiddenInput = document.getElementById('pf-stock');
   if (label) label.innerText = `Total Stock: ${total} Units`;
@@ -865,38 +864,20 @@ function renderProductFormModal(productId, data) {
           </div>
         </div>
 
-        <!-- Size-Wise Stock Inventory Matrix -->
+        <!-- Size-Wise Stock Inventory Matrix (S to 6XL) -->
         <div class="form-group" style="background:#fff;padding:16px;border-radius:8px;border:1px solid #e2e8f0;margin-bottom:16px;">
           <label style="font-weight:700;display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-            <span>📏 Size-Wise Inventory Breakdown *</span>
+            <span>📏 Size-Wise Inventory Breakdown (S to 6XL) *</span>
             <span id="pf-total-stock-label" style="font-size:12px;color:var(--admin-green);font-weight:800;">Total Stock: 0 Units</span>
           </label>
-          <p style="font-size:11px;color:var(--admin-text-secondary);margin-bottom:12px;">Specify exact available inventory stock quantity for each individual size:</p>
-          <div style="display:grid;grid-template-columns:repeat(6, 1fr);gap:10px;">
-            <div style="text-align:center;">
-              <span style="font-size:12px;font-weight:700;display:block;margin-bottom:4px;">XS</span>
-              <input type="number" id="pf-stock-xs" class="form-control" value="${getSizeStock(data, 'XS', 10)}" min="0" oninput="calculateTotalSizeStock()" style="text-align:center;font-weight:700;border-color:#C3A167;">
-            </div>
-            <div style="text-align:center;">
-              <span style="font-size:12px;font-weight:700;display:block;margin-bottom:4px;">S</span>
-              <input type="number" id="pf-stock-s" class="form-control" value="${getSizeStock(data, 'S', 15)}" min="0" oninput="calculateTotalSizeStock()" style="text-align:center;font-weight:700;border-color:#C3A167;">
-            </div>
-            <div style="text-align:center;">
-              <span style="font-size:12px;font-weight:700;display:block;margin-bottom:4px;">M</span>
-              <input type="number" id="pf-stock-m" class="form-control" value="${getSizeStock(data, 'M', 20)}" min="0" oninput="calculateTotalSizeStock()" style="text-align:center;font-weight:700;border-color:#C3A167;">
-            </div>
-            <div style="text-align:center;">
-              <span style="font-size:12px;font-weight:700;display:block;margin-bottom:4px;">L</span>
-              <input type="number" id="pf-stock-l" class="form-control" value="${getSizeStock(data, 'L', 10)}" min="0" oninput="calculateTotalSizeStock()" style="text-align:center;font-weight:700;border-color:#C3A167;">
-            </div>
-            <div style="text-align:center;">
-              <span style="font-size:12px;font-weight:700;display:block;margin-bottom:4px;">XL</span>
-              <input type="number" id="pf-stock-xl" class="form-control" value="${getSizeStock(data, 'XL', 5)}" min="0" oninput="calculateTotalSizeStock()" style="text-align:center;font-weight:700;border-color:#C3A167;">
-            </div>
-            <div style="text-align:center;">
-              <span style="font-size:12px;font-weight:700;display:block;margin-bottom:4px;">XXL</span>
-              <input type="number" id="pf-stock-xxl" class="form-control" value="${getSizeStock(data, 'XXL', 0)}" min="0" oninput="calculateTotalSizeStock()" style="text-align:center;font-weight:700;border-color:#C3A167;">
-            </div>
+          <p style="font-size:11px;color:var(--admin-text-secondary);margin-bottom:12px;">Specify exact available inventory stock quantity for each size (S through 6XL):</p>
+          <div style="display:grid;grid-template-columns:repeat(9, 1fr);gap:6px;">
+            ${['S', 'M', 'L', 'XL', '2XL', '3XL', '4XL', '5XL', '6XL'].map(sz => `
+              <div style="text-align:center;">
+                <span style="font-size:11px;font-weight:700;display:block;margin-bottom:4px;">${sz}</span>
+                <input type="number" id="pf-stock-${sz.toLowerCase()}" class="form-control" value="${getSizeStock(data, sz, sz === 'S' || sz === 'M' || sz === 'L' || sz === 'XL' ? 10 : 2)}" min="0" oninput="calculateTotalSizeStock()" style="text-align:center;font-weight:700;border-color:#C3A167;padding:4px;">
+              </div>
+            `).join('')}
           </div>
           <input type="hidden" id="pf-stock" value="0">
         </div>
@@ -1085,12 +1066,15 @@ async function handleProductFormSubmit(e, productId) {
   payload.append('stock', document.getElementById('pf-stock').value);
 
   const sizeStockMap = {
-    XS: parseInt(document.getElementById('pf-stock-xs')?.value || 0),
     S: parseInt(document.getElementById('pf-stock-s')?.value || 0),
     M: parseInt(document.getElementById('pf-stock-m')?.value || 0),
     L: parseInt(document.getElementById('pf-stock-l')?.value || 0),
     XL: parseInt(document.getElementById('pf-stock-xl')?.value || 0),
-    XXL: parseInt(document.getElementById('pf-stock-xxl')?.value || 0)
+    '2XL': parseInt(document.getElementById('pf-stock-2xl')?.value || 0),
+    '3XL': parseInt(document.getElementById('pf-stock-3xl')?.value || 0),
+    '4XL': parseInt(document.getElementById('pf-stock-4xl')?.value || 0),
+    '5XL': parseInt(document.getElementById('pf-stock-5xl')?.value || 0),
+    '6XL': parseInt(document.getElementById('pf-stock-6xl')?.value || 0)
   };
   payload.append('sizeStock', JSON.stringify(sizeStockMap));
 

@@ -34,16 +34,16 @@ const createProduct = async (data, uploadedImages = []) => {
     const sku = data.sku || `SKU-${Date.now()}`;
     const taxPercentage = data.taxPercentage !== undefined ? parseFloat(data.taxPercentage) : 0;
 
-    // Handle size-wise stock breakdown map
-    let sizeStockMap = { XS: 10, S: 10, M: 10, L: 10, XL: 10 };
+    // Handle size-wise stock breakdown map (S to 6XL)
+    let sizeStockMap = { S: 10, M: 10, L: 10, XL: 10, '2XL': 5, '3XL': 5, '4XL': 2, '5XL': 2, '6XL': 2 };
     if (data.sizeStock) {
         try {
             sizeStockMap = typeof data.sizeStock === 'string' ? JSON.parse(data.sizeStock) : data.sizeStock;
         } catch (e) {}
     } else if (data.stock !== undefined) {
         const total = parseInt(data.stock);
-        const perSize = Math.max(0, Math.floor(total / 5));
-        sizeStockMap = { XS: perSize, S: perSize, M: perSize, L: perSize, XL: perSize };
+        const perSize = Math.max(0, Math.floor(total / 9));
+        sizeStockMap = { S: perSize, M: perSize, L: perSize, XL: perSize, '2XL': perSize, '3XL': perSize, '4XL': perSize, '5XL': perSize, '6XL': perSize };
     }
 
     const sizesToCreate = Object.keys(sizeStockMap);
