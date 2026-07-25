@@ -376,6 +376,11 @@ async function loadProducts() {
       const price = p.basePrice || p.price || 0;
       const status = p.status || 'active';
       const hasYoutube = p.youtubeUrl ? true : false;
+      const tax = parseFloat(p.taxPercentage || 0);
+      let stock = 0;
+      if (p.variants && p.variants[0] && p.variants[0].inventory) {
+          stock = p.variants[0].inventory.stock || 0;
+      }
 
       return `<div class="product-admin-card">
         <div style="position:relative;">
@@ -388,6 +393,7 @@ async function loadProducts() {
           <div class="product-admin-meta">
             <span>${p.category?.name || 'Collection'}</span>
             <span class="badge badge-${status}">${status}</span>
+            <div style="font-size:11px;color:var(--admin-text-secondary);margin-top:6px;font-weight:600;">Stock: ${stock} &nbsp;|&nbsp; Tax: ${tax}%</div>
           </div>
           
           <div class="product-card-actions">
@@ -426,7 +432,9 @@ function openAddProductModal() {
     sku: `MR-KU-${Math.floor(100 + Math.random() * 900)}`,
     description: '',
     youtubeUrl: '',
-    status: 'active'
+    status: 'active',
+    stock: '',
+    taxPercentage: 0
   });
 }
 
@@ -446,6 +454,12 @@ async function openEditProductModal(productId) {
     }
     if (photos.length === 0) photos = ['images/A.jpeg'];
     currentEditPhotos = photos;
+
+    let stock = 0;
+    if (p.variants && p.variants[0] && p.variants[0].inventory) {
+        stock = p.variants[0].inventory.stock || 0;
+    }
+    p.stock = stock;
 
     renderProductFormModal(productId, p);
   } catch (err) {
@@ -477,6 +491,17 @@ function renderProductFormModal(productId, data) {
         <div class="form-group">
           <label>SKU Code *</label>
           <input type="text" id="pf-sku" class="form-control" value="${escapeHtml(data.sku || '')}" placeholder="MR-KU-001" required>
+        </div>
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label>Total Stock Qty *</label>
+          <input type="number" id="pf-stock" class="form-control" value="${data.stock !== undefined ? data.stock : ''}" placeholder="50" required min="0">
+        </div>
+        <div class="form-group">
+          <label>Tax Percentage (%) *</label>
+          <input type="number" id="pf-tax" class="form-control" value="${data.taxPercentage !== undefined ? data.taxPercentage : '0'}" placeholder="12" required step="0.1" min="0" max="100">
         </div>
       </div>
 
@@ -576,6 +601,8 @@ async function handleProductFormSubmit(e, productId) {
     sku: document.getElementById('pf-sku').value.trim(),
     description: document.getElementById('pf-description').value.trim(),
     youtubeUrl: document.getElementById('pf-youtube').value.trim() || null,
+    stock: parseInt(document.getElementById('pf-stock').value),
+    taxPercentage: parseFloat(document.getElementById('pf-tax').value),
     imageUrls: currentEditPhotos
   };
 

@@ -32,6 +32,8 @@ const createProduct = async (data, uploadedImages = []) => {
 
     const price = parseFloat(data.price || 0);
     const sku = data.sku || `SKU-${Date.now()}`;
+    const stock = data.stock !== undefined ? parseInt(data.stock) : 50;
+    const taxPercentage = data.taxPercentage !== undefined ? parseFloat(data.taxPercentage) : 0;
 
     const newProduct = await prisma.product.create({
         data: {
@@ -39,6 +41,7 @@ const createProduct = async (data, uploadedImages = []) => {
             slug,
             sku,
             price,
+            taxPercentage,
             description: data.description || '',
             shortDescription: data.shortDescription || '',
             youtubeUrl: data.youtubeUrl || null,
@@ -60,7 +63,7 @@ const createProduct = async (data, uploadedImages = []) => {
                     variantSku: `${sku}-${size}`,
                     priceAdjustment: 0,
                     inventory: {
-                        create: { stock: 50, lowStockThreshold: 5 }
+                        create: { stock: stock, lowStockThreshold: 5 }
                     }
                 }))
             }
@@ -115,7 +118,7 @@ const getProducts = async (filters, queryParams = {}) => {
             skip: parseInt(skip),
             take: parseInt(limit),
             orderBy,
-            include: { images: true, category: { select: { name: true, slug: true } } }
+            include: { images: true, category: { select: { name: true, slug: true } }, variants: { include: { inventory: true } } }
         })
     ]);
 
@@ -158,6 +161,7 @@ const updateProduct = async (id, data, uploadedImages = []) => {
     if (data.youtubeUrl !== undefined) updateData.youtubeUrl = data.youtubeUrl;
     if (data.status) updateData.status = data.status;
     if (data.categoryId) updateData.categoryId = parseInt(data.categoryId);
+    if (data.taxPercentage !== undefined) updateData.taxPercentage = parseFloat(data.taxPercentage);
 
     let imageList = [];
     if (uploadedImages && uploadedImages.length > 0) {
@@ -182,8 +186,16 @@ const updateProduct = async (id, data, uploadedImages = []) => {
     const updatedProduct = await prisma.product.update({
         where: { id },
         data: updateData,
-        include: { images: true, category: true }
+        include: { images: true, category: true, variants: { include: { inventory: true } } }
     });
+
+    if (data.stock !== undefined) {
+        const stock = parseInt(data.stock);
+        const variants = await prisma.productVariant.findMany({ where: { productId: id } });
+        for (let v of variants) {
+            await prisma.inventory.update({ where: { variantId: v.id }, data: { stock } });
+        }
+    }
 
     return updatedProduct;
 };

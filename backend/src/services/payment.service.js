@@ -106,6 +106,20 @@ const verifyPayment = async (orderId, paymentId, razorpayPaymentId, razorpayOrde
             }
         });
 
+        // 2.5 Deduct Stock
+        for (const item of order.items) {
+            const variants = await tx.productVariant.findMany({ where: { productId: item.productId }, take: 1 });
+            if (variants.length > 0) {
+                const inv = await tx.inventory.findUnique({ where: { variantId: variants[0].id } });
+                if (inv && inv.stock > 0) {
+                    await tx.inventory.update({
+                        where: { id: inv.id },
+                        data: { stock: Math.max(0, inv.stock - item.quantity) }
+                    });
+                }
+            }
+        }
+
         // 3. Generate Invoice
         const invoiceNumber = `INV-${Date.now()}`;
         const invoice = await tx.invoice.create({
@@ -294,6 +308,20 @@ const verifyGuestPayment = async (razorpayPaymentId, razorpayOrderId, razorpaySi
                     }
                 }
             });
+
+            // Deduct Stock
+            for (const itemData of orderItemsData) {
+                const variants = await prisma.productVariant.findMany({ where: { productId: itemData.productId }, take: 1 });
+                if (variants.length > 0) {
+                    const inv = await prisma.inventory.findUnique({ where: { variantId: variants[0].id } });
+                    if (inv && inv.stock > 0) {
+                        await prisma.inventory.update({
+                            where: { id: inv.id },
+                            data: { stock: Math.max(0, inv.stock - itemData.quantity) }
+                        });
+                    }
+                }
+            }
 
             await prisma.payment.create({
                 data: {
