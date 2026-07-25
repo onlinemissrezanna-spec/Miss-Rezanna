@@ -61,19 +61,63 @@ const createProduct = async (data, uploadedImages = []) => {
                     sortOrder: i
                 }))
             },
-            variants: {
-                create: ['XS', 'S', 'M', 'L', 'XL'].map(size => ({
-                    size,
-                    color: 'Standard',
-                    variantSku: `${sku}-${size}`,
-                    priceAdjustment: 0,
-                    inventory: {
-                        create: { stock: stock, lowStockThreshold: 5 }
-                    }
+    // Handle size-wise stock breakdown map
+    let sizeStockMap = { XS: 10, S: 10, M: 10, L: 10, XL: 10 };
+    if (data.sizeStock) {
+        try {
+            sizeStockMap = typeof data.sizeStock === 'string' ? JSON.parse(data.sizeStock) : data.sizeStock;
+        } catch (e) {}
+    } else if (data.stock !== undefined) {
+        const total = parseInt(data.stock);
+        const perSize = Math.max(0, Math.floor(total / 5));
+        sizeStockMap = { XS: perSize, S: perSize, M: perSize, L: perSize, XL: perSize };
+    }
+
+    const sizesToCreate = Object.keys(sizeStockMap);
+    const variantsCreateArray = sizesToCreate.map(size => {
+        const sQty = parseInt(sizeStockMap[size]) || 0;
+        return {
+            size,
+            color: 'Standard',
+            variantSku: `${sku}-${size}`,
+            priceAdjustment: 0,
+            inventory: {
+                create: { stock: sQty, lowStockThreshold: 5 }
+            }
+        };
+    });
+
+    const newProduct = await prisma.product.create({
+        data: {
+            name: data.name,
+            slug,
+            sku,
+            price,
+            taxPercentage,
+            description: data.description || '',
+            seoTitle: data.seoTitle || null,
+            seoDescription: data.seoDescription || null,
+            seoKeywords: data.seoKeywords || null,
+            brand: data.brand || null,
+            fabric: data.fabric || null,
+            fit: data.fit || null,
+            careInstructions: data.careInstructions || null,
+            categoryId,
+            status: data.status || 'active',
+            isFeatured: data.isFeatured === true || data.isFeatured === 'true',
+            isNewArrival: data.isNewArrival === true || data.isNewArrival === 'true',
+            images: {
+                create: imageList.map((url, i) => ({
+                    imageUrl: url,
+                    isPrimary: i === 0,
+                    sortOrder: i
                 }))
+            },
+            variants: {
+                create: variantsCreateArray
             }
         },
-        include: { images: true, category: true, variants: true }
+        include: { images: true, category: true, variants: { include: { inventory: true } } }
     });
 
     // Automatically send email announcement to all registered customers
@@ -206,11 +250,44 @@ const updateProduct = async (id, data, uploadedImages = []) => {
         include: { images: true, category: true, variants: { include: { inventory: true } } }
     });
 
-    if (data.stock !== undefined) {
+    if (data.sizeStock !== undefined) {
+        let sizeStockMap = {};
+        try {
+            sizeStockMap = typeof data.sizeStock === 'string' ? JSON.parse(data.sizeStock) : data.sizeStock;
+        } catch (e) {}
+
+        for (let [sizeName, qty] of Object.entries(sizeStockMap)) {
+            const stockNum = parseInt(qty) || 0;
+            let variant = await prisma.productVariant.findFirst({
+                where: { productId: id, size: sizeName }
+            });
+            if (!variant) {
+                variant = await prisma.productVariant.create({
+                    data: {
+                        productId: id,
+                        size: sizeName,
+                        color: 'Standard',
+                        variantSku: `${updatedProduct.sku}-${sizeName}`,
+                        inventory: { create: { stock: stockNum } }
+                    }
+                });
+            } else {
+                await prisma.inventory.upsert({
+                    where: { variantId: variant.id },
+                    update: { stock: stockNum },
+                    create: { variantId: variant.id, stock: stockNum }
+                });
+            }
+        }
+    } else if (data.stock !== undefined) {
         const stock = parseInt(data.stock);
         const variants = await prisma.productVariant.findMany({ where: { productId: id } });
         for (let v of variants) {
-            await prisma.inventory.update({ where: { variantId: v.id }, data: { stock } });
+            await prisma.inventory.upsert({
+                where: { variantId: v.id },
+                update: { stock },
+                create: { variantId: v.id, stock }
+            });
         }
     }
 
