@@ -252,6 +252,63 @@ img, video, iframe {
   .footer-socials {
     justify-content: center !important;
   }
+
+  /* MOBILE-ONLY BRAND LOGO & HEADER COMPACTNESS */
+  .brand-logo img {
+    height: 52px !important;
+    max-height: 52px !important;
+    width: auto !important;
+  }
+
+  .site-header {
+    padding: 6px 0 !important;
+  }
+
+  .hero-image-col {
+    height: 46vh !important;
+  }
+
+  .hero-content-col {
+    padding: 24px 20px !important;
+  }
+
+  .hero-title {
+    font-size: 28px !important;
+    line-height: 1.25 !important;
+  }
+
+  .hero-label {
+    font-size: 11px !important;
+    margin-bottom: 12px !important;
+  }
+
+  .craft-features {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .complete-look-card {
+    padding: 20px 16px !important;
+  }
+
+  .footer-brand {
+    text-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  .footer-brand-desc {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    text-align: center !important;
+  }
+
+  .footer-social {
+    justify-content: center !important;
+    margin-top: 16px !important;
+    margin-bottom: 24px !important;
+  }
 }
 
 /* EXTRA SMALL SMARTPHONES (< 480px) */
