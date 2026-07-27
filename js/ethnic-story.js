@@ -21,12 +21,12 @@
       audioCtx = new AudioContextClass();
       masterGain = audioCtx.createGain();
       masterGain.gain.setValueAtTime(0.01, audioCtx.currentTime);
-      masterGain.gain.exponentialRampToValueAtTime(0.18, audioCtx.currentTime + 3);
+      masterGain.gain.exponentialRampToValueAtTime(0.65, audioCtx.currentTime + 2.5);
       masterGain.connect(audioCtx.destination);
 
       // Classical Indian Raag Bhoopali / Tanpura harmonic frequencies (Sa - Ga - Pa - Dha - Sa)
-      // Root D3 (146.83 Hz), A3 (220.00 Hz), D4 (293.66 Hz), E4 (329.63 Hz)
-      const baseFreqs = [146.83, 220.00, 293.66, 329.63, 440.00];
+      // Root D2 (73.42 Hz), D3 (146.83 Hz), A3 (220.00 Hz), D4 (293.66 Hz), E4 (329.63 Hz), A4 (440 Hz), D5 (587.33 Hz)
+      const baseFreqs = [73.42, 146.83, 220.00, 293.66, 329.63, 440.00, 587.33];
 
       baseFreqs.forEach((freq, idx) => {
         const osc = audioCtx.createOscillator();
@@ -38,7 +38,7 @@
         // Soft harmonic detuning for rich acoustic sitar resonance
         osc.detune.setValueAtTime((Math.random() - 0.5) * 8, audioCtx.currentTime);
 
-        const volume = 0.04 / (idx + 1);
+        const volume = 0.18 / (idx + 1);
         oscGain.gain.setValueAtTime(volume, audioCtx.currentTime);
 
         osc.connect(oscGain);
@@ -100,7 +100,7 @@
         osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
 
         gain.gain.setValueAtTime(0.001, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.035, audioCtx.currentTime + 0.3);
+        gain.gain.exponentialRampToValueAtTime(0.15, audioCtx.currentTime + 0.3);
         gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 4.5);
 
         osc.connect(gain);
