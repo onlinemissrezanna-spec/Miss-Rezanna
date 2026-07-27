@@ -1,0 +1,136 @@
+/* ==========================================================================
+   MISS REZANNA - LUXURY COOKIE & PRIVACY CONSENT BANNER
+   ========================================================================== */
+
+.cookie-banner-container {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(120%);
+  width: calc(100% - 48px);
+  max-width: 680px;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(195, 161, 103, 0.35);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+  border-radius: 8px;
+  padding: 24px 28px;
+  z-index: 100000;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cookie-banner-container.show-banner {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.cookie-banner-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cookie-banner-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cookie-banner-title {
+  font-family: var(--font-heading, 'Playfair Display', serif);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #111111;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cookie-banner-title span {
+  color: #C3A167;
+}
+
+.cookie-banner-text {
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: #444444;
+  margin: 0;
+}
+
+.cookie-banner-text a {
+  color: #111111;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 500;
+}
+
+.cookie-banner-text a:hover {
+  color: #C3A167;
+}
+
+.cookie-banner-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.cookie-btn {
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 10px 22px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.cookie-btn-accept {
+  background: #111111;
+  color: #ffffff;
+  border: 1px solid #111111;
+}
+
+.cookie-btn-accept:hover {
+  background: #C3A167;
+  border-color: #C3A167;
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.cookie-btn-decline {
+  background: transparent;
+  color: #555555;
+  border: 1px solid #CCCCCC;
+}
+
+.cookie-btn-decline:hover {
+  color: #111111;
+  border-color: #111111;
+}
+
+@media (max-width: 600px) {
+  .cookie-banner-container {
+    bottom: 12px;
+    width: calc(100% - 24px);
+    padding: 18px 20px;
+  }
+  .cookie-banner-actions {
+    justify-content: stretch;
+  }
+  .cookie-btn {
+    flex: 1;
+    text-align: center;
+    padding: 12px 14px;
+  }
+}
