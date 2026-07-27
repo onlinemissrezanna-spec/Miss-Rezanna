@@ -265,32 +265,47 @@ function injectWishlistStyles() {
   document.head.appendChild(style);
 }
 
-// Global initialization & click event binding
-document.addEventListener('DOMContentLoaded', () => {
+// Assign global functions on window object for instant availability
+window.getWishlistItems = getWishlistItems;
+window.saveWishlistItems = saveWishlistItems;
+window.isInWishlist = isInWishlist;
+window.toggleWishlist = toggleWishlist;
+window.removeFromWishlist = removeFromWishlist;
+window.moveWishlistItemToCart = moveWishlistItemToCart;
+window.openWishlistDrawer = openWishlistDrawer;
+window.closeWishlistDrawer = closeWishlistDrawer;
+window.updateWishlistUI = updateWishlistUI;
+
+// Run immediate drawer injection if document is already interactive/ready
+if (document.readyState === 'interactive' || document.readyState === 'complete') {
   injectWishlistDrawerHTML();
   updateWishlistUI();
-
-  // Attach click listeners to all Wishlist trigger buttons
-  document.addEventListener('click', (e) => {
-    const target = e.target.closest('[aria-label="Wishlist"], .btn-wishlist, [data-wishlist-trigger], .quick-action-btn[title*="Wishlist"]');
-    if (target) {
-      e.preventDefault();
-      // Check if button has product details
-      const card = target.closest('.product-card, .product-container, [data-product-id]');
-      if (card) {
-        const id = card.getAttribute('data-product-id') || target.getAttribute('data-product-id') || 'prod-' + Date.now();
-        const titleEl = card.querySelector('.product-card-title, .product-title, h1');
-        const priceEl = card.querySelector('.product-card-price, .product-price, .price');
-        const imgEl = card.querySelector('img');
-
-        const name = titleEl ? titleEl.textContent.trim() : 'Luxury Kurti Ensemble';
-        const price = priceEl ? parseFloat(priceEl.textContent.replace(/[^0-9.]/g, '')) || 3500 : 3500;
-        const image = imgEl ? imgEl.src : 'images/logo.png';
-
-        toggleWishlist({ id, name, price, image });
-      } else {
-        openWishlistDrawer();
-      }
-    }
+} else {
+  document.addEventListener('DOMContentLoaded', () => {
+    injectWishlistDrawerHTML();
+    updateWishlistUI();
   });
+}
+
+// Global click event delegation for heart icons and wishlist buttons
+document.addEventListener('click', (e) => {
+  const target = e.target.closest('[aria-label="Wishlist"], .btn-wishlist, [data-wishlist-trigger], .quick-action-btn[title*="Wishlist"], [title*="Wishlist"], .mobile-dock-item[href*="wishlist"]');
+  if (target) {
+    e.preventDefault();
+    const card = target.closest('.product-card, .product-container, [data-product-id]');
+    if (card) {
+      const id = card.getAttribute('data-product-id') || target.getAttribute('data-product-id') || 'prod-' + Date.now();
+      const titleEl = card.querySelector('.product-card-title, .product-title, h1');
+      const priceEl = card.querySelector('.product-card-price, .product-price, .price');
+      const imgEl = card.querySelector('img');
+
+      const name = titleEl ? titleEl.textContent.trim() : 'Luxury Kurti Ensemble';
+      const price = priceEl ? parseFloat(priceEl.textContent.replace(/[^0-9.]/g, '')) || 3500 : 3500;
+      const image = imgEl ? imgEl.src : 'images/logo.png';
+
+      toggleWishlist({ id, name, price, image });
+    } else {
+      openWishlistDrawer();
+    }
+  }
 });
