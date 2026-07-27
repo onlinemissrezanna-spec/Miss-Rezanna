@@ -546,6 +546,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initialize Luxury Slide Bar Navigation Drawer
   initSlideBar();
+
+  // Initialize Luxury Search Modal
+  initSearchModal();
 });
 
 function initSlideBar() {
@@ -630,6 +633,14 @@ function initSlideBar() {
       openSlideBar();
     });
   });
+
+  // Hook account buttons to admin.html
+  document.querySelectorAll('[aria-label="Account"]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.location.href = 'admin.html';
+    });
+  });
 }
 
 function openSlideBar() {
@@ -651,3 +662,131 @@ function closeSlideBar() {
     document.body.style.overflow = '';
   }
 }
+
+/* ==========================================================================
+   INSTANT LIVE SEARCH OVERLAY MODAL
+   ========================================================================== */
+
+const SEARCH_CATALOG = [
+  { id: 'midnight-kurti', name: 'Midnight Silk Kurti', price: 3000, category: 'Kurti Sets', image: 'images/A.jpeg' },
+  { id: 'ivory-fusion', name: 'Ivory Linen Co-ord', price: 3000, category: 'Co-ord Sets', image: 'images/B.jpeg' },
+  { id: 'crimson-set', name: 'Crimson Festivity Set', price: 3000, category: 'Festive Collection', image: 'images/C.jpeg' },
+  { id: 'terracotta-pant', name: 'Terracotta Flow Pant', price: 3000, category: 'Bottom Wear', image: 'images/N.jpeg' },
+  { id: 'olive-kurti', name: 'Olive Blossom Kurti', price: 3000, category: 'Kurti Sets', image: 'images/design 1 col 2.jpeg' },
+  { id: 'emerald-luxury', name: 'Emerald Heritage Kurti', price: 3000, category: 'Festive Collection', image: 'images/NV.jpeg' },
+  { id: 'sapphire-coord', name: 'Sapphire Modern Co-ord', price: 3000, category: 'Co-ord Sets', image: 'images/Q.jpeg' },
+  { id: 'rose-ensemble', name: 'Rose Petal Kurti Set', price: 3000, category: 'Kurti Sets', image: 'images/R.jpeg' },
+  { id: 'gold-chanderi', name: 'Gold Chanderi Ensemble', price: 3000, category: 'Festive Collection', image: 'images/T.jpeg' }
+];
+
+function initSearchModal() {
+  if (document.getElementById('searchModalBackdrop')) return;
+
+  const html = `
+    <div class="search-modal-backdrop" id="searchModalBackdrop" onclick="closeSearchModal()"></div>
+    <div class="search-modal-box" id="searchModalBox">
+      <div class="search-modal-header">
+        <input type="text" id="searchInputField" class="search-input-field" placeholder="Search kurtis, co-ords, ensembles..." oninput="handleSearchInput(this.value)">
+        <button class="search-modal-close" onclick="closeSearchModal()">✕</button>
+      </div>
+      <div class="search-results-list" id="searchResultsList">
+        <p style="color:#888;font-size:13px;text-align:center;padding:30px 0;">Type to search Miss Rezanna luxury collections...</p>
+      </div>
+    </div>
+  `;
+
+  document.body.insertAdjacentHTML('beforeend', html);
+  injectSearchModalStyles();
+
+  document.querySelectorAll('[aria-label="Search"]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      openSearchModal();
+    });
+  });
+}
+
+function openSearchModal() {
+  initSearchModal();
+  document.getElementById('searchModalBackdrop')?.classList.add('active');
+  document.getElementById('searchModalBox')?.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => document.getElementById('searchInputField')?.focus(), 100);
+}
+
+function closeSearchModal() {
+  document.getElementById('searchModalBackdrop')?.classList.remove('active');
+  document.getElementById('searchModalBox')?.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function handleSearchInput(query) {
+  const container = document.getElementById('searchResultsList');
+  if (!container) return;
+  const q = String(query || '').trim().toLowerCase();
+
+  if (!q) {
+    container.innerHTML = `<p style="color:#888;font-size:13px;text-align:center;padding:30px 0;">Type to search Miss Rezanna luxury collections...</p>`;
+    return;
+  }
+
+  const matches = SEARCH_CATALOG.filter(item => 
+    item.name.toLowerCase().includes(q) || item.category.toLowerCase().includes(q)
+  );
+
+  if (matches.length === 0) {
+    container.innerHTML = `<p style="color:#888;font-size:13px;text-align:center;padding:30px 0;">No ensembles found matching "${escapeHtml(q)}"</p>`;
+    return;
+  }
+
+  container.innerHTML = matches.map(item => `
+    <a href="product.html?id=${item.id}" onclick="closeSearchModal()" class="search-result-card">
+      <img src="${item.image}" alt="${escapeHtml(item.name)}" class="search-result-img">
+      <div class="search-result-info">
+        <h4 class="search-result-title">${escapeHtml(item.name)}</h4>
+        <span class="search-result-cat">${escapeHtml(item.category)}</span>
+        <div class="search-result-price">₹${Number(item.price).toLocaleString('en-IN')}</div>
+      </div>
+    </a>
+  `).join('');
+}
+
+function injectSearchModalStyles() {
+  if (document.getElementById('searchModalStyles')) return;
+  const style = document.createElement('style');
+  style.id = 'searchModalStyles';
+  style.textContent = `
+    .search-modal-backdrop {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.65); backdrop-filter: blur(6px);
+      z-index: 10020; opacity: 0; visibility: hidden; transition: all 0.3s ease;
+    }
+    .search-modal-backdrop.active { opacity: 1; visibility: visible; }
+
+    .search-modal-box {
+      position: fixed; top: 80px; left: 50%; transform: translateX(-50%) translateY(-20px);
+      width: 600px; max-width: 92vw; background: #ffffff; border-radius: 12px;
+      z-index: 10021; box-shadow: 0 20px 50px rgba(0,0,0,0.3); opacity: 0; visibility: hidden;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1); overflow: hidden;
+    }
+    .search-modal-box.active { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+
+    .search-modal-header { display: flex; align-items: center; padding: 16px 20px; border-bottom: 1px solid #eee; background: #faf9f6; }
+    .search-input-field { flex: 1; border: none; background: transparent; font-size: 16px; font-family: 'Cormorant Garamond', serif; outline: none; color: #111; }
+    .search-modal-close { background: none; border: none; font-size: 20px; color: #666; cursor: pointer; padding: 4px 8px; }
+
+    .search-results-list { max-height: 420px; overflow-y: auto; padding: 12px 20px; }
+    .search-result-card { display: flex; align-items: center; gap: 14px; padding: 10px 0; border-bottom: 1px solid #f5f5f5; text-decoration: none; color: inherit; transition: background 0.2s; }
+    .search-result-card:hover { background: #fafafa; }
+    .search-result-img { width: 50px; height: 60px; object-fit: cover; border-radius: 4px; }
+    .search-result-info { flex: 1; }
+    .search-result-title { font-family: 'Cormorant Garamond', serif; font-size: 16px; margin: 0 0 2px; color: #111; }
+    .search-result-cat { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.05em; display: block; }
+    .search-result-price { font-size: 13px; font-weight: 700; color: #C3A167; }
+  `;
+  document.head.appendChild(style);
+}
+
+window.openSlideBar = openSlideBar;
+window.closeSlideBar = closeSlideBar;
+window.openSearchModal = openSearchModal;
+window.closeSearchModal = closeSearchModal;
