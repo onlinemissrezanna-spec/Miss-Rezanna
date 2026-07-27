@@ -1,6 +1,12 @@
-/* Fixed Mobile Bottom App Dock for Native App Experience */
+/* Fixed Mobile Bottom App Dock - STRICTLY HIDDEN ON DESKTOP WEBSITE VIEW */
 .mobile-app-dock {
-  display: none;
+  display: none !important;
+}
+
+@media (min-width: 768px) {
+  .mobile-app-dock {
+    display: none !important;
+  }
 }
 
 @media (max-width: 767px) {
