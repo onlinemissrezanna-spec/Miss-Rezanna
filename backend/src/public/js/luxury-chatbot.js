@@ -8,15 +8,17 @@
     if (document.getElementById('luxuryChatbotLauncher')) return;
 
     const launcherHTML = `
-      <button id="luxuryChatbotLauncher" class="chatbot-launcher-btn" onclick="toggleChatbot(event)" aria-label="Open Luxury AI Stylist Chatbot">
-        <div class="chatbot-avatar-icon">❖</div>
-        <span>AI Stylist</span>
-      </button>
+      <div id="luxuryChatbotLauncher" class="chatbot-launcher-btn" role="button" aria-label="Open Draggable Luxury AI Stylist Chatbot" title="Drag to move anywhere, click to chat">
+        <img src="images/10.jpeg" alt="AI Stylist" class="chatbot-avatar-circle">
+        <div class="ai-online-dot"></div>
+      </div>
 
       <div id="luxuryChatbotWindow" class="chatbot-window" role="dialog" aria-label="Miss Rezanna AI Stylist">
         <div class="chatbot-header">
           <div class="chatbot-header-info">
-            <div class="chatbot-avatar-icon" style="background:#C3A167; color:#111;">❖</div>
+            <div class="chatbot-avatar-icon" style="background:transparent; color:#111;">
+              <img src="images/10.jpeg" alt="AI Stylist" class="chatbot-model-thumb">
+            </div>
             <div>
               <h4 class="chatbot-header-title">MISS REZANNA</h4>
               <div class="chatbot-header-subtitle">AI Heritage Stylist</div>
@@ -48,6 +50,89 @@
     `;
 
     document.body.insertAdjacentHTML('beforeend', launcherHTML);
+
+    const launcherEl = document.getElementById('luxuryChatbotLauncher');
+    if (launcherEl) {
+      // Load saved position if exists
+      const savedLeft = localStorage.getItem('ai_agent_pos_left');
+      const savedTop = localStorage.getItem('ai_agent_pos_top');
+      if (savedLeft && savedTop) {
+        launcherEl.style.left = savedLeft + 'px';
+        launcherEl.style.top = savedTop + 'px';
+        launcherEl.style.bottom = 'auto';
+        launcherEl.style.right = 'auto';
+      }
+
+      let isDragging = false;
+      let startX, startY, initialLeft, initialTop;
+      let dragDistance = 0;
+
+      function onStart(clientX, clientY) {
+        isDragging = true;
+        dragDistance = 0;
+        startX = clientX;
+        startY = clientY;
+        const rect = launcherEl.getBoundingClientRect();
+        initialLeft = rect.left;
+        initialTop = rect.top;
+        launcherEl.style.transition = 'none';
+      }
+
+      function onMove(clientX, clientY) {
+        if (!isDragging) return;
+        const dx = clientX - startX;
+        const dy = clientY - startY;
+        dragDistance = Math.hypot(dx, dy);
+
+        let newLeft = Math.max(8, Math.min(window.innerWidth - 60, initialLeft + dx));
+        let newTop = Math.max(8, Math.min(window.innerHeight - 60, initialTop + dy));
+
+        launcherEl.style.left = newLeft + 'px';
+        launcherEl.style.top = newTop + 'px';
+        launcherEl.style.bottom = 'auto';
+        launcherEl.style.right = 'auto';
+      }
+
+      function onEnd() {
+        if (!isDragging) return;
+        isDragging = false;
+        launcherEl.style.transition = 'transform 0.25s ease, box-shadow 0.25s ease';
+
+        if (dragDistance >= 5) {
+          const rect = launcherEl.getBoundingClientRect();
+          localStorage.setItem('ai_agent_pos_left', Math.round(rect.left));
+          localStorage.setItem('ai_agent_pos_top', Math.round(rect.top));
+        } else {
+          toggleChatbot();
+        }
+      }
+
+      // Mouse events
+      launcherEl.addEventListener('mousedown', (e) => {
+        if (e.button !== 0) return;
+        onStart(e.clientX, e.clientY);
+      });
+      window.addEventListener('mousemove', (e) => {
+        onMove(e.clientX, e.clientY);
+      });
+      window.addEventListener('mouseup', () => {
+        onEnd();
+      });
+
+      // Touch events for mobile devices
+      launcherEl.addEventListener('touchstart', (e) => {
+        const touch = e.touches[0];
+        onStart(touch.clientX, touch.clientY);
+      }, { passive: true });
+      window.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        const touch = e.touches[0];
+        onMove(touch.clientX, touch.clientY);
+      }, { passive: true });
+      window.addEventListener('touchend', () => {
+        onEnd();
+      });
+    }
 
     window.toggleChatbot = function(e) {
       if (e && e.preventDefault) e.preventDefault();

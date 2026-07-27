@@ -2,53 +2,60 @@
    MISS REZANNA - LUXURY AI CONCIERGE & HERITAGE STYLIST CHATBOT
    ========================================================================== */
 
+/* FLOATING 52PX CIRCULAR AI AGENT ICON (DRAGGABLE & COMPACT LIKE WHATSAPP) */
 .chatbot-launcher-btn {
   position: fixed;
-  bottom: 92px;
+  bottom: 88px;
   right: 24px;
-  z-index: 99995;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: linear-gradient(135deg, #1C1914 0%, #111111 100%);
-  color: #F8F6F2;
-  border: 1px solid rgba(195, 161, 103, 0.6);
-  padding: 10px 18px 10px 14px;
-  border-radius: 50px;
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  font-family: var(--font-body, 'Inter', sans-serif);
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  user-select: none;
-}
-
-.chatbot-launcher-btn:hover {
-  background: linear-gradient(135deg, #C3A167 0%, #A58348 100%);
-  color: #111111;
-  border-color: #ffffff;
-  transform: translateY(-3px) scale(1.03);
-  box-shadow: 0 14px 36px rgba(195, 161, 103, 0.5);
-}
-
-.chatbot-avatar-icon {
-  width: 26px;
-  height: 26px;
-  background: rgba(195, 161, 103, 0.2);
+  width: 52px;
+  height: 52px;
+  padding: 0;
   border-radius: 50%;
+  background: #1C1914;
+  border: 2px solid #C3A167;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), 0 0 16px rgba(195, 161, 103, 0.35);
+  cursor: grab;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #C3A167;
-  font-size: 1rem;
+  z-index: 99995;
+  user-select: none;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  overflow: visible;
 }
 
-.chatbot-launcher-btn:hover .chatbot-avatar-icon {
-  background: #111111;
-  color: #F8F6F2;
+.chatbot-launcher-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 12px 32px rgba(195, 161, 103, 0.65), 0 0 24px rgba(195, 161, 103, 0.5);
+  border-color: #ffffff;
+}
+
+.chatbot-launcher-btn:active {
+  cursor: grabbing;
+  transform: scale(1.03);
+}
+
+.chatbot-avatar-circle {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: top center;
+  pointer-events: none;
+}
+
+/* ONLINE GLOWING DOT */
+.ai-online-dot {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  width: 12px;
+  height: 12px;
+  background-color: #25D366;
+  border: 2px solid #111111;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #25D366;
+  pointer-events: none;
 }
 
 /* CHAT WINDOW MODAL */
@@ -259,9 +266,11 @@
 
 @media (max-width: 600px) {
   .chatbot-launcher-btn {
-    bottom: 84px;
-    right: 14px;
-    padding: 8px 14px;
+    bottom: 82px;
+    right: 16px;
+    width: 48px;
+    height: 48px;
+    padding: 0;
   }
   .chatbot-window {
     bottom: 0;
