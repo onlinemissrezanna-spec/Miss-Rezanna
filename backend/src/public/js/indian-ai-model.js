@@ -14,7 +14,7 @@
     }
 
     const greetingText = "Namaste! I am your AI agent from Miss Rezanna, how may I help you? If you require any information, I am just right here at your right side.";
-    const spokenText = "Namaste! I am your A.I. agent from Miss Rezanna, how may I help you? If you require any information, I am just right here at your right side.";
+    const spokenText = "Namaste! I am your Ay Eye agent from Miss Rezanna, how may I help you? If you require any information, I am just right here at your right side.";
 
     const modalHTML = `
       <div id="indianModel3dBackdrop" class="indian-model-3d-backdrop" role="dialog" aria-label="Miss Rezanna 3D AI Model Greeting">
@@ -135,42 +135,42 @@
     window.speechSynthesis.cancel();
 
     const utterance = new SpeechSynthesisUtterance(spokenText || displayText);
-    utterance.rate = 0.86; // Gentle, polite, unhurried rate
-    utterance.pitch = 1.24; // Sweet, warm, natural female human pitch
+    utterance.rate = 0.85; // Soft, polite, unhurried rate
+    utterance.pitch = 1.35; // Distinctly sweet, girlish pitch
 
-    // Select the sweetest, most natural female Indian/English voice available
-    const voices = window.speechSynthesis.getVoices();
-    let sweetVoice = null;
+    const voices = window.speechSynthesis.getVoices() || [];
+    const maleNames = ['male', 'david', 'mark', 'george', 'ravi', 'prabhat', 'guy', 'stefan', 'richard', 'sean', 'james', 'alex', 'fred'];
+    const femaleKeywords = ['neerja', 'swara', 'heera', 'kalpana', 'anita', 'zira', 'samantha', 'victoria', 'karen', 'google uk english female', 'female', 'natural', 'neural', 'hazel', 'eva'];
 
-    // 1. Prefer Natural / Neural Indian Female voices (Microsoft Neerja, Google Indian English Female)
-    sweetVoice = voices.find(v => 
-      !v.name.toLowerCase().includes('male') && 
-      !v.name.toLowerCase().includes('david') && 
-      !v.name.toLowerCase().includes('ravi') && 
-      (v.name.toLowerCase().includes('neerja') || v.name.toLowerCase().includes('swara') || v.name.toLowerCase().includes('natural') || v.name.toLowerCase().includes('neural')) && 
-      (v.lang.includes('IN') || v.name.toLowerCase().includes('india') || v.name.toLowerCase().includes('hindi'))
+    // Filter out male voices
+    const femaleOnly = voices.filter(v => {
+      const name = v.name.toLowerCase();
+      return !maleNames.some(m => name.includes(m));
+    });
+
+    let sweetFemaleVoice = femaleOnly.find(v => 
+      (v.lang.includes('IN') || v.lang.includes('hi') || v.name.toLowerCase().includes('india')) &&
+      femaleKeywords.some(k => v.name.toLowerCase().includes(k))
     );
 
-    // 2. Fallback to any Indian Female voice
-    if (!sweetVoice) {
-      sweetVoice = voices.find(v => 
-        !v.name.toLowerCase().includes('male') && 
-        !v.name.toLowerCase().includes('david') && 
-        !v.name.toLowerCase().includes('ravi') && 
-        (v.lang.includes('IN') || v.name.toLowerCase().includes('india') || v.name.toLowerCase().includes('hindi'))
+    if (!sweetFemaleVoice) {
+      sweetFemaleVoice = femaleOnly.find(v => 
+        (v.lang.includes('IN') || v.lang.includes('hi') || v.name.toLowerCase().includes('india'))
       );
     }
 
-    // 3. Fallback to sweetest global female voices (Samantha, Zira, Google Female, Victoria)
-    if (!sweetVoice) {
-      sweetVoice = voices.find(v => 
-        !v.name.toLowerCase().includes('male') && 
-        (v.name.toLowerCase().includes('female') || v.name.toLowerCase().includes('samantha') || v.name.toLowerCase().includes('zira') || v.name.toLowerCase().includes('victoria') || v.name.toLowerCase().includes('hazel'))
+    if (!sweetFemaleVoice) {
+      sweetFemaleVoice = femaleOnly.find(v => 
+        femaleKeywords.some(k => v.name.toLowerCase().includes(k))
       );
     }
 
-    if (sweetVoice) {
-      utterance.voice = sweetVoice;
+    if (!sweetFemaleVoice && femaleOnly.length > 0) {
+      sweetFemaleVoice = femaleOnly[0];
+    }
+
+    if (sweetFemaleVoice) {
+      utterance.voice = sweetFemaleVoice;
     }
 
     utterance.onend = () => {
