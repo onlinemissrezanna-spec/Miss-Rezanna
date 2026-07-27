@@ -496,4 +496,23 @@ svg, i[data-lucide], .lucide {
   max-height: 20px !important;
 }
 
+/* ==========================================================================
+   GLOBAL MODEL FACE PROTECTION (PREVENTS CROPPING MODEL FACES/HEADS)
+   ========================================================================== */
+.hero-image,
+.our-story-img,
+.collection-img,
+.product-img,
+.craftsmanship-img,
+.complete-look-img,
+.lookbook-media,
+.slider-img,
+.journal-img,
+.unboxing-img,
+.testimonial-img {
+  object-fit: cover !important;
+  object-position: center 15% !important;
+}
+
+
 
