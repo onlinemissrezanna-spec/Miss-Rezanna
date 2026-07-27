@@ -1,0 +1,274 @@
+/* ==========================================================================
+   MISS REZANNA - 3D INDIAN AI MODEL & GREETING CONCIERGE
+   ========================================================================== */
+
+/* 1. 3D HOLOGRAM PORTAL (CENTER-RIGHT WELCOME STAGE) */
+.indian-model-3d-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(17, 17, 17, 0.65);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  z-index: 100005;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  perspective: 1200px;
+}
+
+.indian-model-3d-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* THE 3D MODEL CARD */
+.indian-model-3d-card {
+  width: 380px;
+  max-width: 92vw;
+  background: linear-gradient(145deg, #1C1914 0%, #111111 100%);
+  border: 2px solid #C3A167;
+  border-radius: 16px;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.85), 0 0 40px rgba(195, 161, 103, 0.4);
+  overflow: hidden;
+  position: relative;
+  transform-style: preserve-3d;
+  transform: rotateY(15deg) translateY(30px) scale(0.9);
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+}
+
+.indian-model-3d-backdrop.open .indian-model-3d-card {
+  transform: rotateY(0deg) translateY(0) scale(1);
+}
+
+/* 3D HOLOGRAM SHIMMER EFFECT */
+.indian-model-3d-card::before {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: -100%;
+  width: 300%;
+  height: 300%;
+  background: linear-gradient(
+    45deg,
+    transparent 45%,
+    rgba(195, 161, 103, 0.25) 50%,
+    transparent 55%
+  );
+  animation: hologramShimmer 6s infinite linear;
+  pointer-events: none;
+  z-index: 10;
+}
+
+@keyframes hologramShimmer {
+  0% { transform: translateY(-50%) translateX(-50%) rotate(35deg); }
+  100% { transform: translateY(50%) translateX(50%) rotate(35deg); }
+}
+
+/* MODEL PORTRAIT CONTAINER */
+.model-portrait-wrap {
+  position: relative;
+  width: 100%;
+  height: 380px;
+  background: #000;
+  overflow: hidden;
+}
+
+.model-portrait-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform 6s ease-out;
+  transform: scale(1);
+}
+
+.indian-model-3d-backdrop.open .model-portrait-img {
+  transform: scale(1.08);
+}
+
+/* NAMASTE BADGE OVERLAY */
+.model-namaste-badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: rgba(17, 17, 17, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(195, 161, 103, 0.6);
+  color: #F8F6F2;
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 5;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.model-namaste-badge span {
+  color: #C3A167;
+  font-size: 1rem;
+}
+
+/* SPEAKING AUDIO EQUALIZER */
+.model-speaking-indicator {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: rgba(195, 161, 103, 0.95);
+  color: #111111;
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 5;
+  box-shadow: 0 4px 12px rgba(195, 161, 103, 0.5);
+  animation: pulseSpeaking 1.5s infinite alternate;
+}
+
+@keyframes pulseSpeaking {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.06); }
+}
+
+/* SPEECH TRANSCRIPT / CAPTION PANEL */
+.model-speech-panel {
+  padding: 24px 24px 20px;
+  text-align: center;
+  background: #111111;
+  border-top: 1px solid rgba(195, 161, 103, 0.3);
+  position: relative;
+  z-index: 15;
+}
+
+.speech-transcript-text {
+  font-family: var(--font-heading, 'Playfair Display', serif);
+  font-size: 1.08rem;
+  font-style: italic;
+  line-height: 1.6;
+  color: #F8F6F2;
+  margin: 0 0 20px;
+  min-height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.speech-highlight {
+  color: #C3A167;
+  font-weight: 600;
+}
+
+.model-action-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.btn-model-listen {
+  background: linear-gradient(135deg, #C3A167 0%, #A58348 100%);
+  color: #111111;
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 12px 20px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 6px 18px rgba(195, 161, 103, 0.4);
+}
+
+.btn-model-listen:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(195, 161, 103, 0.6);
+}
+
+.btn-model-skip {
+  background: transparent;
+  color: #888888;
+  border: 1px solid #444444;
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 10px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-model-skip:hover {
+  color: #ffffff;
+  border-color: #C3A167;
+}
+
+/* 2. 3D MORPHING FLY-INTO-CHATBOT ANIMATION */
+.indian-model-3d-card.morphing-to-chatbot {
+  position: fixed;
+  transition: all 1.1s cubic-bezier(0.77, 0, 0.175, 1);
+  transform: translate(35vw, 42vh) scale(0.08) rotateY(360deg) !important;
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+/* 3. SHOCKWAVE PULSE WHEN SHE LANDS ON CHATBOT BUTTON */
+@keyframes aiBotLandingShockwave {
+  0% {
+    box-shadow: 0 0 0 0 rgba(195, 161, 103, 0.8), 0 0 20px rgba(195, 161, 103, 0.8);
+    transform: scale(1.25);
+  }
+  50% {
+    box-shadow: 0 0 0 24px rgba(195, 161, 103, 0), 0 0 40px rgba(195, 161, 103, 0.6);
+    transform: scale(1.1);
+  }
+  100% {
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+    transform: scale(1);
+  }
+}
+
+.chatbot-launcher-btn.ai-landing-pulse {
+  animation: aiBotLandingShockwave 1s ease-out forwards;
+  border-color: #C3A167 !important;
+}
+
+/* MODEL THUMBNAIL AVATAR INSIDE CHATBOT BUTTON */
+.chatbot-model-thumb {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: top;
+  border: 2px solid #C3A167;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 600px) {
+  .indian-model-3d-card {
+    width: 330px;
+  }
+  .model-portrait-wrap {
+    height: 320px;
+  }
+  .speech-transcript-text {
+    font-size: 0.98rem;
+  }
+}
