@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /admin.html
+Disallow: /api/v1/admin
+
+Sitemap: https://www.missrezanna.com/sitemap.xml

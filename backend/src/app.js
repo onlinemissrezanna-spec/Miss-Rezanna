@@ -1,4 +1,6 @@
 const express = require('express');
+const path = require('path');
+const fs = require('fs');
 const helmet = require('helmet');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
@@ -48,7 +50,29 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, '..')));
 app.use(express.static(process.cwd()));
 
-const fs = require('fs');
+// Serve sitemap.xml and robots.txt for Search Engines
+app.get('/sitemap.xml', (req, res) => {
+    const sitemapPath = path.join(process.cwd(), 'sitemap.xml');
+    if (fs.existsSync(sitemapPath)) {
+        res.setHeader('Content-Type', 'application/xml');
+        return res.sendFile(sitemapPath);
+    }
+    const publicSitemap = path.join(__dirname, 'public/sitemap.xml');
+    if (fs.existsSync(publicSitemap)) {
+        res.setHeader('Content-Type', 'application/xml');
+        return res.sendFile(publicSitemap);
+    }
+    res.status(404).send('Sitemap not found');
+});
+
+app.get('/robots.txt', (req, res) => {
+    const robotsPath = path.join(process.cwd(), 'robots.txt');
+    if (fs.existsSync(robotsPath)) {
+        res.setHeader('Content-Type', 'text/plain');
+        return res.sendFile(robotsPath);
+    }
+    res.status(200).send('User-agent: *\nAllow: /\nDisallow: /admin\nSitemap: https://www.missrezanna.com/sitemap.xml');
+});
 
 // Serve storefront index.html for root path '/'
 app.get(['/', '/index.html'], (req, res) => {
