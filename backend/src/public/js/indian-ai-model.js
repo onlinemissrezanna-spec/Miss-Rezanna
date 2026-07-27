@@ -134,21 +134,42 @@
     window.speechSynthesis.cancel();
 
     const utterance = new SpeechSynthesisUtterance(fullText);
-    utterance.rate = 0.95;
-    utterance.pitch = 1.08; // Pleasant female pitch
+    utterance.rate = 0.88; // Calm, polite, unhurried rate
+    utterance.pitch = 1.28; // Sweet, youthful, gentle girl pitch
 
-    // Find Indian English or Hindi Female voice if available
+    // Select the sweetest, most natural female Indian/English voice available
     const voices = window.speechSynthesis.getVoices();
-    let indianFemaleVoice = voices.find(v => (v.lang.includes('IN') || v.name.toLowerCase().includes('india') || v.name.toLowerCase().includes('hindi')) && v.name.toLowerCase().includes('female'));
-    if (!indianFemaleVoice) {
-      indianFemaleVoice = voices.find(v => v.lang.includes('IN') || v.name.toLowerCase().includes('india'));
-    }
-    if (!indianFemaleVoice) {
-      indianFemaleVoice = voices.find(v => v.name.toLowerCase().includes('female') || v.name.toLowerCase().includes('samantha') || v.name.toLowerCase().includes('zira') || v.name.toLowerCase().includes('google'));
+    let sweetVoice = null;
+
+    // 1. Prefer Natural / Neural Indian Female voices (Microsoft Neerja, Google Indian English Female)
+    sweetVoice = voices.find(v => 
+      !v.name.toLowerCase().includes('male') && 
+      !v.name.toLowerCase().includes('david') && 
+      !v.name.toLowerCase().includes('ravi') && 
+      (v.name.toLowerCase().includes('neerja') || v.name.toLowerCase().includes('swara') || v.name.toLowerCase().includes('natural') || v.name.toLowerCase().includes('neural')) && 
+      (v.lang.includes('IN') || v.name.toLowerCase().includes('india') || v.name.toLowerCase().includes('hindi'))
+    );
+
+    // 2. Fallback to any Indian Female voice
+    if (!sweetVoice) {
+      sweetVoice = voices.find(v => 
+        !v.name.toLowerCase().includes('male') && 
+        !v.name.toLowerCase().includes('david') && 
+        !v.name.toLowerCase().includes('ravi') && 
+        (v.lang.includes('IN') || v.name.toLowerCase().includes('india') || v.name.toLowerCase().includes('hindi'))
+      );
     }
 
-    if (indianFemaleVoice) {
-      utterance.voice = indianFemaleVoice;
+    // 3. Fallback to sweetest global female voices (Samantha, Zira, Google Female, Victoria)
+    if (!sweetVoice) {
+      sweetVoice = voices.find(v => 
+        !v.name.toLowerCase().includes('male') && 
+        (v.name.toLowerCase().includes('female') || v.name.toLowerCase().includes('samantha') || v.name.toLowerCase().includes('zira') || v.name.toLowerCase().includes('victoria') || v.name.toLowerCase().includes('hazel'))
+      );
+    }
+
+    if (sweetVoice) {
+      utterance.voice = sweetVoice;
     }
 
     utterance.onend = () => {
