@@ -13,7 +13,8 @@
       return;
     }
 
-    const greetingText = "Namaste! I am your AI agent from Miss Rezanna, how may I help you? If you required any information, I am just here at your right side.";
+    const greetingText = "Namaste! I am your AI agent from Miss Rezanna, how may I help you? If you require any information, I am just right here at your right side.";
+    const spokenText = "Namaste! I am your A.I. agent from Miss Rezanna, how may I help you? If you require any information, I am just right here at your right side.";
 
     const modalHTML = `
       <div id="indianModel3dBackdrop" class="indian-model-3d-backdrop" role="dialog" aria-label="Miss Rezanna 3D AI Model Greeting">
@@ -65,7 +66,7 @@
         btnSkip.innerText = 'Go to AI Chatbot ➤';
         if (speakingBadge) speakingBadge.style.display = 'flex';
         
-        speakIndianAiGreeting(greetingText, transcriptEl, () => {
+        speakIndianAiGreeting(greetingText, spokenText, transcriptEl, () => {
           triggerMorphIntoChatbot();
         });
       });
@@ -125,17 +126,17 @@
     }
   }
 
-  function speakIndianAiGreeting(fullText, transcriptEl, onComplete) {
+  function speakIndianAiGreeting(displayText, spokenText, transcriptEl, onComplete) {
     if (!('speechSynthesis' in window)) {
-      simulateTyping(fullText, transcriptEl, onComplete);
+      simulateTyping(displayText, transcriptEl, onComplete);
       return;
     }
 
     window.speechSynthesis.cancel();
 
-    const utterance = new SpeechSynthesisUtterance(fullText);
-    utterance.rate = 0.88; // Calm, polite, unhurried rate
-    utterance.pitch = 1.28; // Sweet, youthful, gentle girl pitch
+    const utterance = new SpeechSynthesisUtterance(spokenText || displayText);
+    utterance.rate = 0.86; // Gentle, polite, unhurried rate
+    utterance.pitch = 1.24; // Sweet, warm, natural female human pitch
 
     // Select the sweetest, most natural female Indian/English voice available
     const voices = window.speechSynthesis.getVoices();
@@ -181,7 +182,7 @@
     };
 
     // Animate typing along with voice
-    simulateTyping(fullText, transcriptEl, null);
+    simulateTyping(displayText, transcriptEl, null);
 
     window.speechSynthesis.speak(utterance);
 
