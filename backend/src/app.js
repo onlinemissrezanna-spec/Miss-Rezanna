@@ -39,8 +39,6 @@ app.use(cookieParser());
 // HTTP request logger
 app.use(morgan('combined', { stream: { write: message => logger.info(message.trim()) } }));
 
-const path = require('path');
-
 // Serve static product images and public frontend files
 app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/images', express.static(path.join(__dirname, 'public/images')));
