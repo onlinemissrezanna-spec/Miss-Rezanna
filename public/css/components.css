@@ -463,3 +463,37 @@
   }
 }
 
+/* ==========================================================================
+   GLOBAL ICON & SVG SIZE PROTECTION (PREVENTS OVERSIZED ICONS)
+   ========================================================================== */
+svg, i[data-lucide], .lucide {
+  max-width: 24px !important;
+  max-height: 24px !important;
+  flex-shrink: 0 !important;
+}
+
+.header-actions .icon-btn svg,
+.header-actions .icon-btn i {
+  width: 20px !important;
+  height: 20px !important;
+  max-width: 20px !important;
+  max-height: 20px !important;
+}
+
+.footer-social svg,
+.social-link svg {
+  width: 18px !important;
+  height: 18px !important;
+  max-width: 18px !important;
+  max-height: 18px !important;
+}
+
+.floating-actions .float-btn svg,
+.floating-actions .float-btn i {
+  width: 20px !important;
+  height: 20px !important;
+  max-width: 20px !important;
+  max-height: 20px !important;
+}
+
+
