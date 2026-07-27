@@ -551,7 +551,114 @@ document.addEventListener('DOMContentLoaded', () => {
   initSearchModal();
 });
 
+function injectSlideBarStyles() {
+  if (document.getElementById('slideBarInjectedStyles')) return;
+  const css = `
+    /* SELF-CONTAINED SLIDE BAR DRAWER STYLES (PREVENTS STATIC RENDERING AT BOTTOM OF PAGE) */
+    #slideBarBackdrop {
+      display: none !important;
+      position: fixed !important;
+      inset: 0 !important;
+      background: rgba(0, 0, 0, 0.65) !important;
+      backdrop-filter: blur(6px) !important;
+      z-index: 100000 !important;
+      opacity: 0 !important;
+      visibility: hidden !important;
+      transition: opacity 0.35s ease, visibility 0.35s ease !important;
+    }
+    #slideBarBackdrop.active {
+      display: block !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+    }
+    #slideBarDrawer {
+      display: none !important;
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      bottom: 0 !important;
+      width: 320px !important;
+      max-width: 85vw !important;
+      background: #111111 !important;
+      color: #ffffff !important;
+      z-index: 100001 !important;
+      flex-direction: column !important;
+      box-shadow: 10px 0 40px rgba(0, 0, 0, 0.5) !important;
+      transform: translateX(-100%) !important;
+      opacity: 0 !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease, visibility 0.4s ease !important;
+      overflow-y: auto !important;
+      -webkit-overflow-scrolling: touch !important;
+      list-style: none !important;
+    }
+    #slideBarDrawer.active {
+      display: flex !important;
+      transform: translateX(0) !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      pointer-events: auto !important;
+    }
+    #slideBarDrawer .slide-bar-menu {
+      list-style: none !important;
+      padding: 20px 0 !important;
+      margin: 0 !important;
+      flex: 1 !important;
+    }
+    #slideBarDrawer .slide-bar-item {
+      margin: 0 !important;
+      list-style: none !important;
+    }
+    #slideBarDrawer .slide-bar-link {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      padding: 15px 28px !important;
+      color: #e0e0e0 !important;
+      text-decoration: none !important;
+      font-family: 'Playfair Display', serif !important;
+      font-size: 16px !important;
+      letter-spacing: 0.08em !important;
+      transition: all 0.25s ease !important;
+      border-left: 3px solid transparent !important;
+    }
+    #slideBarDrawer .slide-bar-link:hover,
+    #slideBarDrawer .slide-bar-link.active {
+      color: #ffffff !important;
+      background: rgba(195, 161, 103, 0.08) !important;
+      border-left-color: #c3a167 !important;
+      padding-left: 34px !important;
+    }
+    #slideBarDrawer .slide-bar-footer {
+      padding: 20px 24px !important;
+      border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+      background: #0a0a0a !important;
+    }
+    #slideBarDrawer .slide-bar-cta-btn {
+      display: block !important;
+      width: 100% !important;
+      padding: 14px 18px !important;
+      text-align: center !important;
+      background: rgba(195, 161, 103, 0.15) !important;
+      color: #c3a167 !important;
+      border: 1px solid #c3a167 !important;
+      text-decoration: none !important;
+      font-size: 13px !important;
+      font-weight: 600 !important;
+      letter-spacing: 0.1em !important;
+      text-transform: uppercase !important;
+      transition: all 0.25s ease !important;
+    }
+  `;
+  const styleEl = document.createElement('style');
+  styleEl.id = 'slideBarInjectedStyles';
+  styleEl.innerHTML = css;
+  document.head.appendChild(styleEl);
+}
+
 function initSlideBar() {
+  injectSlideBarStyles();
   if (!document.getElementById('slideBarDrawer')) {
     const isHome = window.location.pathname.endsWith('index.html') || window.location.pathname === '/';
     const isCol = window.location.pathname.includes('collection');
@@ -561,8 +668,8 @@ function initSlideBar() {
     const isCont = window.location.pathname.includes('contact');
 
     const slideBarHtml = `
-      <div class="slide-bar-backdrop" id="slideBarBackdrop" onclick="closeSlideBar()"></div>
-      <div class="slide-bar-drawer" id="slideBarDrawer">
+      <div class="slide-bar-backdrop" id="slideBarBackdrop" style="display: none; opacity: 0; visibility: hidden; pointer-events: none;" onclick="closeSlideBar()"></div>
+      <div class="slide-bar-drawer" id="slideBarDrawer" style="display: none; opacity: 0; visibility: hidden; pointer-events: none;">
         <div class="slide-bar-header" style="align-items:center;">
           <div style="flex:1;">
             <a href="index.html" class="slide-bar-brand" style="display:block;">
@@ -644,11 +751,20 @@ function initSlideBar() {
 }
 
 function openSlideBar() {
+  initSlideBar();
   const backdrop = document.getElementById('slideBarBackdrop');
   const drawer = document.getElementById('slideBarDrawer');
   if (backdrop && drawer) {
-    backdrop.classList.add('active');
-    drawer.classList.add('active');
+    backdrop.style.display = 'block';
+    drawer.style.display = 'flex';
+    setTimeout(() => {
+      backdrop.classList.add('active');
+      drawer.classList.add('active');
+      drawer.style.transform = 'translateX(0)';
+      drawer.style.visibility = 'visible';
+      drawer.style.opacity = '1';
+      drawer.style.pointerEvents = 'auto';
+    }, 10);
     document.body.style.overflow = 'hidden';
   }
 }
@@ -659,6 +775,16 @@ function closeSlideBar() {
   if (backdrop && drawer) {
     backdrop.classList.remove('active');
     drawer.classList.remove('active');
+    drawer.style.transform = 'translateX(-100%)';
+    drawer.style.opacity = '0';
+    drawer.style.visibility = 'hidden';
+    drawer.style.pointerEvents = 'none';
+    setTimeout(() => {
+      if (!drawer.classList.contains('active')) {
+        backdrop.style.display = 'none';
+        drawer.style.display = 'none';
+      }
+    }, 400);
     document.body.style.overflow = '';
   }
 }
@@ -683,8 +809,8 @@ function initSearchModal() {
   if (document.getElementById('searchModalBackdrop')) return;
 
   const html = `
-    <div class="search-modal-backdrop" id="searchModalBackdrop" onclick="closeSearchModal()"></div>
-    <div class="search-modal-box" id="searchModalBox">
+    <div class="search-modal-backdrop" id="searchModalBackdrop" style="display: none; opacity: 0; visibility: hidden; pointer-events: none;" onclick="closeSearchModal()"></div>
+    <div class="search-modal-box" id="searchModalBox" style="display: none; opacity: 0; visibility: hidden; pointer-events: none;">
       <div class="search-modal-header">
         <input type="text" id="searchInputField" class="search-input-field" placeholder="Search kurtis, co-ords, ensembles..." oninput="handleSearchInput(this.value)">
         <button class="search-modal-close" onclick="closeSearchModal()">✕</button>
@@ -708,16 +834,40 @@ function initSearchModal() {
 
 function openSearchModal() {
   initSearchModal();
-  document.getElementById('searchModalBackdrop')?.classList.add('active');
-  document.getElementById('searchModalBox')?.classList.add('active');
-  document.body.style.overflow = 'hidden';
-  setTimeout(() => document.getElementById('searchInputField')?.focus(), 100);
+  const backdrop = document.getElementById('searchModalBackdrop');
+  const box = document.getElementById('searchModalBox');
+  if (backdrop && box) {
+    backdrop.style.display = 'block';
+    box.style.display = 'flex';
+    setTimeout(() => {
+      backdrop.classList.add('active');
+      box.classList.add('active');
+      box.style.opacity = '1';
+      box.style.visibility = 'visible';
+      box.style.pointerEvents = 'auto';
+      document.getElementById('searchInputField')?.focus();
+    }, 10);
+    document.body.style.overflow = 'hidden';
+  }
 }
 
 function closeSearchModal() {
-  document.getElementById('searchModalBackdrop')?.classList.remove('active');
-  document.getElementById('searchModalBox')?.classList.remove('active');
-  document.body.style.overflow = '';
+  const backdrop = document.getElementById('searchModalBackdrop');
+  const box = document.getElementById('searchModalBox');
+  if (backdrop && box) {
+    backdrop.classList.remove('active');
+    box.classList.remove('active');
+    box.style.opacity = '0';
+    box.style.visibility = 'hidden';
+    box.style.pointerEvents = 'none';
+    setTimeout(() => {
+      if (!box.classList.contains('active')) {
+        backdrop.style.display = 'none';
+        box.style.display = 'none';
+      }
+    }, 350);
+    document.body.style.overflow = '';
+  }
 }
 
 function handleSearchInput(query) {
