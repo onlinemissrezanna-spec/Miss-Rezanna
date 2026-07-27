@@ -1,0 +1,103 @@
+/* ==========================================================================
+   MISS REZANNA - ANIMATIONS
+   ========================================================================== */
+
+/* 
+  These classes are designed to be used independently 
+  or as starting states for GSAP. 
+*/
+
+/* Fade Up */
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity var(--transition-slow), transform var(--transition-slow);
+}
+
+.fade-up.is-visible,
+.fade-up:not(.gsap-marker) /* fallback if no JS */ {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Fade In */
+.fade-in {
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.fade-in.is-visible {
+  opacity: 1;
+}
+
+/* Image Reveal (Mask effect) */
+.image-reveal {
+  position: relative;
+  overflow: hidden;
+}
+
+.image-reveal::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-bg-secondary);
+  transition: transform var(--transition-slow);
+  transform-origin: top;
+}
+
+.image-reveal.is-visible::after {
+  transform: scaleY(0);
+}
+
+/* Parallax Wrapper */
+.parallax-wrapper {
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+.parallax-img {
+  width: 100%;
+  height: 120%; /* Extra height for parallax */
+  object-fit: cover;
+  /* GSAP will control the y transform here */
+}
+
+/* Luxury Hover (Images) */
+.hover-zoom {
+  overflow: hidden;
+}
+
+.hover-zoom img {
+  transition: transform var(--transition-slow);
+}
+
+.hover-zoom:hover img {
+  transform: scale(1.05);
+}
+
+/* Custom Cursor */
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  background-color: var(--color-accent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s, height 0.3s, background-color 0.3s;
+  mix-blend-mode: difference;
+}
+
+.custom-cursor.is-hovering {
+  width: 40px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+

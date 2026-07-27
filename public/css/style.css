@@ -1,0 +1,25 @@
+/* ==========================================================================
+   MISS REZANNA - MASTER STYLE SHEET
+   ========================================================================== */
+
+/* 
+  This is the main entry point for the MISS REZANNA Design System.
+  It imports all foundational CSS files required to style any page 
+  in the application.
+*/
+
+/* 1. Base Variables & Tokens */
+@import url('variables.css');
+
+/* 2. Typography Rules */
+@import url('typography.css');
+
+/* 3. Layout, Spacing, & Grid */
+@import url('spacing.css');
+
+/* 4. Animations & Micro-interactions */
+@import url('animations.css');
+
+/* 5. Reusable Components */
+@import url('components.css');
+
