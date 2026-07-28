@@ -92,6 +92,10 @@
 
     if (btnSkip) {
       btnSkip.addEventListener('click', () => {
+        if (activeAudio) {
+          activeAudio.pause();
+          activeAudio = null;
+        }
         if ('speechSynthesis' in window) {
           window.speechSynthesis.cancel();
         }
@@ -144,23 +148,66 @@
     }
   }
 
+  let activeAudio = null;
+
   function speakIndianAiGreeting(displayText, spokenText, transcriptEl, onComplete) {
+    simulateTyping(displayText, transcriptEl, null);
+
+    try {
+      if (activeAudio) {
+        activeAudio.pause();
+        activeAudio = null;
+      }
+
+      const audio = new Audio('audio/sweet_girl_greeting.mp3');
+      activeAudio = audio;
+      audio.playbackRate = 1.02;
+
+      let audioHandled = false;
+
+      audio.onended = () => {
+        if (!audioHandled) {
+          audioHandled = true;
+          activeAudio = null;
+          if (onComplete) onComplete();
+        }
+      };
+
+      audio.onerror = () => {
+        if (!audioHandled) {
+          audioHandled = true;
+          activeAudio = null;
+          fallbackSpeechSynthesis(displayText, spokenText, onComplete);
+        }
+      };
+
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          fallbackSpeechSynthesis(displayText, spokenText, onComplete);
+        });
+      }
+    } catch (e) {
+      fallbackSpeechSynthesis(displayText, spokenText, onComplete);
+    }
+  }
+
+  function fallbackSpeechSynthesis(displayText, spokenText, onComplete) {
     if (!('speechSynthesis' in window)) {
-      simulateTyping(displayText, transcriptEl, onComplete);
+      if (onComplete) onComplete();
       return;
     }
 
     window.speechSynthesis.cancel();
 
     const utterance = new SpeechSynthesisUtterance(spokenText || displayText);
-    utterance.rate = 0.85; // Soft, polite, unhurried rate
-    utterance.pitch = 1.35; // Distinctly sweet, girlish pitch
+    utterance.rate = 0.85;
+    utterance.pitch = 1.40;
 
     const voices = window.speechSynthesis.getVoices() || [];
     const maleNames = ['male', 'david', 'mark', 'george', 'ravi', 'prabhat', 'guy', 'stefan', 'richard', 'sean', 'james', 'alex', 'fred'];
     const femaleKeywords = ['neerja', 'swara', 'heera', 'kalpana', 'anita', 'zira', 'samantha', 'victoria', 'karen', 'google uk english female', 'female', 'natural', 'neural', 'hazel', 'eva'];
 
-    // Filter out male voices
     const femaleOnly = voices.filter(v => {
       const name = v.name.toLowerCase();
       return !maleNames.some(m => name.includes(m));
@@ -173,18 +220,8 @@
 
     if (!sweetFemaleVoice) {
       sweetFemaleVoice = femaleOnly.find(v => 
-        (v.lang.includes('IN') || v.lang.includes('hi') || v.name.toLowerCase().includes('india'))
-      );
-    }
-
-    if (!sweetFemaleVoice) {
-      sweetFemaleVoice = femaleOnly.find(v => 
         femaleKeywords.some(k => v.name.toLowerCase().includes(k))
       );
-    }
-
-    if (!sweetFemaleVoice && femaleOnly.length > 0) {
-      sweetFemaleVoice = femaleOnly[0];
     }
 
     if (sweetFemaleVoice) {
@@ -199,17 +236,7 @@
       if (onComplete) onComplete();
     };
 
-    // Animate typing along with voice
-    simulateTyping(displayText, transcriptEl, null);
-
     window.speechSynthesis.speak(utterance);
-
-    // Safety fallback in case speech doesn't trigger onend
-    setTimeout(() => {
-      if (onComplete && !sessionStorage.getItem(SESSION_KEY)) {
-        onComplete();
-      }
-    }, 8500);
   }
 
   function simulateTyping(text, el, onDone) {
