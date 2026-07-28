@@ -20,7 +20,7 @@
       <div id="indianModel3dBackdrop" class="indian-model-3d-backdrop" role="dialog" aria-label="Miss Rezanna 3D AI Model Greeting">
         <div id="indianModel3dCard" class="indian-model-3d-card">
           <div class="model-portrait-wrap">
-            <img src="images/10.jpeg" alt="Indian Model in Miss Rezanna Suit" class="model-portrait-img">
+            <img src="images/ai_avatar_3d.jpg" alt="3D Pixar Indian AI Avatar in Miss Rezanna Suit" class="model-portrait-img">
             <div class="model-namaste-badge">
               <span>🙏</span> ❖ NAMASTE
             </div>
@@ -55,6 +55,24 @@
     const btnSkip = document.getElementById('btnSkipToChatbot');
     const speakingBadge = document.getElementById('modelSpeakingBadge');
     const transcriptEl = document.getElementById('modelSpeechTranscript');
+
+    // 3D Parallax Tilt Effect on Mouse Move
+    if (backdropEl && cardEl) {
+      backdropEl.addEventListener('mousemove', (e) => {
+        if (cardEl.classList.contains('morphing-to-chatbot')) return;
+        const rect = cardEl.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        const rotateY = (e.clientX - centerX) / 18;
+        const rotateX = -(e.clientY - centerY) / 18;
+        cardEl.style.transform = `rotateY(${rotateY}deg) rotateX(${rotateX}deg) scale(1)`;
+      });
+
+      backdropEl.addEventListener('mouseleave', () => {
+        if (cardEl.classList.contains('morphing-to-chatbot')) return;
+        cardEl.style.transform = `rotateY(0deg) rotateX(0deg) scale(1)`;
+      });
+    }
 
     setTimeout(() => {
       if (backdropEl) backdropEl.classList.add('open');
@@ -114,14 +132,14 @@
     // Replace generic icon with 3D Indian Model thumbnail
     const iconWrap = botBtn.querySelector('.chatbot-avatar-icon');
     if (iconWrap && !iconWrap.querySelector('img')) {
-      iconWrap.innerHTML = `<img src="images/10.jpeg" alt="AI Stylist" class="chatbot-model-thumb">`;
+      iconWrap.innerHTML = `<img src="images/ai_avatar_3d.jpg" alt="AI Stylist" class="chatbot-model-thumb">`;
       iconWrap.style.background = 'transparent';
     }
 
     // Also upgrade the chat header icon
     const headerIcon = document.querySelector('.chatbot-header .chatbot-avatar-icon');
     if (headerIcon && !headerIcon.querySelector('img')) {
-      headerIcon.innerHTML = `<img src="images/10.jpeg" alt="AI Stylist" class="chatbot-model-thumb">`;
+      headerIcon.innerHTML = `<img src="images/ai_avatar_3d.jpg" alt="AI Stylist" class="chatbot-model-thumb">`;
       headerIcon.style.background = 'transparent';
     }
   }

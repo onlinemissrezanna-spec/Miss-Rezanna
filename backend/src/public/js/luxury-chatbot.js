@@ -9,7 +9,7 @@
 
     const launcherHTML = `
       <div id="luxuryChatbotLauncher" class="chatbot-launcher-btn" role="button" aria-label="Open Draggable Luxury AI Stylist Chatbot" title="Drag to move anywhere, click to chat">
-        <img src="images/10.jpeg" alt="AI Stylist" class="chatbot-avatar-circle">
+        <img src="images/ai_avatar_3d.jpg" alt="AI Stylist" class="chatbot-avatar-circle">
         <div class="ai-online-dot"></div>
       </div>
 
@@ -17,7 +17,7 @@
         <div class="chatbot-header">
           <div class="chatbot-header-info">
             <div class="chatbot-avatar-icon" style="background:transparent; color:#111;">
-              <img src="images/10.jpeg" alt="AI Stylist" class="chatbot-model-thumb">
+              <img src="images/ai_avatar_3d.jpg" alt="AI Stylist" class="chatbot-model-thumb">
             </div>
             <div>
               <h4 class="chatbot-header-title">MISS REZANNA</h4>
