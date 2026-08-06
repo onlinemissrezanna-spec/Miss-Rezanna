@@ -2,10 +2,13 @@ const PDFDocument = require('pdfkit');
 const fs = require('fs');
 const path = require('path');
 
-const invoiceDir = path.join(__dirname, '../../uploads/invoices');
-if (!fs.existsSync(invoiceDir)) {
-    fs.mkdirSync(invoiceDir, { recursive: true });
-}
+const os = require('os');
+const invoiceDir = path.join(os.tmpdir(), 'uploads/invoices');
+try {
+    if (!fs.existsSync(invoiceDir)) {
+        fs.mkdirSync(invoiceDir, { recursive: true });
+    }
+} catch (e) {}
 
 const generateInvoice = (order) => {
     return new Promise((resolve, reject) => {
