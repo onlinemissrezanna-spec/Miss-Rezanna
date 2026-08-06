@@ -1,9 +1,11 @@
 // MISS REZANNA — Admin Portal JavaScript
 // Connects to all backend API endpoints
 
-// Auto-detect backend URL: Production Railway API server or local dev server
-let BACKEND_BASE = 'https://miss-rezanna-production.up.railway.app';
-if ((window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && (window.location.port === '5000' || window.location.port === '3000')) {
+// Auto-detect backend URL: relative origin or local server
+let BACKEND_BASE = window.location.origin;
+if ((window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && (window.location.port === '5500' || window.location.port === '3000')) {
+    BACKEND_BASE = 'http://localhost:5000';
+} else if (window.location.protocol === 'file:') {
     BACKEND_BASE = 'http://localhost:5000';
 }
 const API = `${BACKEND_BASE}/api/v1`;
@@ -63,15 +65,20 @@ async function handleLogin(e) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password })
     });
+
+    const contentType = res.headers.get('content-type') || '';
+    if (!contentType.includes('application/json')) {
+      throw new Error('Invalid backend server response. Please verify backend API deployment.');
+    }
     const data = await res.json();
 
     if (res.ok && data.success) {
-      const user = data.data.user;
-      const roleName = user.role?.name || '';
+      const user = data.data?.user || data.user;
+      const roleName = user?.role?.name || '';
       if (roleName !== 'Admin') {
-        throw new Error('Access denied. Admin privileges required. Make sure you seeded the database first at: /api/v1/seed');
+        throw new Error('Access denied. Admin privileges required.');
       }
-      adminToken = data.data.accessToken;
+      adminToken = data.data?.accessToken || data.accessToken || data.token;
       localStorage.setItem('mr_admin_token', adminToken);
       checkAuth();
     } else {
@@ -110,14 +117,42 @@ async function api(path, method = 'GET', body = null) {
     opts.headers['Content-Type'] = 'application/json';
     if (body) opts.body = JSON.stringify(body);
   }
-  const res = await fetch(`${API}${path}`, opts);
-  const data = await res.json();
+
+  let res;
+  try {
+    res = await fetch(`${API}${path}`, opts);
+  } catch (err) {
+    throw new Error('Unable to connect to server. Please check network connection.');
+  }
+
+  const contentType = res.headers.get('content-type') || '';
+  let data = {};
+
+  if (contentType.includes('application/json')) {
+    try {
+      data = await res.json();
+    } catch (e) {
+      data = {};
+    }
+  } else {
+    const text = await res.text();
+    if (res.status === 401 || res.status === 403 || text.includes('<!DOCTYPE') || text.includes('<html')) {
+      logoutAdmin();
+      throw new Error('Session expired or invalid login. Please sign in again.');
+    }
+    throw new Error(`Unexpected server response (${res.status})`);
+  }
+
   if (res.status === 401 || res.status === 403) {
     logoutAdmin();
     throw new Error(data.message || 'Session expired. Please log in again.');
   }
-  if (!res.ok) throw new Error(data.message || 'API Error');
-  return data.data;
+
+  if (!res.ok) {
+    throw new Error(data.message || `API Error (${res.status})`);
+  }
+
+  return data.data !== undefined ? data.data : data;
 }
 
 // =============================================
