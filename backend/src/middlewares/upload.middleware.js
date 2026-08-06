@@ -11,14 +11,17 @@ try {
     }
 } catch (e) {}
 
-const storage = multer.diskStorage({
-    destination(req, file, cb) {
-        cb(null, uploadDir);
-    },
-    filename(req, file, cb) {
-        cb(null, `${req.user.id}-${Date.now()}${path.extname(file.originalname)}`);
-    }
-});
+const isServerless = process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME || process.env.NODE_ENV === 'production';
+const storage = isServerless 
+    ? multer.memoryStorage() 
+    : multer.diskStorage({
+        destination(req, file, cb) {
+            cb(null, uploadDir);
+        },
+        filename(req, file, cb) {
+            cb(null, `${req.user ? req.user.id : 'anon'}-${Date.now()}${path.extname(file.originalname)}`);
+        }
+    });
 
 const checkFileType = (file, cb) => {
     const filetypes = /jpg|jpeg|png/;
