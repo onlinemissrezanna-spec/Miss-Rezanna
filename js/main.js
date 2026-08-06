@@ -760,14 +760,6 @@ function initSlideBar() {
       window.location.href = 'admin.html';
     }
   });
-
-  // Double-click on logo in header opens Admin Portal for Store Manager
-  document.querySelectorAll('.logo, .site-logo, .logo-text, header img').forEach(logo => {
-    logo.addEventListener('dblclick', (e) => {
-      e.preventDefault();
-      window.location.href = 'admin.html';
-    });
-  });
 }
 
 function openSlideBar() {

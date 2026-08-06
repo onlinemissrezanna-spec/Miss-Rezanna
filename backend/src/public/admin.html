@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -752,13 +752,6 @@ body.admin-body {
 }
 
 </style>
-  <link rel="stylesheet" href="css/mobile-nav.css?v=3.0">
-  <link rel="stylesheet" href="css/cookie-consent.css">
-  <link rel="stylesheet" href="css/luxury-dynamics.css">
-  <link rel="stylesheet" href="css/ethnic-story.css">
-  <link rel="stylesheet" href="css/luxury-chatbot.css">
-  <link rel="stylesheet" href="css/indian-ai-model.css">
-  <link rel="stylesheet" href="css/customer-auth.css">
 </head>
 <body class="admin-body">
 
@@ -767,17 +760,12 @@ body.admin-body {
   <div class="login-card">
     <div class="login-logo">MISS REZANNA</div>
     <div class="login-subtitle">Administration Portal</div>
-    <form class="login-form" id="loginForm">
-      <input type="email" id="loginEmail" value="admin@missrezanna.com" placeholder="Admin Email Address" required autocomplete="email">
-      <input type="password" id="loginPassword" value="admin123" placeholder="Password" required>
+    <form class="login-form" id="loginForm" autocomplete="off">
+      <input type="email" id="loginEmail" value="" placeholder="Admin Email Address" required autocomplete="off">
+      <input type="password" id="loginPassword" value="" placeholder="Password" required autocomplete="new-password">
       <button type="submit" id="btnLogin">Sign In Securely</button>
     </form>
     <div class="login-error" id="loginError"></div>
-    <div class="login-hint">
-      Default credentials after seeding database:<br>
-      Email: <code>admin@missrezanna.com</code> &nbsp; Password: <code>admin123</code><br><br>
-      <strong>Seed first:</strong> Visit <code>/api/v1/seed</code> on your backend URL
-    </div>
   </div>
 </div>
 
