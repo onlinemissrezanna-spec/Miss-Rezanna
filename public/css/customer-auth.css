@@ -1,0 +1,304 @@
+/* ==========================================================================
+   MISS REZANNA - LUXURY CUSTOMER AUTH & PROFILE SUITE
+   ========================================================================== */
+
+.customer-auth-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(17, 17, 17, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  z-index: 1000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.customer-auth-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.customer-auth-card {
+  width: 460px;
+  max-width: 95vw;
+  background: #F8F6F2;
+  border: 1px solid rgba(195, 161, 103, 0.5);
+  border-radius: 12px;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+  position: relative;
+  transform: translateY(20px) scale(0.95);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.customer-auth-backdrop.open .customer-auth-card {
+  transform: translateY(0) scale(1);
+}
+
+/* HEADER */
+.customer-auth-header {
+  background: linear-gradient(135deg, #1C1914 0%, #111111 100%);
+  color: #F8F6F2;
+  padding: 24px 28px;
+  text-align: center;
+  position: relative;
+  border-bottom: 2px solid #C3A167;
+}
+
+.auth-header-subtitle {
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #C3A167;
+  margin-bottom: 6px;
+}
+
+.auth-header-title {
+  font-family: var(--font-heading, 'Playfair Display', serif);
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin: 0;
+  color: #F8F6F2;
+}
+
+.auth-close-btn {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  color: #888888;
+  font-size: 1.3rem;
+  cursor: pointer;
+  padding: 4px;
+  transition: color 0.2s ease;
+}
+
+.auth-close-btn:hover {
+  color: #C3A167;
+}
+
+/* TABS NAV */
+.customer-auth-tabs {
+  display: flex;
+  background: #EBE7DE;
+  border-bottom: 1px solid #DCD7CB;
+}
+
+.auth-tab-btn {
+  flex: 1;
+  padding: 14px 16px;
+  background: transparent;
+  border: none;
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #777777;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-bottom: 2px solid transparent;
+}
+
+.auth-tab-btn.active {
+  color: #111111;
+  background: #F8F6F2;
+  border-bottom-color: #C3A167;
+}
+
+/* FORM BODY */
+.customer-auth-body {
+  padding: 28px;
+}
+
+.auth-form-group {
+  margin-bottom: 18px;
+}
+
+.auth-form-group label {
+  display: block;
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #444444;
+  margin-bottom: 6px;
+}
+
+.auth-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #CCCCCC;
+  border-radius: 4px;
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 0.9rem;
+  background: #ffffff;
+  color: #111111;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.auth-input:focus {
+  border-color: #C3A167;
+}
+
+.btn-customer-submit {
+  width: 100%;
+  padding: 14px 24px;
+  background: linear-gradient(135deg, #1C1914 0%, #111111 100%);
+  color: #F8F6F2;
+  border: 1px solid #C3A167;
+  border-radius: 4px;
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  margin-top: 10px;
+}
+
+.btn-customer-submit:hover {
+  background: linear-gradient(135deg, #C3A167 0%, #A58348 100%);
+  color: #111111;
+  box-shadow: 0 8px 24px rgba(195, 161, 103, 0.4);
+}
+
+.auth-feedback-msg {
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 0.8rem;
+  margin-top: 14px;
+  padding: 10px 14px;
+  border-radius: 4px;
+  display: none;
+}
+
+.auth-feedback-msg.error {
+  display: block;
+  background: rgba(220, 53, 69, 0.1);
+  color: #dc3545;
+  border: 1px solid rgba(220, 53, 69, 0.3);
+}
+
+.auth-feedback-msg.success {
+  display: block;
+  background: rgba(40, 167, 69, 0.1);
+  color: #28a745;
+  border: 1px solid rgba(40, 167, 69, 0.3);
+}
+
+/* LOGGED IN PROFILE DASHBOARD */
+.customer-profile-dashboard {
+  padding: 24px;
+}
+
+.profile-welcome-box {
+  background: linear-gradient(135deg, #1C1914 0%, #111111 100%);
+  color: #F8F6F2;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid rgba(195, 161, 103, 0.4);
+  margin-bottom: 20px;
+}
+
+.profile-welcome-name {
+  font-family: var(--font-heading, 'Playfair Display', serif);
+  font-size: 1.3rem;
+  margin: 0 0 4px;
+  color: #F8F6F2;
+}
+
+.profile-welcome-email {
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 0.8rem;
+  color: #C3A167;
+}
+
+.profile-section-title {
+  font-family: var(--font-heading, 'Playfair Display', serif);
+  font-size: 1.1rem;
+  margin: 18px 0 12px;
+  color: #111111;
+}
+
+.order-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.order-item-card {
+  background: #ffffff;
+  border: 1px solid #E0DCD3;
+  padding: 12px 16px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-item-id {
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.order-item-status {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 12px;
+  background: rgba(195, 161, 103, 0.15);
+  color: #A58348;
+}
+
+.btn-customer-logout {
+  width: 100%;
+  padding: 12px;
+  background: transparent;
+  border: 1px solid #CCCCCC;
+  color: #666666;
+  border-radius: 4px;
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  margin-top: 16px;
+  transition: all 0.2s ease;
+}
+
+.btn-customer-logout:hover {
+  background: #dc3545;
+  color: #ffffff;
+  border-color: #dc3545;
+}
+
+/* FOOTER SECRET ADMIN LINK */
+.customer-auth-footer {
+  padding: 12px 20px;
+  background: #EBE7DE;
+  border-top: 1px solid #DCD7CB;
+  text-align: center;
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 0.72rem;
+  color: #777777;
+}
+
+.customer-auth-footer a {
+  color: #111111;
+  font-weight: 600;
+  text-decoration: underline;
+}

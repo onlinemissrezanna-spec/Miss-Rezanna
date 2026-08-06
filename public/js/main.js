@@ -741,11 +741,15 @@ function initSlideBar() {
     });
   });
 
-  // Hook account buttons to admin.html
+  // Hook account buttons to Customer Auth & Profile Modal
   document.querySelectorAll('[aria-label="Account"]').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
-      window.location.href = 'admin.html';
+      if (typeof openCustomerAuthModal === 'function') {
+        openCustomerAuthModal();
+      } else {
+        window.location.href = 'admin.html';
+      }
     });
   });
 }
