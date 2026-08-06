@@ -1767,7 +1767,7 @@ function parseYouTubeEmbed(url) {
 }
 
 function openAddProductModal() {
-  currentEditPhotos = ['images/9.jpeg'];
+  currentEditPhotos = ['images/A.jpeg'];
   renderProductFormModal(null, {
     name: '',
     price: '',
@@ -1792,9 +1792,9 @@ async function openEditProductModal(productId) {
     const p = await api(`/products/${productId}`);
     let photos = [];
     if (p.images && Array.isArray(p.images)) {
-      photos = p.images.map(img => typeof img === 'string' ? img : (img.imageUrl || 'images/9.jpeg'));
+      photos = p.images.map(img => typeof img === 'string' ? img : (img.imageUrl || 'images/A.jpeg'));
     }
-    if (photos.length === 0) photos = ['images/9.jpeg'];
+    if (photos.length === 0) photos = ['images/A.jpeg'];
     currentEditPhotos = photos;
 
     let stock = 0;
