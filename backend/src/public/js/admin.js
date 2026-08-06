@@ -1,11 +1,9 @@
 // MISS REZANNA — Admin Portal JavaScript
 // Connects to all backend API endpoints
 
-// Auto-detect backend URL: relative to current origin on deployed servers or localhost
-let BACKEND_BASE = window.location.origin;
-if (window.location.protocol === 'file:') {
-    BACKEND_BASE = 'https://miss-rezanna-production.up.railway.app';
-} else if ((window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && window.location.port === '5500') {
+// Auto-detect backend URL: Production Railway API server or local dev server
+let BACKEND_BASE = 'https://miss-rezanna-production.up.railway.app';
+if ((window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && (window.location.port === '5000' || window.location.port === '3000')) {
     BACKEND_BASE = 'http://localhost:5000';
 }
 const API = `${BACKEND_BASE}/api/v1`;
