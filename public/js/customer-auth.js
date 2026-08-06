@@ -26,36 +26,36 @@
             </div>
 
             <!-- SIGN IN FORM -->
-            <form id="formSignIn" class="customer-auth-body" onsubmit="handleCustomerLogin(event)">
+            <form id="formSignIn" class="customer-auth-body" autocomplete="off" onsubmit="handleCustomerLogin(event)">
               <div class="auth-form-group">
-                <label for="loginEmail">Email Address / Phone</label>
-                <input type="text" id="loginEmail" class="auth-input" placeholder="Enter your email or phone number" required>
+                <label for="customerUserEmail">Email Address / Phone</label>
+                <input type="text" id="customerUserEmail" name="customer_user_email_nofill" class="auth-input" placeholder="Enter your email or phone number" autocomplete="off" required>
               </div>
               <div class="auth-form-group">
-                <label for="loginPassword">Password</label>
-                <input type="password" id="loginPassword" class="auth-input" placeholder="••••••••" required>
+                <label for="customerUserPassword">Password</label>
+                <input type="password" id="customerUserPassword" name="customer_user_password_nofill" class="auth-input" placeholder="••••••••" autocomplete="new-password" required>
               </div>
               <button type="submit" class="btn-customer-submit">Sign In to My Account</button>
               <div id="signInFeedback" class="auth-feedback-msg"></div>
             </form>
 
             <!-- REGISTER FORM -->
-            <form id="formRegister" class="customer-auth-body" style="display:none;" onsubmit="handleCustomerRegister(event)">
+            <form id="formRegister" class="customer-auth-body" style="display:none;" autocomplete="off" onsubmit="handleCustomerRegister(event)">
               <div class="auth-form-group">
                 <label for="regName">Full Name</label>
-                <input type="text" id="regName" class="auth-input" placeholder="e.g. Ananya Sharma" required>
+                <input type="text" id="regName" name="reg_name_nofill" class="auth-input" placeholder="e.g. Ananya Sharma" autocomplete="off" required>
               </div>
               <div class="auth-form-group">
                 <label for="regEmail">Email Address</label>
-                <input type="email" id="regEmail" class="auth-input" placeholder="ananya@example.com" required>
+                <input type="email" id="regEmail" name="reg_email_nofill" class="auth-input" placeholder="ananya@example.com" autocomplete="off" required>
               </div>
               <div class="auth-form-group">
                 <label for="regPhone">Phone Number</label>
-                <input type="tel" id="regPhone" class="auth-input" placeholder="+91 98765 43210" required>
+                <input type="tel" id="regPhone" name="reg_phone_nofill" class="auth-input" placeholder="+91 98765 43210" autocomplete="off" required>
               </div>
               <div class="auth-form-group">
                 <label for="regPassword">Create Password</label>
-                <input type="password" id="regPassword" class="auth-input" placeholder="At least 6 characters" required>
+                <input type="password" id="regPassword" name="reg_password_nofill" class="auth-input" placeholder="At least 6 characters" autocomplete="new-password" required>
               </div>
               <button type="submit" class="btn-customer-submit">Create My Atelier Account</button>
               <div id="registerFeedback" class="auth-feedback-msg"></div>
@@ -81,10 +81,6 @@
             </div>
 
             <button class="btn-customer-logout" onclick="handleCustomerLogout()">Log Out</button>
-          </div>
-
-          <div class="customer-auth-footer">
-            Are you a boutique administrator? <a href="admin.html">Admin Login Panel</a>
           </div>
         </div>
       </div>
@@ -132,6 +128,11 @@
     if (loggedOutView) loggedOutView.style.display = 'block';
     if (loggedInView) loggedInView.style.display = 'none';
     if (modalTitle) modalTitle.innerText = 'Customer Login';
+
+    const emailInput = document.getElementById('customerUserEmail');
+    const passInput = document.getElementById('customerUserPassword');
+    if (emailInput) emailInput.value = '';
+    if (passInput) passInput.value = '';
   }
 
   window.closeCustomerAuthModal = function() {
@@ -163,8 +164,10 @@
 
   window.handleCustomerLogin = function(e) {
     e.preventDefault();
-    const email = document.getElementById('loginEmail').value.trim();
-    const password = document.getElementById('loginPassword').value.trim();
+    const emailEl = document.getElementById('customerUserEmail');
+    const passEl = document.getElementById('customerUserPassword');
+    const email = emailEl ? emailEl.value.trim() : '';
+    const password = passEl ? passEl.value.trim() : '';
     const feedback = document.getElementById('signInFeedback');
 
     if (!email || !password) return;
