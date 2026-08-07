@@ -1,20 +1,20 @@
 {
   "version": 2,
-  "cleanUrls": true,
-  "functions": {
-    "api/index.js": {
-      "memory": 1024,
-      "maxDuration": 15
-    }
-  },
-  "rewrites": [
+  "routes": [
     {
-      "source": "/api/v1/:path*",
-      "destination": "/api/index.js"
+      "src": "/api/v1/(.*)",
+      "dest": "/api/index.js"
     },
     {
-      "source": "/health",
-      "destination": "/api/index.js"
+      "src": "/health",
+      "dest": "/api/index.js"
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
     }
   ],
   "headers": [
