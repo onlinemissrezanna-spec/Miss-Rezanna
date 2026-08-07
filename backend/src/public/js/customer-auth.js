@@ -265,6 +265,15 @@
     showLoggedOutView();
   };
 
+  // Global delegated click listener for Account buttons on all pages
+  document.addEventListener('click', function(e) {
+    const accountBtn = e.target.closest('[aria-label="Account"], .icon-btn-account, .account-icon');
+    if (accountBtn) {
+      e.preventDefault();
+      openCustomerAuthModal();
+    }
+  });
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initCustomerAuthModal);
   } else {
