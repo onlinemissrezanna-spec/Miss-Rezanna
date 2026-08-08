@@ -1,25 +1,18 @@
 {
   "version": 2,
   "cleanUrls": true,
-  "routes": [
+  "rewrites": [
     {
-      "src": "/api/v1/(.*)",
-      "dest": "/api"
+      "source": "/api/v1/:path*",
+      "destination": "/api"
     },
     {
-      "src": "/health",
-      "dest": "/api"
+      "source": "/health",
+      "destination": "/api"
     },
     {
-      "src": "/admin",
-      "dest": "/admin.html"
-    },
-    {
-      "handle": "filesystem"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
+      "source": "/admin",
+      "destination": "/admin.html"
     }
   ],
   "headers": [
