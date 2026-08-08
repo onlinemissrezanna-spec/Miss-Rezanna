@@ -522,238 +522,252 @@ body.admin-body {
   align-items: center;
 }
 
-/* ===== RESPONSIVE ===== */
-@media (max-width: 1024px) {
-  .admin-sidebar { transform: translateX(-100%); }
-  .admin-sidebar.open { transform: translateX(0); }
-  .admin-main { margin-left: 0; padding: 24px 20px; }
-  .detail-grid { grid-template-columns: 1fr; }
+/* ===== MOBILE HEADER & NAV DRAWER ===== */
+.admin-mobile-header {
+  display: none;
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: var(--admin-sidebar);
+  color: #fff;
+  padding: 0 16px;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1020;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
-
-/* ===== PRODUCT EDIT FORM & PHOTO GALLERY & YOUTUBE ===== */
-.form-group {
-  margin-bottom: 18px;
+.mobile-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
-.form-group label {
-  display: block;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-weight: 600;
-  color: var(--admin-text-secondary);
-  margin-bottom: 6px;
+.mobile-brand-logo {
+  height: 38px;
+  width: auto;
 }
-.form-control {
-  width: 100%;
-  padding: 10px 14px;
-  border: 1px solid var(--admin-border);
-  border-radius: var(--admin-radius);
-  font-family: inherit;
-  font-size: 13px;
-  background: var(--admin-card);
-  color: var(--admin-text);
-  box-sizing: border-box;
+.mobile-brand-text {
+  display: flex;
+  flex-direction: column;
 }
-.form-control:focus {
-  outline: none;
+.mobile-brand-title {
+  font-family: var(--font-heading);
+  font-size: 14px;
+  letter-spacing: 0.12em;
+  color: #fff;
+  line-height: 1.2;
+}
+.mobile-brand-badge {
+  font-size: 9px;
+  color: var(--admin-gold);
+  letter-spacing: 0.15em;
+  font-weight: 700;
+}
+.admin-hamburger-btn {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+.admin-hamburger-btn:hover, .admin-hamburger-btn:active {
+  background: rgba(255,255,255,0.15);
   border-color: var(--admin-gold);
 }
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-.photo-gallery-preview {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-  gap: 10px;
-  margin-top: 10px;
-}
-.photo-thumb-box {
-  position: relative;
-  aspect-ratio: 1;
-  border-radius: 6px;
-  overflow: hidden;
-  border: 1px solid var(--admin-border);
-  background: #f8f8f8;
-}
-.photo-thumb-box img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.btn-remove-photo {
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  background: rgba(197, 48, 48, 0.9);
-  color: #fff;
-  border: none;
+.admin-hamburger-btn svg {
   width: 22px;
   height: 22px;
-  border-radius: 50%;
-  font-size: 12px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.2s;
-}
-.btn-remove-photo:hover {
-  transform: scale(1.15);
-}
-.youtube-preview-box {
-  margin-top: 10px;
-  border-radius: 8px;
-  overflow: hidden;
-  background: #000;
-  aspect-ratio: 16/9;
-  display: none;
-}
-.youtube-preview-box iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-.product-card-actions {
-  display: flex;
-  gap: 8px;
-  margin-top: 12px;
-  padding-top: 12px;
-  border-top: 1px solid var(--admin-border);
-}
-.btn-card-edit {
-  flex: 1;
-  padding: 8px;
-  font-size: 12px;
-  border: 1px solid var(--admin-border);
-  background: transparent;
-  color: var(--admin-text);
-  border-radius: 4px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  transition: all 0.2s;
-}
-.btn-card-edit:hover {
-  border-color: var(--admin-gold);
-  color: var(--admin-gold);
-}
-.btn-card-delete {
-  padding: 8px 12px;
-  font-size: 12px;
-  border: 1px solid rgba(197, 48, 48, 0.3);
-  background: rgba(197, 48, 48, 0.08);
-  color: var(--admin-red);
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.btn-card-delete:hover {
-  background: var(--admin-red);
-  color: #fff;
 }
 
-/* ==========================================================================
-   MOBILE & TABLET RESPONSIVE OVERRIDES
-   ========================================================================== */
+.admin-sidebar-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(3px);
+  z-index: 1040;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.admin-sidebar-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.btn-close-sidebar-mobile {
+  display: none;
+  background: rgba(255,255,255,0.12);
+  border: none;
+  color: #fff;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  cursor: pointer;
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  transition: all 0.2s;
+}
+.btn-close-sidebar-mobile:hover {
+  background: var(--admin-gold);
+  color: #000;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ===== RESPONSIVE MEDIA QUERIES ===== */
 @media (max-width: 991px) {
+  .admin-mobile-header {
+    display: flex;
+  }
+  .btn-close-sidebar-mobile {
+    display: flex;
+  }
   .admin-sidebar {
-    width: 220px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 280px;
+    max-width: 85vw;
+    z-index: 1050;
+    transform: translateX(-100%);
+    box-shadow: 4px 0 25px rgba(0,0,0,0.4);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .admin-sidebar.open {
+    transform: translateX(0);
   }
   .admin-main {
-    margin-left: 220px;
-    padding: 20px;
+    margin-left: 0;
+    padding: 24px 16px;
+    min-height: calc(100vh - 60px);
   }
   .metrics-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
   }
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 767px) {
-  .admin-app {
-    flex-direction: column;
-  }
-  .admin-sidebar {
-    position: relative;
-    width: 100%;
-    height: auto;
-    border-right: none;
-    border-bottom: 1px solid var(--admin-border);
-    padding: 16px;
-  }
-  .sidebar-nav {
-    display: flex;
-    overflow-x: auto;
-    padding-bottom: 8px;
-    gap: 6px;
-  }
-  .nav-item {
-    white-space: nowrap;
-    padding: 8px 12px;
-    font-size: 13px;
-  }
   .admin-main {
-    margin-left: 0;
     padding: 16px 12px;
+  }
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .page-header > div:last-child {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .page-title {
+    font-size: 22px;
   }
   .metrics-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+    gap: 12px;
   }
   .metric-card {
-    padding: 14px;
+    padding: 16px;
   }
-  .metric-val {
-    font-size: 20px;
+  .metric-value {
+    font-size: 22px;
   }
-  .topbar {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
+  .form-control, .form-select, .login-form input {
+    font-size: 16px !important; /* Disables auto-zoom in iOS Safari */
+    padding: 12px 14px;
   }
-  .topbar-actions {
-    width: 100%;
-    justify-content: space-between;
-  }
-  .table-card {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-  .admin-table {
-    min-width: 600px;
-  }
-  .modal-dialog {
-    width: 96% !important;
-    margin: 12px auto !important;
-    max-height: 92vh !important;
-    overflow-y: auto !important;
-  }
-  .products-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+  .btn-action, .btn-card-edit, .btn-card-delete, .btn-signout {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
   .form-row {
-    flex-direction: column;
+    grid-template-columns: 1fr;
     gap: 12px;
+  }
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 14px;
+  }
+  .modal-card {
+    width: 95%;
+    max-height: 90vh;
+    margin: 12px auto;
+  }
+  .modal-header {
+    padding: 16px 20px;
+  }
+  .modal-body {
+    padding: 16px 20px;
+  }
+  .login-card {
+    padding: 36px 24px;
+    margin: 16px;
+    max-width: 100%;
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 576px) {
+  .metrics-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
   .products-grid {
     grid-template-columns: 1fr;
   }
-  .metrics-grid {
-    grid-template-columns: 1fr 1fr;
+  .admin-table th, .admin-table td {
+    padding: 12px 14px;
+    font-size: 13px;
+  }
+  .page-title {
+    font-size: 20px;
   }
 }
+
 
 </style>
 </head>
 <body class="admin-body">
+
+<!-- ========== MOBILE TOP HEADER BAR ========== -->
+<header class="admin-mobile-header">
+  <div class="mobile-brand">
+    <img src="images/logo.png" alt="MISS REZANNA" class="mobile-brand-logo">
+    <div class="mobile-brand-text">
+      <span class="mobile-brand-title">MISS REZANNA</span>
+      <span class="mobile-brand-badge">ADMIN PORTAL</span>
+    </div>
+  </div>
+  <button class="admin-hamburger-btn" id="mobileMenuBtn" onclick="toggleMobileSidebar()" aria-label="Toggle navigation menu">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+  </button>
+</header>
+<div class="admin-sidebar-backdrop" id="sidebarBackdrop"></div>
 
 <!-- ========== LOGIN OVERLAY ========== -->
 <div class="login-overlay" id="loginOverlay">
@@ -771,6 +785,7 @@ body.admin-body {
 
 <!-- ========== SIDEBAR ========== -->
 <aside class="admin-sidebar" id="adminSidebar">
+  <button class="btn-close-sidebar-mobile" onclick="closeMobileSidebar()" aria-label="Close navigation menu">&times;</button>
   <div class="sidebar-brand" style="padding: 24px 16px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.08);">
     <img src="images/logo.png" alt="MISS REZANNA" style="height: 95px; max-height: 95px; width: auto; display: inline-block; vertical-align: middle;">
     <div class="sidebar-brand-label" style="margin-top: 10px; font-weight: 700; letter-spacing: 0.25em; color: var(--admin-gold); font-size: 11px;">ADMIN PORTAL</div>
@@ -869,21 +884,23 @@ body.admin-body {
         <button class="btn-action" onclick="switchTab('orders', document.querySelector('[data-tab=orders]'))">View All</button>
       </div>
       <div class="card-body no-pad">
-        <table class="admin-table">
-          <thead>
-            <tr>
-              <th>Order #</th>
-              <th>Customer</th>
-              <th>Date</th>
-              <th>Total</th>
-              <th>Payment</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody id="recent-orders-table">
-            <tr><td colspan="6" class="loading-text">Loading recent orders…</td></tr>
-          </tbody>
-        </table>
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Order #</th>
+                <th>Customer</th>
+                <th>Date</th>
+                <th>Total</th>
+                <th>Payment</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="recent-orders-table">
+              <tr><td colspan="6" class="loading-text">Loading recent orders…</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -910,22 +927,24 @@ body.admin-body {
 
     <div class="admin-card">
       <div class="card-body no-pad">
-        <table class="admin-table">
-          <thead>
-            <tr>
-              <th>Order #</th>
-              <th>Date & Time</th>
-              <th>Customer</th>
-              <th>Grand Total</th>
-              <th>Payment</th>
-              <th>Fulfillment</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody id="orders-table-body">
-            <tr><td colspan="7" class="loading-text">Loading orders…</td></tr>
-          </tbody>
-        </table>
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Order #</th>
+                <th>Date & Time</th>
+                <th>Customer</th>
+                <th>Grand Total</th>
+                <th>Payment</th>
+                <th>Fulfillment</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="orders-table-body">
+              <tr><td colspan="7" class="loading-text">Loading orders…</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
     <div id="orders-pagination" style="display:flex;justify-content:center;gap:8px;margin-top:16px;"></div>
@@ -967,21 +986,23 @@ body.admin-body {
     </div>
     <div class="admin-card">
       <div class="card-body no-pad">
-        <table class="admin-table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Phone</th>
-              <th>Joined</th>
-              <th>Status</th>
-              <th>Orders</th>
-            </tr>
-          </thead>
-          <tbody id="customers-table-body">
-            <tr><td colspan="6" class="loading-text">Loading customers…</td></tr>
-          </tbody>
-        </table>
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Joined</th>
+                <th>Status</th>
+                <th>Orders</th>
+              </tr>
+            </thead>
+            <tbody id="customers-table-body">
+              <tr><td colspan="6" class="loading-text">Loading customers…</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -1013,7 +1034,7 @@ body.admin-body {
     </div>
 
     <!-- Metrics Grid -->
-    <div class="metrics-grid" style="grid-template-columns: repeat(4, 1fr); margin-bottom: 24px;">
+    <div class="metrics-grid" style="margin-bottom: 24px;">
       <div class="metric-card">
         <div class="metric-label">Average SEO Score</div>
         <div class="metric-value" id="m-seo-avg" style="color:var(--admin-green)">—</div>
@@ -1038,21 +1059,23 @@ body.admin-body {
         <span class="card-title">Catalogue Search Engine Audit</span>
       </div>
       <div class="card-body no-pad">
-        <table class="admin-table">
-          <thead>
-            <tr>
-              <th>Product Name</th>
-              <th>Focus Keyword</th>
-              <th>SEO Title</th>
-              <th>SEO Health Score</th>
-              <th>Status</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody id="seo-table-body">
-            <tr><td colspan="6" class="loading-text">Loading SEO catalogue audit…</td></tr>
-          </tbody>
-        </table>
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Product Name</th>
+                <th>Focus Keyword</th>
+                <th>SEO Title</th>
+                <th>SEO Health Score</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="seo-table-body">
+              <tr><td colspan="6" class="loading-text">Loading SEO catalogue audit…</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -1070,7 +1093,7 @@ body.admin-body {
     </div>
 
     <!-- Payment Metrics Grid -->
-    <div class="metrics-grid" style="grid-template-columns: repeat(4, 1fr); margin-bottom: 24px;">
+    <div class="metrics-grid" style="margin-bottom: 24px;">
       <div class="metric-card">
         <div class="metric-label">Total Online Volume</div>
         <div class="metric-value" id="m-rzp-volume" style="color:var(--admin-green)">₹ 0</div>
@@ -1095,7 +1118,7 @@ body.admin-body {
         <span class="card-title">Razorpay Merchant Gateway Configuration</span>
       </div>
       <div class="card-body">
-        <div style="display:grid;grid-template-columns: repeat(3, 1fr);gap:16px;">
+        <div class="form-row" style="gap:16px;">
           <div>
             <div style="font-size:11px;color:var(--admin-text-secondary);text-transform:uppercase;letter-spacing:0.05em;">Merchant Environment</div>
             <div style="font-weight:700;font-size:14px;color:#111;margin-top:4px;">Razorpay India (INR ₹)</div>
@@ -1118,22 +1141,24 @@ body.admin-body {
         <span class="card-title">Live Razorpay Payment Ledger</span>
       </div>
       <div class="card-body no-pad">
-        <table class="admin-table">
-          <thead>
-            <tr>
-              <th>Order ID</th>
-              <th>Razorpay Payment ID</th>
-              <th>Customer Name / Email</th>
-              <th>Amount Paid</th>
-              <th>Payment Method</th>
-              <th>Status</th>
-              <th>Date</th>
-            </tr>
-          </thead>
-          <tbody id="razorpay-table-body">
-            <tr><td colspan="7" class="loading-text">Loading Razorpay transaction ledger…</td></tr>
-          </tbody>
-        </table>
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Razorpay Payment ID</th>
+                <th>Customer Name / Email</th>
+                <th>Amount Paid</th>
+                <th>Payment Method</th>
+                <th>Status</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody id="razorpay-table-body">
+              <tr><td colspan="7" class="loading-text">Loading Razorpay transaction ledger…</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -1182,6 +1207,28 @@ let adminToken = localStorage.getItem('mr_admin_token') || null;
 let allOrders = [];
 let currentOrderPage = 1;
 
+// Mobile Sidebar Functions
+function toggleMobileSidebar() {
+  const sidebar = document.getElementById('adminSidebar');
+  const backdrop = document.getElementById('sidebarBackdrop');
+  if (sidebar) sidebar.classList.toggle('open');
+  if (backdrop) backdrop.classList.toggle('active');
+}
+
+function closeMobileSidebar() {
+  const sidebar = document.getElementById('adminSidebar');
+  const backdrop = document.getElementById('sidebarBackdrop');
+  if (sidebar) sidebar.classList.remove('open');
+  if (backdrop) backdrop.classList.remove('active');
+}
+
+function openMobileSidebar() {
+  const sidebar = document.getElementById('adminSidebar');
+  const backdrop = document.getElementById('sidebarBackdrop');
+  if (sidebar) sidebar.classList.add('open');
+  if (backdrop) backdrop.classList.add('active');
+}
+
 // =============================================
 // INITIALIZATION
 // =============================================
@@ -1196,6 +1243,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const loginForm = document.getElementById('loginForm');
   if (loginForm) loginForm.addEventListener('submit', handleLogin);
+
+  const backdrop = document.getElementById('sidebarBackdrop');
+  if (backdrop) backdrop.addEventListener('click', closeMobileSidebar);
 });
 
 // =============================================
@@ -1328,6 +1378,7 @@ async function api(path, method = 'GET', body = null) {
 // =============================================
 function switchTab(tabName, el) {
   if (!tabName) return;
+  closeMobileSidebar();
   document.querySelectorAll('.tab-view').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   
