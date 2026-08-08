@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "cleanUrls": true,
   "routes": [
     {
       "src": "/api/v1/(.*)",
@@ -8,6 +9,10 @@
     {
       "src": "/health",
       "dest": "/api"
+    },
+    {
+      "src": "/admin",
+      "dest": "/admin.html"
     },
     {
       "handle": "filesystem"
