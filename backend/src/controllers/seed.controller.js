@@ -15,6 +15,7 @@ const productCatalog = [
     { slug: 'dusk-dupatta',        name: 'Dusk Organza Dupatta',         price: 3000, sku: 'MR-DD-010', images: ['images/A.jpeg', 'images/L.jpeg', 'images/N.jpeg'],             description: 'A sheer, elegant drape designed to complement any evening attire.' },
     { slug: 'terracotta-pant',     name: 'Terracotta Flow Pant',         price: 3000, sku: 'MR-TP-011', images: ['images/N.jpeg', 'images/L.jpeg'],                               description: 'Wide-leg trousers offering supreme comfort and effortless style.' },
     { slug: 'olive-kurti',         name: 'Olive Blossom Kurti',          price: 3000, sku: 'MR-OK-012', images: ['images/design 1 col 2.jpeg', 'images/L.jpeg', 'images/N.jpeg'],description: 'Crafted to move beautifully, providing comfort without compromising on elegance.' },
+    { slug: 'navy-blue-embroidered-kurta-pant-set', name: 'Navy Blue Floral Embroidered Kurta Pant Set', price: 4500, sku: 'MR-KS-013', images: ['images/navy-blue-embroidered-kurta-pant-set-1.png', 'images/navy-blue-embroidered-kurta-pant-set-2.png', 'images/navy-blue-embroidered-kurta-pant-set-3.png', 'images/navy-blue-embroidered-kurta-pant-set-4.png', 'images/navy-blue-embroidered-kurta-pant-set-5.png'], description: 'A refined navy blue kurta pant set featuring intricate multicolour floral embroidery, designed for the modern woman who appreciates understated elegance.' },
 ];
 
 const seedDatabase = asyncHandler(async (req, res) => {

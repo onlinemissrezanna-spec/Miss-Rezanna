@@ -111,6 +111,24 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+const staticProductCatalog = {
+  'navy-blue-embroidered-kurta-pant-set': {
+    name: 'Navy Blue Floral Embroidered Kurta Pant Set',
+    seoTitle: 'Navy Blue Embroidered Kurta Pant Set for Women | MISS REZANNA',
+    metaDesc: 'Shop the navy blue embroidered kurta pant set by MISS REZANNA, featuring intricate floral embroidery and a sophisticated contemporary silhouette.',
+    price: '₹ 4,500',
+    label: 'Festive Edit · Kurta Pant Set',
+    images: [
+      'images/navy-blue-embroidered-kurta-pant-set-3.png',
+      'images/navy-blue-embroidered-kurta-pant-set-1.png',
+      'images/navy-blue-embroidered-kurta-pant-set-2.png',
+      'images/navy-blue-embroidered-kurta-pant-set-4.png',
+      'images/navy-blue-embroidered-kurta-pant-set-5.png'
+    ],
+    description: `A refined navy blue kurta pant set featuring intricate multicolour floral embroidery, designed for the modern woman who appreciates understated elegance.<br><br><strong>Elegance meets contemporary Indian craftsmanship.</strong><br><br>This sophisticated navy blue kurta pant set features intricate floral embroidery across the front and sleeves, creating a beautifully balanced statement while keeping the overall look refined.<br><br>The deep navy base gives the ensemble a timeless character, while the delicate multicolour floral detailing adds depth and individuality. Paired with matching straight-cut pants, the set creates an effortlessly polished silhouette.<br><br>Designed for women who prefer graceful dressing without excessive embellishment, this ensemble transitions beautifully from festive gatherings to intimate celebrations and elegant evening occasions.<br><br><em>Style it with: minimal earrings, delicate bracelets and classic heels for a polished occasion-ready look.</em><br><br><strong>✦ Key Product Highlights</strong><br>• Intricate multicolour floral embroidery<br>• Rich navy blue colour palette<br>• Coordinated 2-piece kurta and pant set<br>• Contemporary ethnic silhouette<br>• Elegant 3/4 sleeves<br>• Refined Mandarin / keyhole neckline<br>• Designed for versatile festive & evening occasions`
+  }
+};
+
 // Dynamic Product Loading from API
 document.addEventListener('DOMContentLoaded', async () => {
   let currentProductCatalog = {};
@@ -123,20 +141,26 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   const urlParams = new URLSearchParams(window.location.search);
-  const productId = urlParams.get('id') || 'midnight-kurti';
+  const productId = urlParams.get('id') || 'navy-blue-embroidered-kurta-pant-set';
   
-  if (currentProductCatalog && currentProductCatalog[productId]) {
-      const product = currentProductCatalog[productId];
+  const product = (currentProductCatalog && currentProductCatalog[productId]) 
+    ? currentProductCatalog[productId] 
+    : (staticProductCatalog[productId] || staticProductCatalog['navy-blue-embroidered-kurta-pant-set']);
+
+  if (product) {
       window.activeProduct = product;
       
       // Update Title & Meta
-      document.title = `${product.name} - MISS REZANNA`;
+      document.title = product.seoTitle || `${product.name} | MISS REZANNA`;
+      
+      const metaDescEl = document.querySelector('meta[name="description"]');
+      if (metaDescEl && product.metaDesc) metaDescEl.setAttribute('content', product.metaDesc);
       
       // Update DOM Elements
       if (document.getElementById('pdp-title')) document.getElementById('pdp-title').innerText = product.name;
       if (document.getElementById('pdp-price')) document.getElementById('pdp-price').innerText = product.price;
       if (document.getElementById('pdp-label')) document.getElementById('pdp-label').innerText = product.label || 'Festive Edit';
-      if (document.getElementById('pdp-desc')) document.getElementById('pdp-desc').innerText = product.description || '';
+      if (document.getElementById('pdp-desc')) document.getElementById('pdp-desc').innerHTML = product.description || '';
       
       // Sticky Bar
       if (document.getElementById('sticky-title')) document.getElementById('sticky-title').innerText = product.name;
@@ -147,7 +171,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (gallery && product.images && product.images.length > 0) {
         gallery.innerHTML = product.images.map(img => `
             <div class="pdp-img-wrapper">
-              <img src="${img}" alt="${product.name}" class="pdp-img">
+              <img src="${img}" alt="${product.name} for Women by MISS REZANNA" class="pdp-img">
             </div>
         `).join('');
       }
