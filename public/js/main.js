@@ -806,15 +806,7 @@ function closeSlideBar() {
    ========================================================================== */
 
 const SEARCH_CATALOG = [
-  { id: 'midnight-kurti', name: 'Midnight Silk Kurti', price: 3000, category: 'Kurti Sets', image: 'images/A.jpeg' },
-  { id: 'ivory-fusion', name: 'Ivory Linen Co-ord', price: 3000, category: 'Co-ord Sets', image: 'images/B.jpeg' },
-  { id: 'crimson-set', name: 'Crimson Festivity Set', price: 3000, category: 'Festive Collection', image: 'images/C.jpeg' },
-  { id: 'terracotta-pant', name: 'Terracotta Flow Pant', price: 3000, category: 'Bottom Wear', image: 'images/N.jpeg' },
-  { id: 'olive-kurti', name: 'Olive Blossom Kurti', price: 3000, category: 'Kurti Sets', image: 'images/design 1 col 2.jpeg' },
-  { id: 'emerald-luxury', name: 'Emerald Heritage Kurti', price: 3000, category: 'Festive Collection', image: 'images/NV.jpeg' },
-  { id: 'sapphire-coord', name: 'Sapphire Modern Co-ord', price: 3000, category: 'Co-ord Sets', image: 'images/Q.jpeg' },
-  { id: 'rose-ensemble', name: 'Rose Petal Kurti Set', price: 3000, category: 'Kurti Sets', image: 'images/R.jpeg' },
-  { id: 'gold-chanderi', name: 'Gold Chanderi Ensemble', price: 3000, category: 'Festive Collection', image: 'images/T.jpeg' }
+  { id: 'navy-blue-embroidered-kurta-pant-set', name: 'Navy Blue Floral Embroidered Kurta Pant Set', price: 4500, category: 'Kurta Pant Sets', image: 'images/navy-blue-embroidered-kurta-pant-set-3.png' }
 ];
 
 function initSearchModal() {
