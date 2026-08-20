@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -65,26 +65,42 @@
   <main class="pdp-main" style="padding-top: 100px;">
     <div class="pdp-container">
       
-      <!-- Left: Swipeable Gallery -->
+      <!-- Left: Image Slider Gallery -->
       <div class="pdp-gallery-container">
-        <div class="pdp-gallery" id="pdpGallery">
-          <div class="pdp-img-wrapper">
-            <img src="images/9.jpeg" alt="Midnight Silk Kurti Front" class="pdp-img">
+        <div class="pdp-slider" id="pdpSlider">
+          <div class="pdp-slider-track" id="pdpGallery">
+            <div class="pdp-img-wrapper">
+              <img src="images/9.jpeg" alt="Product Image 1" class="pdp-img">
+            </div>
+            <div class="pdp-img-wrapper">
+              <img src="images/L.jpeg" alt="Product Image 2" class="pdp-img">
+            </div>
+            <div class="pdp-img-wrapper">
+              <img src="images/12.jpeg" alt="Product Image 3" class="pdp-img">
+            </div>
           </div>
-          <div class="pdp-img-wrapper">
-            <img src="images/L.jpeg" alt="Midnight Silk Kurti Detail" class="pdp-img">
-          </div>
-          <div class="pdp-img-wrapper">
-            <img src="images/12.jpeg" alt="Midnight Silk Kurti Back" class="pdp-img">
-          </div>
+
+          <!-- Prev / Next Arrows -->
+          <button class="slider-arrow slider-prev" id="sliderPrev" aria-label="Previous image">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          </button>
+          <button class="slider-arrow slider-next" id="sliderNext" aria-label="Next image">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 6 15 12 9 18"></polyline></svg>
+          </button>
+
+          <!-- Slide Counter -->
+          <div class="slider-counter" id="sliderCounter">1 / 3</div>
         </div>
-        
-        <!-- Swipe Dots -->
-        <div class="pdp-gallery-dots">
+
+        <!-- Dot Indicators -->
+        <div class="pdp-gallery-dots" id="sliderDots">
           <div class="pdp-dot active"></div>
           <div class="pdp-dot"></div>
           <div class="pdp-dot"></div>
         </div>
+
+        <!-- Thumbnail Strip -->
+        <div class="slider-thumbnails" id="sliderThumbs"></div>
       </div>
 
       <!-- Right: Sticky Product Info -->

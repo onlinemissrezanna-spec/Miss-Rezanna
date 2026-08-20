@@ -35,22 +35,105 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Mobile Gallery Scroll Dots Logic
-  const gallery = document.getElementById('pdpGallery');
-  const dots = document.querySelectorAll('.pdp-dot');
-  
-  if (gallery && dots.length > 0) {
-    gallery.addEventListener('scroll', () => {
-      const scrollPosition = gallery.scrollLeft;
-      const width = gallery.clientWidth;
-      const index = Math.round(scrollPosition / width);
-      
-      dots.forEach((dot, i) => {
-        if (i === index) dot.classList.add('active');
-        else dot.classList.remove('active');
+  // ========== IMAGE SLIDER CONTROLLER ==========
+  let currentSlide = 0;
+  let totalSlides = 0;
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  function initSlider() {
+    const track = document.getElementById('pdpGallery');
+    const slides = track ? track.querySelectorAll('.pdp-img-wrapper') : [];
+    totalSlides = slides.length;
+    if (totalSlides === 0) return;
+
+    goToSlide(0);
+    buildThumbnails();
+
+    // Arrow buttons
+    const prevBtn = document.getElementById('sliderPrev');
+    const nextBtn = document.getElementById('sliderNext');
+    if (prevBtn) prevBtn.addEventListener('click', () => goToSlide(currentSlide - 1));
+    if (nextBtn) nextBtn.addEventListener('click', () => goToSlide(currentSlide + 1));
+
+    // Touch swipe on slider
+    const slider = document.getElementById('pdpSlider');
+    if (slider) {
+      slider.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+      slider.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        const diff = touchStartX - touchEndX;
+        if (Math.abs(diff) > 40) {
+          if (diff > 0) goToSlide(currentSlide + 1); // swipe left = next
+          else goToSlide(currentSlide - 1); // swipe right = prev
+        }
       });
+    }
+
+    // Dot clicks
+    const dotsContainer = document.getElementById('sliderDots');
+    if (dotsContainer) {
+      dotsContainer.addEventListener('click', (e) => {
+        const dot = e.target.closest('.pdp-dot');
+        if (!dot) return;
+        const allDots = Array.from(dotsContainer.querySelectorAll('.pdp-dot'));
+        const idx = allDots.indexOf(dot);
+        if (idx >= 0) goToSlide(idx);
+      });
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') goToSlide(currentSlide - 1);
+      if (e.key === 'ArrowRight') goToSlide(currentSlide + 1);
     });
   }
+
+  function goToSlide(index) {
+    if (totalSlides === 0) return;
+    // Loop around
+    if (index < 0) index = totalSlides - 1;
+    if (index >= totalSlides) index = 0;
+    currentSlide = index;
+
+    // Move track
+    const track = document.getElementById('pdpGallery');
+    if (track) track.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+    // Update counter
+    const counter = document.getElementById('sliderCounter');
+    if (counter) counter.textContent = `${currentSlide + 1} / ${totalSlides}`;
+
+    // Update dots
+    const dots = document.querySelectorAll('#sliderDots .pdp-dot');
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === currentSlide);
+    });
+
+    // Update thumbnails
+    const thumbs = document.querySelectorAll('.slider-thumb');
+    thumbs.forEach((thumb, i) => {
+      thumb.classList.toggle('active', i === currentSlide);
+    });
+  }
+
+  function buildThumbnails() {
+    const track = document.getElementById('pdpGallery');
+    const thumbsContainer = document.getElementById('sliderThumbs');
+    if (!track || !thumbsContainer) return;
+    const images = track.querySelectorAll('.pdp-img');
+    thumbsContainer.innerHTML = '';
+    images.forEach((img, i) => {
+      const thumb = document.createElement('div');
+      thumb.className = 'slider-thumb' + (i === 0 ? ' active' : '');
+      thumb.innerHTML = `<img src="${img.src}" alt="Thumbnail ${i + 1}">`;
+      thumb.addEventListener('click', () => goToSlide(i));
+      thumbsContainer.appendChild(thumb);
+    });
+  }
+
+  // Initialize slider
+  initSlider();
 
   // Sticky Action Bar Observer
   const mainActions = document.getElementById('mainActions');
@@ -201,7 +284,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (document.getElementById('sticky-title')) document.getElementById('sticky-title').innerText = product.name;
       if (document.getElementById('sticky-price')) document.getElementById('sticky-price').innerText = product.price;
       
-      // Images
+      // Images — rebuild slider
       const gallery = document.getElementById('pdpGallery');
       if (gallery && product.images && product.images.length > 0) {
         gallery.innerHTML = product.images.map(img => `
@@ -211,13 +294,24 @@ document.addEventListener('DOMContentLoaded', async () => {
         `).join('');
       }
       
-      // Dots
-      const dotsContainer = document.querySelector('.pdp-gallery-dots');
+      // Dots — rebuild for slider
+      const dotsContainer = document.getElementById('sliderDots');
       if (dotsContainer && product.images && product.images.length > 0) {
         dotsContainer.innerHTML = product.images.map((_, i) => `
             <div class="pdp-dot ${i === 0 ? 'active' : ''}"></div>
         `).join('');
       }
+
+      // Counter
+      const counter = document.getElementById('sliderCounter');
+      if (counter && product.images) {
+        counter.textContent = `1 / ${product.images.length}`;
+      }
+
+      // Rebuild thumbnails & re-init slider state
+      totalSlides = product.images ? product.images.length : 0;
+      currentSlide = 0;
+      buildThumbnails();
 
       // Re-bind buttons with dynamic product data
       bindAddToCartButtons(product);
