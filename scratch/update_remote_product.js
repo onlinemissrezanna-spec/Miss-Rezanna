@@ -64,6 +64,14 @@ async function updateRemoteProduct() {
       </table>
     `;
 
+    const targetImages = [
+      'images/navy-blue-embroidered-kurta-pant-set-1.png',
+      'images/navy-blue-embroidered-kurta-pant-set-2.png',
+      'images/navy-blue-embroidered-kurta-pant-set-3.png',
+      'images/navy-blue-embroidered-kurta-pant-set-4.jpg',
+      'images/navy-blue-embroidered-kurta-pant-set-5.jpg'
+    ];
+
     const updateRes = await fetch(`${API_URL}/products/1`, {
       method: 'PUT',
       headers: {
@@ -79,13 +87,8 @@ async function updateRemoteProduct() {
         seoTitle: 'Navy Blue Embroidered Kurta Pant Set for Women | MISS REZANNA',
         seoDescription: 'Shop the navy blue embroidered kurta pant set by MISS REZANNA, featuring intricate floral embroidery and a sophisticated contemporary silhouette.',
         seoKeywords: 'navy blue kurta pant set, navy blue kurta set for women, floral embroidered kurta set, embroidered kurta pant set, premium kurta set for women',
-        images: [
-          'images/navy-blue-embroidered-kurta-pant-set-1.png',
-          'images/navy-blue-embroidered-kurta-pant-set-2.png',
-          'images/navy-blue-embroidered-kurta-pant-set-3.png',
-          'images/navy-blue-embroidered-kurta-pant-set-4.jpg',
-          'images/navy-blue-embroidered-kurta-pant-set-5.jpg'
-        ]
+        imageUrls: targetImages,
+        images: targetImages
       })
     });
 
