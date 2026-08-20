@@ -1830,7 +1830,7 @@ async function loadProducts() {
   container.innerHTML = '<div class="loading-text">Loading products…</div>';
 
   try {
-    const data = await api('/products?limit=100');
+    const data = await api('/products?limit=100&status=active');
     const products = data.products || [];
 
     if (!products.length) {
