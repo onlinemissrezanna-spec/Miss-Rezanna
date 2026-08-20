@@ -1,53 +1,38 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Designer Ethnic Wear Collections & Kurti Sets | MISS REZANNA</title>
-  <meta name="description" content="Explore MISS REZANNA's signature collections: Mulberry silk tunics, hand-embroidered kurti sets, matching pants & festive dupattas handcrafted with timeless elegance.">
-  <meta name="keywords" content="Miss Rezanna collection, designer kurti set, embroidered dupattas, Mulberry silk suits, Indian luxury fashion">
-  <link rel="canonical" href="https://www.missrezanna.com/collection.html">
-  <meta property="og:title" content="Designer Ethnic Wear Collections | MISS REZANNA">
-  <meta property="og:description" content="Explore MISS REZANNA's signature collections: Mulberry silk tunics, hand-embroidered kurti sets & festive ensembles.">
-  <meta property="og:image" content="https://www.missrezanna.com/images/logo.png">
-  <meta property="og:url" content="https://www.missrezanna.com/collection.html">
+  <title>Autumn Season 2026 Collection — MISS REZANNA</title>
   
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/hero.css">
-  <link rel="stylesheet" href="css/footer.css">
-  <link rel="stylesheet" href="css/collection-page.css">
-  
+  <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
-  <link rel="stylesheet" href="css/mobile-nav.css?v=3.0">
-  <link rel="stylesheet" href="css/cookie-consent.css">
-  <link rel="stylesheet" href="css/luxury-dynamics.css">
-  <link rel="stylesheet" href="css/ethnic-story.css">
-  <link rel="stylesheet" href="css/luxury-chatbot.css">
-  <link rel="stylesheet" href="css/indian-ai-model.css">
-  <link rel="stylesheet" href="css/customer-auth.css">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/collection.css">
 </head>
 <body>
 
   <!-- HEADER -->
-    <header class="site-header" id="site-header">
+  <header class="site-header" id="siteHeader">
     <div class="header-container">
       
-      <!-- 3-Line Shutter Panel Toggle Button (Just Left of Logo) -->
-      <button class="hamburger-toggle-btn" onclick="openSlideBar()" aria-label="Open Navigation Menu">
-        <div class="hamburger-lines">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
+      <!-- Mobile Menu Hamburger -->
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle navigation menu">
+        <i data-lucide="menu"></i>
       </button>
 
-      <!-- Logo -->
-      <a href="index.html" class="brand-logo h3"><img src="images/logo.png" alt="MISS REZANNA" style="height: 95px; max-height: 95px; width: auto; display: inline-block; vertical-align: middle;"></a>
-      
+      <!-- Brand Logo -->
+      <div class="header-brand">
+        <a href="index.html" class="brand-logo h3"><img src="images/logo.png" alt="MISS REZANNA" style="height: 95px; max-height: 95px; width: auto; display: inline-block; vertical-align: middle;"></a>
+      </div>
+
       <!-- Desktop Navigation -->
       <nav class="desktop-nav">
         <ul class="nav-list text-button">
@@ -100,65 +85,15 @@
 
     <!-- GRID -->
     <section class="collection-grid-section" id="products-section">
-      <div class="collection-grid">
+      <div class="collection-grid" style="grid-template-columns: minmax(280px, 420px); justify-content: center; padding: 40px 20px;">
         
-        <a href="product.html?id=midnight-kurti" class="product-card">
+        <a href="product.html?id=navy-blue-embroidered-kurta-pant-set" class="product-card">
           <div class="product-img-wrapper">
-            <img src="images/9.jpeg" alt="Midnight Silk Kurti" class="product-img">
+            <img src="images/navy-blue-embroidered-kurta-pant-set-3.png" alt="Navy Blue Floral Embroidered Kurta Pant Set" class="product-img">
           </div>
           <div class="product-info">
-            <h4 class="product-title">Midnight Silk Kurti</h4>
-            <span class="product-price">₹ 3,000</span>
-          </div>
-        </a>
-
-        <a href="product.html?id=ivory-fusion" class="product-card">
-          <div class="product-img-wrapper">
-            <img src="images/10.jpeg" alt="Ivory Linen Co-ord" class="product-img">
-          </div>
-          <div class="product-info">
-            <h4 class="product-title">Ivory Linen Co-ord</h4>
-            <span class="product-price">₹ 3,000</span>
-          </div>
-        </a>
-
-        <a href="product.html?id=crimson-set" class="product-card">
-          <div class="product-img-wrapper">
-            <img src="images/11.jpeg" alt="Crimson Festivity Set" class="product-img">
-          </div>
-          <div class="product-info">
-            <h4 class="product-title">Crimson Festivity Set</h4>
-            <span class="product-price">₹ 3,000</span>
-          </div>
-        </a>
-
-        <a href="product.html?id=dusk-dupatta" class="product-card">
-          <div class="product-img-wrapper">
-            <img src="images/9.jpeg" alt="Dusk Organza Dupatta" class="product-img">
-          </div>
-          <div class="product-info">
-            <h4 class="product-title">Dusk Organza Dupatta</h4>
-            <span class="product-price">₹ 3,000</span>
-          </div>
-        </a>
-
-        <a href="product.html?id=terracotta-pant" class="product-card">
-          <div class="product-img-wrapper">
-            <img src="images/12.jpeg" alt="Terracotta Flow Pant" class="product-img">
-          </div>
-          <div class="product-info">
-            <h4 class="product-title">Terracotta Flow Pant</h4>
-            <span class="product-price">₹ 3,000</span>
-          </div>
-        </a>
-
-        <a href="product.html?id=olive-kurti" class="product-card">
-          <div class="product-img-wrapper">
-            <img src="images/13.jpeg" alt="Olive Blossom Kurti" class="product-img">
-          </div>
-          <div class="product-info">
-            <h4 class="product-title">Olive Blossom Kurti</h4>
-            <span class="product-price">₹ 3,000</span>
+            <h4 class="product-title">Navy Blue Floral Embroidered Kurta Pant Set</h4>
+            <span class="product-price">₹ 4,500</span>
           </div>
         </a>
 
@@ -175,7 +110,7 @@
           <p class="footer-brand-desc">
             Thoughtfully crafted for women who appreciate timeless elegance, refined craftsmanship and everyday luxury.
           </p>
-                              <div class="footer-social" style="display:flex;gap:12px;align-items:center;margin-top:16px;">
+          <div class="footer-social" style="display:flex;gap:12px;align-items:center;margin-top:16px;">
             <a href="https://www.instagram.com/miss_rezanna?igsh=M3YwcDZrdGtudXMy" target="_blank" class="social-link" aria-label="Instagram" style="color:#ffffff;display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.1);transition:all 0.2s;text-decoration:none;" onmouseover="this.style.background='#E1306C'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
             </a>
@@ -207,12 +142,12 @@
             <li><a href="about.html">Our Story</a></li>
             <li><a href="journal.html">Journal</a></li>
             <li><a href="exhibitions.html">Exhibitions</a></li>
-            <li><a href="#">Contact</a></li>
+            <li><a href="contact.html">Contact</a></li>
           </ul>
         </div>
 
         <div class="footer-nav">
-                    <h4 class="footer-heading">Customer Care</h4>
+          <h4 class="footer-heading">Customer Care</h4>
           <ul class="footer-links">
             <li><a href="terms-conditions.html#shipping">Shipping</a></li>
             <li><a href="terms-conditions.html#returns">Returns</a></li>
@@ -221,42 +156,19 @@
             <li><a href="#" onclick="openCookieSettings(event)">Cookie Settings</a></li>
           </ul>
         </div>
+
       </div>
 
       <div class="footer-bottom">
-        <span>&copy; 2026 MISS REZANNA. All Rights Reserved.</span>
-        <span>Designed with elegance in India.</span>
+        <p class="copyright">&copy; 2026 MISS REZANNA. All rights reserved.</p>
       </div>
     </div>
   </footer>
 
-  <!-- GSAP & JS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-  <script src="js/collection.js"></script>
-  <script src="js/cart.js"></script>
-  <script src="js/wishlist.js"></script>
-  <script src="js/main.js"></script>
-  <script src="js/cookie-consent.js"></script>
-  <script src="js/luxury-dynamics.js"></script>
-  <script src="js/ethnic-story.js"></script>
-  <script src="js/luxury-chatbot.js"></script>
-  <script src="js/indian-ai-model.js"></script>
-  <script src="js/customer-auth.js"></script>
+  <script href="js/main.js"></script>
+  <script href="js/customer-auth.js"></script>
+  <script>
+    lucide.createIcons();
+  </script>
 </body>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+</html>
