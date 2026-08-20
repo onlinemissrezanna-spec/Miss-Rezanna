@@ -1825,6 +1825,14 @@ async function viewOrderDetail(orderId) {
 // =============================================
 let currentEditPhotos = [];
 
+function formatAdminImgUrl(url) {
+  if (!url || typeof url !== 'string') return PLACEHOLDER_IMG;
+  url = url.trim();
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) return url;
+  if (!url.startsWith('/')) url = '/' + url;
+  return url;
+}
+
 async function loadProducts() {
   const container = document.getElementById('products-grid-container');
   container.innerHTML = '<div class="loading-text">Loading products…</div>';
@@ -1850,7 +1858,7 @@ async function loadProducts() {
         if (Array.isArray(imgs) && imgs.length > 0) {
           const first = typeof imgs[0] === 'string' ? imgs[0] : (imgs[0].imageUrl || '');
           if (first && first.trim()) {
-            imgSrc = first.trim();
+            imgSrc = formatAdminImgUrl(first);
           }
         }
       } catch (e) { }
@@ -2125,7 +2133,7 @@ function renderPhotoThumbsHTML() {
   // Render existing photos
   html += currentEditPhotos.map((url, idx) => `
     <div class="photo-thumb-box">
-      <img src="${escapeHtml(url)}" onerror="this.onerror=null;this.src=PLACEHOLDER_IMG" alt="Photo ${idx + 1}">
+      <img src="${escapeHtml(formatAdminImgUrl(url))}" onerror="this.onerror=null;this.src=PLACEHOLDER_IMG" alt="Photo ${idx + 1}">
       <button type="button" class="btn-remove-photo" onclick="removePhoto(${idx})" title="Remove photo">&times;</button>
     </div>
   `).join('');
