@@ -125,7 +125,42 @@ const staticProductCatalog = {
       'images/navy-blue-embroidered-kurta-pant-set-4.png',
       'images/navy-blue-embroidered-kurta-pant-set-5.png'
     ],
-    description: `A refined navy blue kurta pant set featuring intricate multicolour floral embroidery, designed for the modern woman who appreciates understated elegance.<br><br><strong>Elegance meets contemporary Indian craftsmanship.</strong><br><br>This sophisticated navy blue kurta pant set features intricate floral embroidery across the front and sleeves, creating a beautifully balanced statement while keeping the overall look refined.<br><br>The deep navy base gives the ensemble a timeless character, while the delicate multicolour floral detailing adds depth and individuality. Paired with matching straight-cut pants, the set creates an effortlessly polished silhouette.<br><br>Designed for women who prefer graceful dressing without excessive embellishment, this ensemble transitions beautifully from festive gatherings to intimate celebrations and elegant evening occasions.<br><br><em>Style it with: minimal earrings, delicate bracelets and classic heels for a polished occasion-ready look.</em><br><br><strong>✦ Key Product Highlights</strong><br>• Intricate multicolour floral embroidery<br>• Rich navy blue colour palette<br>• Coordinated 2-piece kurta and pant set<br>• Contemporary ethnic silhouette<br>• Elegant 3/4 sleeves<br>• Refined Mandarin / keyhole neckline<br>• Designed for versatile festive & evening occasions`
+    description: `
+      <p style="font-size: 1.05rem; font-style: italic; color: #b89728; margin-bottom: 12px;">A deeper expression of contemporary Indian elegance.</p>
+      <p style="margin-bottom: 16px; font-weight: 500;">A refined navy blue kurta pant set featuring intricate multicolour floral embroidery, designed for the modern woman who appreciates understated elegance.</p>
+      
+      <h4 style="font-family: 'Playfair Display', serif; font-size: 1.15rem; margin: 20px 0 10px; color: #111;">Elegance Meets Contemporary Craftsmanship</h4>
+      <p style="margin-bottom: 12px;">This sophisticated navy blue kurta pant set features intricate floral embroidery across the front and sleeves, creating a beautifully balanced statement while keeping the overall look refined.</p>
+      <p style="margin-bottom: 12px;">The deep navy base gives the ensemble a timeless character, while the delicate multicolour floral detailing adds depth and individuality. Paired with matching straight-cut pants, the set creates an effortlessly polished silhouette.</p>
+      <p style="margin-bottom: 16px;">Designed for women who prefer graceful dressing without excessive embellishment, this ensemble transitions beautifully from festive gatherings to intimate celebrations and elegant evening occasions.</p>
+      
+      <p style="background: #f9f8f6; padding: 12px 16px; border-left: 3px solid #b89728; margin-bottom: 20px; font-size: 0.95rem;">
+        <strong>Style It With:</strong> Minimal earrings, delicate bracelets, and classic heels for a polished, occasion-ready look.
+      </p>
+
+      <h4 style="font-family: 'Playfair Display', serif; font-size: 1.1rem; margin: 24px 0 12px; color: #111;">✦ Key Product Highlights</h4>
+      <ul style="padding-left: 20px; margin-bottom: 20px; line-height: 1.8;">
+        <li>Intricate multicolour floral thread embroidery</li>
+        <li>Rich, deep navy blue colour palette</li>
+        <li>Coordinated 2-piece Kurta &amp; Pant set</li>
+        <li>Contemporary ethnic silhouette with side slits</li>
+        <li>Elegant 3/4 sleeves with embroidered sleeve cuffs</li>
+        <li>Refined Mandarin / keyhole neckline</li>
+        <li>Designed for versatile festive &amp; evening celebrations</li>
+      </ul>
+
+      <h4 style="font-family: 'Playfair Display', serif; font-size: 1.1rem; margin: 24px 0 12px; color: #111;">📋 Garment Specifications</h4>
+      <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 0.9rem;">
+        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600; width: 40%;">Set Includes:</td><td style="padding: 8px 0;">1 Kurta + 1 Coordinated Pant</td></tr>
+        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600;">Colour:</td><td style="padding: 8px 0;">Navy Blue</td></tr>
+        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600;">Pattern:</td><td style="padding: 8px 0;">Multicolour Floral Embroidery</td></tr>
+        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600;">Neckline:</td><td style="padding: 8px 0;">Mandarin / Keyhole Neck</td></tr>
+        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600;">Sleeves:</td><td style="padding: 8px 0;">3/4 Sleeves</td></tr>
+        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600;">Fit:</td><td style="padding: 8px 0;">Relaxed / Regular Fit</td></tr>
+        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600;">Pant Style:</td><td style="padding: 8px 0;">Full-Length Straight Cut</td></tr>
+        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600;">Occasion:</td><td style="padding: 8px 0;">Festive, Evening, Dinner, Family Gatherings</td></tr>
+      </table>
+    `
   }
 };
 
