@@ -1,6 +1,24 @@
 {
   "version": 2,
   "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/product/ethereal-kurti",
+      "destination": "/product?id=navy-blue-embroidered-kurta-pant-set",
+      "permanent": true
+    },
+    {
+      "source": "/product/midnight-kurti",
+      "destination": "/product?id=navy-blue-embroidered-kurta-pant-set",
+      "permanent": true
+    },
+    {
+      "source": "/product/ivory-fusion",
+      "destination": "/product?id=navy-blue-embroidered-kurta-pant-set",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/api/v1/:path*",
