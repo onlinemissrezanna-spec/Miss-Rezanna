@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">
+  <channel>
+    <title>MISS REZANNA Product Feed</title>
+    <link>https://www.missrezanna.com</link>
+    <description>Handcrafted luxury women ethnic wear and kurta sets from MISS REZANNA.</description>
+    
+    <item>
+      <g:id>MR-KU-001</g:id>
+      <g:title>Navy Blue Floral Embroidered Kurta Pant Set</g:title>
+      <g:description>A refined navy blue kurta pant set featuring intricate multicolour floral embroidery, designed for the modern woman who appreciates understated elegance.</g:description>
+      <g:link>https://www.missrezanna.com/product?id=navy-blue-embroidered-kurta-pant-set</g:link>
+      <g:image_link>https://www.missrezanna.com/images/navy-blue-embroidered-kurta-pant-set-1.png</g:image_link>
+      <g:additional_image_link>https://www.missrezanna.com/images/navy-blue-embroidered-kurta-pant-set-2.png</g:additional_image_link>
+      <g:additional_image_link>https://www.missrezanna.com/images/navy-blue-embroidered-kurta-pant-set-3.png</g:additional_image_link>
+      <g:additional_image_link>https://www.missrezanna.com/images/navy-blue-embroidered-kurta-pant-set-4.jpg</g:additional_image_link>
+      <g:additional_image_link>https://www.missrezanna.com/images/navy-blue-embroidered-kurta-pant-set-5.jpg</g:additional_image_link>
+      <g:availability>in_stock</g:availability>
+      <g:price>4500.00 INR</g:price>
+      <g:brand>MISS REZANNA</g:brand>
+      <g:condition>new</g:condition>
+      <g:google_product_category>Apparel &amp; Accessories &gt; Clothing &gt; Traditional &amp; Ceremonial Clothing &gt; Religious &amp; Ceremonial Clothing</g:google_product_category>
+      <g:product_type>Women &gt; Indian Wear &gt; Kurta Sets</g:product_type>
+      <g:identifier_exists>false</g:identifier_exists>
+      <g:shipping>
+        <g:country>IN</g:country>
+        <g:service>Express Free Shipping</g:service>
+        <g:price>0.00 INR</g:price>
+      </g:shipping>
+    </item>
+
+  </channel>
+</rss>
