@@ -27,8 +27,6 @@ const transports = [
 ];
 
 // Only add file transports if not in a serverless environment (Vercel, Lambda) where filesystem is read-only
-const isServerless = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME);
-
 if (!isServerless) {
     try {
         if (fs.existsSync(logDir)) {
