@@ -1,9 +1,16 @@
 /**
  * MISS REZANNA - LUXURY AI CONCIERGE & HERITAGE STYLIST CHATBOT
- * Intelligent luxury assistant providing instant sizing, craftsmanship, and boutique support.
+ * Intelligent luxury assistant powered by Google Gemini AI.
+ * Automatically knows brand details and all products from the database.
  */
 
 (function() {
+  // Backend API URL — uses the same API base as catalog.js
+  const CHAT_API_URL = (typeof API_BASE_URL !== 'undefined' ? API_BASE_URL : 'https://miss-rezanna-production.up.railway.app/api/v1') + '/chat';
+
+  // Conversation history for multi-turn context (persists within session)
+  let conversationHistory = [];
+
   function initLuxuryChatbot() {
     if (document.getElementById('luxuryChatbotLauncher')) return;
 
@@ -30,20 +37,20 @@
         <div id="chatbotMessages" class="chatbot-messages">
           <div class="chat-bubble-row ai">
             <div class="chat-bubble ai">
-              Namaste & welcome to <strong>MISS REZANNA</strong>! I am your personal AI Stylist from our Ludhiana atelier. How may I assist your luxury wardrobe or bespoke sizing today?
+              Namaste & welcome to <strong>MISS REZANNA</strong>! I am your personal AI Stylist from our Ludhiana atelier. I know all about our collections, fabrics, sizes, and pricing. How may I assist you today?
             </div>
           </div>
         </div>
 
         <div class="chatbot-chips">
-          <button class="chat-chip" onclick="sendChatChip('✦ What are your shipping & delivery times?')">✦ Shipping Times</button>
-          <button class="chat-chip" onclick="sendChatChip('✦ Help me choose my size')">✦ Sizing Guide</button>
-          <button class="chat-chip" onclick="sendChatChip('✦ Tell me about Ludhiana craftsmanship')">✦ Our Craftsmanship</button>
-          <button class="chat-chip" onclick="sendChatChip('✦ How do I place a bespoke custom order?')">✦ Custom Orders</button>
+          <button class="chat-chip" onclick="sendChatChip('What products do you have?')">✦ Our Collection</button>
+          <button class="chat-chip" onclick="sendChatChip('Help me choose my size')">✦ Sizing Guide</button>
+          <button class="chat-chip" onclick="sendChatChip('What are your shipping & delivery times?')">✦ Shipping Info</button>
+          <button class="chat-chip" onclick="sendChatChip('How do I place a bespoke custom order?')">✦ Custom Orders</button>
         </div>
 
         <form class="chatbot-input-area" onsubmit="handleChatSubmit(event)">
-          <input type="text" id="chatbotInput" class="chatbot-input" placeholder="Ask about sizing, fabrics, or orders..." autocomplete="off">
+          <input type="text" id="chatbotInput" class="chatbot-input" placeholder="Ask about products, sizing, fabrics, pricing..." autocomplete="off">
           <button type="submit" class="chatbot-send-btn" aria-label="Send Message">➤</button>
         </form>
       </div>
@@ -176,29 +183,127 @@
       row.appendChild(bubble);
       container.appendChild(row);
       container.scrollTop = container.scrollHeight;
+
+      return bubble;
     }
 
-    function respondAI(query) {
-      const q = query.toLowerCase();
-      let answer = "";
+    /**
+     * Show a typing indicator while the AI is thinking
+     */
+    function showTypingIndicator() {
+      const container = document.getElementById('chatbotMessages');
+      if (!container) return null;
 
-      if (q.includes('ship') || q.includes('deliver') || q.includes('time') || q.includes('courier')) {
-        answer = "We offer <strong>complimentary express shipping</strong> across India on orders over ₹15,000. Ready-to-wear pieces dispatch in 2–4 business days, arriving within 3–6 working days via insured courier.";
-      } else if (q.includes('size') || q.includes('fit') || q.includes('measurement') || q.includes('chart')) {
-        answer = "Our knitwear is designed with relaxed luxury drape across sizes XS to XL. For bespoke tailoring or exact bust/waist measurements, you can <a href='https://wa.me/919877327186?text=Hello%20MISS%20REZANNA,%20I%20need%20sizing%20guidance' target='_blank'>connect with our atelier artisans on WhatsApp</a>.";
-      } else if (q.includes('craft') || q.includes('ludhiana') || q.includes('punjab') || q.includes('yarn') || q.includes('fabric') || q.includes('material')) {
-        answer = "Every garment is handcrafted in our historical <strong>Ludhiana, Punjab atelier</strong>. Our master artisans spend up to 120 hours weaving select luxury yarns, celebrating organic texture and royal silhouettes.";
-      } else if (q.includes('return') || q.includes('exchange') || q.includes('refund')) {
-        answer = "We offer hassle-free <strong>7-day size exchanges</strong> on unworn garments with tags attached. For artisanal defects or transit inquiries, contact our atelier within 48 hours of receipt.";
-      } else if (q.includes('custom') || q.includes('bespoke') || q.includes('order') || q.includes('whatsapp') || q.includes('buy')) {
-        answer = "We specialize in bespoke creations! You can place a direct order or request custom sleeves/measurements by messaging us: <a href='https://wa.me/919877327186?text=Hello%20MISS%20REZANNA,%20I%20would%20like%20a%20bespoke%20order' target='_blank'>✦ Click here to chat on WhatsApp (+91 98773 27186)</a>.";
-      } else {
-        answer = "Thank you for reaching out to the MISS REZANNA atelier! For personalized styling advice or order assistance, our senior fashion consultants are available on WhatsApp: <a href='https://wa.me/919877327186?text=" + encodeURIComponent("Hello MISS REZANNA, " + query) + "' target='_blank'>✦ Click here to connect on WhatsApp (+91 98773 27186)</a>.";
+      const row = document.createElement('div');
+      row.className = 'chat-bubble-row ai';
+      row.id = 'typingIndicator';
+
+      const bubble = document.createElement('div');
+      bubble.className = 'chat-bubble ai typing-bubble';
+      bubble.innerHTML = '<span class="typing-dots"><span>.</span><span>.</span><span>.</span></span>';
+
+      row.appendChild(bubble);
+      container.appendChild(row);
+      container.scrollTop = container.scrollHeight;
+
+      return row;
+    }
+
+    function removeTypingIndicator() {
+      const indicator = document.getElementById('typingIndicator');
+      if (indicator) indicator.remove();
+    }
+
+    /**
+     * Format AI response text — converts markdown-style links and formatting to HTML
+     */
+    function formatAIResponse(text) {
+      if (!text) return '';
+
+      // Convert markdown links [text](url) to <a> tags
+      text = text.replace(/\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
+
+      // Convert markdown bold **text** to <strong>
+      text = text.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+
+      // Convert markdown italic *text* to <em> (but not inside ** pairs)
+      text = text.replace(/(?<!\*)\*([^*]+)\*(?!\*)/g, '<em>$1</em>');
+
+      // Convert newlines to <br>
+      text = text.replace(/\n/g, '<br>');
+
+      return text;
+    }
+
+    /**
+     * Sends the user message to the backend AI API and displays the response.
+     * Falls back to a WhatsApp link if the API is unreachable.
+     */
+    async function respondAI(query) {
+      // Disable input while processing
+      const inputEl = document.getElementById('chatbotInput');
+      const sendBtn = document.querySelector('.chatbot-send-btn');
+      if (inputEl) inputEl.disabled = true;
+      if (sendBtn) sendBtn.disabled = true;
+
+      // Show typing animation
+      showTypingIndicator();
+
+      // Add user message to conversation history for context
+      conversationHistory.push({
+        role: 'user',
+        parts: [{ text: query }]
+      });
+
+      try {
+        const response = await fetch(CHAT_API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            message: query,
+            conversationHistory: conversationHistory.slice(-10) // Send last 10 messages for context
+          })
+        });
+
+        const data = await response.json();
+
+        removeTypingIndicator();
+
+        if (data.success && data.reply) {
+          const formattedReply = formatAIResponse(data.reply);
+          addChatMessage('ai', formattedReply);
+
+          // Add AI response to conversation history
+          conversationHistory.push({
+            role: 'model',
+            parts: [{ text: data.reply }]
+          });
+        } else {
+          // API returned an error but with a reply (graceful degradation)
+          const fallbackReply = data.reply || 'I apologize, I\'m having trouble connecting right now. Please try again in a moment.';
+          addChatMessage('ai', formatAIResponse(fallbackReply));
+        }
+
+      } catch (error) {
+        console.error('[Miss Rezanna Chatbot] API error:', error);
+        removeTypingIndicator();
+
+        // Network error fallback — still provide helpful response
+        const fallbackMsg = 'I apologize, I\'m temporarily unable to connect. For immediate assistance, please reach out to our atelier team: <a href="https://wa.me/919877327186?text=' + encodeURIComponent('Hello MISS REZANNA, ' + query) + '" target="_blank">✦ Chat on WhatsApp (+91 98773 27186)</a>';
+        addChatMessage('ai', fallbackMsg);
+      } finally {
+        // Re-enable input
+        if (inputEl) {
+          inputEl.disabled = false;
+          inputEl.focus();
+        }
+        if (sendBtn) sendBtn.disabled = false;
+
+        // Keep conversation history manageable (max 20 entries)
+        if (conversationHistory.length > 20) {
+          conversationHistory = conversationHistory.slice(-20);
+        }
       }
-
-      setTimeout(() => {
-        addChatMessage('ai', answer);
-      }, 600);
     }
   }
 

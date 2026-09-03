@@ -17,6 +17,7 @@ const customerRoutes = require('./customer.routes');
 const couponRoutes = require('./coupon.routes');
 const shippingRoutes = require('./shipping.routes');
 const seedRoutes = require('./seed.routes');
+const chatRoutes = require('./chat.routes');
 
 const router = express.Router();
 
@@ -52,7 +53,8 @@ const defaultRoutes = [
     { path: '/customer', route: customerRoutes },
     { path: '/coupons', route: couponRoutes },
     { path: '/shipping', route: shippingRoutes },
-    { path: '/seed', route: seedRoutes }
+    { path: '/seed', route: seedRoutes },
+    { path: '/chat', route: chatRoutes }
 ];
 
 defaultRoutes.forEach((route) => {
