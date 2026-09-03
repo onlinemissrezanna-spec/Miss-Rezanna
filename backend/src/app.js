@@ -17,6 +17,9 @@ const { swaggerUi, specs } = require('./config/swagger');
 
 const app = express();
 
+// Trust proxy for reverse proxies like Vercel and Railway (required for rate-limiting)
+app.set('trust proxy', 1);
+
 // Set security HTTP headers permissively for admin portal and mobile access
 app.use(helmet({
     contentSecurityPolicy: false,

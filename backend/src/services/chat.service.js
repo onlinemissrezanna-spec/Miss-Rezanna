@@ -313,33 +313,44 @@ async function chat(userMessage, conversationHistory = []) {
     try {
         const productContext = await getProductContext();
         const systemInstruction = BRAND_SYSTEM_PROMPT + productContext;
-
         const genAI = new GoogleGenerativeAI(apiKey);
-        const model = genAI.getGenerativeModel({
-            model: 'gemini-2.0-flash',
-            systemInstruction: systemInstruction,
-            generationConfig: {
-                temperature: 0.7,
-                topP: 0.9,
-                topK: 40,
-                maxOutputTokens: 600,
-            },
-            safetySettings: [
-                { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_ONLY_HIGH' },
-                { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_ONLY_HIGH' },
-                { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_ONLY_HIGH' },
-                { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_ONLY_HIGH' },
-            ],
-        });
 
-        const chatSession = model.startChat({
-            history: conversationHistory,
-        });
+        const candidateModels = ['gemini-3.5-flash-lite', 'gemini-3.1-flash-lite', 'gemini-flash-lite-latest'];
+        let lastError = null;
 
-        const result = await chatSession.sendMessage(userMessage);
-        const response = result.response.text();
+        for (const modelName of candidateModels) {
+            try {
+                const model = genAI.getGenerativeModel({
+                    model: modelName,
+                    systemInstruction: systemInstruction,
+                    generationConfig: {
+                        temperature: 0.7,
+                        topP: 0.9,
+                        topK: 40,
+                        maxOutputTokens: 600,
+                    },
+                    safetySettings: [
+                        { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_ONLY_HIGH' },
+                        { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_ONLY_HIGH' },
+                        { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_ONLY_HIGH' },
+                        { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_ONLY_HIGH' },
+                    ],
+                });
 
-        return response;
+                const chatSession = model.startChat({
+                    history: conversationHistory,
+                });
+
+                const result = await chatSession.sendMessage(userMessage);
+                const response = result.response.text();
+                return response;
+            } catch (err) {
+                lastError = err;
+                logger.warn(`[ChatService] Model ${modelName} failed, attempting next model: ${err.message}`);
+            }
+        }
+
+        if (lastError) throw lastError;
 
     } catch (error) {
         logger.error('[ChatService] Gemini API error:', error.message);
