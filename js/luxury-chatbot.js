@@ -5,8 +5,8 @@
  */
 
 (function() {
-  // Backend API URL — uses the same API base as catalog.js
-  const CHAT_API_URL = (typeof API_BASE_URL !== 'undefined' ? API_BASE_URL : 'https://miss-rezanna-production.up.railway.app/api/v1') + '/chat';
+  // Backend API URL — relative path works since frontend and API are on the same Vercel deployment
+  const CHAT_API_URL = '/api/v1/chat';
 
   // Conversation history for multi-turn context (persists within session)
   let conversationHistory = [];
