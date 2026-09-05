@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KPMHRF2M');</script>
+<!-- End Google Tag Manager -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Portal — MISS REZANNA</title>
@@ -634,6 +641,10 @@ body.admin-body {
 @media (max-width: 991px) {
   .admin-mobile-header {
     display: flex;
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
   }
   .btn-close-sidebar-mobile {
     display: flex;
@@ -655,12 +666,12 @@ body.admin-body {
   }
   .admin-main {
     margin-left: 0;
-    padding: 24px 16px;
+    padding: 20px 16px;
     min-height: calc(100vh - 60px);
   }
   .metrics-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+    gap: 14px;
   }
   .detail-grid {
     grid-template-columns: 1fr;
@@ -688,13 +699,17 @@ body.admin-body {
   }
   .metrics-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+    gap: 10px;
   }
   .metric-card {
-    padding: 16px;
+    padding: 16px 14px;
+  }
+  .metric-label {
+    font-size: 10px;
+    letter-spacing: 0.05em;
   }
   .metric-value {
-    font-size: 22px;
+    font-size: 20px;
   }
   .form-control, .form-select, .login-form input {
     font-size: 16px !important; /* Disables auto-zoom in iOS Safari */
@@ -711,48 +726,137 @@ body.admin-body {
     gap: 12px;
   }
   .products-grid {
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 14px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .product-admin-info {
+    padding: 12px 10px;
+  }
+  .product-admin-name {
+    font-size: 13px;
+    line-height: 1.3;
+    height: 34px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+  .product-admin-price {
+    font-size: 13px;
+    margin-bottom: 4px;
+  }
+  .product-card-actions {
+    flex-direction: column;
+    gap: 6px;
+  }
+  .btn-card-edit {
+    width: 100%;
+    font-size: 11px;
+    padding: 8px 4px;
+  }
+  .btn-card-delete {
+    width: 100%;
+    font-size: 11px;
+    padding: 8px 4px;
+  }
+  .modal-overlay {
+    align-items: flex-end;
   }
   .modal-card {
-    width: 95%;
-    max-height: 90vh;
-    margin: 12px auto;
+    width: 100%;
+    max-width: 100%;
+    max-height: 92vh;
+    margin: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    animation: slideUpModal 0.3s ease;
+  }
+  @keyframes slideUpModal {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
   }
   .modal-header {
-    padding: 16px 20px;
+    padding: 18px 20px;
+    position: sticky;
+    top: 0;
+    background: #fff;
+    z-index: 10;
   }
   .modal-body {
-    padding: 16px 20px;
+    padding: 20px 16px;
   }
   .login-card {
-    padding: 36px 24px;
+    padding: 36px 20px;
     margin: 16px;
     max-width: 100%;
+    border-radius: 12px;
   }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 480px) {
   .metrics-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
   }
-  .products-grid {
-    grid-template-columns: 1fr;
+  .metric-card {
+    padding: 12px 10px;
+  }
+  .metric-icon {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 10px;
+  }
+  .metric-value {
+    font-size: 18px;
   }
   .admin-table th, .admin-table td {
-    padding: 12px 14px;
-    font-size: 13px;
+    padding: 10px 12px;
+    font-size: 12px;
   }
   .page-title {
     font-size: 20px;
+  }
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
   }
 }
 
 
 </style>
+  <!-- Microsoft Clarity Analytics -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "y7axoaay98");
+  </script>
+  <meta name="robots" content="noindex, nofollow">
+  <!-- Google Analytics 4 (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-30CWXSKXT7"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-30CWXSKXT7');
+  </script>
+  <meta name="keywords" content="Miss Rezanna, luxury ethnic wear, Indian kurti sets, Ludhiana fashion">
+  <link rel="icon" type="image/png" href="images/logo.png">
+  <link rel="apple-touch-icon" href="images/logo.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Admin Portal — MISS REZANNA">
+  <meta name="twitter:description" content="Thoughtfully crafted for women who appreciate timeless elegance, refined craftsmanship and everyday luxury.">
+  <meta name="twitter:image" content="https://www.missrezanna.com/images/logo.png">
 </head>
 <body class="admin-body">
+  <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KPMHRF2M"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 
 <!-- ========== MOBILE TOP HEADER BAR ========== -->
 <header class="admin-mobile-header">
@@ -1087,7 +1191,7 @@ body.admin-body {
         <h1 class="page-title">Razorpay Payment Gateway 💳</h1>
         <p class="page-subtitle">Monitor live transactions, revenue, Razorpay payment statuses, and gateway configuration</p>
       </div>
-      <a href="https://dashboard.razorpay.com" target="_blank" class="btn-action primary" style="background:#0052FF;color:#fff;font-weight:700;display:inline-flex;align-items:center;gap:6px;text-decoration:none;padding:10px 18px;border-radius:6px;">
+      <a href="https://dashboard.razorpay.com" target="_blank" rel="noopener noreferrer" class="btn-action primary" style="background:#0052FF;color:#fff;font-weight:700;display:inline-flex;align-items:center;gap:6px;text-decoration:none;padding:10px 18px;border-radius:6px;">
         Open Official Razorpay Portal ↗
       </a>
     </div>
@@ -1757,12 +1861,20 @@ async function viewOrderDetail(orderId) {
 // =============================================
 let currentEditPhotos = [];
 
+function formatAdminImgUrl(url) {
+  if (!url || typeof url !== 'string') return PLACEHOLDER_IMG;
+  url = url.trim();
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) return url;
+  if (!url.startsWith('/')) url = '/' + url;
+  return url;
+}
+
 async function loadProducts() {
   const container = document.getElementById('products-grid-container');
   container.innerHTML = '<div class="loading-text">Loading products…</div>';
 
   try {
-    const data = await api('/products?limit=100');
+    const data = await api('/products?limit=100&status=active');
     const products = data.products || [];
 
     if (!products.length) {
@@ -1782,7 +1894,7 @@ async function loadProducts() {
         if (Array.isArray(imgs) && imgs.length > 0) {
           const first = typeof imgs[0] === 'string' ? imgs[0] : (imgs[0].imageUrl || '');
           if (first && first.trim()) {
-            imgSrc = first.trim();
+            imgSrc = formatAdminImgUrl(first);
           }
         }
       } catch (e) { }
@@ -1798,7 +1910,7 @@ async function loadProducts() {
 
       return `<div class="product-admin-card">
         <div style="position:relative;">
-          <img src="${imgSrc}" class="product-admin-img" alt="${escapeHtml(p.name)}" onerror="this.onerror=null;this.src=PLACEHOLDER_IMG">
+          <img loading="lazy" src="${imgSrc}" class="product-admin-img" alt="${escapeHtml(p.name)}" onerror="this.onerror=null;this.src=PLACEHOLDER_IMG">
           ${hasYoutube ? `<span class="badge" style="position:absolute;top:8px;right:8px;background:#FF0000;color:#fff;font-size:10px;">▶ YouTube Video</span>` : ''}
         </div>
         <div class="product-admin-info">
@@ -2057,7 +2169,7 @@ function renderPhotoThumbsHTML() {
   // Render existing photos
   html += currentEditPhotos.map((url, idx) => `
     <div class="photo-thumb-box">
-      <img src="${escapeHtml(url)}" onerror="this.onerror=null;this.src=PLACEHOLDER_IMG" alt="Photo ${idx + 1}">
+      <img loading="lazy" src="${escapeHtml(formatAdminImgUrl(url))}" onerror="this.onerror=null;this.src=PLACEHOLDER_IMG" alt="Photo ${idx + 1}">
       <button type="button" class="btn-remove-photo" onclick="removePhoto(${idx})" title="Remove photo">&times;</button>
     </div>
   `).join('');
@@ -2065,7 +2177,7 @@ function renderPhotoThumbsHTML() {
   // Render new local files
   html += newFiles.map((file, idx) => `
     <div class="photo-thumb-box" style="border: 2px solid #C3A167;">
-      <img src="${URL.createObjectURL(file)}" alt="New File ${idx + 1}">
+      <img loading="lazy" src="${URL.createObjectURL(file)}" alt="New File ${idx + 1}">
       <div style="position:absolute;bottom:0;background:rgba(195,161,103,0.9);color:#fff;font-size:9px;width:100%;text-align:center;padding:2px;">NEW</div>
     </div>
   `).join('');
