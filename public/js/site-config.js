@@ -20,7 +20,7 @@ window.SITE_CONFIG = {
 
   // Form handler endpoint for waitlist submissions (e.g. Google Apps Script / webhook)
   // If empty, submissions are recorded locally and push dataLayer events
-  WAITLIST_ENDPOINT: "", // [OWNER INPUT: Configure Google Sheets / Webhook URL]
+  WAITLIST_ENDPOINT: "", // Optional: Configure Google Sheets / Webhook URL if external sync desired
 
   // Brand contact information
   BRAND: {
