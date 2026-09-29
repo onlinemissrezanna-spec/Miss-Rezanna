@@ -1,13 +1,13 @@
 /* ==========================================================================
    MISS REZANNA - WINTER 2026 TEASER & ANNOUNCEMENT STYLES
-   Deep Midnight Blue (#070F1E) & Warm Gold (#C3A167)
+   Warm Cashmere Pastel Rose-Ivory & Antique Burnished Gold
    ========================================================================== */
 
 /* Top Slim Announcement Bar */
 .site-announcement-bar {
-  background-color: #070F1E;
-  color: #F4E8D1;
-  border-bottom: 1px solid rgba(195, 161, 103, 0.25);
+  background-color: #241C18;
+  color: #F8EFEA;
+  border-bottom: 1px solid rgba(184, 145, 95, 0.35);
   font-family: var(--font-body, 'Inter', sans-serif);
   font-size: 12px;
   font-weight: 500;
@@ -20,7 +20,7 @@
 }
 
 .site-announcement-bar a {
-  color: #C3A167;
+  color: #D4AF67;
   text-decoration: underline;
   margin-left: 6px;
   font-weight: 600;
@@ -31,15 +31,15 @@
   color: #ffffff;
 }
 
-/* Teaser Hero Section */
+/* Teaser Hero Section - Luxury Pastel Gradient */
 .winter-teaser-hero {
   position: relative;
   min-height: 85vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle at 50% 30%, #101c38 0%, #070f1e 75%, #040810 100%);
-  color: #ffffff;
+  background: radial-gradient(circle at 50% 25%, #FFFDFB 0%, #F8EFEA 45%, #EFE1D8 100%);
+  color: #241C18;
   padding: 100px 24px 80px;
   overflow: hidden;
   text-align: center;
@@ -52,10 +52,10 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: radial-gradient(rgba(195, 161, 103, 0.08) 1px, transparent 0);
-  background-size: 32px 32px;
+  background-image: radial-gradient(rgba(140, 101, 46, 0.09) 1px, transparent 0);
+  background-size: 28px 28px;
   pointer-events: none;
-  opacity: 0.6;
+  opacity: 0.7;
 }
 
 .winter-teaser-container {
@@ -72,39 +72,40 @@
   font-size: 11px;
   letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: #C3A167;
-  border: 1px solid rgba(195, 161, 103, 0.35);
+  color: #8C652E;
+  border: 1px solid rgba(140, 101, 46, 0.35);
   padding: 8px 18px;
   border-radius: 30px;
   margin-bottom: 24px;
-  background: rgba(195, 161, 103, 0.05);
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 4px 12px rgba(140, 101, 46, 0.06);
 }
 
 .winter-teaser-title {
   font-family: 'Playfair Display', Cormorant Garamond, serif;
   font-size: clamp(2.8rem, 6vw, 4.8rem);
-  font-weight: 400;
+  font-weight: 500;
   line-height: 1.15;
-  color: #ffffff;
+  color: #1F1916;
   letter-spacing: 0.02em;
   margin: 0 0 20px;
-  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
 }
 
 .winter-teaser-title span {
   display: block;
   font-style: italic;
-  color: #E2C992;
+  color: #8C652E;
 }
 
 .winter-teaser-subtitle {
   font-family: var(--font-body, 'Inter', sans-serif);
   font-size: clamp(1rem, 2vw, 1.25rem);
   line-height: 1.7;
-  color: #D1D5DB;
+  color: #5C524C;
   max-width: 640px;
   margin: 0 auto 40px;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 /* Countdown Clock */
@@ -118,23 +119,23 @@
 }
 
 .countdown-box {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(195, 161, 103, 0.25);
-  backdrop-filter: blur(10px);
-  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(140, 101, 46, 0.25);
+  backdrop-filter: blur(12px);
+  border-radius: 10px;
   padding: 16px 20px;
   min-width: 86px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 10px 25px rgba(60, 48, 40, 0.07);
 }
 
 .countdown-number {
   font-family: 'Playfair Display', serif;
   font-size: clamp(1.8rem, 3.5vw, 2.5rem);
   font-weight: 600;
-  color: #C3A167;
+  color: #8C652E;
   line-height: 1;
   margin-bottom: 6px;
 }
@@ -144,27 +145,27 @@
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  color: #9CA3AF;
+  color: #7C726B;
 }
 
 .countdown-live-msg {
   font-family: 'Playfair Display', serif;
   font-size: 1.8rem;
-  color: #C3A167;
+  color: #8C652E;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 /* Waitlist Form */
 .winter-waitlist-card {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(195, 161, 103, 0.3);
-  backdrop-filter: blur(12px);
-  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(140, 101, 46, 0.28);
+  backdrop-filter: blur(14px);
+  border-radius: 14px;
   padding: 36px 32px;
   max-width: 600px;
   margin: 0 auto;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 20px 45px rgba(60, 48, 40, 0.08);
   text-align: left;
 }
 
@@ -176,13 +177,13 @@
 .winter-waitlist-title {
   font-family: 'Playfair Display', serif;
   font-size: 1.45rem;
-  color: #ffffff;
+  color: #1F1916;
   margin-bottom: 6px;
 }
 
 .winter-waitlist-desc {
   font-size: 13px;
-  color: #9CA3AF;
+  color: #6B615B;
   line-height: 1.5;
 }
 
@@ -195,19 +196,19 @@
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: #C3A167;
+  color: #8C652E;
   margin-bottom: 6px;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .waitlist-input {
   width: 100%;
   min-height: 46px;
   padding: 13px 16px;
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(195, 161, 103, 0.25);
+  background: #FFFFFF;
+  border: 1px solid #D8CFC8;
   border-radius: 4px;
-  color: #ffffff;
+  color: #1F1916;
   font-family: var(--font-body, 'Inter', sans-serif);
   font-size: 14px;
   transition: all 0.25s ease;
@@ -216,13 +217,13 @@
 
 .waitlist-input:focus {
   outline: none;
-  border-color: #C3A167;
-  background: rgba(255, 255, 255, 0.12);
-  box-shadow: 0 0 10px rgba(195, 161, 103, 0.2);
+  border-color: #8C652E;
+  background: #FFFFFF;
+  box-shadow: 0 0 10px rgba(140, 101, 46, 0.18);
 }
 
 .waitlist-input::placeholder {
-  color: #6B7280;
+  color: #9C9189;
 }
 
 .waitlist-consent {
@@ -231,21 +232,21 @@
   gap: 10px;
   margin: 18px 0 24px;
   font-size: 12px;
-  color: #9CA3AF;
+  color: #6B615B;
   line-height: 1.4;
 }
 
 .waitlist-consent input {
   margin-top: 3px;
-  accent-color: #C3A167;
+  accent-color: #8C652E;
   cursor: pointer;
 }
 
 .btn-waitlist-submit {
   width: 100%;
   padding: 16px 24px;
-  background: #C3A167;
-  color: #070F1E;
+  background: #8C652E;
+  color: #FFFFFF;
   border: none;
   border-radius: 4px;
   font-family: var(--font-body, 'Inter', sans-serif);
@@ -259,9 +260,9 @@
 }
 
 .btn-waitlist-submit:hover:not(:disabled) {
-  background: #D4AF37;
+  background: #735122;
   transform: translateY(-1px);
-  box-shadow: 0 8px 24px rgba(195, 161, 103, 0.3);
+  box-shadow: 0 8px 24px rgba(140, 101, 46, 0.25);
 }
 
 .btn-waitlist-submit:disabled {
@@ -282,7 +283,7 @@
   display: block;
   background: rgba(37, 211, 102, 0.12);
   border: 1px solid rgba(37, 211, 102, 0.35);
-  color: #4ade80;
+  color: #15803d;
   text-align: center;
 }
 
@@ -290,36 +291,37 @@
   display: block;
   background: rgba(239, 68, 68, 0.12);
   border: 1px solid rgba(239, 68, 68, 0.35);
-  color: #f87171;
+  color: #b91c1c;
 }
 
 /* Collection Teaser Banner */
 .collection-teaser-banner {
-  background: #070F1E;
-  color: #ffffff;
-  border: 1px solid rgba(195, 161, 103, 0.3);
+  background: #F8EFEA;
+  color: #1F1916;
+  border: 1px solid rgba(140, 101, 46, 0.3);
   padding: 24px;
   text-align: center;
   max-width: 800px;
   margin: 0 auto 30px;
-  border-radius: 6px;
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(60, 48, 40, 0.05);
 }
 
 .collection-teaser-banner h3 {
   font-family: 'Playfair Display', serif;
   font-size: 1.5rem;
-  color: #C3A167;
+  color: #8C652E;
   margin-bottom: 8px;
 }
 
 .collection-teaser-banner p {
   font-size: 14px;
-  color: #D1D5DB;
+  color: #5C524C;
   margin: 0;
 }
 
 .collection-teaser-banner a {
-  color: #C3A167;
+  color: #8C652E;
   text-decoration: underline;
   font-weight: 600;
 }
