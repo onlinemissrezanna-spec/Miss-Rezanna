@@ -1462,8 +1462,10 @@ const MASTER_CATALOGUE = [
     name: 'Navy Blue Floral Embroidered Kurta Pant Set',
     slug: 'navy-blue-embroidered-kurta-pant-set',
     sku: 'MR-KS-013',
-    price: 4500,
-    basePrice: 4500,
+    price: 2360,
+    basePrice: 2360,
+    originalPrice: 2950,
+    discountPercentage: 20,
     category: { id: 1, name: 'Kurta Pant Sets' },
     status: 'active',
     taxPercentage: 12,
@@ -1481,13 +1483,13 @@ const MASTER_CATALOGUE = [
 
 function getStoredProducts() {
   try {
-    const raw = localStorage.getItem('mr_admin_products_v2');
+    const raw = localStorage.getItem('mr_admin_products_v3');
     if (raw) {
       const parsed = JSON.parse(raw);
       if (Array.isArray(parsed) && parsed.length > 0) return parsed;
     }
   } catch (e) {}
-  localStorage.setItem('mr_admin_products_v2', JSON.stringify(MASTER_CATALOGUE));
+  localStorage.setItem('mr_admin_products_v3', JSON.stringify(MASTER_CATALOGUE));
   return MASTER_CATALOGUE;
 }
 
@@ -2058,7 +2060,10 @@ async function loadProducts() {
         </div>
         <div class="product-admin-info">
           <div class="product-admin-name">${escapeHtml(p.name)}</div>
-          <div class="product-admin-price">₹ ${parseFloat(price).toLocaleString('en-IN')}</div>
+          <div class="product-admin-price">
+            ₹ ${parseFloat(price).toLocaleString('en-IN')}
+            ${p.originalPrice ? `<span style="text-decoration: line-through; font-size: 13px; color: var(--admin-text-secondary); margin-left: 6px;">₹ ${parseFloat(p.originalPrice).toLocaleString('en-IN')}</span> <span class="badge" style="background:#e6f4ea;color:#137333;font-size:10px;margin-left:4px;">${p.discountPercentage || 20}% OFF</span>` : ''}
+          </div>
           <div class="product-admin-meta">
             <span>${p.category?.name || 'Collection'}</span>
             <span class="badge badge-${status}">${status}</span>
@@ -2717,7 +2722,7 @@ async function handleProductFormSubmit(e, productId) {
     } else {
       stored.unshift(updatedProd);
     }
-    localStorage.setItem('mr_admin_products_v2', JSON.stringify(stored));
+    localStorage.setItem('mr_admin_products_v3', JSON.stringify(stored));
     alert('Product & SEO Metadata saved successfully!');
     closeModal('productModal');
     loadProducts();
@@ -2740,7 +2745,7 @@ async function confirmDeleteProduct(productId, productName) {
   } catch (err) {}
 
   const stored = getStoredProducts().filter(item => item.id != productId && item.slug != productId);
-  localStorage.setItem('mr_admin_products_v2', JSON.stringify(stored));
+  localStorage.setItem('mr_admin_products_v3', JSON.stringify(stored));
   alert(`"${productName}" deleted successfully.`);
   loadProducts();
   loadDashboard();

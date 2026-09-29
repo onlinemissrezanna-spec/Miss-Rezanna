@@ -806,7 +806,7 @@ function closeSlideBar() {
    ========================================================================== */
 
 const SEARCH_CATALOG = [
-  { id: 'navy-blue-embroidered-kurta-pant-set', name: 'Navy Blue Floral Embroidered Kurta Pant Set', price: 4500, category: 'Kurta Pant Sets', image: 'images/navy-blue-embroidered-kurta-pant-set-3.png' }
+  { id: 'navy-blue-embroidered-kurta-pant-set', name: 'Navy Blue Floral Embroidered Kurta Pant Set', price: 2360, originalPrice: 2950, discount: '20% OFF', category: 'Kurta Pant Sets', image: 'images/navy-blue-embroidered-kurta-pant-set-3.png' }
 ];
 
 function initSearchModal() {

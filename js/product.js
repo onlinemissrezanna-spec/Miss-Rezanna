@@ -161,7 +161,7 @@ function bindAddToCartButtons(currentProduct) {
   const stickyBar = document.getElementById('stickyActionBar');
 
   const name = currentProduct ? currentProduct.name : (document.getElementById('pdp-title')?.innerText || 'Navy Blue Floral Embroidered Kurta Pant Set');
-  const price = currentProduct ? currentProduct.price : (document.getElementById('pdp-price')?.innerText || '₹ 4,500');
+  const price = currentProduct ? currentProduct.price : (document.getElementById('pdp-price')?.innerText || '₹ 2,360');
 
   if (isOutOfStock) {
     // 1. Disable Main Actions and provide Out of Stock + WhatsApp notification + Waitlist
@@ -254,7 +254,9 @@ const staticProductCatalog = {
     name: 'Navy Blue Floral Embroidered Kurta Pant Set',
     seoTitle: 'Navy Blue Embroidered Kurta Pant Set for Women | MISS REZANNA',
     metaDesc: 'Shop the navy blue embroidered kurta pant set by MISS REZANNA, featuring intricate floral embroidery and a sophisticated contemporary silhouette.',
-    price: '₹ 4,500',
+    price: '₹ 2,360',
+    mrp: '₹ 2,950',
+    discount: '20% OFF',
     label: 'Festive Edit · Kurta Pant Set',
     inStock: false,
     images: [
@@ -345,13 +347,14 @@ document.addEventListener('DOMContentLoaded', async () => {
       
       // Update DOM Elements
       if (document.getElementById('pdp-title')) document.getElementById('pdp-title').innerText = product.name;
-      if (document.getElementById('pdp-price')) document.getElementById('pdp-price').innerText = product.price;
+      const priceHtml = `₹ 2,360 <span style="text-decoration: line-through; color: #999; font-size: 0.8em; margin-left: 8px;">₹ 2,950</span> <span style="color: #c3a167; font-size: 0.75em; font-weight: 600; margin-left: 6px;">(20% OFF)</span>`;
+      if (document.getElementById('pdp-price')) document.getElementById('pdp-price').innerHTML = priceHtml;
       if (document.getElementById('pdp-label')) document.getElementById('pdp-label').innerText = product.label || 'Festive Edit';
       if (document.getElementById('pdp-desc')) document.getElementById('pdp-desc').innerHTML = product.description || '';
       
       // Sticky Bar
       if (document.getElementById('sticky-title')) document.getElementById('sticky-title').innerText = product.name;
-      if (document.getElementById('sticky-price')) document.getElementById('sticky-price').innerText = product.price;
+      if (document.getElementById('sticky-price')) document.getElementById('sticky-price').innerHTML = priceHtml;
       
       // Images — rebuild slider
       const gallery = document.getElementById('pdpGallery');
@@ -373,7 +376,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       // Push GA4 view_item event to dataLayer
       try {
         window.dataLayer = window.dataLayer || [];
-        const numericPrice = parseInt(String(product.price || '0').replace(/[^0-9]/g, ''), 10) || 4500;
+        const numericPrice = 2360;
         window.dataLayer.push({
           event: 'view_item',
           ecommerce: {
