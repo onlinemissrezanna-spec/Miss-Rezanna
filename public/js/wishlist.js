@@ -65,6 +65,10 @@ function removeFromWishlist(productId) {
 }
 
 function moveWishlistItemToCart(productId) {
+  if (window.SITE_CONFIG && window.SITE_CONFIG.ALL_PRODUCTS_OUT_OF_STOCK) {
+    showWishlistToast('Items are out of stock ahead of our Winter 2026 launch. Please join the waitlist!');
+    return;
+  }
   const items = getWishlistItems();
   const target = items.find(item => String(item.id) === String(productId));
   if (target) {

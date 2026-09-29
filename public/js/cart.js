@@ -11,10 +11,14 @@ function saveCart() {
 
 // Add Item
 function addToCart(event, name, priceStr, img, size = 'M', color = 'Standard') {
-    // If the click came from a link, we might not want to prevent default if we want to redirect to cart page immediately
-    // but we can prevent default, save, and then redirect manually to ensure it saves.
     if(event) {
         event.preventDefault();
+    }
+    
+    // Check global out of stock override
+    if (window.SITE_CONFIG && window.SITE_CONFIG.ALL_PRODUCTS_OUT_OF_STOCK) {
+        alert('All products are currently out of stock ahead of our Winter 2026 launch. Please join the waitlist for early access!');
+        return;
     }
     
     // Parse price string to number
@@ -146,11 +150,58 @@ function renderCart() {
     subtotalEls.forEach(el => {
         el.innerText = `₹ ${subtotal.toLocaleString()}`;
     });
+
+    // Check Out of Stock override
+    const isOutOfStock = window.SITE_CONFIG && window.SITE_CONFIG.ALL_PRODUCTS_OUT_OF_STOCK;
+    let alertEl = document.getElementById('cart-out-of-stock-banner');
+
+    if (isOutOfStock && cart.length > 0) {
+        if (!alertEl) {
+            alertEl = document.createElement('div');
+            alertEl.id = 'cart-out-of-stock-banner';
+            alertEl.style.cssText = 'background:#fff8e6; border:1px solid #e6c875; border-left:4px solid #c3a167; color:#5a4a1b; padding:18px 22px; border-radius:4px; margin-bottom:24px; font-size:14px; line-height:1.6;';
+            alertEl.innerHTML = `
+                <strong style="display:block;margin-bottom:6px;font-size:15px;color:#222;">Notice: Some items in your bag are no longer available.</strong>
+                All current items are temporarily out of stock ahead of our Winter 2026 Collection launch. Checkout is currently paused.
+                <a href="index.html#waitlist" style="color:#111;font-weight:600;text-decoration:underline;margin-left:6px;">Join the Winter Waitlist for 24-hr early access &rarr;</a>
+            `;
+            const cartGrid = document.querySelector('.cart-grid');
+            if (cartGrid && cartGrid.parentNode) {
+                cartGrid.parentNode.insertBefore(alertEl, cartGrid);
+            }
+        }
+    } else if (alertEl) {
+        alertEl.remove();
+    }
+
+    const checkoutBtn = document.getElementById('razorpay-checkout-btn');
+    if (checkoutBtn) {
+        if (isOutOfStock) {
+            checkoutBtn.disabled = true;
+            checkoutBtn.setAttribute('aria-disabled', 'true');
+            checkoutBtn.style.opacity = '0.5';
+            checkoutBtn.style.cursor = 'not-allowed';
+            checkoutBtn.style.pointerEvents = 'none';
+            checkoutBtn.innerText = 'Checkout Paused · Launching Soon';
+        } else {
+            checkoutBtn.disabled = false;
+            checkoutBtn.removeAttribute('aria-disabled');
+            checkoutBtn.style.opacity = '1';
+            checkoutBtn.style.cursor = 'pointer';
+            checkoutBtn.style.pointerEvents = 'auto';
+            checkoutBtn.innerText = 'Proceed to Secure Checkout';
+        }
+    }
 }
 
 // Razorpay & Buying Checkout Integration
 async function handleCheckout(event) {
     if (event) event.preventDefault();
+
+    if (window.SITE_CONFIG && window.SITE_CONFIG.ALL_PRODUCTS_OUT_OF_STOCK) {
+        alert('Checkout is temporarily paused as we prepare for our Winter 2026 launch. Please join the waitlist for 24-hour early access!');
+        return;
+    }
     
     if (cart.length === 0) {
         alert('Your bag is currently empty!');
@@ -369,6 +420,12 @@ function escapeHtml(str) {
 }
 
 async function submitRazorpayPayment() {
+  if (window.SITE_CONFIG && window.SITE_CONFIG.ALL_PRODUCTS_OUT_OF_STOCK) {
+    alert('Checkout is temporarily paused as we prepare for our Winter 2026 launch.');
+    closeRazorpayModal();
+    return;
+  }
+
   const btn = document.getElementById('btn-submit-razorpay-pay');
   if (btn) {
     btn.innerText = 'Processing Order & Payment…';

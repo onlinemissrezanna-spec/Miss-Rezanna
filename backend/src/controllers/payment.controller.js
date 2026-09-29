@@ -1,10 +1,19 @@
 const asyncHandler = require('../middlewares/asyncHandler');
 const ApiResponse = require('../utils/ApiResponse');
+const ApiError = require('../utils/ApiError');
 const paymentService = require('../services/payment.service');
 const prisma = require('../config/db');
 const crypto = require('crypto');
 
+const checkStockAvailability = () => {
+    const isOutOfStock = process.env.ALL_PRODUCTS_OUT_OF_STOCK !== 'false';
+    if (isOutOfStock) {
+        throw new ApiError(400, 'Orders are currently paused ahead of the Winter 2026 launch. Please join the waitlist.');
+    }
+};
+
 const createOrder = asyncHandler(async (req, res) => {
+    checkStockAvailability();
     const { orderId } = req.body;
     const razorpayData = await paymentService.createPaymentOrder(orderId, req.user.id);
     res.status(200).json(new ApiResponse(200, razorpayData, 'Razorpay order created'));
@@ -66,6 +75,7 @@ const handleWebhook = asyncHandler(async (req, res) => {
 });
 
 const guestCheckout = asyncHandler(async (req, res) => {
+    checkStockAvailability();
     const { amount, customer, items } = req.body;
     if (!amount) throw new ApiError(400, 'Amount is required');
     

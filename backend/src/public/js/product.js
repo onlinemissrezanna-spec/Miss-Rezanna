@@ -152,15 +152,70 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// Helper function to bind Add to Cart / Buy Now buttons
+// Helper function to bind Add to Cart / Buy Now buttons or Out-of-Stock state
 function bindAddToCartButtons(currentProduct) {
+  const isOutOfStock = (window.SITE_CONFIG && window.SITE_CONFIG.ALL_PRODUCTS_OUT_OF_STOCK) ||
+                       (currentProduct && currentProduct.inStock === false);
+
+  const mainActions = document.getElementById('mainActions');
+  const stickyBar = document.getElementById('stickyActionBar');
+
+  const name = currentProduct ? currentProduct.name : (document.getElementById('pdp-title')?.innerText || 'Navy Blue Floral Embroidered Kurta Pant Set');
+  const price = currentProduct ? currentProduct.price : (document.getElementById('pdp-price')?.innerText || '₹ 4,500');
+
+  if (isOutOfStock) {
+    // 1. Disable Main Actions and provide Out of Stock + WhatsApp notification + Waitlist
+    if (mainActions) {
+      mainActions.innerHTML = `
+        <div class="pdp-stock-notice">Out of stock. Back soon.</div>
+        <a href="https://wa.me/919877327186?text=Hello%20Miss%20Rezanna,%20please%20notify%20me%20when%20this%20is%20available%20again." target="_blank" rel="noopener noreferrer" class="btn-whatsapp-notify" aria-label="Get notified on WhatsApp">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:8px;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+          Get notified on WhatsApp
+        </a>
+        <a href="index.html#waitlist" class="btn-waitlist-link">✦ Join the Winter Waitlist</a>
+      `;
+    }
+
+    // 2. Disable Size Selectors (keep them visible but non-functional)
+    document.querySelectorAll('.size-btn').forEach(btn => {
+      btn.classList.add('disabled');
+      btn.setAttribute('aria-disabled', 'true');
+      btn.setAttribute('disabled', 'disabled');
+    });
+
+    // 3. Update Sticky Bottom Action Bar
+    if (stickyBar) {
+      stickyBar.innerHTML = `
+        <div class="sticky-info">
+          <span class="sticky-title" id="sticky-title">${name}</span>
+          <span class="sticky-stock-msg">Out of stock. Back soon.</span>
+        </div>
+        <a href="https://wa.me/919877327186?text=Hello%20Miss%20Rezanna,%20please%20notify%20me%20when%20this%20is%20available%20again." target="_blank" rel="noopener noreferrer" class="btn-whatsapp-notify" style="padding: 10px 16px; font-size: 12px; min-height: 44px; flex: 1; max-width: 260px;">
+          WhatsApp Notify
+        </a>
+      `;
+    }
+
+    // 4. Update JSON-LD Product availability to OutOfStock
+    const schemaEl = document.querySelector('script[type="application/ld+json"]');
+    if (schemaEl) {
+      try {
+        const schema = JSON.parse(schemaEl.textContent);
+        if (schema && schema.offers) {
+          schema.offers.availability = "https://schema.org/OutOfStock";
+          schemaEl.textContent = JSON.stringify(schema, null, 2);
+        }
+      } catch (e) {}
+    }
+
+    return;
+  }
+
+  // Normal in-stock purchasing mode
   const activeSizeBtn = document.querySelector('.size-btn.active');
   const size = activeSizeBtn ? activeSizeBtn.innerText.trim() : 'M';
   
-  const name = currentProduct ? currentProduct.name : (document.getElementById('pdp-title')?.innerText || 'Midnight Silk Kurti');
-  const price = currentProduct ? currentProduct.price : (document.getElementById('pdp-price')?.innerText || '₹ 3,000');
-  
-  let img = 'images/A.jpeg';
+  let img = 'images/navy-blue-embroidered-kurta-pant-set-1.png';
   if (currentProduct && currentProduct.images && currentProduct.images.length > 0) {
       img = currentProduct.images[0];
   } else {
@@ -169,6 +224,8 @@ function bindAddToCartButtons(currentProduct) {
   }
 
   document.querySelectorAll('.btn-add, .btn-buy').forEach(btn => {
+      btn.removeAttribute('disabled');
+      btn.removeAttribute('aria-disabled');
       btn.onclick = (e) => {
           if (typeof addToCart === 'function') {
               addToCart(e, name, price, img, size, 'Standard');
@@ -199,6 +256,7 @@ const staticProductCatalog = {
     metaDesc: 'Shop the navy blue embroidered kurta pant set by MISS REZANNA, featuring intricate floral embroidery and a sophisticated contemporary silhouette.',
     price: '₹ 4,500',
     label: 'Festive Edit · Kurta Pant Set',
+    inStock: false,
     images: [
       'images/navy-blue-embroidered-kurta-pant-set-1.png',
       'images/navy-blue-embroidered-kurta-pant-set-2.png',
@@ -311,5 +369,27 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       // Re-bind buttons with dynamic product data
       bindAddToCartButtons(product);
+
+      // Push GA4 view_item event to dataLayer
+      try {
+        window.dataLayer = window.dataLayer || [];
+        const numericPrice = parseInt(String(product.price || '0').replace(/[^0-9]/g, ''), 10) || 4500;
+        window.dataLayer.push({
+          event: 'view_item',
+          ecommerce: {
+            currency: 'INR',
+            value: numericPrice,
+            items: [{
+              item_id: productId,
+              item_name: product.name,
+              price: numericPrice,
+              item_category: 'Kurti Sets',
+              quantity: 1
+            }]
+          }
+        });
+      } catch (analyticsErr) {
+        console.warn('Analytics event push error:', analyticsErr);
+      }
   }
 });
