@@ -1454,7 +1454,7 @@ function logoutAdmin() {
 }
 
 // =============================================
-// MASTER LUXURY CATALOGUE (Offline & Serverless Resilient)
+// MASTER LUXURY CATALOGUE (Single Exclusive Launch Product)
 // =============================================
 const MASTER_CATALOGUE = [
   {
@@ -1467,189 +1467,27 @@ const MASTER_CATALOGUE = [
     category: { id: 1, name: 'Kurta Pant Sets' },
     status: 'active',
     taxPercentage: 12,
-    images: ['images/navy-blue-embroidered-kurta-pant-set-3.png', 'images/navy-blue-embroidered-kurta-pant-set-1.png', 'images/navy-blue-embroidered-kurta-pant-set-2.png'],
+    images: [
+      'images/navy-blue-embroidered-kurta-pant-set-3.png',
+      'images/navy-blue-embroidered-kurta-pant-set-1.png',
+      'images/navy-blue-embroidered-kurta-pant-set-2.png',
+      'images/navy-blue-embroidered-kurta-pant-set-4.png',
+      'images/navy-blue-embroidered-kurta-pant-set-5.png'
+    ],
     description: 'A refined navy blue kurta pant set featuring intricate multicolour floral embroidery, designed for the modern woman who appreciates understated elegance.',
     variants: [{ size: 'M', inventory: { stock: 25 } }]
-  },
-  {
-    id: 2,
-    name: 'Ethereal Embroidered Kurti',
-    slug: 'ethereal-kurti',
-    sku: 'MR-KU-001',
-    price: 3000,
-    basePrice: 3000,
-    category: { id: 2, name: 'Kurti Sets' },
-    status: 'active',
-    taxPercentage: 12,
-    images: ['images/A.jpeg', 'images/L.jpeg', 'images/N.jpeg'],
-    description: 'Intricate threadwork with a relaxed silhouette. Crafted from pure, ethically sourced Mulberry silk.',
-    variants: [{ size: 'M', inventory: { stock: 30 } }]
-  },
-  {
-    id: 3,
-    name: 'Ivory Fusion Set',
-    slug: 'ivory-fusion',
-    sku: 'MR-FS-002',
-    price: 3500,
-    basePrice: 3500,
-    category: { id: 3, name: 'Co-ord Sets' },
-    status: 'active',
-    taxPercentage: 12,
-    images: ['images/B.jpeg', 'images/L.jpeg', 'images/N.jpeg'],
-    description: 'A modern take on traditional elegance. Designed for a fluid, flattering drape.',
-    variants: [{ size: 'M', inventory: { stock: 20 } }]
-  },
-  {
-    id: 4,
-    name: 'Signature Silk Tunic',
-    slug: 'signature-tunic',
-    sku: 'MR-TU-003',
-    price: 4000,
-    basePrice: 4000,
-    category: { id: 4, name: 'Tunics' },
-    status: 'active',
-    taxPercentage: 12,
-    images: ['images/C.jpeg', 'images/L.jpeg', 'images/N.jpeg'],
-    description: 'Flowing lines rendered in pure mulberry silk. True to size for the intended relaxed fit.',
-    variants: [{ size: 'M', inventory: { stock: 15 } }]
-  },
-  {
-    id: 5,
-    name: 'Heritage Pantsuit',
-    slug: 'heritage-pantsuit',
-    sku: 'MR-PS-004',
-    price: 5000,
-    basePrice: 5000,
-    category: { id: 5, name: 'Pantsuits' },
-    status: 'active',
-    taxPercentage: 12,
-    images: ['images/A.jpeg', 'images/L.jpeg', 'images/N.jpeg'],
-    description: 'Tailored perfection for the confident woman. Hand-finished zari embroidery.',
-    variants: [{ size: 'M', inventory: { stock: 18 } }]
-  },
-  {
-    id: 6,
-    name: 'Floral Grace Ensemble',
-    slug: 'floral-grace',
-    sku: 'MR-FG-005',
-    price: 3200,
-    basePrice: 3200,
-    category: { id: 6, name: 'Festive Wear' },
-    status: 'active',
-    taxPercentage: 12,
-    images: ['images/design 1 col 2.jpeg', 'images/L.jpeg', 'images/N.jpeg'],
-    description: 'Intricate floral embroidery inspired by timeless elegance.',
-    variants: [{ size: 'M', inventory: { stock: 22 } }]
-  },
-  {
-    id: 7,
-    name: 'Botanical Bloom Set',
-    slug: 'botanical-bloom',
-    sku: 'MR-BB-006',
-    price: 3800,
-    basePrice: 3800,
-    category: { id: 3, name: 'Co-ord Sets' },
-    status: 'active',
-    taxPercentage: 12,
-    images: ['images/design 1 col 2.jpeg', 'images/L.jpeg', 'images/N.jpeg'],
-    description: 'Contemporary silhouettes with handcrafted floral detailing.',
-    variants: [{ size: 'M', inventory: { stock: 14 } }]
-  },
-  {
-    id: 8,
-    name: 'Summer Heritage Ensemble',
-    slug: 'summer-heritage',
-    sku: 'MR-SH-007',
-    price: 2800,
-    basePrice: 2800,
-    category: { id: 2, name: 'Kurti Sets' },
-    status: 'active',
-    taxPercentage: 12,
-    images: ['images/NN.jpeg', 'images/L.jpeg', 'images/N.jpeg'],
-    description: 'Premium summer essentials designed for effortless sophistication.',
-    variants: [{ size: 'M', inventory: { stock: 25 } }]
-  },
-  {
-    id: 9,
-    name: 'Midnight Silk Kurti',
-    slug: 'midnight-kurti',
-    sku: 'MR-MK-008',
-    price: 3000,
-    basePrice: 3000,
-    category: { id: 2, name: 'Kurti Sets' },
-    status: 'active',
-    taxPercentage: 12,
-    images: ['images/A.jpeg', 'images/L.jpeg', 'images/N.jpeg'],
-    description: 'An uncompromising statement of elegance. The Midnight Kurti moves like liquid dusk.',
-    variants: [{ size: 'M', inventory: { stock: 35 } }]
-  },
-  {
-    id: 10,
-    name: 'Crimson Festivity Set',
-    slug: 'crimson-set',
-    sku: 'MR-CS-009',
-    price: 3000,
-    basePrice: 3000,
-    category: { id: 6, name: 'Festive Wear' },
-    status: 'active',
-    taxPercentage: 12,
-    images: ['images/C.jpeg', 'images/L.jpeg', 'images/N.jpeg'],
-    description: 'Deep earthy tones combined with quiet luxury and minimal embellishments.',
-    variants: [{ size: 'M', inventory: { stock: 19 } }]
-  },
-  {
-    id: 11,
-    name: 'Dusk Organza Dupatta',
-    slug: 'dusk-dupatta',
-    sku: 'MR-DD-010',
-    price: 3000,
-    basePrice: 3000,
-    category: { id: 7, name: 'Dupattas' },
-    status: 'active',
-    taxPercentage: 12,
-    images: ['images/A.jpeg', 'images/L.jpeg', 'images/N.jpeg'],
-    description: 'A sheer, elegant drape designed to complement any evening attire.',
-    variants: [{ size: 'M', inventory: { stock: 40 } }]
-  },
-  {
-    id: 12,
-    name: 'Terracotta Flow Pant',
-    slug: 'terracotta-pant',
-    sku: 'MR-TP-011',
-    price: 3000,
-    basePrice: 3000,
-    category: { id: 8, name: 'Bottoms' },
-    status: 'active',
-    taxPercentage: 12,
-    images: ['images/N.jpeg', 'images/L.jpeg'],
-    description: 'Wide-leg trousers offering supreme comfort and effortless style.',
-    variants: [{ size: 'M', inventory: { stock: 28 } }]
-  },
-  {
-    id: 13,
-    name: 'Olive Blossom Kurti',
-    slug: 'olive-kurti',
-    sku: 'MR-OK-012',
-    price: 3000,
-    basePrice: 3000,
-    category: { id: 2, name: 'Kurti Sets' },
-    status: 'active',
-    taxPercentage: 12,
-    images: ['images/design 1 col 2.jpeg', 'images/L.jpeg', 'images/N.jpeg'],
-    description: 'Crafted to move beautifully, providing comfort without compromising on elegance.',
-    variants: [{ size: 'M', inventory: { stock: 26 } }]
   }
 ];
 
 function getStoredProducts() {
   try {
-    const raw = localStorage.getItem('mr_admin_products');
+    const raw = localStorage.getItem('mr_admin_products_v2');
     if (raw) {
       const parsed = JSON.parse(raw);
       if (Array.isArray(parsed) && parsed.length > 0) return parsed;
     }
   } catch (e) {}
-  localStorage.setItem('mr_admin_products', JSON.stringify(MASTER_CATALOGUE));
+  localStorage.setItem('mr_admin_products_v2', JSON.stringify(MASTER_CATALOGUE));
   return MASTER_CATALOGUE;
 }
 
@@ -2879,7 +2717,7 @@ async function handleProductFormSubmit(e, productId) {
     } else {
       stored.unshift(updatedProd);
     }
-    localStorage.setItem('mr_admin_products', JSON.stringify(stored));
+    localStorage.setItem('mr_admin_products_v2', JSON.stringify(stored));
     alert('Product & SEO Metadata saved successfully!');
     closeModal('productModal');
     loadProducts();
@@ -2902,7 +2740,7 @@ async function confirmDeleteProduct(productId, productName) {
   } catch (err) {}
 
   const stored = getStoredProducts().filter(item => item.id != productId && item.slug != productId);
-  localStorage.setItem('mr_admin_products', JSON.stringify(stored));
+  localStorage.setItem('mr_admin_products_v2', JSON.stringify(stored));
   alert(`"${productName}" deleted successfully.`);
   loadProducts();
   loadDashboard();
