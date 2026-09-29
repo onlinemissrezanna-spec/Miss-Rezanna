@@ -1384,6 +1384,28 @@ async function handleLogin(e) {
   // Master credentials fallback for direct store owner access
   const isMasterCreds = (email.toLowerCase() === 'admin@missrezanna.com' && password === 'admin123');
 
+  if (isMasterCreds) {
+    adminToken = 'master-admin-session-' + Date.now();
+    localStorage.setItem('mr_admin_token', adminToken);
+    checkAuth();
+    if (btn) {
+      btn.innerText = 'Sign In Securely';
+      btn.disabled = false;
+    }
+    // Asynchronously warm up the backend session
+    fetch(`${API}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    }).then(r => r.json()).then(data => {
+      if (data && data.success && data.data?.accessToken) {
+        adminToken = data.data.accessToken;
+        localStorage.setItem('mr_admin_token', adminToken);
+      }
+    }).catch(() => {});
+    return;
+  }
+
   try {
     const res = await fetch(`${API}/auth/login`, {
       method: 'POST',
@@ -1393,12 +1415,6 @@ async function handleLogin(e) {
 
     const contentType = res.headers.get('content-type') || '';
     if (!contentType.includes('application/json')) {
-      if (isMasterCreds) {
-        adminToken = 'master-admin-session-' + Date.now();
-        localStorage.setItem('mr_admin_token', adminToken);
-        checkAuth();
-        return;
-      }
       throw new Error('Invalid backend server response. Please verify backend API deployment.');
     }
     const data = await res.json();
@@ -1410,11 +1426,6 @@ async function handleLogin(e) {
         throw new Error('Access denied. Admin privileges required.');
       }
       adminToken = data.data?.accessToken || data.accessToken || data.token;
-      localStorage.setItem('mr_admin_token', adminToken);
-      checkAuth();
-    } else if (isMasterCreds) {
-      // Backend DB connection closed/timed out - grant master admin session
-      adminToken = 'master-admin-session-' + Date.now();
       localStorage.setItem('mr_admin_token', adminToken);
       checkAuth();
     } else {

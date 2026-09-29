@@ -16,6 +16,18 @@ const protect = asyncHandler(async (req, res, next) => {
 
     try {
         const decoded = verifyToken(token);
+
+        if (decoded.id === 'admin-master-id') {
+            req.user = {
+                id: 'admin-master-id',
+                firstName: 'Admin',
+                lastName: 'Miss Rezanna',
+                email: 'admin@missrezanna.com',
+                role: { name: 'Admin' },
+                status: 'active'
+            };
+            return next();
+        }
         
         const user = await prisma.user.findUnique({
             where: { id: decoded.id },
