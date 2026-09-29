@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <!-- Google Tag Manager -->
@@ -36,6 +36,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <link rel="stylesheet" href="css/animations.css?v=5.0">
   <link rel="stylesheet" href="css/components.css?v=5.0">
   <link rel="stylesheet" href="css/hero.css?v=5.0">
+  <link rel="stylesheet" href="css/exhibitions-page.css?v=5.0">
   <link rel="stylesheet" href="css/mobile-nav.css?v=5.0">
   <link rel="stylesheet" href="css/footer.css?v=5.0">
   <link rel="stylesheet" href="css/cookie-consent.css?v=5.0">
@@ -46,13 +47,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <link rel="stylesheet" href="css/customer-auth.css?v=5.0">
 
   <script src="https://unpkg.com/lucide@latest"></script>
-  <link rel="stylesheet" href="css/mobile-nav.css?v=3.0">
-  <link rel="stylesheet" href="css/cookie-consent.css">
-  <link rel="stylesheet" href="css/luxury-dynamics.css">
-  <link rel="stylesheet" href="css/ethnic-story.css">
-  <link rel="stylesheet" href="css/luxury-chatbot.css">
-  <link rel="stylesheet" href="css/indian-ai-model.css">
-  <link rel="stylesheet" href="css/customer-auth.css">
   <!-- Microsoft Clarity Analytics -->
   <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
@@ -126,7 +120,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <main>
     <!-- HERO SECTION -->
     <section class="exhibition-hero">
-      <img src="images/14.jpeg" alt="Exhibitions Hero" class="exhibition-hero-img" style="object-position: center 15% !important;">
+      <img src="images/25.jpeg" alt="MISS REZANNA Couture Showcase Hero" class="exhibition-hero-img" style="object-position: center 25% !important;">
       <div class="exhibition-hero-overlay"></div>
       <div class="exhibition-hero-content hero-anim">
         <h1 class="exhibition-hero-title">Exhibitions & Showcases</h1>
@@ -141,14 +135,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <!-- Left: Details -->
         <div class="event-details split-anim">
           <span class="event-label">Upcoming Showcase</span>
-          <h2 class="event-title">The Spring Heritage Edition</h2>
+          <h2 class="event-title">Winter 2026 Couture Showcase & Trunk Show</h2>
           
           <div class="event-meta">
             <div class="meta-item">
               <i data-lucide="calendar"></i>
               <div class="meta-text">
-                <strong>March 15 - 17, 2027</strong>
-                <span>10:00 AM - 8:00 PM</span>
+                <strong>October 24 - 26, 2026</strong>
+                <span>11:00 AM - 8:00 PM IST</span>
               </div>
             </div>
             <div class="meta-item">
@@ -161,8 +155,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="meta-item">
               <i data-lucide="ticket"></i>
               <div class="meta-text">
-                <strong>Entry by Registration</strong>
-                <span>Exclusive styling sessions available upon request.</span>
+                <strong>Complimentary Priority Pass</strong>
+                <span>Exclusive styling & bespoke fitting sessions upon RSVP.</span>
               </div>
             </div>
           </div>
@@ -175,9 +169,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <!-- Right: RSVP Form -->
         <div class="event-registration split-anim">
           <h3 class="reg-form-title">Visitor Registration</h3>
-          <p class="reg-form-desc">Secure your priority entry and opt-in for a complimentary personal styling session.</p>
+          <p class="reg-form-desc">Secure your priority pass and reserve an exclusive personal styling consultation.</p>
           
-          <form class="reg-form" onsubmit="event.preventDefault(); alert('Thank you for registering. We look forward to seeing you.');">
+          <form class="reg-form">
             <div class="reg-input-group">
               <label>Full Name</label>
               <input type="text" class="reg-input" placeholder="Enter your full name" required>
@@ -190,21 +184,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             
             <div class="reg-input-group">
               <label>Phone Number</label>
-              <input type="tel" class="reg-input" placeholder="Enter your phone number">
+              <input type="tel" class="reg-input" placeholder="+91 98765 43210" pattern="^(\+91|91|0)?[6-9]\d{9}$" title="Enter a valid 10-digit Indian phone number">
             </div>
 
             <div class="reg-input-group">
               <label>Styling Appointment (Optional)</label>
               <select class="reg-select">
-                <option value="">No appointment needed</option>
-                <option value="day1">March 15 - Morning Session</option>
-                <option value="day1-aft">March 15 - Afternoon Session</option>
-                <option value="day2">March 16 - Morning Session</option>
-                <option value="day2-aft">March 16 - Afternoon Session</option>
+                <option value="">No appointment needed (Open Showcase Entry)</option>
+                <option value="oct24-morning">Saturday, Oct 24 - Morning Session (11:00 AM - 2:00 PM)</option>
+                <option value="oct24-evening">Saturday, Oct 24 - Evening Session (3:00 PM - 7:00 PM)</option>
+                <option value="oct25-morning">Sunday, Oct 25 - Morning Session (11:00 AM - 2:00 PM)</option>
+                <option value="oct25-evening">Sunday, Oct 25 - Evening Session (3:00 PM - 7:00 PM)</option>
+                <option value="oct26-vip">Monday, Oct 26 - VIP Private Fitting (By Appointment)</option>
               </select>
             </div>
 
-            <button type="submit" class="btn-rsvp">Confirm Attendance</button>
+            <button type="submit" class="btn-rsvp">Reserve My Entry Pass</button>
           </form>
         </div>
       </div>
@@ -217,17 +212,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="highlight-item highlight-anim">
           <i data-lucide="gem" class="highlight-icon"></i>
           <h4 class="highlight-heading">Exclusive Launches</h4>
-          <p class="highlight-desc">Be the first to discover and purchase pieces from our unreleased Spring Heritage collection.</p>
+          <p class="highlight-desc">Be the first to experience and reserve unreleased ensembles from our Winter 2026 Couture collection.</p>
         </div>
         <div class="highlight-item highlight-anim">
           <i data-lucide="scissors" class="highlight-icon"></i>
           <h4 class="highlight-heading">Personal Styling</h4>
-          <p class="highlight-desc">Work directly with our lead stylists to curate looks tailored perfectly to your silhouette.</p>
+          <p class="highlight-desc">Work directly with our master stylists to curate bridal, formal, and festive looks tailored to your silhouette.</p>
         </div>
         <div class="highlight-item highlight-anim">
           <i data-lucide="users" class="highlight-icon"></i>
-          <h4 class="highlight-heading">Meet The Founders</h4>
-          <p class="highlight-desc">Engage in conversations about craftsmanship, fabric selection, and the art of elegant living.</p>
+          <h4 class="highlight-heading">Meet The Artisans</h4>
+          <p class="highlight-desc">Engage in conversations about heritage zardozi, handwoven silk textiles, and sustainable Indian luxury.</p>
         </div>
       </div>
     </section>
@@ -241,19 +236,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <div class="gallery-grid">
         <div class="gallery-item gallery-anim">
-          <img loading="lazy" src="images/exhibition_booth.png" alt="Booth Design" class="gallery-img">
+          <img loading="lazy" src="images/hero_new_season.jpg" alt="MISS REZANNA Luxury Couture Showcase Pavilion" class="gallery-img">
         </div>
         <div class="gallery-item gallery-anim">
-          <img loading="lazy" src="images/exhibition_details.png" alt="Fabric Details" class="gallery-img">
+          <img loading="lazy" src="images/14.jpeg" alt="Artisanal Zardozi & Hand Embroidery Details" class="gallery-img">
         </div>
         <div class="gallery-item gallery-anim">
-          <img loading="lazy" src="images/exhibition_exploring.png" alt="Visitor Exploring" class="gallery-img">
+          <img loading="lazy" src="images/10.jpeg" alt="Handcrafted Luxury Silks & Pure Fabrics" class="gallery-img">
         </div>
         <div class="gallery-item gallery-anim">
-          <img loading="lazy" src="images/10.jpeg" alt="Model Showcase" class="gallery-img">
+          <img loading="lazy" src="images/11.jpeg" alt="Winter Festive Ensemble Drape" class="gallery-img">
         </div>
         <div class="gallery-item gallery-anim">
-          <img loading="lazy" src="images/12.jpeg" alt="The Collection" class="gallery-img">
+          <img loading="lazy" src="images/12.jpeg" alt="Winter 2026 Collection Display" class="gallery-img">
         </div>
       </div>
     </section>
@@ -296,10 +291,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="footer-nav">
           <h4 class="footer-heading">Shop</h4>
           <ul class="footer-links">
-            <li><a href="index.html#new-arrivals">New Arrivals</a></li>
-            <li><a href="index.html#collections">Kurti Sets</a></li>
-            <li><a href="index.html#collections">Co-ord Sets</a></li>
-            <li><a href="index.html#collections">Festive Collection</a></li>
+            <li><a href="collection.html">All Collections</a></li>
+            <li><a href="collection.html?category=kurti-sets">Kurti Sets</a></li>
+            <li><a href="collection.html?category=co-ord-sets">Co-ord Sets</a></li>
+            <li><a href="collection.html?category=festive">Festive Collection</a></li>
           </ul>
         </div>
 
@@ -349,14 +344,3 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <script src="js/customer-auth.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-

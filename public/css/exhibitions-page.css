@@ -377,7 +377,7 @@
 
 /* Animations */
 .hero-anim, .split-anim, .highlight-anim, .gallery-anim {
-  opacity: 0;
-  transform: translateY(20px);
+  opacity: 1;
+  transform: translateY(0);
 }
 
