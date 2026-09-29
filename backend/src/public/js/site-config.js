@@ -31,6 +31,6 @@ window.SITE_CONFIG = {
     whatsapp: "+91 98773 27186",
     whatsappNumber: "919877327186",
     supportHours: "Monday to Saturday, 10:00 AM – 7:00 PM IST",
-    gstNumber: "[OWNER INPUT: GST Number]"
+    gstNumber: "03BKYPS7000M1ZM"
   }
 };
