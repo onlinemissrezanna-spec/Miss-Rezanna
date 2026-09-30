@@ -309,6 +309,13 @@
       }
     });
 
+    // Refresh ScrollTrigger so visible sections calculate layout accurately
+    setTimeout(() => {
+      if (window.ScrollTrigger) {
+        window.ScrollTrigger.refresh();
+      }
+    }, 100);
+
     // Also link the footer "Join the Circle" form to the waitlist logic
     const circleForm = document.querySelector('.circle-form');
     if (circleForm) {
