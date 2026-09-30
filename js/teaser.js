@@ -33,7 +33,8 @@
   }
 
   // 2. Countdown Clock Logic
-  function startCountdown(targetIsoDate) {
+  function startCountdown(targetIsoDate, startIsoDate) {
+    const startDate = startIsoDate ? new Date(startIsoDate).getTime() : 0;
     const targetDate = new Date(targetIsoDate).getTime();
     const daysEl = document.getElementById('cd-days');
     const hoursEl = document.getElementById('cd-hours');
@@ -45,6 +46,15 @@
 
     function update() {
       const now = new Date().getTime();
+
+      // If scheduled countdown start time is in the future, keep countdown hidden
+      if (startDate && now < startDate) {
+        clockEl.style.display = 'none';
+        return;
+      }
+
+      clockEl.style.display = 'flex';
+
       const diff = targetDate - now;
 
       if (diff <= 0) {
@@ -210,8 +220,8 @@
             Miss Rezanna Winter 2026 launches 15/10/2026. Join the private list for 24-hour early access and bespoke atelier previews.
           </p>
 
-          <!-- Live Countdown -->
-          <div class="winter-countdown" id="winterCountdown">
+          <!-- Live Countdown (Scheduled to display from 01/10/2026 12:00 AM IST) -->
+          <div class="winter-countdown" id="winterCountdown" style="display: none;">
             <div class="countdown-box">
               <span class="countdown-number" id="cd-days">00</span>
               <span class="countdown-label">Days</span>
@@ -270,9 +280,10 @@
     // Replace hero section content
     heroSection.outerHTML = teaserHeroHtml;
 
-    // Start countdown
+    // Start countdown with start and target dates
     const launchDate = window.SITE_CONFIG?.LAUNCH_DATETIME_IST || "2026-10-15T10:00:00+05:30";
-    startCountdown(launchDate);
+    const startDate = window.SITE_CONFIG?.COUNTDOWN_START_DATETIME_IST || "2026-10-01T00:00:00+05:30";
+    startCountdown(launchDate, startDate);
 
     // Bind form
     const form = document.getElementById('winterWaitlistForm');

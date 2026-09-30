@@ -15,6 +15,9 @@ window.SITE_CONFIG = {
   // Global out of stock override - disables add-to-cart, buy now, and blocks checkout
   ALL_PRODUCTS_OUT_OF_STOCK: true,
 
+  // Countdown display start time in Indian Standard Time (IST) - countdown becomes visible from 01/10/2026 12:00 AM
+  COUNTDOWN_START_DATETIME_IST: "2026-10-01T00:00:00+05:30",
+
   // Launch Date & Time in Indian Standard Time (IST)
   LAUNCH_DATETIME_IST: "2026-10-15T10:00:00+05:30",
 
