@@ -445,113 +445,53 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </div>
           </div>
         </div>
-        
-      </div>
-    </div>
-
-    <!-- 12. Full Width Customer Reviews & Verified Ratings (Libas Standard) -->
-    <section class="pdp-full-sections">
-      <div class="pdp-section-header">
-        <h2>Customer Reviews &amp; Ratings</h2>
-        <p>Real feedback from women across India who love MISS REZANNA</p>
-      </div>
-
-      <div class="reviews-summary-bar">
-        <div style="text-align: center;">
-          <div style="font-size: 2.8rem; font-family: 'Playfair Display', serif; font-weight: 700; color: #111; line-height: 1;">4.9</div>
-          <div style="color: #c3a167; font-size: 16px; margin: 4px 0;">★★★★★</div>
-          <div style="font-size: 12px; color: #777;">Based on 86 verified reviews</div>
-        </div>
-        <div style="border-left: 1px solid #e0d8c8; padding-left: 24px; font-size: 13px; line-height: 1.8; color: #444;">
-          <div>✦ <strong>98%</strong> reported true to size fit</div>
-          <div>✦ <strong>99%</strong> praised the embroidery detail &amp; fabric softness</div>
-          <div>✦ <strong>100%</strong> confirmed safe and timely delivery</div>
-        </div>
-      </div>
-
-      <div class="reviews-grid">
-        <div class="review-item">
-          <div class="review-header">
-            <span class="reviewer-name">Pooja M.</span>
-            <span class="review-date">Verified Buyer · New Delhi</span>
-          </div>
-          <div class="review-stars">★★★★★</div>
-          <p class="review-text">
-            "The navy blue shade is so rich and regal! The floral embroidery looks even more exquisite in person than in the photos. The pants fit comfortably with the elastic waist. Wore it to a Diwali dinner and received endless compliments!"
-          </p>
-          <span class="verified-purchase">✓ Verified Purchase · Size M</span>
-        </div>
-
-        <div class="review-item">
-          <div class="review-header">
-            <span class="reviewer-name">Simranjit K.</span>
-            <span class="review-date">Verified Buyer · Ludhiana</span>
-          </div>
-          <div class="review-stars">★★★★★</div>
-          <p class="review-text">
-            "Being from Ludhiana, I know quality textiles when I see them. MISS REZANNA's finishing and stitching are on another level compared to standard market suits. The fabric is super soft, breathable, and doesn't crease easily."
-          </p>
-          <span class="verified-purchase">✓ Verified Purchase · Size L</span>
-        </div>
-
-        <div class="review-item">
-          <div class="review-header">
-            <span class="reviewer-name">Ananya V.</span>
-            <span class="review-date">Verified Buyer · Bengaluru</span>
-          </div>
-          <div class="review-stars">★★★★★</div>
-          <p class="review-text">
-            "Hard to find premium ethnic wear sets that offer sizes up to 6XL without compromising on cut or design. The fit is exceptionally flattering. Fast delivery and beautiful unboxing experience!"
-          </p>
-          <span class="verified-purchase">✓ Verified Purchase · Size 2XL</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- 13. Interactive Size Guide Modal Dialog (Inches & CM) -->
-    <div class="pdp-modal-overlay" id="sizeGuideModal" onclick="handleModalBackdropClick(event)">
-      <div class="pdp-modal-dialog" role="dialog" aria-label="Size Guide">
-        <button type="button" class="pdp-modal-close" onclick="closeSizeGuideModal()" aria-label="Close Size Guide">✕</button>
-        
-        <div class="size-modal-header">
-          <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em; color: #8c652e;">Miss Rezanna Atelier</span>
-          <h3 class="size-modal-title">Kurta &amp; Pant Set Sizing Chart</h3>
-          <p style="font-size: 13px; color: #666; margin: 0;">Standard garment measurements in ready-to-wear condition.</p>
-        </div>
-
-        <div class="unit-toggle-wrap">
-          <button type="button" class="unit-toggle-btn active" id="btnUnitIn" onclick="switchSizeUnit('in')">Inches (in)</button>
-          <button type="button" class="unit-toggle-btn" id="btnUnitCm" onclick="switchSizeUnit('cm')">Centimeters (cm)</button>
-        </div>
-
-        <div class="size-chart-table-wrap">
-          <table class="size-chart-table" id="sizeChartTable">
-            <thead>
-              <tr>
-                <th>Size</th>
-                <th>Bust</th>
-                <th>Waist</th>
-                <th>Hip</th>
-                <th>Kurta Length</th>
-                <th>Shoulder</th>
-              </tr>
-            </thead>
-            <tbody id="sizeChartBody">
-              <!-- Dynamically populated by JS (inches / cm) -->
-            </tbody>
-          </table>
-        </div>
-
-        <div class="how-to-measure-card">
-          <strong style="color: #111; display: block; margin-bottom: 6px;">📏 How to Measure:</strong>
-          <div>• <strong>Bust:</strong> Measure around the fullest part of your chest, keeping the tape level.</div>
-          <div>• <strong>Waist:</strong> Measure around your natural waistline, where your trousers sit.</div>
-          <div>• <strong>Hip:</strong> Measure around the fullest part of your hips and seat.</div>
-          <div>• <strong>Kurta Length:</strong> Measured from highest point of the shoulder down to the hemline.</div>
-        </div>
       </div>
     </div>
   </main>
+
+  <!-- Size Guide Modal Dialog (Inches & CM) -->
+  <div class="pdp-modal-overlay" id="sizeGuideModal" onclick="handleModalBackdropClick(event)">
+    <div class="pdp-modal-dialog" role="dialog" aria-label="Size Guide">
+      <button type="button" class="pdp-modal-close" onclick="closeSizeGuideModal()" aria-label="Close Size Guide">✕</button>
+      
+      <div class="size-modal-header">
+        <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em; color: #8c652e;">Miss Rezanna Atelier</span>
+        <h3 class="size-modal-title">Kurta &amp; Pant Set Sizing Chart</h3>
+        <p style="font-size: 13px; color: #666; margin: 0;">Standard garment measurements in ready-to-wear condition.</p>
+      </div>
+
+      <div class="unit-toggle-wrap">
+        <button type="button" class="unit-toggle-btn active" id="btnUnitIn" onclick="switchSizeUnit('in')">Inches (in)</button>
+        <button type="button" class="unit-toggle-btn" id="btnUnitCm" onclick="switchSizeUnit('cm')">Centimeters (cm)</button>
+      </div>
+
+      <div class="size-chart-table-wrap">
+        <table class="size-chart-table" id="sizeChartTable">
+          <thead>
+            <tr>
+              <th>Size</th>
+              <th>Bust</th>
+              <th>Waist</th>
+              <th>Hip</th>
+              <th>Kurta Length</th>
+              <th>Shoulder</th>
+            </tr>
+          </thead>
+          <tbody id="sizeChartBody">
+            <!-- Dynamically populated by JS (inches / cm) -->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="how-to-measure-card">
+        <strong style="color: #111; display: block; margin-bottom: 6px;">📏 How to Measure:</strong>
+        <div>• <strong>Bust:</strong> Measure around the fullest part of your chest, keeping the tape level.</div>
+        <div>• <strong>Waist:</strong> Measure around your natural waistline, where your trousers sit.</div>
+        <div>• <strong>Hip:</strong> Measure around the fullest part of your hips and seat.</div>
+        <div>• <strong>Kurta Length:</strong> Measured from highest point of the shoulder down to the hemline.</div>
+      </div>
+    </div>
+  </div>
 
   <!-- Sticky Bottom Action Bar -->
   <div class="sticky-add-bar" id="stickyActionBar">
