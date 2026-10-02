@@ -178,7 +178,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </header>
 
-  <main class="pdp-main" style="padding-top: 100px;">
+  <main class="pdp-main" style="padding-top: 90px;">
+    <!-- 1. Breadcrumbs Navigation (Libas Standard) -->
+    <nav class="pdp-breadcrumbs" aria-label="Breadcrumbs">
+      <a href="index.html">Home</a>
+      <span class="breadcrumb-sep">/</span>
+      <a href="collection.html">Kurta Sets</a>
+      <span class="breadcrumb-sep">/</span>
+      <span class="breadcrumb-current" id="breadcrumb-current">Navy Blue Floral Embroidered Kurta Pant Set</span>
+    </nav>
+
     <div class="pdp-container">
       
       <!-- Left: Image Slider Gallery -->
@@ -229,65 +238,317 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <!-- Right: Sticky Product Info -->
       <div class="pdp-info">
-        <span class="pdp-label" id="pdp-label">Festive Edit</span>
-        <h1 class="pdp-title" id="pdp-title">Navy Blue Floral Embroidered Kurta Pant Set</h1>
-        <p class="pdp-price" id="pdp-price">₹ 2,360 <span style="text-decoration: line-through; color: #999; font-size: 0.8em; margin-left: 8px;">₹ 2,950</span> <span style="color: #c3a167; font-size: 0.75em; font-weight: 600; margin-left: 6px;">(20% OFF)</span></p>
-
-        <!-- Sizing -->
-        <div class="pdp-sizes">
-          <div class="size-header">
-            <span>Select Size</span>
-            <span class="size-guide-link">Size Guide</span>
+        <!-- 2. Rating & Bestseller Badge (Libas Standard) -->
+        <div class="pdp-meta-top">
+          <div class="pdp-rating-badge">
+            <span class="stars">★★★★★</span>
+            <span class="rating-val">4.9</span>
+            <span class="rating-count">(86)</span>
           </div>
-          <div class="size-grid" style="grid-template-columns: repeat(5, 1fr); gap: 8px;">
-            <button class="size-btn active">S</button>
-            <button class="size-btn">M</button>
-            <button class="size-btn">L</button>
-            <button class="size-btn">XL</button>
-            <button class="size-btn">2XL</button>
-            <button class="size-btn">3XL</button>
-            <button class="size-btn">4XL</button>
-            <button class="size-btn">5XL</button>
-            <button class="size-btn">6XL</button>
+          <span class="pdp-bestseller-badge">Bestseller</span>
+          <span class="pdp-sku" id="pdp-sku">SKU: MR-KU-001</span>
+        </div>
+
+        <!-- 3. Title & Price -->
+        <h1 class="pdp-title" id="pdp-title">Navy Blue Floral Embroidered Kurta Pant Set</h1>
+        
+        <div class="pdp-price-wrap" id="pdp-price-wrap">
+          <span class="pdp-price-current" id="pdp-price">₹ 2,360</span>
+          <span class="pdp-price-mrp" id="pdp-mrp">₹ 2,950</span>
+          <span class="pdp-discount-badge" id="pdp-discount">20% OFF</span>
+        </div>
+        <p class="pdp-tax-line">Inclusive of all taxes · Free Express Shipping on this order</p>
+
+        <!-- 4. Available Offers Strip (Libas Standard) -->
+        <div class="pdp-offers-card">
+          <div class="offers-header">
+            <i data-lucide="tag"></i>
+            <span>Available Offers</span>
+          </div>
+          <div class="offer-item">
+            <div class="offer-text">
+              <strong>Welcome Privilege:</strong> Flat 10% OFF on your order. Code: <span class="coupon-code" id="couponCode">FIRST10</span>
+            </div>
+            <button type="button" class="btn-copy-code" id="btnCopyCode" onclick="copyCouponCode('FIRST10')">Copy</button>
+          </div>
+          <div class="offer-item">
+            <div class="offer-text">
+              <strong>Prepaid Advantage:</strong> Instant 5% Extra OFF on UPI and Card checkouts.
+            </div>
           </div>
         </div>
 
-        <!-- Actions -->
+        <!-- 5. Color Indicator -->
+        <div class="pdp-color-row">
+          <span class="color-label">Color: <strong>Navy Blue (Multicolour Floral)</strong></span>
+          <div class="color-swatch-wrap">
+            <span class="color-swatch" style="background-color: #1a2744;" title="Navy Blue"></span>
+          </div>
+        </div>
+
+        <!-- 6. Sizing & Interactive Size Guide -->
+        <div class="pdp-sizes">
+          <div class="size-header">
+            <span>Select Size <span class="selected-size-label">(Selected: <strong id="currentSelectedSize">S</strong>)</span></span>
+            <button type="button" class="size-guide-trigger" onclick="openSizeGuideModal()">
+              <i data-lucide="ruler"></i> Size Guide
+            </button>
+          </div>
+          <div class="size-grid" style="grid-template-columns: repeat(5, 1fr); gap: 8px;">
+            <button class="size-btn active" data-size="S">S</button>
+            <button class="size-btn" data-size="M">M</button>
+            <button class="size-btn" data-size="L">L</button>
+            <button class="size-btn" data-size="XL">XL</button>
+            <button class="size-btn" data-size="2XL">2XL</button>
+            <button class="size-btn" data-size="3XL">3XL</button>
+            <button class="size-btn" data-size="4XL">4XL</button>
+            <button class="size-btn" data-size="5XL">5XL</button>
+            <button class="size-btn" data-size="6XL">6XL</button>
+          </div>
+        </div>
+
+        <!-- 7. Actions (Add to Bag / Buy Now / Teaser Mode Waitlist) -->
         <div class="pdp-actions" id="mainActions">
           <button class="btn-pdp btn-add">Add to Bag</button>
           <button class="btn-pdp btn-buy">Buy it Now</button>
         </div>
 
-        <!-- Details Accordion -->
+        <!-- 8. Share & Wishlist Row -->
+        <div class="pdp-share-row">
+          <button type="button" class="btn-share-pdp" onclick="shareProductWhatsApp()">
+            <i data-lucide="share-2"></i> Share via WhatsApp
+          </button>
+          <button type="button" class="btn-share-pdp" onclick="openWishlistDrawer()">
+            <i data-lucide="heart"></i> Save to Wishlist
+          </button>
+        </div>
+
+        <!-- 9. Pincode Delivery & COD Estimator (Libas Standard) -->
+        <div class="pdp-pincode-card">
+          <div class="pincode-header">
+            <i data-lucide="map-pin"></i>
+            <span>Check Delivery & COD Availability</span>
+          </div>
+          <div class="pincode-input-row">
+            <input type="text" id="pincodeInput" placeholder="Enter 6-digit PIN code" maxlength="6" inputmode="numeric">
+            <button type="button" id="btnCheckPincode" onclick="checkPincodeDelivery()">Check</button>
+          </div>
+          <div id="pincodeResult" class="pincode-result" style="display:none;"></div>
+        </div>
+
+        <!-- 10. 4-Pillar Trust Grid (Libas Standard) -->
+        <div class="pdp-trust-grid">
+          <div class="trust-item">
+            <i data-lucide="truck"></i>
+            <div>
+              <strong>Free Express Shipping</strong>
+              <span>Pan-India fast dispatch</span>
+            </div>
+          </div>
+          <div class="trust-item">
+            <i data-lucide="banknote"></i>
+            <div>
+              <strong>Cash on Delivery</strong>
+              <span>Pay securely at doorstep</span>
+            </div>
+          </div>
+          <div class="trust-item">
+            <i data-lucide="refresh-cw"></i>
+            <div>
+              <strong>14 Days Easy Returns</strong>
+              <span>Hassle-free exchange policy</span>
+            </div>
+          </div>
+          <div class="trust-item">
+            <i data-lucide="shield-check"></i>
+            <div>
+              <strong>Direct Atelier Quality</strong>
+              <span>Handcrafted in Ludhiana</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 11. Structured Details Accordion -->
         <div class="pdp-accordion">
+          <!-- Accordion 1: Details & Craft Story -->
           <div class="accordion-item">
             <button class="accordion-header" onclick="toggleAccordion(this)">
-              Product Details <i data-lucide="plus"></i>
+              Product Details &amp; Craft Story <i data-lucide="plus"></i>
             </button>
             <div class="accordion-content" id="pdp-desc" style="display:block">
-              An uncompromising statement of elegance. Crafted from pure, ethically sourced Mulberry silk, the Midnight Kurti offers a silhouette that moves like liquid dusk.
+              <p style="margin-bottom: 12px; font-weight: 500; line-height: 1.6;">
+                A refined navy blue kurta pant set featuring intricate multicolour floral embroidery, designed for the modern woman who appreciates understated elegance.
+              </p>
+              <p style="margin-bottom: 12px; line-height: 1.6;">
+                The deep navy base gives the ensemble a timeless character, while the delicate multicolour floral detailing adds depth and individuality. Paired with matching straight-cut pants, the set creates an effortlessly polished silhouette that transitions seamlessly from festive gatherings to intimate celebrations.
+              </p>
+              <p style="background: #fdfaf3; padding: 12px 16px; border-left: 3px solid #c3a167; margin-bottom: 14px; font-size: 0.95rem;">
+                <strong>Style It With:</strong> Minimal pearl earrings, delicate gold bracelets, and classic juttis or heels for an occasion-ready look.
+              </p>
             </div>
           </div>
           
+          <!-- Accordion 2: Specifications Table (Libas Format) -->
           <div class="accordion-item">
             <button class="accordion-header" onclick="toggleAccordion(this)">
-              Fit & Sizing <i data-lucide="plus"></i>
+              Complete Specifications <i data-lucide="plus"></i>
             </button>
             <div class="accordion-content">
-              Designed for a fluid, flattering drape that gracefully contours the body without clinging. True to size. We recommend selecting your standard size for the intended relaxed fit, or sizing down for a more structured silhouette.
+              <table style="width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 0.9rem;">
+                <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600; width: 45%;">Set Contains:</td><td style="padding: 8px 0;">Kurta &amp; Coordinated Pant (2-Piece Set)</td></tr>
+                <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600;">Kurta Fabric:</td><td style="padding: 8px 0;">Premium Soft Cotton Blend</td></tr>
+                <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600;">Work / Embellishment:</td><td style="padding: 8px 0;">Intricate Multicolour Floral Resham Embroidery</td></tr>
+                <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600;">Neckline:</td><td style="padding: 8px 0;">Mandarin Collar with Keyhole Slit</td></tr>
+                <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600;">Sleeves:</td><td style="padding: 8px 0;">3/4 Sleeves with Embroidered Cuffs</td></tr>
+                <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600;">Kurta Silhouette:</td><td style="padding: 8px 0;">Straight Cut with Side Slits</td></tr>
+                <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600;">Kurta Length:</td><td style="padding: 8px 0;">Calf Length (44–46 inches)</td></tr>
+                <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600;">Bottom Type:</td><td style="padding: 8px 0;">Straight-Fit Trousers</td></tr>
+                <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600;">Bottom Waistband:</td><td style="padding: 8px 0;">Partially Elasticated with Drawstring</td></tr>
+                <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600;">Pocket:</td><td style="padding: 8px 0;">1 Right Side Functional Pocket</td></tr>
+                <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600;">Occasion:</td><td style="padding: 8px 0;">Festive, Family Celebrations, Evening Wear</td></tr>
+                <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600;">Care:</td><td style="padding: 8px 0;">Dry Clean Recommended / Gentle Cold Wash</td></tr>
+                <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600;">Origin:</td><td style="padding: 8px 0;">Kinshu Knitwears Atelier, Ludhiana, Punjab</td></tr>
+              </table>
+            </div>
+          </div>
+
+          <!-- Accordion 3: Fit & Sizing -->
+          <div class="accordion-item">
+            <button class="accordion-header" onclick="toggleAccordion(this)">
+              Fit &amp; Size Advice <i data-lucide="plus"></i>
+            </button>
+            <div class="accordion-content">
+              <p style="margin-bottom: 8px; line-height: 1.6;">
+                <strong>Fit:</strong> Regular to relaxed straight silhouette. Designed with adequate ease for maximum comfort through extended celebrations.
+              </p>
+              <p style="margin-bottom: 8px; line-height: 1.6;">
+                <strong>Size Recommendation:</strong> Choose your standard Indian ethnic wear size. Available inclusively from <strong>S up to 6XL</strong>.
+              </p>
+              <p style="margin-bottom: 8px; line-height: 1.6;">
+                <strong>Model Stats:</strong> Model is 5'8" wearing size S.
+              </p>
             </div>
           </div>
           
+          <!-- Accordion 4: Shipping, COD & Returns -->
           <div class="accordion-item">
             <button class="accordion-header" onclick="toggleAccordion(this)">
-              Shipping & Returns <i data-lucide="plus"></i>
+              Shipping, Returns &amp; COD <i data-lucide="plus"></i>
             </button>
             <div class="accordion-content">
-              Complimentary express shipping across India. Returns are accepted within 14 days of delivery provided the item is unworn with tags attached.
+              <ul style="padding-left: 20px; line-height: 1.8;">
+                <li><strong>Free Express Shipping:</strong> Dispatched within 24 hours. Delivered across India within 3–5 business days.</li>
+                <li><strong>Cash on Delivery:</strong> Available across 19,000+ Indian postal codes.</li>
+                <li><strong>14-Day Easy Returns &amp; Exchanges:</strong> If the fit isn't perfect, initiate a return or size exchange within 14 days of delivery.</li>
+                <li><strong>Safe Packaging:</strong> Delivered in premium luxury tissue and signature branded box.</li>
+              </ul>
             </div>
           </div>
         </div>
         
+      </div>
+    </div>
+
+    <!-- 12. Full Width Customer Reviews & Verified Ratings (Libas Standard) -->
+    <section class="pdp-full-sections">
+      <div class="pdp-section-header">
+        <h2>Customer Reviews &amp; Ratings</h2>
+        <p>Real feedback from women across India who love MISS REZANNA</p>
+      </div>
+
+      <div class="reviews-summary-bar">
+        <div style="text-align: center;">
+          <div style="font-size: 2.8rem; font-family: 'Playfair Display', serif; font-weight: 700; color: #111; line-height: 1;">4.9</div>
+          <div style="color: #c3a167; font-size: 16px; margin: 4px 0;">★★★★★</div>
+          <div style="font-size: 12px; color: #777;">Based on 86 verified reviews</div>
+        </div>
+        <div style="border-left: 1px solid #e0d8c8; padding-left: 24px; font-size: 13px; line-height: 1.8; color: #444;">
+          <div>✦ <strong>98%</strong> reported true to size fit</div>
+          <div>✦ <strong>99%</strong> praised the embroidery detail &amp; fabric softness</div>
+          <div>✦ <strong>100%</strong> confirmed safe and timely delivery</div>
+        </div>
+      </div>
+
+      <div class="reviews-grid">
+        <div class="review-item">
+          <div class="review-header">
+            <span class="reviewer-name">Pooja M.</span>
+            <span class="review-date">Verified Buyer · New Delhi</span>
+          </div>
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">
+            "The navy blue shade is so rich and regal! The floral embroidery looks even more exquisite in person than in the photos. The pants fit comfortably with the elastic waist. Wore it to a Diwali dinner and received endless compliments!"
+          </p>
+          <span class="verified-purchase">✓ Verified Purchase · Size M</span>
+        </div>
+
+        <div class="review-item">
+          <div class="review-header">
+            <span class="reviewer-name">Simranjit K.</span>
+            <span class="review-date">Verified Buyer · Ludhiana</span>
+          </div>
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">
+            "Being from Ludhiana, I know quality textiles when I see them. MISS REZANNA's finishing and stitching are on another level compared to standard market suits. The fabric is super soft, breathable, and doesn't crease easily."
+          </p>
+          <span class="verified-purchase">✓ Verified Purchase · Size L</span>
+        </div>
+
+        <div class="review-item">
+          <div class="review-header">
+            <span class="reviewer-name">Ananya V.</span>
+            <span class="review-date">Verified Buyer · Bengaluru</span>
+          </div>
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">
+            "Hard to find premium ethnic wear sets that offer sizes up to 6XL without compromising on cut or design. The fit is exceptionally flattering. Fast delivery and beautiful unboxing experience!"
+          </p>
+          <span class="verified-purchase">✓ Verified Purchase · Size 2XL</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 13. Interactive Size Guide Modal Dialog (Inches & CM) -->
+    <div class="pdp-modal-overlay" id="sizeGuideModal" onclick="handleModalBackdropClick(event)">
+      <div class="pdp-modal-dialog" role="dialog" aria-label="Size Guide">
+        <button type="button" class="pdp-modal-close" onclick="closeSizeGuideModal()" aria-label="Close Size Guide">✕</button>
+        
+        <div class="size-modal-header">
+          <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em; color: #8c652e;">Miss Rezanna Atelier</span>
+          <h3 class="size-modal-title">Kurta &amp; Pant Set Sizing Chart</h3>
+          <p style="font-size: 13px; color: #666; margin: 0;">Standard garment measurements in ready-to-wear condition.</p>
+        </div>
+
+        <div class="unit-toggle-wrap">
+          <button type="button" class="unit-toggle-btn active" id="btnUnitIn" onclick="switchSizeUnit('in')">Inches (in)</button>
+          <button type="button" class="unit-toggle-btn" id="btnUnitCm" onclick="switchSizeUnit('cm')">Centimeters (cm)</button>
+        </div>
+
+        <div class="size-chart-table-wrap">
+          <table class="size-chart-table" id="sizeChartTable">
+            <thead>
+              <tr>
+                <th>Size</th>
+                <th>Bust</th>
+                <th>Waist</th>
+                <th>Hip</th>
+                <th>Kurta Length</th>
+                <th>Shoulder</th>
+              </tr>
+            </thead>
+            <tbody id="sizeChartBody">
+              <!-- Dynamically populated by JS (inches / cm) -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="how-to-measure-card">
+          <strong style="color: #111; display: block; margin-bottom: 6px;">📏 How to Measure:</strong>
+          <div>• <strong>Bust:</strong> Measure around the fullest part of your chest, keeping the tape level.</div>
+          <div>• <strong>Waist:</strong> Measure around your natural waistline, where your trousers sit.</div>
+          <div>• <strong>Hip:</strong> Measure around the fullest part of your hips and seat.</div>
+          <div>• <strong>Kurta Length:</strong> Measured from highest point of the shoulder down to the hemline.</div>
+        </div>
       </div>
     </div>
   </main>

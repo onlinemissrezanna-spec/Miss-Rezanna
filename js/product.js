@@ -32,8 +32,23 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', () => {
       sizeBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
+      const sz = btn.getAttribute('data-size') || btn.innerText.trim();
+      const currentSelectedSize = document.getElementById('currentSelectedSize');
+      if (currentSelectedSize) currentSelectedSize.innerText = sz;
     });
   });
+
+  // Auto-restore saved pincode if present
+  try {
+    const savedPin = localStorage.getItem('mr_saved_pincode');
+    if (savedPin) {
+      const pinInput = document.getElementById('pincodeInput');
+      if (pinInput) {
+        pinInput.value = savedPin;
+        window.checkPincodeDelivery();
+      }
+    }
+  } catch(e) {}
 
   // ========== IMAGE SLIDER CONTROLLER ==========
   let currentSlide = 0;
@@ -396,3 +411,150 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
   }
 });
+
+// ==========================================================================
+// LIBAS-INSPIRED PDP INTERACTIVE TOOLS & CONTROLLERS
+// ==========================================================================
+
+// 1. Size Guide Modal Controller (Inches & CM with Measurement Guide)
+const sizeChartData = [
+  { size: 'S', bustIn: 36, waistIn: 32, hipIn: 38, lengthIn: 44, shoulderIn: 14.5 },
+  { size: 'M', bustIn: 38, waistIn: 34, hipIn: 40, lengthIn: 44, shoulderIn: 15.0 },
+  { size: 'L', bustIn: 40, waistIn: 36, hipIn: 42, lengthIn: 45, shoulderIn: 15.5 },
+  { size: 'XL', bustIn: 42, waistIn: 38, hipIn: 44, lengthIn: 45, shoulderIn: 16.0 },
+  { size: '2XL', bustIn: 44, waistIn: 40, hipIn: 46, lengthIn: 46, shoulderIn: 16.5 },
+  { size: '3XL', bustIn: 46, waistIn: 42, hipIn: 48, lengthIn: 46, shoulderIn: 17.0 },
+  { size: '4XL', bustIn: 48, waistIn: 44, hipIn: 50, lengthIn: 46, shoulderIn: 17.5 },
+  { size: '5XL', bustIn: 50, waistIn: 46, hipIn: 52, lengthIn: 47, shoulderIn: 18.0 },
+  { size: '6XL', bustIn: 52, waistIn: 48, hipIn: 54, lengthIn: 47, shoulderIn: 18.5 }
+];
+
+let currentSizeUnit = 'in';
+
+function renderSizeChart(unit) {
+  const tbody = document.getElementById('sizeChartBody');
+  if (!tbody) return;
+
+  const isCm = unit === 'cm';
+  tbody.innerHTML = sizeChartData.map(row => {
+    const bust = isCm ? Math.round(row.bustIn * 2.54) : row.bustIn;
+    const waist = isCm ? Math.round(row.waistIn * 2.54) : row.waistIn;
+    const hip = isCm ? Math.round(row.hipIn * 2.54) : row.hipIn;
+    const len = isCm ? Math.round(row.lengthIn * 2.54) : row.lengthIn;
+    const shoulder = isCm ? (row.shoulderIn * 2.54).toFixed(1) : row.shoulderIn.toFixed(1);
+
+    return `
+      <tr>
+        <td><strong>${row.size}</strong></td>
+        <td>${bust} ${unit}</td>
+        <td>${waist} ${unit}</td>
+        <td>${hip} ${unit}</td>
+        <td>${len} ${unit}</td>
+        <td>${shoulder} ${unit}</td>
+      </tr>
+    `;
+  }).join('');
+}
+
+window.openSizeGuideModal = function() {
+  const modal = document.getElementById('sizeGuideModal');
+  if (modal) {
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    renderSizeChart(currentSizeUnit);
+  }
+};
+
+window.closeSizeGuideModal = function() {
+  const modal = document.getElementById('sizeGuideModal');
+  if (modal) {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+};
+
+window.handleModalBackdropClick = function(e) {
+  if (e.target && e.target.id === 'sizeGuideModal') {
+    window.closeSizeGuideModal();
+  }
+};
+
+window.switchSizeUnit = function(unit) {
+  currentSizeUnit = unit;
+  document.getElementById('btnUnitIn')?.classList.toggle('active', unit === 'in');
+  document.getElementById('btnUnitCm')?.classList.toggle('active', unit === 'cm');
+  renderSizeChart(unit);
+};
+
+// 2. Copy Coupon Code
+window.copyCouponCode = function(code) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(code).then(() => {
+      const btn = document.getElementById('btnCopyCode');
+      if (btn) {
+        btn.textContent = '✓ Copied';
+        setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+      }
+    }).catch(() => fallbackCopy(code));
+  } else {
+    fallbackCopy(code);
+  }
+};
+
+function fallbackCopy(code) {
+  const tempInput = document.createElement('input');
+  tempInput.value = code;
+  document.body.appendChild(tempInput);
+  tempInput.select();
+  try {
+    document.execCommand('copy');
+  } catch(e) {}
+  document.body.removeChild(tempInput);
+  const btn = document.getElementById('btnCopyCode');
+  if (btn) {
+    btn.textContent = '✓ Copied';
+    setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+  }
+}
+
+// 3. Pincode Delivery & COD Estimator (Libas Standard)
+window.checkPincodeDelivery = function() {
+  const input = document.getElementById('pincodeInput');
+  const result = document.getElementById('pincodeResult');
+  if (!input || !result) return;
+
+  const val = input.value.trim();
+  if (!/^\d{6}$/.test(val)) {
+    result.style.display = 'block';
+    result.className = 'pincode-result error';
+    result.innerHTML = '✕ Please enter a valid 6-digit Indian postal PIN code.';
+    return;
+  }
+
+  // Calculate estimated delivery: 4 days from today
+  const now = new Date();
+  now.setDate(now.getDate() + 4);
+  const dateStr = now.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short' });
+
+  result.style.display = 'block';
+  result.className = 'pincode-result success';
+  result.innerHTML = `
+    <div style="font-weight: 600; margin-bottom: 4px;">✓ Delivery available for <strong>${val}</strong></div>
+    <div>🚚 Estimated Delivery by <strong>${dateStr}</strong></div>
+    <div>💵 <strong>Cash on Delivery (COD)</strong> Available</div>
+    <div>🔄 14-Day Easy Return &amp; Size Exchange Eligible</div>
+  `;
+
+  try {
+    localStorage.setItem('mr_saved_pincode', val);
+  } catch(e) {}
+};
+
+// 4. WhatsApp Product Share
+window.shareProductWhatsApp = function() {
+  const url = window.location.href;
+  const title = document.getElementById('pdp-title')?.innerText || 'Navy Blue Floral Embroidered Kurta Pant Set';
+  const text = encodeURIComponent(`Hi! Check out this stunning ${title} by MISS REZANNA:\n${url}`);
+  window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+};
+
