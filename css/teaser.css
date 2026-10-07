@@ -3,32 +3,9 @@
    Warm Cashmere Pastel Rose-Ivory & Antique Burnished Gold
    ========================================================================== */
 
-/* Top Slim Announcement Bar */
+/* Top Slim Announcement Bar (Disabled) */
 .site-announcement-bar {
-  background-color: #241C18;
-  color: #F8EFEA;
-  border-bottom: 1px solid rgba(184, 145, 95, 0.35);
-  font-family: var(--font-body, 'Inter', sans-serif);
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  text-align: center;
-  padding: 10px 16px;
-  position: relative;
-  z-index: 1050;
-}
-
-.site-announcement-bar a {
-  color: #D4AF67;
-  text-decoration: underline;
-  margin-left: 6px;
-  font-weight: 600;
-  transition: color 0.2s ease;
-}
-
-.site-announcement-bar a:hover {
-  color: #ffffff;
+  display: none !important;
 }
 
 /* Teaser Hero Section - Luxury Pastel Gradient */
@@ -40,7 +17,7 @@
   justify-content: center;
   background: radial-gradient(circle at 50% 25%, #FFFDFB 0%, #F8EFEA 45%, #EFE1D8 100%);
   color: #241C18;
-  padding: 100px 24px 80px;
+  padding: 140px 24px 80px;
   overflow: hidden;
   text-align: center;
 }

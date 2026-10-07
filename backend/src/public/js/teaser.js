@@ -12,23 +12,11 @@
     return Boolean(window.SITE_CONFIG && window.SITE_CONFIG.TEASER_MODE);
   }
 
-  // 1. Top Announcement Bar across all pages
+  // 1. Top Announcement Bar (Disabled - removed so main title bar and buttons are never hidden)
   function initAnnouncementBar() {
-    if (!isTeaserMode()) return;
-    if (document.querySelector('.site-announcement-bar')) return;
-
-    const bar = document.createElement('div');
-    bar.className = 'site-announcement-bar';
-    bar.innerHTML = `
-      Winter 2026 coming soon.
-      <a href="index.html#waitlist">Join the waitlist for 24-hour early access &rarr;</a>
-    `;
-
-    const header = document.querySelector('.site-header');
-    if (header && header.parentNode) {
-      header.parentNode.insertBefore(bar, header);
-    } else {
-      document.body.insertAdjacentElement('afterbegin', bar);
+    const existing = document.querySelector('.site-announcement-bar');
+    if (existing) {
+      existing.remove();
     }
   }
 
