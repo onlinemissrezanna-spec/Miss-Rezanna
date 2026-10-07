@@ -4,6 +4,7 @@
 
 /* 1. 3D HOLOGRAM PORTAL (CENTER-RIGHT WELCOME STAGE) */
 .indian-model-3d-backdrop {
+  display: none !important;
   position: fixed;
   inset: 0;
   background: rgba(17, 17, 17, 0.65);

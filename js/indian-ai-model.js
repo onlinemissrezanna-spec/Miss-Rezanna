@@ -1,133 +1,11 @@
 /**
- * MISS REZANNA - 3D INDIAN AI MODEL & GREETING EXPERIENCE
- * Indian model wearing suit greets visitor with Namaste and morphs into AI Chatbot icon.
+ * MISS REZANNA - 3D INDIAN AI AVATAR INTEGRATION
+ * Configures the luxury chatbot launcher avatar.
+ * Initial calling / automatic modal popup and speech greeting have been disabled per user request.
  */
 
 (function() {
-  const SESSION_KEY = 'miss_rezanna_model_seen';
-  let hasSpoken = false;
-
-  function initIndianAiModel() {
-    if (sessionStorage.getItem(SESSION_KEY) || document.getElementById('indianModel3dBackdrop')) {
-      upgradeChatbotButtonAvatar();
-      return;
-    }
-
-    const greetingText = "Namaste! I am your AI agent from Miss Rezanna, how may I help you? If you require any information, I am just right here at your right side.";
-    const spokenText = "Namaste! I am your Ay Eye agent from Miss Rezanna, how may I help you? If you require any information, I am just right here at your right side.";
-
-    const modalHTML = `
-      <div id="indianModel3dBackdrop" class="indian-model-3d-backdrop" role="dialog" aria-label="Miss Rezanna 3D AI Model Greeting">
-        <div id="indianModel3dCard" class="indian-model-3d-card">
-          <div class="model-portrait-wrap">
-            <img src="images/ai_avatar_3d.jpg" alt="3D Pixar Indian AI Avatar in Miss Rezanna Suit" class="model-portrait-img">
-            <div class="model-namaste-badge">
-              <span>🙏</span> ❖ NAMASTE
-            </div>
-            <div id="modelSpeakingBadge" class="model-speaking-indicator" style="display:none;">
-              <span>♫</span> SPEAKING...
-            </div>
-          </div>
-
-          <div class="model-speech-panel">
-            <p id="modelSpeechTranscript" class="speech-transcript-text">
-              "Namaste! I am your AI agent from Miss Rezanna. How may I help you?"
-            </p>
-
-            <div class="model-action-buttons">
-              <button id="btnListenGreeting" class="btn-model-listen">
-                <span>♫</span> Hear Namaste Greeting
-              </button>
-              <button id="btnSkipToChatbot" class="btn-model-skip">
-                Skip to AI Chatbot ➤
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    `;
-
-    document.body.insertAdjacentHTML('beforeend', modalHTML);
-
-    const backdropEl = document.getElementById('indianModel3dBackdrop');
-    const cardEl = document.getElementById('indianModel3dCard');
-    const btnListen = document.getElementById('btnListenGreeting');
-    const btnSkip = document.getElementById('btnSkipToChatbot');
-    const speakingBadge = document.getElementById('modelSpeakingBadge');
-    const transcriptEl = document.getElementById('modelSpeechTranscript');
-
-    // 3D Parallax Tilt Effect on Mouse Move
-    if (backdropEl && cardEl) {
-      backdropEl.addEventListener('mousemove', (e) => {
-        if (cardEl.classList.contains('morphing-to-chatbot')) return;
-        const rect = cardEl.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
-        const rotateY = (e.clientX - centerX) / 18;
-        const rotateX = -(e.clientY - centerY) / 18;
-        cardEl.style.transform = `rotateY(${rotateY}deg) rotateX(${rotateX}deg) scale(1)`;
-      });
-
-      backdropEl.addEventListener('mouseleave', () => {
-        if (cardEl.classList.contains('morphing-to-chatbot')) return;
-        cardEl.style.transform = `rotateY(0deg) rotateX(0deg) scale(1)`;
-      });
-    }
-
-    setTimeout(() => {
-      if (backdropEl) backdropEl.classList.add('open');
-    }, 900);
-
-    if (btnListen) {
-      btnListen.addEventListener('click', () => {
-        btnListen.style.display = 'none';
-        btnSkip.innerText = 'Go to AI Chatbot ➤';
-        if (speakingBadge) speakingBadge.style.display = 'flex';
-        
-        speakIndianAiGreeting(greetingText, spokenText, transcriptEl, () => {
-          triggerMorphIntoChatbot();
-        });
-      });
-    }
-
-    if (btnSkip) {
-      btnSkip.addEventListener('click', () => {
-        if (activeAudio) {
-          activeAudio.pause();
-          activeAudio = null;
-        }
-        if ('speechSynthesis' in window) {
-          window.speechSynthesis.cancel();
-        }
-        triggerMorphIntoChatbot();
-      });
-    }
-
-    function triggerMorphIntoChatbot() {
-      sessionStorage.setItem(SESSION_KEY, 'true');
-
-      if (cardEl) {
-        cardEl.classList.add('morphing-to-chatbot');
-      }
-
-      setTimeout(() => {
-        if (backdropEl) {
-          backdropEl.classList.remove('open');
-          setTimeout(() => backdropEl.remove(), 600);
-        }
-
-        // Pulse the chatbot button & upgrade icon
-        const botBtn = document.getElementById('luxuryChatbotLauncher');
-        if (botBtn) {
-          botBtn.classList.add('ai-landing-pulse');
-          upgradeChatbotButtonAvatar();
-          setTimeout(() => {
-            botBtn.classList.remove('ai-landing-pulse');
-          }, 1200);
-        }
-      }, 950);
-    }
-  }
+  'use strict';
 
   function upgradeChatbotButtonAvatar() {
     const botBtn = document.getElementById('luxuryChatbotLauncher');
@@ -148,117 +26,14 @@
     }
   }
 
-  let activeAudio = null;
-
-  function speakIndianAiGreeting(displayText, spokenText, transcriptEl, onComplete) {
-    simulateTyping(displayText, transcriptEl, null);
-
-    try {
-      if (activeAudio) {
-        activeAudio.pause();
-        activeAudio = null;
-      }
-
-      const audio = new Audio('audio/sweet_girl_greeting.mp3');
-      activeAudio = audio;
-      audio.playbackRate = 1.02;
-
-      let audioHandled = false;
-
-      audio.onended = () => {
-        if (!audioHandled) {
-          audioHandled = true;
-          activeAudio = null;
-          if (onComplete) onComplete();
-        }
-      };
-
-      audio.onerror = () => {
-        if (!audioHandled) {
-          audioHandled = true;
-          activeAudio = null;
-          fallbackSpeechSynthesis(displayText, spokenText, onComplete);
-        }
-      };
-
-      const playPromise = audio.play();
-      if (playPromise !== undefined) {
-        playPromise.catch(() => {
-          fallbackSpeechSynthesis(displayText, spokenText, onComplete);
-        });
-      }
-    } catch (e) {
-      fallbackSpeechSynthesis(displayText, spokenText, onComplete);
+  function initIndianAiModel() {
+    // Ensure any previously created backdrop is cleaned up
+    const existing = document.getElementById('indianModel3dBackdrop');
+    if (existing) {
+      existing.remove();
     }
-  }
-
-  function fallbackSpeechSynthesis(displayText, spokenText, onComplete) {
-    if (!('speechSynthesis' in window)) {
-      if (onComplete) onComplete();
-      return;
-    }
-
-    window.speechSynthesis.cancel();
-
-    const utterance = new SpeechSynthesisUtterance(spokenText || displayText);
-    utterance.rate = 0.85;
-    utterance.pitch = 1.40;
-
-    const voices = window.speechSynthesis.getVoices() || [];
-    const maleNames = ['male', 'david', 'mark', 'george', 'ravi', 'prabhat', 'guy', 'stefan', 'richard', 'sean', 'james', 'alex', 'fred'];
-    const femaleKeywords = ['neerja', 'swara', 'heera', 'kalpana', 'anita', 'zira', 'samantha', 'victoria', 'karen', 'google uk english female', 'female', 'natural', 'neural', 'hazel', 'eva'];
-
-    const femaleOnly = voices.filter(v => {
-      const name = v.name.toLowerCase();
-      return !maleNames.some(m => name.includes(m));
-    });
-
-    let sweetFemaleVoice = femaleOnly.find(v => 
-      (v.lang.includes('IN') || v.lang.includes('hi') || v.name.toLowerCase().includes('india')) &&
-      femaleKeywords.some(k => v.name.toLowerCase().includes(k))
-    );
-
-    if (!sweetFemaleVoice) {
-      sweetFemaleVoice = femaleOnly.find(v => 
-        femaleKeywords.some(k => v.name.toLowerCase().includes(k))
-      );
-    }
-
-    if (sweetFemaleVoice) {
-      utterance.voice = sweetFemaleVoice;
-    }
-
-    utterance.onend = () => {
-      if (onComplete) onComplete();
-    };
-
-    utterance.onerror = () => {
-      if (onComplete) onComplete();
-    };
-
-    window.speechSynthesis.speak(utterance);
-  }
-
-  function simulateTyping(text, el, onDone) {
-    if (!el) return;
-    el.innerHTML = "";
-    let idx = 0;
-    const interval = setInterval(() => {
-      if (idx < text.length) {
-        el.innerHTML += text.charAt(idx);
-        idx++;
-      } else {
-        clearInterval(interval);
-        if (onDone) onDone();
-      }
-    }, 38);
-  }
-
-  // Ensure voices are loaded
-  if ('speechSynthesis' in window) {
-    window.speechSynthesis.onvoiceschanged = () => {
-      window.speechSynthesis.getVoices();
-    };
+    // Set launcher avatar thumbnail without any popup or initial audio calling
+    upgradeChatbotButtonAvatar();
   }
 
   if (document.readyState === 'loading') {

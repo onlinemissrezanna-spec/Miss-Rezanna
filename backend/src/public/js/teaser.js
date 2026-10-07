@@ -20,7 +20,7 @@
     const bar = document.createElement('div');
     bar.className = 'site-announcement-bar';
     bar.innerHTML = `
-      Winter 2026 launches 15/10/2026.
+      Winter 2026 coming soon.
       <a href="index.html#waitlist">Join the waitlist for 24-hour early access &rarr;</a>
     `;
 
@@ -32,50 +32,13 @@
     }
   }
 
-  // 2. Countdown Clock Logic
+  // 2. Countdown Clock Logic (Disabled - timing removed per request)
   function startCountdown(targetIsoDate, startIsoDate) {
-    const startDate = startIsoDate ? new Date(startIsoDate).getTime() : 0;
-    const targetDate = new Date(targetIsoDate).getTime();
-    const daysEl = document.getElementById('cd-days');
-    const hoursEl = document.getElementById('cd-hours');
-    const minsEl = document.getElementById('cd-mins');
-    const secsEl = document.getElementById('cd-secs');
     const clockEl = document.getElementById('winterCountdown');
-
-    if (!clockEl) return;
-
-    function update() {
-      const now = new Date().getTime();
-
-      // If scheduled countdown start time is in the future, keep countdown hidden
-      if (startDate && now < startDate) {
-        clockEl.style.display = 'none';
-        return;
-      }
-
-      clockEl.style.display = 'flex';
-
-      const diff = targetDate - now;
-
-      if (diff <= 0) {
-        clockEl.innerHTML = '<span class="countdown-live-msg">Launching Now</span>';
-        clearInterval(timerInterval);
-        return;
-      }
-
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const secs = Math.floor((diff % (1000 * 60)) / 1000);
-
-      if (daysEl) daysEl.textContent = String(days).padStart(2, '0');
-      if (hoursEl) hoursEl.textContent = String(hours).padStart(2, '0');
-      if (minsEl) minsEl.textContent = String(mins).padStart(2, '0');
-      if (secsEl) secsEl.textContent = String(secs).padStart(2, '0');
+    if (clockEl) {
+      clockEl.style.display = 'none';
+      clockEl.remove();
     }
-
-    update();
-    const timerInterval = setInterval(update, 1000);
   }
 
   // 3. Indian Phone Number Validator
@@ -217,28 +180,8 @@
           </h1>
           
           <p class="winter-teaser-subtitle">
-            Miss Rezanna Winter 2026 launches 15/10/2026. Join the private list for 24-hour early access and bespoke atelier previews.
+            Winter 2026 coming soon. Join the private list for 24-hour early access and bespoke atelier previews.
           </p>
-
-          <!-- Live Countdown (Scheduled to display from 01/10/2026 12:00 AM IST) -->
-          <div class="winter-countdown" id="winterCountdown" style="display: none;">
-            <div class="countdown-box">
-              <span class="countdown-number" id="cd-days">00</span>
-              <span class="countdown-label">Days</span>
-            </div>
-            <div class="countdown-box">
-              <span class="countdown-number" id="cd-hours">00</span>
-              <span class="countdown-label">Hours</span>
-            </div>
-            <div class="countdown-box">
-              <span class="countdown-number" id="cd-mins">00</span>
-              <span class="countdown-label">Minutes</span>
-            </div>
-            <div class="countdown-box">
-              <span class="countdown-number" id="cd-secs">00</span>
-              <span class="countdown-label">Seconds</span>
-            </div>
-          </div>
 
           <!-- Waitlist Card -->
           <div class="winter-waitlist-card">
@@ -280,10 +223,7 @@
     // Replace hero section content
     heroSection.outerHTML = teaserHeroHtml;
 
-    // Start countdown with start and target dates
-    const launchDate = window.SITE_CONFIG?.LAUNCH_DATETIME_IST || "2026-10-15T10:00:00+05:30";
-    const startDate = window.SITE_CONFIG?.COUNTDOWN_START_DATETIME_IST || "2026-10-01T00:00:00+05:30";
-    startCountdown(launchDate, startDate);
+    // Countdown display stopped per request
 
     // Bind form
     const form = document.getElementById('winterWaitlistForm');
@@ -347,7 +287,7 @@
       banner.innerHTML = `
         <h3>Winter 2026 is Coming</h3>
         <p>
-          Current collection items are out of stock in preparation for our Winter 2026 release on 15/10/2026.
+          Current collection items are out of stock in preparation for our Winter 2026 release.
           <br><a href="index.html#waitlist">Join the winter waitlist for 24-hour early access &rarr;</a>
         </p>
       `;

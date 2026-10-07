@@ -147,13 +147,13 @@
   }
 }
 
-/* 2. FLOATING ROYAL MUSIC CONTROLLER (BOTTOM-LEFT) */
+.ethnic-prologue-backdrop {
+  display: none !important;
+}
+
+/* 2. FLOATING ROYAL MUSIC CONTROLLER (HIDDEN) */
 .royal-music-player {
-  position: fixed;
-  bottom: 24px;
-  left: 24px;
-  z-index: 99990;
-  display: flex;
+  display: none !important;
   align-items: center;
   gap: 10px;
   background: rgba(24, 21, 17, 0.92);
