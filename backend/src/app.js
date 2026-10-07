@@ -47,9 +47,9 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/images', express.static(path.join(__dirname, 'public/images')));
 app.use('/images', express.static(path.join(__dirname, '../images')));
 app.use('/images', express.static(path.join(process.cwd(), 'images')));
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, '..')));
-app.use(express.static(process.cwd()));
+app.use(express.static(path.join(__dirname, 'public'), { extensions: ['html'] }));
+app.use(express.static(path.join(__dirname, '..'), { extensions: ['html'] }));
+app.use(express.static(process.cwd(), { extensions: ['html'] }));
 
 // Serve sitemap.xml and robots.txt for Search Engines
 app.get('/sitemap.xml', (req, res) => {
