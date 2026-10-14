@@ -9,19 +9,23 @@
  */
 
 window.SITE_CONFIG = {
-  // Teaser mode displays the countdown, waitlist hero, and hides seasonal/summer sections
-  TEASER_MODE: true,
+  // Live storefront active - ordering open
+  TEASER_MODE: false,
 
-  // Global out of stock override - disables add-to-cart, buy now, and blocks checkout
-  ALL_PRODUCTS_OUT_OF_STOCK: true,
+  // All products are IN STOCK with 10 units available per size
+  ALL_PRODUCTS_OUT_OF_STOCK: false,
+  STOCK_PER_SIZE: 10,
 
-  // Countdown display and launch timing paused per owner request - date to be confirmed
+  // Razorpay Gateway in Test Mode
+  RAZORPAY_TEST_MODE: true,
+  RAZORPAY_KEY_ID: 'rzp_test_THMHYLikeuEJLO',
+
+  // Countdown display and launch timing
   COUNTDOWN_START_DATETIME_IST: null,
   LAUNCH_DATETIME_IST: null,
 
-  // Form handler endpoint for waitlist submissions (e.g. Google Apps Script / webhook)
-  // If empty, submissions are recorded locally and push dataLayer events
-  WAITLIST_ENDPOINT: "", // Optional: Configure Google Sheets / Webhook URL if external sync desired
+  // Form handler endpoint for waitlist submissions
+  WAITLIST_ENDPOINT: "",
 
   // Brand contact information
   BRAND: {

@@ -225,11 +225,35 @@ function bindAddToCartButtons(currentProduct) {
     return;
   }
 
-  // Normal in-stock purchasing mode
+  // Normal in-stock purchasing mode: ensure buttons exist and are active
+  if (mainActions) {
+    mainActions.innerHTML = `
+      <button class="btn-pdp btn-add" id="btnAddToCart">Add to Bag</button>
+      <button class="btn-pdp btn-buy" id="btnBuyNow">Buy it Now</button>
+    `;
+  }
+  if (stickyBar) {
+    stickyBar.innerHTML = `
+      <div class="sticky-info">
+        <span class="sticky-title" id="sticky-title">${name}</span>
+        <span class="sticky-price" id="sticky-price">${price}</span>
+      </div>
+      <button class="btn-pdp btn-add">Add to Bag</button>
+      <button class="btn-pdp btn-buy">Buy it Now</button>
+    `;
+  }
+
+  // Enable all size buttons
+  document.querySelectorAll('.size-btn').forEach(btn => {
+    btn.classList.remove('disabled');
+    btn.removeAttribute('aria-disabled');
+    btn.removeAttribute('disabled');
+  });
+
   const activeSizeBtn = document.querySelector('.size-btn.active');
   const size = activeSizeBtn ? activeSizeBtn.innerText.trim() : 'M';
   
-  let img = 'images/navy-blue-embroidered-kurta-pant-set-1.png';
+  let img = 'images/black-embroidered-jacket-coord-set-1.jpg';
   if (currentProduct && currentProduct.images && currentProduct.images.length > 0) {
       img = currentProduct.images[0];
   } else {
@@ -241,8 +265,12 @@ function bindAddToCartButtons(currentProduct) {
       btn.removeAttribute('disabled');
       btn.removeAttribute('aria-disabled');
       btn.onclick = (e) => {
+          const currentSize = (document.querySelector('.size-btn.active')?.innerText || 'M').trim();
           if (typeof addToCart === 'function') {
-              addToCart(e, name, price, img, size, 'Standard');
+              addToCart(e, name, price, img, currentSize, 'Standard');
+              if (btn.classList.contains('btn-buy')) {
+                setTimeout(() => { window.location.href = 'cart.html'; }, 300);
+              }
           } else {
               console.warn('addToCart function missing, redirecting to cart page.');
               window.location.href = 'cart.html';
@@ -274,6 +302,8 @@ const staticProductCatalog = {
     discount: '25% OFF',
     label: 'Summer Luxe · 3-Piece Co-ord Set',
     inStock: true,
+    stock: 90,
+    stockPerSize: { S: 10, M: 10, L: 10, XL: 10, '2XL': 10, '3XL': 10, '4XL': 10, '5XL': 10, '6XL': 10 },
     images: [
       'images/black-embroidered-jacket-coord-set-1.jpg'
     ],
@@ -320,6 +350,8 @@ const staticProductCatalog = {
     discount: '25% OFF',
     label: 'Summer Soiree · 2-Piece Linen Co-ord Set',
     inStock: true,
+    stock: 90,
+    stockPerSize: { S: 10, M: 10, L: 10, XL: 10, '2XL': 10, '3XL': 10, '4XL': 10, '5XL': 10, '6XL': 10 },
     images: [
       'images/charcoal-floral-embroidered-tunic-coord-set-1.jpg'
     ],
@@ -366,6 +398,8 @@ const staticProductCatalog = {
     discount: '25% OFF',
     label: 'Artisanal Craft · 2-Piece Shirt Co-ord Set',
     inStock: true,
+    stock: 90,
+    stockPerSize: { S: 10, M: 10, L: 10, XL: 10, '2XL': 10, '3XL': 10, '4XL': 10, '5XL': 10, '6XL': 10 },
     images: [
       'images/sage-green-embroidered-linen-coord-set-1.jpg'
     ],
@@ -412,6 +446,8 @@ const staticProductCatalog = {
     discount: '25% OFF',
     label: 'Everyday Luxury · 2-Piece Pocket Co-ord Set',
     inStock: true,
+    stock: 90,
+    stockPerSize: { S: 10, M: 10, L: 10, XL: 10, '2XL': 10, '3XL': 10, '4XL': 10, '5XL': 10, '6XL': 10 },
     images: [
       'images/denim-blue-lotus-embroidered-coord-set-1.jpg'
     ],
@@ -458,6 +494,8 @@ const staticProductCatalog = {
     discount: '25% OFF',
     label: 'Atelier Couture · 2-Piece Embroidered Co-ord Set',
     inStock: true,
+    stock: 90,
+    stockPerSize: { S: 10, M: 10, L: 10, XL: 10, '2XL': 10, '3XL': 10, '4XL': 10, '5XL': 10, '6XL': 10 },
     images: [
       'images/ocean-teal-floral-embroidered-coord-set-1.jpg'
     ],
@@ -503,7 +541,9 @@ const staticProductCatalog = {
     mrp: '₹ 2,950',
     discount: '20% OFF',
     label: 'Festive Edit · Kurta Pant Set',
-    inStock: false,
+    inStock: true,
+    stock: 90,
+    stockPerSize: { S: 10, M: 10, L: 10, XL: 10, '2XL': 10, '3XL': 10, '4XL': 10, '5XL': 10, '6XL': 10 },
     images: [
       'images/navy-blue-embroidered-kurta-pant-set-1.png',
       'images/navy-blue-embroidered-kurta-pant-set-2.png',

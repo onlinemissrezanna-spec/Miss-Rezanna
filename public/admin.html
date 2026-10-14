@@ -1225,7 +1225,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="form-row" style="gap:16px;">
           <div>
             <div style="font-size:11px;color:var(--admin-text-secondary);text-transform:uppercase;letter-spacing:0.05em;">Merchant Environment</div>
-            <div style="font-weight:700;font-size:14px;color:#111;margin-top:4px;">Razorpay India (INR ₹)</div>
+            <div style="font-weight:700;font-size:14px;color:#b06000;margin-top:4px;"><span class="badge" style="background:#fef7e0;color:#b06000;font-weight:700;margin-right:6px;">TEST MODE ACTIVE</span> Razorpay India Sandbox (rzp_test_THMHYLikeuEJLO)</div>
           </div>
           <div>
             <div style="font-size:11px;color:var(--admin-text-secondary);text-transform:uppercase;letter-spacing:0.05em;">Webhook Secret Integration</div>
@@ -1454,11 +1454,161 @@ function logoutAdmin() {
 }
 
 // =============================================
-// MASTER LUXURY CATALOGUE (Single Exclusive Launch Product)
+// MASTER LUXURY CATALOGUE (All 6 Products - 10 Units Per Size: S to 6XL)
 // =============================================
 const MASTER_CATALOGUE = [
   {
     id: 1,
+    name: 'Zuri Arch Embroidered Jacket & Trousers Co-ord Set - Noir Black',
+    slug: 'black-embroidered-jacket-coord-set',
+    sku: 'MR-SS-001',
+    price: 2771,
+    basePrice: 2771,
+    originalPrice: 3695,
+    discountPercentage: 25,
+    category: { id: 1, name: 'Summer Co-ord Sets', slug: 'summer-coord-sets' },
+    status: 'active',
+    taxPercentage: 12,
+    images: ['images/black-embroidered-jacket-coord-set-1.jpg'],
+    description: 'The Zuri 3-Piece Co-ord Set unites architectural grandeur with fluid summer ease in a commanding noir black palette.',
+    seoTitle: 'Black Embroidered Jacket Co-ord Set for Women | Summer Edit — MISS REZANNA',
+    seoDescription: 'Shop the noir black embroidered jacket co-ord set by MISS REZANNA. Features antique gold arch threadwork, inner top & wide-leg trousers. Enjoy 25% off.',
+    focusKeyword: 'black embroidered jacket co-ord set',
+    stock: 90,
+    variants: [
+      { size: 'S', inventory: { stock: 10 } },
+      { size: 'M', inventory: { stock: 10 } },
+      { size: 'L', inventory: { stock: 10 } },
+      { size: 'XL', inventory: { stock: 10 } },
+      { size: '2XL', inventory: { stock: 10 } },
+      { size: '3XL', inventory: { stock: 10 } },
+      { size: '4XL', inventory: { stock: 10 } },
+      { size: '5XL', inventory: { stock: 10 } },
+      { size: '6XL', inventory: { stock: 10 } }
+    ]
+  },
+  {
+    id: 2,
+    name: 'Gulnar Rose Embroidered Linen Tunic Co-ord Set - Charcoal Slate',
+    slug: 'charcoal-floral-embroidered-tunic-coord-set',
+    sku: 'MR-SS-002',
+    price: 2621,
+    basePrice: 2621,
+    originalPrice: 3495,
+    discountPercentage: 25,
+    category: { id: 1, name: 'Summer Co-ord Sets', slug: 'summer-coord-sets' },
+    status: 'active',
+    taxPercentage: 12,
+    images: ['images/charcoal-floral-embroidered-tunic-coord-set-1.jpg'],
+    description: 'The Gulnar Co-ord Set features fine Kashmiri rosette embroidery down the front placket and across poet balloon sleeves in slub linen.',
+    seoTitle: 'Charcoal Linen Floral Embroidered Co-ord Set | Summer Wear — MISS REZANNA',
+    seoDescription: 'Buy charcoal slate linen-cotton co-ord set with rose pink floral embroidery & straight trousers. Handcrafted in Ludhiana for effortless summer grace. 25% off.',
+    focusKeyword: 'charcoal linen floral co-ord set',
+    stock: 90,
+    variants: [
+      { size: 'S', inventory: { stock: 10 } },
+      { size: 'M', inventory: { stock: 10 } },
+      { size: 'L', inventory: { stock: 10 } },
+      { size: 'XL', inventory: { stock: 10 } },
+      { size: '2XL', inventory: { stock: 10 } },
+      { size: '3XL', inventory: { stock: 10 } },
+      { size: '4XL', inventory: { stock: 10 } },
+      { size: '5XL', inventory: { stock: 10 } },
+      { size: '6XL', inventory: { stock: 10 } }
+    ]
+  },
+  {
+    id: 3,
+    name: 'Vanya Botanical Embroidered Linen Shirt Co-ord Set - Sage Mint',
+    slug: 'sage-green-embroidered-linen-coord-set',
+    sku: 'MR-SS-003',
+    price: 2400,
+    basePrice: 2400,
+    originalPrice: 3200,
+    discountPercentage: 25,
+    category: { id: 1, name: 'Summer Co-ord Sets', slug: 'summer-coord-sets' },
+    status: 'active',
+    taxPercentage: 12,
+    images: ['images/sage-green-embroidered-linen-coord-set-1.jpg'],
+    description: 'The Vanya Co-ord Set is designed in refreshing sage mint hue with symmetrical Suzani-inspired botanical vines and peacock wheel medallions in 100% fine slub linen.',
+    seoTitle: 'Sage Mint Green Embroidered Linen Co-ord Set for Women — MISS REZANNA',
+    seoDescription: 'Explore our sage green linen shirt co-ord set with intricate botanical vine embroidery and tailored trousers. Summer comfort meets artisan luxury at 25% off.',
+    focusKeyword: 'sage mint green linen co-ord set',
+    stock: 90,
+    variants: [
+      { size: 'S', inventory: { stock: 10 } },
+      { size: 'M', inventory: { stock: 10 } },
+      { size: 'L', inventory: { stock: 10 } },
+      { size: 'XL', inventory: { stock: 10 } },
+      { size: '2XL', inventory: { stock: 10 } },
+      { size: '3XL', inventory: { stock: 10 } },
+      { size: '4XL', inventory: { stock: 10 } },
+      { size: '5XL', inventory: { stock: 10 } },
+      { size: '6XL', inventory: { stock: 10 } }
+    ]
+  },
+  {
+    id: 4,
+    name: 'Padma Lotus Embroidered Summer Co-ord Set - Indigo Denim Blue',
+    slug: 'denim-blue-lotus-embroidered-coord-set',
+    sku: 'MR-SS-004',
+    price: 1980,
+    basePrice: 1980,
+    originalPrice: 2640,
+    discountPercentage: 25,
+    category: { id: 1, name: 'Summer Co-ord Sets', slug: 'summer-coord-sets' },
+    status: 'active',
+    taxPercentage: 12,
+    images: ['images/denim-blue-lotus-embroidered-coord-set-1.jpg'],
+    description: 'The Padma Co-ord Set redefines casual dressing with soft-washed slub chambray, lotus flower embroidery, and two deep functional side pockets.',
+    seoTitle: 'Indigo Denim Blue Lotus Embroidered Co-ord Set for Women — MISS REZANNA',
+    seoDescription: 'Shop indigo denim blue summer co-ord set with lotus threadwork & functional side pockets. Light, stylish everyday luxury at ₹1,980 (25% off). Fast shipping.',
+    focusKeyword: 'indigo denim lotus co-ord set',
+    stock: 90,
+    variants: [
+      { size: 'S', inventory: { stock: 10 } },
+      { size: 'M', inventory: { stock: 10 } },
+      { size: 'L', inventory: { stock: 10 } },
+      { size: 'XL', inventory: { stock: 10 } },
+      { size: '2XL', inventory: { stock: 10 } },
+      { size: '3XL', inventory: { stock: 10 } },
+      { size: '4XL', inventory: { stock: 10 } },
+      { size: '5XL', inventory: { stock: 10 } },
+      { size: '6XL', inventory: { stock: 10 } }
+    ]
+  },
+  {
+    id: 5,
+    name: 'Mehrab Floral Embroidered Luxury Co-ord Set - Ocean Teal',
+    slug: 'ocean-teal-floral-embroidered-coord-set',
+    sku: 'MR-SS-005',
+    price: 3071,
+    basePrice: 3071,
+    originalPrice: 4095,
+    discountPercentage: 25,
+    category: { id: 1, name: 'Summer Co-ord Sets', slug: 'summer-coord-sets' },
+    status: 'active',
+    taxPercentage: 12,
+    images: ['images/ocean-teal-floral-embroidered-coord-set-1.jpg'],
+    description: 'The Mehrab Co-ord Set features architectural Mughal floral border panels wrapping around shirt placket, side seams, cuffs, and trouser hem in pure cotton-linen.',
+    seoTitle: 'Ocean Teal Floral Embroidered Luxury Co-ord Set — MISS REZANNA',
+    seoDescription: 'Discover our ocean teal blue luxury co-ord set with architectural floral embroidery on tunic & matching trousers. Premium summer couture at 25% off.',
+    focusKeyword: 'ocean teal floral luxury co-ord set',
+    stock: 90,
+    variants: [
+      { size: 'S', inventory: { stock: 10 } },
+      { size: 'M', inventory: { stock: 10 } },
+      { size: 'L', inventory: { stock: 10 } },
+      { size: 'XL', inventory: { stock: 10 } },
+      { size: '2XL', inventory: { stock: 10 } },
+      { size: '3XL', inventory: { stock: 10 } },
+      { size: '4XL', inventory: { stock: 10 } },
+      { size: '5XL', inventory: { stock: 10 } },
+      { size: '6XL', inventory: { stock: 10 } }
+    ]
+  },
+  {
+    id: 6,
     name: 'Navy Blue Floral Embroidered Kurta Pant Set',
     slug: 'navy-blue-embroidered-kurta-pant-set',
     sku: 'MR-KS-013',
@@ -1466,42 +1616,565 @@ const MASTER_CATALOGUE = [
     basePrice: 2360,
     originalPrice: 2950,
     discountPercentage: 20,
-    category: { id: 1, name: 'Kurta Pant Sets' },
+    category: { id: 2, name: 'Kurta Pant Sets', slug: 'kurta-pant-sets' },
     status: 'active',
     taxPercentage: 12,
     images: [
-      'images/navy-blue-embroidered-kurta-pant-set-3.png',
       'images/navy-blue-embroidered-kurta-pant-set-1.png',
       'images/navy-blue-embroidered-kurta-pant-set-2.png',
+      'images/navy-blue-embroidered-kurta-pant-set-3.png',
       'images/navy-blue-embroidered-kurta-pant-set-4.png',
       'images/navy-blue-embroidered-kurta-pant-set-5.png'
     ],
     description: 'A refined navy blue kurta pant set featuring intricate multicolour floral embroidery, designed for the modern woman who appreciates understated elegance.',
-    variants: [{ size: 'M', inventory: { stock: 25 } }]
+    seoTitle: 'Navy Blue Embroidered Kurta Pant Set for Women | MISS REZANNA',
+    seoDescription: 'Shop the navy blue embroidered kurta pant set by MISS REZANNA, featuring intricate floral embroidery and a sophisticated contemporary silhouette.',
+    focusKeyword: 'navy blue embroidered kurta pant set',
+    stock: 90,
+    variants: [
+      { size: 'S', inventory: { stock: 10 } },
+      { size: 'M', inventory: { stock: 10 } },
+      { size: 'L', inventory: { stock: 10 } },
+      { size: 'XL', inventory: { stock: 10 } },
+      { size: '2XL', inventory: { stock: 10 } },
+      { size: '3XL', inventory: { stock: 10 } },
+      { size: '4XL', inventory: { stock: 10 } },
+      { size: '5XL', inventory: { stock: 10 } },
+      { size: '6XL', inventory: { stock: 10 } }
+    ]
+  }
+];
+
+// 12 Orders from Punjab (2 orders for each of the 6 products in the last 10 days)
+const DEFAULT_PUNJAB_ORDERS = [
+  // Product 1 - Order 1 (Ludhiana)
+  {
+    id: 1,
+    orderNumber: 'MR-2026-1001',
+    createdAt: '2026-10-06T11:24:00.000Z',
+    grandTotal: 2771,
+    totalAmount: 2771,
+    paymentStatus: 'Paid',
+    orderStatus: 'Delivered',
+    paymentMethod: 'Razorpay [Test Mode]',
+    paymentId: 'pay_test_RZP901001',
+    user: {
+      firstName: 'Simran',
+      lastName: 'Kaur',
+      email: 'simran.kaur.ldh@gmail.com',
+      phone: '+91 98140 23819'
+    },
+    shippingAddress: {
+      fullName: 'Simran Kaur',
+      addressLine1: 'House #142, Model Town',
+      addressLine2: 'Near Guru Nanak Stadium',
+      city: 'Ludhiana',
+      state: 'Punjab',
+      postalCode: '141002',
+      country: 'India',
+      phone: '+91 98140 23819'
+    },
+    items: [
+      {
+        id: 101,
+        productId: 1,
+        size: 'M',
+        color: 'Noir Black',
+        quantity: 1,
+        price: 2771,
+        product: {
+          name: 'Zuri Arch Embroidered Jacket & Trousers Co-ord Set - Noir Black',
+          images: [{ imageUrl: 'images/black-embroidered-jacket-coord-set-1.jpg' }]
+        }
+      }
+    ]
+  },
+  // Product 1 - Order 2 (Ludhiana)
+  {
+    id: 2,
+    orderNumber: 'MR-2026-1002',
+    createdAt: '2026-10-11T16:45:00.000Z',
+    grandTotal: 2771,
+    totalAmount: 2771,
+    paymentStatus: 'Paid',
+    orderStatus: 'Shipped',
+    paymentMethod: 'Razorpay [Test Mode]',
+    paymentId: 'pay_test_RZP901002',
+    user: {
+      firstName: 'Harpreet',
+      lastName: 'Singh',
+      email: 'harpreet.singh.ldh@gmail.com',
+      phone: '+91 98721 54320'
+    },
+    shippingAddress: {
+      fullName: 'Harpreet Singh',
+      addressLine1: 'Plot 28, Sarabha Nagar',
+      addressLine2: 'Opposite Kipps Market',
+      city: 'Ludhiana',
+      state: 'Punjab',
+      postalCode: '141001',
+      country: 'India',
+      phone: '+91 98721 54320'
+    },
+    items: [
+      {
+        id: 102,
+        productId: 1,
+        size: 'L',
+        color: 'Noir Black',
+        quantity: 1,
+        price: 2771,
+        product: {
+          name: 'Zuri Arch Embroidered Jacket & Trousers Co-ord Set - Noir Black',
+          images: [{ imageUrl: 'images/black-embroidered-jacket-coord-set-1.jpg' }]
+        }
+      }
+    ]
+  },
+  // Product 2 - Order 1 (SAS Nagar Mohali)
+  {
+    id: 3,
+    orderNumber: 'MR-2026-1003',
+    createdAt: '2026-10-07T14:15:00.000Z',
+    grandTotal: 2621,
+    totalAmount: 2621,
+    paymentStatus: 'Paid',
+    orderStatus: 'Delivered',
+    paymentMethod: 'Razorpay [Test Mode]',
+    paymentId: 'pay_test_RZP901003',
+    user: {
+      firstName: 'Gurleen',
+      lastName: 'Sandhu',
+      email: 'gurleen.sandhu.mohali@gmail.com',
+      phone: '+91 98882 17409'
+    },
+    shippingAddress: {
+      fullName: 'Gurleen Sandhu',
+      addressLine1: 'Flat 402, Homeland Heights',
+      addressLine2: 'Sector 70',
+      city: 'SAS Nagar (Mohali)',
+      state: 'Punjab',
+      postalCode: '160071',
+      country: 'India',
+      phone: '+91 98882 17409'
+    },
+    items: [
+      {
+        id: 103,
+        productId: 2,
+        size: 'S',
+        color: 'Charcoal Slate',
+        quantity: 1,
+        price: 2621,
+        product: {
+          name: 'Gulnar Rose Embroidered Linen Tunic Co-ord Set - Charcoal Slate',
+          images: [{ imageUrl: 'images/charcoal-floral-embroidered-tunic-coord-set-1.jpg' }]
+        }
+      }
+    ]
+  },
+  // Product 2 - Order 2 (Mohali)
+  {
+    id: 4,
+    orderNumber: 'MR-2026-1004',
+    createdAt: '2026-10-12T18:10:00.000Z',
+    grandTotal: 2621,
+    totalAmount: 2621,
+    paymentStatus: 'Paid',
+    orderStatus: 'Shipped',
+    paymentMethod: 'Razorpay [Test Mode]',
+    paymentId: 'pay_test_RZP901004',
+    user: {
+      firstName: 'Amanat',
+      lastName: 'Dhillon',
+      email: 'amanat.dhillon.mhl@gmail.com',
+      phone: '+91 94172 90812'
+    },
+    shippingAddress: {
+      fullName: 'Amanat Dhillon',
+      addressLine1: 'House 318, Phase 3B2',
+      addressLine2: 'Near Rose Garden',
+      city: 'Mohali',
+      state: 'Punjab',
+      postalCode: '160059',
+      country: 'India',
+      phone: '+91 94172 90812'
+    },
+    items: [
+      {
+        id: 104,
+        productId: 2,
+        size: 'XL',
+        color: 'Charcoal Slate',
+        quantity: 1,
+        price: 2621,
+        product: {
+          name: 'Gulnar Rose Embroidered Linen Tunic Co-ord Set - Charcoal Slate',
+          images: [{ imageUrl: 'images/charcoal-floral-embroidered-tunic-coord-set-1.jpg' }]
+        }
+      }
+    ]
+  },
+  // Product 3 - Order 1 (Amritsar)
+  {
+    id: 5,
+    orderNumber: 'MR-2026-1005',
+    createdAt: '2026-10-08T10:30:00.000Z',
+    grandTotal: 2400,
+    totalAmount: 2400,
+    paymentStatus: 'Paid',
+    orderStatus: 'Delivered',
+    paymentMethod: 'Razorpay [Test Mode]',
+    paymentId: 'pay_test_RZP901005',
+    user: {
+      firstName: 'Jasleen',
+      lastName: 'Chawla',
+      email: 'jasleen.chawla.asr@gmail.com',
+      phone: '+91 98150 63481'
+    },
+    shippingAddress: {
+      fullName: 'Jasleen Chawla',
+      addressLine1: '54 Lawrence Road',
+      addressLine2: 'Near Novelty Mall',
+      city: 'Amritsar',
+      state: 'Punjab',
+      postalCode: '143001',
+      country: 'India',
+      phone: '+91 98150 63481'
+    },
+    items: [
+      {
+        id: 105,
+        productId: 3,
+        size: 'M',
+        color: 'Sage Mint',
+        quantity: 1,
+        price: 2400,
+        product: {
+          name: 'Vanya Botanical Embroidered Linen Shirt Co-ord Set - Sage Mint',
+          images: [{ imageUrl: 'images/sage-green-embroidered-linen-coord-set-1.jpg' }]
+        }
+      }
+    ]
+  },
+  // Product 3 - Order 2 (Amritsar)
+  {
+    id: 6,
+    orderNumber: 'MR-2026-1006',
+    createdAt: '2026-10-13T12:05:00.000Z',
+    grandTotal: 2400,
+    totalAmount: 2400,
+    paymentStatus: 'Paid',
+    orderStatus: 'Confirmed',
+    paymentMethod: 'Razorpay [Test Mode]',
+    paymentId: 'pay_test_RZP901006',
+    user: {
+      firstName: 'Manpreet',
+      lastName: 'Grewal',
+      email: 'manpreet.grewal.asr@gmail.com',
+      phone: '+91 98765 41209'
+    },
+    shippingAddress: {
+      fullName: 'Manpreet Grewal',
+      addressLine1: '112 Mall Road',
+      addressLine2: 'Green Avenue',
+      city: 'Amritsar',
+      state: 'Punjab',
+      postalCode: '143002',
+      country: 'India',
+      phone: '+91 98765 41209'
+    },
+    items: [
+      {
+        id: 106,
+        productId: 3,
+        size: '2XL',
+        color: 'Sage Mint',
+        quantity: 1,
+        price: 2400,
+        product: {
+          name: 'Vanya Botanical Embroidered Linen Shirt Co-ord Set - Sage Mint',
+          images: [{ imageUrl: 'images/sage-green-embroidered-linen-coord-set-1.jpg' }]
+        }
+      }
+    ]
+  },
+  // Product 4 - Order 1 (Jalandhar)
+  {
+    id: 7,
+    orderNumber: 'MR-2026-1007',
+    createdAt: '2026-10-09T15:20:00.000Z',
+    grandTotal: 1980,
+    totalAmount: 1980,
+    paymentStatus: 'Paid',
+    orderStatus: 'Delivered',
+    paymentMethod: 'Razorpay [Test Mode]',
+    paymentId: 'pay_test_RZP901007',
+    user: {
+      firstName: 'Ravneet',
+      lastName: 'Sidhu',
+      email: 'ravneet.sidhu.jal@gmail.com',
+      phone: '+91 94631 82940'
+    },
+    shippingAddress: {
+      fullName: 'Ravneet Sidhu',
+      addressLine1: '89 Urban Estate Phase 1',
+      addressLine2: 'Near Cantt Road',
+      city: 'Jalandhar',
+      state: 'Punjab',
+      postalCode: '144022',
+      country: 'India',
+      phone: '+91 94631 82940'
+    },
+    items: [
+      {
+        id: 107,
+        productId: 4,
+        size: 'S',
+        color: 'Indigo Denim Blue',
+        quantity: 1,
+        price: 1980,
+        product: {
+          name: 'Padma Lotus Embroidered Summer Co-ord Set - Indigo Denim Blue',
+          images: [{ imageUrl: 'images/denim-blue-lotus-embroidered-coord-set-1.jpg' }]
+        }
+      }
+    ]
+  },
+  // Product 4 - Order 2 (Jalandhar)
+  {
+    id: 8,
+    orderNumber: 'MR-2026-1008',
+    createdAt: '2026-10-14T09:40:00.000Z',
+    grandTotal: 1980,
+    totalAmount: 1980,
+    paymentStatus: 'Paid',
+    orderStatus: 'Confirmed',
+    paymentMethod: 'Razorpay [Test Mode]',
+    paymentId: 'pay_test_RZP901008',
+    user: {
+      firstName: 'Navjot',
+      lastName: 'Bains',
+      email: 'navjot.bains.jal@gmail.com',
+      phone: '+91 98889 31750'
+    },
+    shippingAddress: {
+      fullName: 'Navjot Bains',
+      addressLine1: '24 Model Town Market',
+      addressLine2: 'Near Nikku Park',
+      city: 'Jalandhar',
+      state: 'Punjab',
+      postalCode: '144003',
+      country: 'India',
+      phone: '+91 98889 31750'
+    },
+    items: [
+      {
+        id: 108,
+        productId: 4,
+        size: 'L',
+        color: 'Indigo Denim Blue',
+        quantity: 1,
+        price: 1980,
+        product: {
+          name: 'Padma Lotus Embroidered Summer Co-ord Set - Indigo Denim Blue',
+          images: [{ imageUrl: 'images/denim-blue-lotus-embroidered-coord-set-1.jpg' }]
+        }
+      }
+    ]
+  },
+  // Product 5 - Order 1 (Patiala)
+  {
+    id: 9,
+    orderNumber: 'MR-2026-1009',
+    createdAt: '2026-10-09T17:50:00.000Z',
+    grandTotal: 3071,
+    totalAmount: 3071,
+    paymentStatus: 'Paid',
+    orderStatus: 'Delivered',
+    paymentMethod: 'Razorpay [Test Mode]',
+    paymentId: 'pay_test_RZP901009',
+    user: {
+      firstName: 'Prabhjot',
+      lastName: 'Gill',
+      email: 'prabhjot.gill.pta@gmail.com',
+      phone: '+91 98780 19283'
+    },
+    shippingAddress: {
+      fullName: 'Prabhjot Gill',
+      addressLine1: '17 Baradari Gardens',
+      addressLine2: 'Near Circuit House',
+      city: 'Patiala',
+      state: 'Punjab',
+      postalCode: '147001',
+      country: 'India',
+      phone: '+91 98780 19283'
+    },
+    items: [
+      {
+        id: 109,
+        productId: 5,
+        size: 'M',
+        color: 'Ocean Teal',
+        quantity: 1,
+        price: 3071,
+        product: {
+          name: 'Mehrab Floral Embroidered Luxury Co-ord Set - Ocean Teal',
+          images: [{ imageUrl: 'images/ocean-teal-floral-embroidered-coord-set-1.jpg' }]
+        }
+      }
+    ]
+  },
+  // Product 5 - Order 2 (Patiala)
+  {
+    id: 10,
+    orderNumber: 'MR-2026-1010',
+    createdAt: '2026-10-14T15:15:00.000Z',
+    grandTotal: 3071,
+    totalAmount: 3071,
+    paymentStatus: 'Paid',
+    orderStatus: 'Confirmed',
+    paymentMethod: 'Razorpay [Test Mode]',
+    paymentId: 'pay_test_RZP901010',
+    user: {
+      firstName: 'Kirat',
+      lastName: 'Walia',
+      email: 'kirat.walia.pta@gmail.com',
+      phone: '+91 98144 77210'
+    },
+    shippingAddress: {
+      fullName: 'Kirat Walia',
+      addressLine1: '76 Leela Bhawan',
+      addressLine2: 'Opposite Polo Ground',
+      city: 'Patiala',
+      state: 'Punjab',
+      postalCode: '147001',
+      country: 'India',
+      phone: '+91 98144 77210'
+    },
+    items: [
+      {
+        id: 110,
+        productId: 5,
+        size: '3XL',
+        color: 'Ocean Teal',
+        quantity: 1,
+        price: 3071,
+        product: {
+          name: 'Mehrab Floral Embroidered Luxury Co-ord Set - Ocean Teal',
+          images: [{ imageUrl: 'images/ocean-teal-floral-embroidered-coord-set-1.jpg' }]
+        }
+      }
+    ]
+  },
+  // Product 6 - Order 1 (Bathinda)
+  {
+    id: 11,
+    orderNumber: 'MR-2026-1011',
+    createdAt: '2026-10-10T13:40:00.000Z',
+    grandTotal: 2360,
+    totalAmount: 2360,
+    paymentStatus: 'Paid',
+    orderStatus: 'Delivered',
+    paymentMethod: 'Razorpay [Test Mode]',
+    paymentId: 'pay_test_RZP901011',
+    user: {
+      firstName: 'Sukhmani',
+      lastName: 'Virdi',
+      email: 'sukhmani.virdi.bta@gmail.com',
+      phone: '+91 94170 33891'
+    },
+    shippingAddress: {
+      fullName: 'Sukhmani Virdi',
+      addressLine1: '204 Civil Lines',
+      addressLine2: 'Near Rose Garden',
+      city: 'Bathinda',
+      state: 'Punjab',
+      postalCode: '151001',
+      country: 'India',
+      phone: '+91 94170 33891'
+    },
+    items: [
+      {
+        id: 111,
+        productId: 6,
+        size: 'M',
+        color: 'Navy Blue',
+        quantity: 1,
+        price: 2360,
+        product: {
+          name: 'Navy Blue Floral Embroidered Kurta Pant Set',
+          images: [{ imageUrl: 'images/navy-blue-embroidered-kurta-pant-set-1.png' }]
+        }
+      }
+    ]
+  },
+  // Product 6 - Order 2 (Hoshiarpur)
+  {
+    id: 12,
+    orderNumber: 'MR-2026-1012',
+    createdAt: '2026-10-14T19:30:00.000Z',
+    grandTotal: 2360,
+    totalAmount: 2360,
+    paymentStatus: 'Paid',
+    orderStatus: 'Confirmed',
+    paymentMethod: 'Razorpay [Test Mode]',
+    paymentId: 'pay_test_RZP901012',
+    user: {
+      firstName: 'Jasmeen',
+      lastName: 'Ahluwalia',
+      email: 'jasmeen.ahluwalia.hsp@gmail.com',
+      phone: '+91 98722 66145'
+    },
+    shippingAddress: {
+      fullName: 'Jasmeen Ahluwalia',
+      addressLine1: '58 Railway Road',
+      addressLine2: 'Near Clock Tower',
+      city: 'Hoshiarpur',
+      state: 'Punjab',
+      postalCode: '146001',
+      country: 'India',
+      phone: '+91 98722 66145'
+    },
+    items: [
+      {
+        id: 112,
+        productId: 6,
+        size: 'XL',
+        color: 'Navy Blue',
+        quantity: 1,
+        price: 2360,
+        product: {
+          name: 'Navy Blue Floral Embroidered Kurta Pant Set',
+          images: [{ imageUrl: 'images/navy-blue-embroidered-kurta-pant-set-1.png' }]
+        }
+      }
+    ]
   }
 ];
 
 function getStoredProducts() {
   try {
-    const raw = localStorage.getItem('mr_admin_products_v3');
+    const raw = localStorage.getItem('mr_admin_products_v4');
     if (raw) {
       const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      if (Array.isArray(parsed) && parsed.length >= 6) return parsed;
     }
   } catch (e) {}
-  localStorage.setItem('mr_admin_products_v3', JSON.stringify(MASTER_CATALOGUE));
+  localStorage.setItem('mr_admin_products_v4', JSON.stringify(MASTER_CATALOGUE));
   return MASTER_CATALOGUE;
 }
 
 function getStoredOrders() {
   try {
-    const raw = localStorage.getItem('mr_admin_orders') || localStorage.getItem('mr_orders');
+    const raw = localStorage.getItem('mr_admin_orders_v4');
     if (raw) {
       const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed)) return parsed;
+      if (Array.isArray(parsed) && parsed.length >= 12) return parsed;
     }
   } catch (e) {}
-  return [];
+  localStorage.setItem('mr_admin_orders_v4', JSON.stringify(DEFAULT_PUNJAB_ORDERS));
+  return DEFAULT_PUNJAB_ORDERS;
 }
 
 // =============================================
@@ -1524,6 +2197,20 @@ async function api(path, method = 'GET', body = null) {
 
   // Intercept products requests if backend is unreachable
   if (path.includes('/products') && method === 'GET') {
+    const singleProdMatch = path.match(/\/products\/([^?&]+)/);
+    if (singleProdMatch && !singleProdMatch[1].startsWith('?')) {
+      const pIdOrSlug = decodeURIComponent(singleProdMatch[1]);
+      try {
+        const res = await fetch(`${API}${path}`, opts);
+        if (res.ok) {
+          const d = await res.json();
+          if (d.data || d.id || d.name) return d.data || d;
+        }
+      } catch(e) {}
+      const prods = getStoredProducts();
+      const found = prods.find(p => p.id == pIdOrSlug || p.slug === pIdOrSlug);
+      if (found) return found;
+    }
     try {
       const res = await fetch(`${API}${path}`, opts);
       if (res.ok) {
@@ -1538,6 +2225,19 @@ async function api(path, method = 'GET', body = null) {
 
   // Intercept orders requests if backend is unreachable
   if (path.includes('/orders') && method === 'GET') {
+    const singleOrderMatch = path.match(/\/orders\/(\d+)/);
+    if (singleOrderMatch) {
+      try {
+        const res = await fetch(`${API}${path}`, opts);
+        if (res.ok) {
+          const d = await res.json();
+          if (d.data || d.id) return d.data || d;
+        }
+      } catch(e) {}
+      const ords = getStoredOrders();
+      const found = ords.find(o => o.id == singleOrderMatch[1] || o.orderNumber == singleOrderMatch[1]);
+      if (found) return found;
+    }
     try {
       const res = await fetch(`${API}${path}`, opts);
       if (res.ok) {
@@ -1637,7 +2337,8 @@ async function loadRazorpayDashboard() {
 
   try {
     const data = await api('/orders?limit=100');
-    const orders = data.orders || [];
+    let orders = data.orders || [];
+    if (!orders.length) orders = getStoredOrders();
 
     if (!orders.length) {
       container.innerHTML = '<tr><td colspan="7" class="loading-text">No payment records found.</td></tr>';
@@ -1649,7 +2350,7 @@ async function loadRazorpayDashboard() {
 
     const rows = orders.map(o => {
       const isPaid = (o.paymentStatus || '').toLowerCase() === 'paid';
-      const amount = parseFloat(o.totalAmount || 0);
+      const amount = parseFloat(o.totalAmount || o.grandTotal || 0);
       if (isPaid) {
         totalVolume += amount;
         paidCount++;
@@ -1658,7 +2359,7 @@ async function loadRazorpayDashboard() {
       const rzpId = o.paymentId || `pay_rzp_${o.id * 1000 + 123}`;
       const customerName = o.user ? `${o.user.firstName || ''} ${o.user.lastName || ''}`.trim() : 'Guest Customer';
       const customerEmail = o.user?.email || 'N/A';
-      const payMethod = o.paymentMethod || 'Razorpay UPI / Cards';
+      const payMethod = o.paymentMethod || 'Razorpay [Test Mode]';
 
       const statusBadge = isPaid
         ? `<span class="badge badge-active" style="background:#e6f4ea;color:#137333;">Captured (Paid)</span>`
@@ -2049,9 +2750,10 @@ async function loadProducts() {
       const hasYoutube = p.youtubeUrl ? true : false;
       const tax = parseFloat(p.taxPercentage || 0);
       let stock = 0;
-      if (p.variants && p.variants[0] && p.variants[0].inventory) {
-          stock = p.variants[0].inventory.stock || 0;
+      if (p.variants && Array.isArray(p.variants) && p.variants.length > 0) {
+        stock = p.variants.reduce((sum, v) => sum + (v.inventory?.stock || 0), 0);
       }
+      if (!stock && p.stock) stock = p.stock;
 
       return `<div class="product-admin-card">
         <div style="position:relative;">
@@ -2067,7 +2769,7 @@ async function loadProducts() {
           <div class="product-admin-meta">
             <span>${p.category?.name || 'Collection'}</span>
             <span class="badge badge-${status}">${status}</span>
-            <div style="font-size:11px;color:var(--admin-text-secondary);margin-top:6px;font-weight:600;">Stock: ${stock} &nbsp;|&nbsp; Tax: ${tax}%</div>
+            <div style="font-size:11px;color:var(--admin-text-secondary);margin-top:6px;font-weight:600;"><span class="badge badge-active" style="background:#e6f4ea;color:#137333;font-size:10px;padding:2px 6px;">In Stock</span> ${stock} units (10/size) &nbsp;|&nbsp; Tax: ${tax}%</div>
           </div>
           
           <div class="product-card-actions">
@@ -2138,9 +2840,10 @@ async function openEditProductModal(productId) {
     currentEditPhotos = photos;
 
     let stock = 0;
-    if (p.variants && p.variants[0] && p.variants[0].inventory) {
-        stock = p.variants[0].inventory.stock || 0;
+    if (p.variants && Array.isArray(p.variants) && p.variants.length > 0) {
+      stock = p.variants.reduce((sum, v) => sum + (v.inventory?.stock || 0), 0);
     }
+    if (!stock && p.stock) stock = p.stock;
     p.stock = stock;
 
     renderProductFormModal(productId, p);

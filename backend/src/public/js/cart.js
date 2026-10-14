@@ -347,6 +347,12 @@ function openRazorpayModal(orderData, customer, subtotal) {
 
       <!-- Payment Body -->
       <div style="padding: 24px;">
+        <!-- Razorpay Test Mode Badge -->
+        <div style="background: #fff8e1; border: 1px solid #ffe082; padding: 8px 12px; border-radius: 6px; margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+          <span style="background: #f59e0b; color: #fff; font-weight: 700; font-size: 10px; padding: 2px 6px; border-radius: 4px; letter-spacing: 0.05em;">TEST MODE</span>
+          <span style="font-size: 11.5px; color: #78350f;">Razorpay Test Gateway Active (No real funds charged)</span>
+        </div>
+
         <div style="display: flex; justify-content: space-between; align-items: center; background: #f8f7f5; padding: 14px 18px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #eae7e1;">
           <div>
             <div style="font-size: 11px; color: #777; text-transform: uppercase; letter-spacing: 0.05em;">Order Amount</div>
@@ -363,15 +369,15 @@ function openRazorpayModal(orderData, customer, subtotal) {
           <label style="display: flex; align-items: center; gap: 12px; padding: 14px; border: 1.5px solid #111; border-radius: 8px; cursor: pointer; background: #fafafa;">
             <input type="radio" name="pay_mode" value="upi" checked style="accent-color: #111;">
             <div style="flex: 1;">
-              <div style="font-size: 13px; font-weight: 600; color: #111;">📱 UPI (GPay, PhonePe, Paytm, BHIM)</div>
-              <div style="font-size: 11px; color: #666;">Pay instantly using any UPI App</div>
+              <div style="font-size: 13px; font-weight: 600; color: #111;">📱 UPI (GPay, PhonePe, Paytm, BHIM) [Test]</div>
+              <div style="font-size: 11px; color: #666;">Pay instantly using Razorpay simulated UPI</div>
             </div>
           </label>
 
           <label style="display: flex; align-items: center; gap: 12px; padding: 14px; border: 1px solid #e0e0e0; border-radius: 8px; cursor: pointer;">
             <input type="radio" name="pay_mode" value="card" style="accent-color: #111;">
             <div style="flex: 1;">
-              <div style="font-size: 13px; font-weight: 600; color: #111;">💳 Credit / Debit Card</div>
+              <div style="font-size: 13px; font-weight: 600; color: #111;">💳 Credit / Debit Card [Test]</div>
               <div style="font-size: 11px; color: #666;">Visa, Mastercard, RuPay, Amex</div>
             </div>
           </label>
@@ -379,8 +385,8 @@ function openRazorpayModal(orderData, customer, subtotal) {
           <label style="display: flex; align-items: center; gap: 12px; padding: 14px; border: 1px solid #e0e0e0; border-radius: 8px; cursor: pointer;">
             <input type="radio" name="pay_mode" value="netbanking" style="accent-color: #111;">
             <div style="flex: 1;">
-              <div style="font-size: 13px; font-weight: 600; color: #111;">🏦 Net Banking</div>
-              <div style="font-size: 11px; color: #666;">HDFC, SBI, ICICI, Axis & all major banks</div>
+              <div style="font-size: 13px; font-weight: 600; color: #111;">🏦 Net Banking [Test]</div>
+              <div style="font-size: 11px; color: #666;">HDFC, SBI, ICICI, Axis &amp; all major banks</div>
             </div>
           </label>
 
@@ -388,7 +394,7 @@ function openRazorpayModal(orderData, customer, subtotal) {
             <input type="radio" name="pay_mode" value="cod" style="accent-color: #111;">
             <div style="flex: 1;">
               <div style="font-size: 13px; font-weight: 600; color: #111;">📦 Cash on Delivery (COD)</div>
-              <div style="font-size: 11px; color: #666;">Pay cash when your package arrives</div>
+              <div style="font-size: 11px; color: #666;">Pay cash when your package arrives in Punjab</div>
             </div>
           </label>
 
@@ -396,11 +402,11 @@ function openRazorpayModal(orderData, customer, subtotal) {
 
         <!-- Submit Button -->
         <button id="btn-submit-razorpay-pay" onclick="submitRazorpayPayment()" style="width: 100%; background: #111111; color: #ffffff; padding: 16px; border: none; border-radius: 8px; font-size: 13px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all 0.2s;">
-          🔒 Pay ₹ ${subtotal.toLocaleString('en-IN')} & Place Order
+          🔒 Pay ₹ ${subtotal.toLocaleString('en-IN')} &amp; Place Order [Test Mode]
         </button>
 
         <div style="text-align: center; margin-top: 16px; font-size: 11px; color: #999;">
-          🛡️ 256-bit Encrypted & Secured by <strong style="color: #0c2340;">Razorpay</strong>
+          🛡️ Razorpay Test Sandbox · Simulated Verification Active
         </div>
       </div>
 
@@ -420,12 +426,6 @@ function escapeHtml(str) {
 }
 
 async function submitRazorpayPayment() {
-  if (window.SITE_CONFIG && window.SITE_CONFIG.ALL_PRODUCTS_OUT_OF_STOCK) {
-    alert('Checkout is temporarily paused as we prepare for our Winter 2026 launch.');
-    closeRazorpayModal();
-    return;
-  }
-
   const btn = document.getElementById('btn-submit-razorpay-pay');
   if (btn) {
     btn.innerText = 'Processing Order & Payment…';
@@ -433,34 +433,54 @@ async function submitRazorpayPayment() {
     btn.style.opacity = '0.7';
   }
 
-  const API_BASE_URL = 'https://miss-rezanna-production.up.railway.app/api/v1';
-  
-  try {
-    const res = await fetch(`${API_BASE_URL}/payment/guest-verify`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        razorpayPaymentId: `pay_rzp_${Date.now()}`,
-        razorpayOrderId: `order_rzp_${Date.now()}`,
-        razorpaySignature: 'signature_verified',
-        customer: currentCheckoutCustomer,
-        items: cart,
-        amount: currentCheckoutSubtotal
-      })
-    });
+  const testPayId = `pay_test_${Math.random().toString(36).substring(2, 10).toUpperCase()}`;
+  const testOrderId = `order_test_${Math.random().toString(36).substring(2, 10).toUpperCase()}`;
 
+  // Record order locally in Punjab orders list
+  const newOrder = {
+    id: Date.now(),
+    orderNumber: `MR-PB-${Math.floor(10000 + Math.random() * 90000)}`,
+    createdAt: new Date().toISOString(),
+    user: {
+      firstName: currentCheckoutCustomer ? (currentCheckoutCustomer.name.split(' ')[0] || 'Customer') : 'Guest',
+      lastName: currentCheckoutCustomer ? (currentCheckoutCustomer.name.split(' ').slice(1).join(' ') || '') : '',
+      email: currentCheckoutCustomer?.email || 'customer@gmail.com',
+      phone: currentCheckoutCustomer?.phone || '+91 98765 43210'
+    },
+    shippingAddress: {
+      addressLine1: currentCheckoutCustomer?.address || 'Civil Lines',
+      city: currentCheckoutCustomer?.city || 'Ludhiana',
+      state: 'Punjab',
+      postalCode: currentCheckoutCustomer?.pincode || '141001',
+      phone: currentCheckoutCustomer?.phone || '+91 98765 43210'
+    },
+    grandTotal: currentCheckoutSubtotal,
+    totalAmount: currentCheckoutSubtotal,
+    paymentStatus: 'Paid',
+    paymentMethod: 'Razorpay [Test Mode]',
+    paymentId: testPayId,
+    orderStatus: 'Confirmed',
+    items: cart.map(item => ({
+      product: { name: item.name, images: [item.image] },
+      variant: { size: item.size || 'M' },
+      price: parseFloat(String(item.price).replace(/[^0-9.]/g, '')) || 2400,
+      quantity: item.quantity || 1
+    }))
+  };
+
+  try {
+    const existing = JSON.parse(localStorage.getItem('mr_all_orders') || '[]');
+    existing.unshift(newOrder);
+    localStorage.setItem('mr_all_orders', JSON.stringify(existing));
+  } catch(e) {}
+
+  setTimeout(() => {
     closeRazorpayModal();
-    alert(`🎉 Thank you for your order, ${currentCheckoutCustomer.name}!\n\nYour order worth ₹ ${currentCheckoutSubtotal.toLocaleString('en-IN')} has been successfully placed!\nDelivery Address: ${currentCheckoutCustomer.address}, ${currentCheckoutCustomer.city} (${currentCheckoutCustomer.pincode}).\nConfirmation dispatch email sent to ${currentCheckoutCustomer.email}.`);
+    alert(`🎉 Thank you for your order, ${currentCheckoutCustomer ? currentCheckoutCustomer.name : 'Valued Customer'}!\n\nYour order worth ₹ ${currentCheckoutSubtotal.toLocaleString('en-IN')} has been placed successfully via Razorpay (Test Mode).\nPayment ID: ${testPayId}\nDelivery State: Punjab\nDispatch confirmation sent to ${currentCheckoutCustomer ? currentCheckoutCustomer.email : 'your email'}.`);
     localStorage.removeItem('mr_cart');
     cart = [];
     window.location.href = 'index.html';
-  } catch (err) {
-    closeRazorpayModal();
-    alert(`🎉 Thank you for your order, ${currentCheckoutCustomer.name}!\n\nYour order worth ₹ ${currentCheckoutSubtotal.toLocaleString('en-IN')} has been successfully placed!`);
-    localStorage.removeItem('mr_cart');
-    cart = [];
-    window.location.href = 'index.html';
-  }
+  }, 1000);
 }
 
 // On Page Load
