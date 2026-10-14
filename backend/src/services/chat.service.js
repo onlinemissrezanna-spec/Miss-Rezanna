@@ -11,6 +11,71 @@ const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
 // Guarantees the AI knows all products and prices immediately, even if DB is cold or unreachable
 const DEFAULT_PRODUCTS = [
     {
+        name: 'Noir Black Embroidered Jacket & Palazzo 3-Piece Co-ord Set',
+        slug: 'black-embroidered-jacket-coord-set',
+        sku: 'MR-CD-001',
+        price: 2771,
+        mrp: 3695,
+        discount: '25% OFF',
+        category: 'Summer Luxe · 3-Piece Co-ord Set',
+        fabric: 'Premium Breathable Rayon-Cotton with Resham & Zardozi Arch Needlework',
+        fit: 'Open-front layered jacket with matching high-rise wide-leg palazzo trousers',
+        sizes: 'S, M, L, XL, 2XL, 3XL, 4XL, 5XL, 6XL (In Stock)',
+        description: 'An architectural 3-piece co-ord set in noir black with antique gold, ivory, and champagne arch threadwork. Features an open-front jacket, inner top, and wide-leg palazzo trousers.'
+    },
+    {
+        name: 'Gulnar Rose Embroidered Linen Tunic Co-ord Set - Charcoal Slate',
+        slug: 'charcoal-floral-embroidered-tunic-coord-set',
+        sku: 'MR-CD-002',
+        price: 2621,
+        mrp: 3495,
+        discount: '25% OFF',
+        category: 'Summer Soiree · 2-Piece Linen Co-ord Set',
+        fabric: 'Pure Slub Linen-Cotton Blend with fine Kashmiri rosette needlework',
+        fit: 'Band collar tunic with balloon sleeves and tailored straight trousers',
+        sizes: 'S, M, L, XL, 2XL, 3XL, 4XL, 5XL, 6XL (In Stock)',
+        description: 'Textured charcoal slate slub linen tunic featuring delicate dusty pink and blush rose medallion embroidery down the front placket, paired with straight trousers.'
+    },
+    {
+        name: 'Vanya Botanical Embroidered Linen Shirt Co-ord Set - Sage Mint',
+        slug: 'sage-green-embroidered-linen-coord-set',
+        sku: 'MR-CD-003',
+        price: 2400,
+        mrp: 3200,
+        discount: '25% OFF',
+        category: 'Artisanal Craft · 2-Piece Shirt Co-ord Set',
+        fabric: '100% Fine Slub Linen with vibrant jewel-tone Suzani floral vines',
+        fit: 'Spread shirt collar with full button front and straight-cut trousers with pockets',
+        sizes: 'S, M, L, XL, 2XL, 3XL, 4XL, 5XL, 6XL (In Stock)',
+        description: 'Sage mint green pure slub linen shirt-style tunic adorned with symmetrical botanical vines and peacock wheel medallions in teal and ochre, paired with trousers.'
+    },
+    {
+        name: 'Padma Lotus Embroidered Summer Co-ord Set - Indigo Denim Blue',
+        slug: 'denim-blue-lotus-embroidered-coord-set',
+        sku: 'MR-CD-004',
+        price: 1980,
+        mrp: 2640,
+        discount: '25% OFF',
+        category: 'Everyday Luxury · 2-Piece Pocket Co-ord Set',
+        fabric: 'Soft-Washed Slub Chambray Cotton with sacred lotus bloom embroidery',
+        fit: 'Relaxed shirt tunic with functional side-seam pockets and tapered cigarette pants',
+        sizes: 'S, M, L, XL, 2XL, 3XL, 4XL, 5XL, 6XL (In Stock)',
+        description: 'Indigo denim blue chambray cotton tunic featuring stylized lotus flowers embroidered in maroon and sage green, with deep side pockets and matching trousers.'
+    },
+    {
+        name: 'Mehrab Floral Embroidered Luxury Co-ord Set - Ocean Teal',
+        slug: 'ocean-teal-floral-embroidered-coord-set',
+        sku: 'MR-CD-005',
+        price: 3071,
+        mrp: 4095,
+        discount: '25% OFF',
+        category: 'Atelier Couture · 2-Piece Embroidered Co-ord Set',
+        fabric: 'Pure Fine-Count Cotton Linen with Mughal Mehrab architectural floral borders',
+        fit: 'Collared long tunic with matching wide-leg embroidered border palazzo trousers',
+        sizes: 'S, M, L, XL, 2XL, 3XL, 4XL, 5XL, 6XL (In Stock)',
+        description: 'Ocean teal blue luxury co-ord set with intricate architectural floral border panels wrapping the tunic placket, cuffs, side slits, and entire palazzo hemline.'
+    },
+    {
         name: 'Navy Blue Floral Embroidered Kurta Pant Set',
         slug: 'navy-blue-embroidered-kurta-pant-set',
         sku: 'MR-KS-013',

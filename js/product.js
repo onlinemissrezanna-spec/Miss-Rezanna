@@ -169,8 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Helper function to bind Add to Cart / Buy Now buttons or Out-of-Stock state
 function bindAddToCartButtons(currentProduct) {
-  const isOutOfStock = (window.SITE_CONFIG && window.SITE_CONFIG.ALL_PRODUCTS_OUT_OF_STOCK) ||
-                       (currentProduct && currentProduct.inStock === false);
+  const isOutOfStock = currentProduct ? (currentProduct.inStock === false) : Boolean(window.SITE_CONFIG && window.SITE_CONFIG.ALL_PRODUCTS_OUT_OF_STOCK);
 
   const mainActions = document.getElementById('mainActions');
   const stickyBar = document.getElementById('stickyActionBar');
@@ -265,7 +264,238 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 const staticProductCatalog = {
+  'black-embroidered-jacket-coord-set': {
+    id: 'black-embroidered-jacket-coord-set',
+    name: 'Zuri Arch Embroidered Jacket & Trousers Co-ord Set - Noir Black',
+    seoTitle: 'Black Embroidered Jacket Co-ord Set for Women | Summer Edit — MISS REZANNA',
+    metaDesc: 'Shop the noir black embroidered jacket co-ord set by MISS REZANNA. Features antique gold arch threadwork, inner top & wide-leg trousers. Enjoy 25% off.',
+    price: '₹ 2,771',
+    mrp: '₹ 3,695',
+    discount: '25% OFF',
+    label: 'Summer Luxe · 3-Piece Co-ord Set',
+    inStock: true,
+    images: [
+      'images/black-embroidered-jacket-coord-set-1.jpg'
+    ],
+    description: `
+      <p style="font-size: 1.05rem; font-style: italic; color: #b89728; margin-bottom: 12px;">Understated luxury in a commanding noir palette.</p>
+      <p style="margin-bottom: 16px; font-weight: 500; line-height: 1.6;">The Zuri 3-Piece Co-ord Set unites architectural grandeur with fluid summer ease. Tailored in an all-black silhouette, it features a structured open-front jacket adorned with majestic antique gold, ivory, and champagne arch threadwork, layered over a soft inner top and finished with tailored wide-leg trousers.</p>
+      
+      <h4 style="font-family: 'Playfair Display', serif; font-size: 1.15rem; margin: 20px 0 10px; color: #111;">Artisanal Arch Needlework &amp; Modern Tailoring</h4>
+      <p style="margin-bottom: 12px;">Crafted for women who command quiet confidence, the dramatic scalloped zardozi-inspired embroidery traces the lapels and bracelet-length cuffs, bringing vintage regal charm into everyday modern dressing.</p>
+      <p style="margin-bottom: 12px;">The airy, breathable drape allows seamless comfort from daytime gallery visits to cocktail evenings under ambient starlight.</p>
+      
+      <p style="background: #f9f8f6; padding: 12px 16px; border-left: 3px solid #b89728; margin-bottom: 20px; font-size: 0.95rem;">
+        <strong>Style Note:</strong> Pair with pointed stiletto pumps, minimal gold studs, and a sleek structured box clutch for an immaculate evening appearance.
+      </p>
+
+      <h4 style="font-family: 'Playfair Display', serif; font-size: 1.1rem; margin: 24px 0 12px; color: #111;">✦ Key Features</h4>
+      <ul style="padding-left: 20px; margin-bottom: 24px; line-height: 1.9; font-size: 0.95rem;">
+        <li>✦ Complete 3-Piece Co-ord Set (Jacket, Inner Top &amp; Trousers)</li>
+        <li>✦ Intricate antique gold &amp; champagne arch embroidery</li>
+        <li>✦ Deep Noir Black premium breathable rayon-cotton fabric</li>
+        <li>✦ Bracelet-length wide sleeves with embroidered cuffs</li>
+        <li>✦ High-rise wide-leg palazzo trousers with relaxed comfort fit</li>
+        <li>✦ Inclusive size availability from S up to 6XL</li>
+      </ul>
+
+      <h4 style="font-family: 'Playfair Display', serif; font-size: 1.1rem; margin: 24px 0 12px; color: #111;">📋 Garment Specifications</h4>
+      <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 0.9rem;">
+        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600; width: 40%;">Colour:</td><td style="padding: 8px 0;">Noir Black &amp; Antique Gold</td></tr>
+        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600;">Fabric:</td><td style="padding: 8px 0;">Premium Breathable Rayon-Cotton Blend</td></tr>
+        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600;">Embroidery:</td><td style="padding: 8px 0;">Resham &amp; Zardozi Arch Border Detailing</td></tr>
+        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600;">Jacket Style:</td><td style="padding: 8px 0;">Open-Front Layered Overlay</td></tr>
+        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600;">Trouser Style:</td><td style="padding: 8px 0;">Wide-Leg Palazzo with Elasticated Comfort Band</td></tr>
+        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600;">Wash Care:</td><td style="padding: 8px 0;">Gentle Machine Wash or Dry Clean</td></tr>
+      </table>
+    `
+  },
+  'charcoal-floral-embroidered-tunic-coord-set': {
+    id: 'charcoal-floral-embroidered-tunic-coord-set',
+    name: 'Gulnar Rose Embroidered Linen Tunic Co-ord Set - Charcoal Slate',
+    seoTitle: 'Charcoal Linen Floral Embroidered Co-ord Set | Summer Wear — MISS REZANNA',
+    metaDesc: 'Buy charcoal slate linen-cotton co-ord set with rose pink floral embroidery & straight trousers. Handcrafted in Ludhiana for effortless summer grace. 25% off.',
+    price: '₹ 2,621',
+    mrp: '₹ 3,495',
+    discount: '25% OFF',
+    label: 'Summer Soiree · 2-Piece Linen Co-ord Set',
+    inStock: true,
+    images: [
+      'images/charcoal-floral-embroidered-tunic-coord-set-1.jpg'
+    ],
+    description: `
+      <p style="font-size: 1.05rem; font-style: italic; color: #b89728; margin-bottom: 12px;">Delicate Kashmiri roses blossoming against cool slate linen.</p>
+      <p style="margin-bottom: 16px; font-weight: 500; line-height: 1.6;">The Gulnar Co-ord Set infuses classic Indian craftsmanship with effortless everyday luxury. The textured charcoal slate base is brought to life with intricate dusty pink and blush rose medallion embroidery down the front placket and across the poet balloon sleeves.</p>
+      
+      <h4 style="font-family: 'Playfair Display', serif; font-size: 1.15rem; margin: 20px 0 10px; color: #111;">Textured Slub Linen &amp; Artisan Rosettes</h4>
+      <p style="margin-bottom: 12px;">Crafted from a breathable slub linen-cotton blend that naturally softens with every wear, this two-piece ensemble keeps you cool and poised during warm summer days.</p>
+      <p style="margin-bottom: 12px;">Features a chic mandarin collar, covered button detailing, and coordinating tailored straight trousers with crisp center creases.</p>
+      
+      <p style="background: #f9f8f6; padding: 12px 16px; border-left: 3px solid #b89728; margin-bottom: 20px; font-size: 0.95rem;">
+        <strong>Style Note:</strong> Elevate the feminine pink embroidery with pearl earrings, strappy metallic block heels, and a soft rose lip.
+      </p>
+
+      <h4 style="font-family: 'Playfair Display', serif; font-size: 1.1rem; margin: 24px 0 12px; color: #111;">✦ Key Features</h4>
+      <ul style="padding-left: 20px; margin-bottom: 24px; line-height: 1.9; font-size: 0.95rem;">
+        <li>✦ 2-Piece Set: Embroidered Tunic &amp; Matching Straight Trousers</li>
+        <li>✦ Multi-shade rose pink &amp; beige botanical threadwork</li>
+        <li>✦ Breathable natural slub linen-cotton texture</li>
+        <li>✦ Mandarin band collar with buttoned placket</li>
+        <li>✦ Elegant gathered balloon sleeves with embroidered cuffs</li>
+        <li>✦ Tailored ankle-length trousers with comfortable fit</li>
+      </ul>
+
+      <h4 style="font-family: 'Playfair Display', serif; font-size: 1.1rem; margin: 24px 0 12px; color: #111;">📋 Garment Specifications</h4>
+      <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 0.9rem;">
+        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600; width: 40%;">Colour:</td><td style="padding: 8px 0;">Charcoal Slate Grey with Rose Pink Embroidery</td></tr>
+        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600;">Fabric:</td><td style="padding: 8px 0;">Pure Slub Linen-Cotton Blend</td></tr>
+        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600;">Embroidery:</td><td style="padding: 8px 0;">Fine Kashmiri-inspired Rosette Needlework</td></tr>
+        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600;">Neckline:</td><td style="padding: 8px 0;">Mandarin Band Collar</td></tr>
+        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600;">Trouser Style:</td><td style="padding: 8px 0;">Tailored Straight Cut with Elastic Waist</td></tr>
+        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600;">Wash Care:</td><td style="padding: 8px 0;">Gentle Hand Wash or Machine Wash Cold</td></tr>
+      </table>
+    `
+  },
+  'sage-green-embroidered-linen-coord-set': {
+    id: 'sage-green-embroidered-linen-coord-set',
+    name: 'Vanya Botanical Embroidered Linen Shirt Co-ord Set - Sage Mint',
+    seoTitle: 'Sage Mint Green Embroidered Linen Co-ord Set for Women — MISS REZANNA',
+    metaDesc: 'Explore our sage green linen shirt co-ord set with intricate botanical vine embroidery and tailored trousers. Summer comfort meets artisan luxury at 25% off.',
+    price: '₹ 2,400',
+    mrp: '₹ 3,200',
+    discount: '25% OFF',
+    label: 'Artisanal Craft · 2-Piece Shirt Co-ord Set',
+    inStock: true,
+    images: [
+      'images/sage-green-embroidered-linen-coord-set-1.jpg'
+    ],
+    description: `
+      <p style="font-size: 1.05rem; font-style: italic; color: #b89728; margin-bottom: 12px;">Lush botanical tapestries woven into serene mint linen.</p>
+      <p style="margin-bottom: 16px; font-weight: 500; line-height: 1.6;">The Vanya Co-ord Set is a celebration of organic motifs and artisanal precision. Designed in an ultra-refreshing sage mint hue, this shirt-style tunic features symmetrical Suzani-inspired botanical vines, peacock wheel medallions, and floral motifs in deep teal, violet, and ochre.</p>
+      
+      <h4 style="font-family: 'Playfair Display', serif; font-size: 1.15rem; margin: 20px 0 10px; color: #111;">Pure Breathable Linen for Warm Climates</h4>
+      <p style="margin-bottom: 12px;">Crafted from 100% fine-count slub linen, this co-ord set delivers exceptional breathability and effortless poise. The neat spread collar and button-down front create a modern resort-ready feel.</p>
+      <p style="margin-bottom: 12px;">Complemented by matching straight trousers that elongate the silhouette, this ensemble is an instant favorite for summer travels, brunches, and casual gatherings.</p>
+      
+      <p style="background: #f9f8f6; padding: 12px 16px; border-left: 3px solid #b89728; margin-bottom: 20px; font-size: 0.95rem;">
+        <strong>Style Note:</strong> Team with neutral espadrilles or leather slides and tortoiseshell sunglasses for a chic European summer aesthetic.
+      </p>
+
+      <h4 style="font-family: 'Playfair Display', serif; font-size: 1.1rem; margin: 24px 0 12px; color: #111;">✦ Key Features</h4>
+      <ul style="padding-left: 20px; margin-bottom: 24px; line-height: 1.9; font-size: 0.95rem;">
+        <li>✦ 2-Piece Co-ord Set (Embroidered Shirt-Tunic &amp; Straight Pants)</li>
+        <li>✦ Vibrant jewel-tone Suzani floral &amp; vine needlework</li>
+        <li>✦ 100% Premium fine slub linen with natural cooling drape</li>
+        <li>✦ Classic shirt spread collar with full button front</li>
+        <li>✦ Straight-cut trousers with deep side pockets</li>
+        <li>✦ Inclusive sizes S to 6XL</li>
+      </ul>
+
+      <h4 style="font-family: 'Playfair Display', serif; font-size: 1.1rem; margin: 24px 0 12px; color: #111;">📋 Garment Specifications</h4>
+      <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 0.9rem;">
+        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600; width: 40%;">Colour:</td><td style="padding: 8px 0;">Sage Mint Green with Jewel-tone Embroidery</td></tr>
+        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600;">Fabric:</td><td style="padding: 8px 0;">100% Fine Slub Linen</td></tr>
+        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600;">Embroidery:</td><td style="padding: 8px 0;">Multi-colored Botanical Vine &amp; Floral Medallion</td></tr>
+        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600;">Collar:</td><td style="padding: 8px 0;">Classic Spread Shirt Collar</td></tr>
+        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600;">Trouser Style:</td><td style="padding: 8px 0;">Straight Trouser with Comfort Back Elastic</td></tr>
+        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600;">Wash Care:</td><td style="padding: 8px 0;">Hand Wash or Gentle Machine Wash Cold</td></tr>
+      </table>
+    `
+  },
+  'denim-blue-lotus-embroidered-coord-set': {
+    id: 'denim-blue-lotus-embroidered-coord-set',
+    name: 'Padma Lotus Embroidered Summer Co-ord Set - Indigo Denim Blue',
+    seoTitle: 'Indigo Denim Blue Lotus Embroidered Co-ord Set for Women — MISS REZANNA',
+    metaDesc: 'Shop indigo denim blue summer co-ord set with lotus threadwork & functional side pockets. Light, stylish everyday luxury at ₹1,980 (25% off). Fast shipping.',
+    price: '₹ 1,980',
+    mrp: '₹ 2,640',
+    discount: '25% OFF',
+    label: 'Everyday Luxury · 2-Piece Pocket Co-ord Set',
+    inStock: true,
+    images: [
+      'images/denim-blue-lotus-embroidered-coord-set-1.jpg'
+    ],
+    description: `
+      <p style="font-size: 1.05rem; font-style: italic; color: #b89728; margin-bottom: 12px;">Effortless everyday ease with sacred lotus motifs.</p>
+      <p style="margin-bottom: 16px; font-weight: 500; line-height: 1.6;">The Padma Co-ord Set redefines casual dressing with an artisanal spirit. Tailored from a soft-washed slub chambray in an indigo denim blue tone, the tunic features stylized lotus flower and leaf motifs embroidered across the upper chest in deep maroon and sage green.</p>
+      
+      <h4 style="font-family: 'Playfair Display', serif; font-size: 1.15rem; margin: 20px 0 10px; color: #111;">Designed for Daily Comfort with Functional Pockets</h4>
+      <p style="margin-bottom: 12px;">Engineered for modern, active lifestyles, the tunic includes deep, practical side-seam pockets, a buttoned shirt front, and a gentle curved hemline that flatters all body types.</p>
+      <p style="margin-bottom: 12px;">The matching tapered trousers complete a polished, contemporary look that seamlessly transitions from smart workdays to casual weekend outings.</p>
+      
+      <p style="background: #f9f8f6; padding: 12px 16px; border-left: 3px solid #b89728; margin-bottom: 20px; font-size: 0.95rem;">
+        <strong>Style Note:</strong> Wear with leather mules and an oversized tote bag for clean, understated daytime sophistication.
+      </p>
+
+      <h4 style="font-family: 'Playfair Display', serif; font-size: 1.1rem; margin: 24px 0 12px; color: #111;">✦ Key Features</h4>
+      <ul style="padding-left: 20px; margin-bottom: 24px; line-height: 1.9; font-size: 0.95rem;">
+        <li>✦ 2-Piece Co-ord Set (Pocket Shirt Tunic &amp; Tapered Trousers)</li>
+        <li>✦ Handcrafted lotus bloom threadwork embroidery</li>
+        <li>✦ Soft-washed, pre-shrunk chambray cotton fabric</li>
+        <li>✦ Two functional deep side-seam pockets</li>
+        <li>✦ Relaxed comfort fit with curved shirt hem</li>
+        <li>✦ Sizes from S to 6XL</li>
+      </ul>
+
+      <h4 style="font-family: 'Playfair Display', serif; font-size: 1.1rem; margin: 24px 0 12px; color: #111;">📋 Garment Specifications</h4>
+      <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 0.9rem;">
+        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600; width: 40%;">Colour:</td><td style="padding: 8px 0;">Indigo Denim Blue</td></tr>
+        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600;">Fabric:</td><td style="padding: 8px 0;">Soft-Washed Slub Chambray Cotton</td></tr>
+        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600;">Pockets:</td><td style="padding: 8px 0;">2 Functional Side Pockets</td></tr>
+        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600;">Embroidery:</td><td style="padding: 8px 0;">Lotus Flower &amp; Foliage Resham Work</td></tr>
+        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600;">Trouser Style:</td><td style="padding: 8px 0;">Tapered Cigarette Pants with Elastic Waist</td></tr>
+        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600;">Wash Care:</td><td style="padding: 8px 0;">Machine Wash Cold with Similar Colours</td></tr>
+      </table>
+    `
+  },
+  'ocean-teal-floral-embroidered-coord-set': {
+    id: 'ocean-teal-floral-embroidered-coord-set',
+    name: 'Mehrab Floral Embroidered Luxury Co-ord Set - Ocean Teal',
+    seoTitle: 'Ocean Teal Floral Embroidered Luxury Co-ord Set — MISS REZANNA',
+    metaDesc: 'Discover our ocean teal blue luxury co-ord set with architectural floral embroidery on tunic & matching trousers. Premium summer couture at 25% off.',
+    price: '₹ 3,071',
+    mrp: '₹ 4,095',
+    discount: '25% OFF',
+    label: 'Atelier Couture · 2-Piece Embroidered Co-ord Set',
+    inStock: true,
+    images: [
+      'images/ocean-teal-floral-embroidered-coord-set-1.jpg'
+    ],
+    description: `
+      <p style="font-size: 1.05rem; font-style: italic; color: #b89728; margin-bottom: 12px;">Regal Persian arches and flourishing summer vines.</p>
+      <p style="margin-bottom: 16px; font-weight: 500; line-height: 1.6;">The Mehrab Co-ord Set represents the pinnacle of Miss Rezanna's artisanal couture. Crafted in an evocative ocean teal blue hue, both the collared long tunic and the matching trousers are lavishly embellished with architectural floral border panels inspired by Mughal palace frescoes.</p>
+      
+      <h4 style="font-family: 'Playfair Display', serif; font-size: 1.15rem; margin: 20px 0 10px; color: #111;">Comprehensive Front &amp; Trouser Hem Embroidery</h4>
+      <p style="margin-bottom: 12px;">Unlike standard sets, the Mehrab ensemble features intricate border embroidery wrapping around the shirt placket, side seams, sleeve cuffs, and the entire lower hem of the wide-leg trousers.</p>
+      <p style="margin-bottom: 12px;">Woven from a luxurious blend of premium cotton and linen, it provides unmatched breathability, drape, and enduring elegance for festive and formal occasions.</p>
+      
+      <p style="background: #f9f8f6; padding: 12px 16px; border-left: 3px solid #b89728; margin-bottom: 20px; font-size: 0.95rem;">
+        <strong>Style Note:</strong> Complete the couture look with statement silver jhumkas, a crystal-embellished potli bag, and elegant block heels.
+      </p>
+
+      <h4 style="font-family: 'Playfair Display', serif; font-size: 1.1rem; margin: 24px 0 12px; color: #111;">✦ Key Features</h4>
+      <ul style="padding-left: 20px; margin-bottom: 24px; line-height: 1.9; font-size: 0.95rem;">
+        <li>✦ 2-Piece Couture Co-ord Set (Embroidered Tunic &amp; Embroidered Palazzo)</li>
+        <li>✦ Architectural Mehrab floral border embroidery on tunic &amp; trouser hem</li>
+        <li>✦ Rich Ocean Teal Blue pure cotton-linen luxury fabric</li>
+        <li>✦ Tailored notched shirt collar with covered buttons</li>
+        <li>✦ Wide-leg palazzo trousers with detailed embroidered borders</li>
+        <li>✦ Inclusively tailored from size S to 6XL</li>
+      </ul>
+
+      <h4 style="font-family: 'Playfair Display', serif; font-size: 1.1rem; margin: 24px 0 12px; color: #111;">📋 Garment Specifications</h4>
+      <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 0.9rem;">
+        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600; width: 40%;">Colour:</td><td style="padding: 8px 0;">Ocean Teal Blue with Multi-color Floral Resham</td></tr>
+        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600;">Fabric:</td><td style="padding: 8px 0;">Pure Fine-Count Cotton Linen</td></tr>
+        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600;">Embroidery:</td><td style="padding: 8px 0;">Mehrab Arch &amp; Botanical Vine Border Work</td></tr>
+        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600;">Top Style:</td><td style="padding: 8px 0;">Collared Long Tunic with Front Button Placket</td></tr>
+        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600;">Trouser Style:</td><td style="padding: 8px 0;">Embroidered Border Palazzo with Comfort Fit</td></tr>
+        <tr style="border-bottom: 1px solid #eee;"><td style="padding: 8px 0; font-weight: 600;">Wash Care:</td><td style="padding: 8px 0;">Dry Clean or Gentle Cold Wash Recommended</td></tr>
+      </table>
+    `
+  },
   'navy-blue-embroidered-kurta-pant-set': {
+    id: 'navy-blue-embroidered-kurta-pant-set',
     name: 'Navy Blue Floral Embroidered Kurta Pant Set',
     seoTitle: 'Navy Blue Embroidered Kurta Pant Set for Women | MISS REZANNA',
     metaDesc: 'Shop the navy blue embroidered kurta pant set by MISS REZANNA, featuring intricate floral embroidery and a sophisticated contemporary silhouette.',
@@ -333,7 +563,7 @@ const staticProductCatalog = {
   }
 };
 
-// Dynamic Product Loading from API
+// Dynamic Product Loading from URL or Catalog
 document.addEventListener('DOMContentLoaded', async () => {
   let currentProductCatalog = {};
   if (typeof fetchProducts === 'function') {
@@ -345,11 +575,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   const urlParams = new URLSearchParams(window.location.search);
-  const productId = urlParams.get('id') || 'navy-blue-embroidered-kurta-pant-set';
+  const productId = urlParams.get('id') || 'black-embroidered-jacket-coord-set';
   
   const product = (currentProductCatalog && currentProductCatalog[productId]) 
     ? currentProductCatalog[productId] 
-    : (staticProductCatalog[productId] || staticProductCatalog['navy-blue-embroidered-kurta-pant-set']);
+    : (staticProductCatalog[productId] || staticProductCatalog['black-embroidered-jacket-coord-set']);
 
   if (product) {
       window.activeProduct = product;
@@ -359,14 +589,32 @@ document.addEventListener('DOMContentLoaded', async () => {
       
       const metaDescEl = document.querySelector('meta[name="description"]');
       if (metaDescEl && product.metaDesc) metaDescEl.setAttribute('content', product.metaDesc);
+
+      // Open Graph & Twitter Social Tags
+      const ogTitle = document.querySelector('meta[property="og:title"]');
+      if (ogTitle) ogTitle.setAttribute('content', product.seoTitle || product.name);
+      const ogDesc = document.querySelector('meta[property="og:description"]');
+      if (ogDesc) ogDesc.setAttribute('content', product.metaDesc || product.name);
+      const ogUrl = document.querySelector('meta[property="og:url"]');
+      if (ogUrl) ogUrl.setAttribute('content', window.location.href);
+      const ogImg = document.querySelector('meta[property="og:image"]');
+      if (ogImg && product.images && product.images[0]) ogImg.setAttribute('content', window.location.origin + '/' + product.images[0]);
+      const twTitle = document.querySelector('meta[name="twitter:title"]');
+      if (twTitle) twTitle.setAttribute('content', product.seoTitle || product.name);
+      const twDesc = document.querySelector('meta[name="twitter:description"]');
+      if (twDesc) twDesc.setAttribute('content', product.metaDesc || product.name);
       
       // Update DOM Elements
       if (document.getElementById('pdp-title')) document.getElementById('pdp-title').innerText = product.name;
-      const priceHtml = `₹ 2,360 <span style="text-decoration: line-through; color: #999; font-size: 0.8em; margin-left: 8px;">₹ 2,950</span> <span style="color: #c3a167; font-size: 0.75em; font-weight: 600; margin-left: 6px;">(20% OFF)</span>`;
+      const priceHtml = `${product.price} <span style="text-decoration: line-through; color: #999; font-size: 0.8em; margin-left: 8px;">${product.mrp}</span> <span style="color: #c3a167; font-size: 0.75em; font-weight: 600; margin-left: 6px;">(${product.discount})</span>`;
       if (document.getElementById('pdp-price')) document.getElementById('pdp-price').innerHTML = priceHtml;
-      if (document.getElementById('pdp-label')) document.getElementById('pdp-label').innerText = product.label || 'Festive Edit';
+      if (document.getElementById('pdp-label')) document.getElementById('pdp-label').innerText = product.label || 'Summer Luxe Co-ord';
       if (document.getElementById('pdp-desc')) document.getElementById('pdp-desc').innerHTML = product.description || '';
       
+      // Breadcrumb title update if present
+      const breadcrumbCurrent = document.querySelector('.pdp-breadcrumb span:last-child');
+      if (breadcrumbCurrent) breadcrumbCurrent.innerText = product.name;
+
       // Sticky Bar
       if (document.getElementById('sticky-title')) document.getElementById('sticky-title').innerText = product.name;
       if (document.getElementById('sticky-price')) document.getElementById('sticky-price').innerHTML = priceHtml;
@@ -388,10 +636,31 @@ document.addEventListener('DOMContentLoaded', async () => {
       // Re-bind buttons with dynamic product data
       bindAddToCartButtons(product);
 
+      // Dynamic Schema.org JSON-LD Update for Google Merchant & Rich Snippets
+      const numericPrice = parseInt(String(product.price).replace(/[^0-9]/g, ''), 10) || 2771;
+      const schemaEl = document.querySelector('script[type="application/ld+json"]');
+      if (schemaEl) {
+        try {
+          const schema = JSON.parse(schemaEl.textContent);
+          if (schema) {
+            schema.name = product.name;
+            schema.description = product.metaDesc || product.name;
+            if (product.images && product.images.length > 0) {
+              schema.image = product.images.map(img => window.location.origin + '/' + img.replace(/^\//, ''));
+            }
+            if (schema.offers) {
+              schema.offers.price = String(numericPrice);
+              schema.offers.url = window.location.href;
+              schema.offers.availability = product.inStock !== false ? "https://schema.org/InStock" : "https://schema.org/OutOfStock";
+            }
+            schemaEl.textContent = JSON.stringify(schema, null, 2);
+          }
+        } catch (e) {}
+      }
+
       // Push GA4 view_item event to dataLayer
       try {
         window.dataLayer = window.dataLayer || [];
-        const numericPrice = 2360;
         window.dataLayer.push({
           event: 'view_item',
           ecommerce: {
@@ -401,7 +670,7 @@ document.addEventListener('DOMContentLoaded', async () => {
               item_id: productId,
               item_name: product.name,
               price: numericPrice,
-              item_category: 'Kurti Sets',
+              item_category: 'Co-ord Sets',
               quantity: 1
             }]
           }
