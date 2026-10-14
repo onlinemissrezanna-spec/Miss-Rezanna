@@ -806,6 +806,11 @@ function closeSlideBar() {
    ========================================================================== */
 
 const SEARCH_CATALOG = [
+  { id: 'black-embroidered-jacket-coord-set', name: 'Noir Black Embroidered Jacket & Palazzo 3-Piece Co-ord Set', price: 2771, originalPrice: 3695, discount: '25% OFF', category: 'Summer Co-ord Sets', image: 'images/black-embroidered-jacket-coord-set-1.jpg' },
+  { id: 'charcoal-floral-embroidered-tunic-coord-set', name: 'Charcoal Slate Floral Embroidered Linen Tunic Co-ord Set', price: 2621, originalPrice: 3495, discount: '25% OFF', category: 'Summer Co-ord Sets', image: 'images/charcoal-floral-embroidered-tunic-coord-set-1.jpg' },
+  { id: 'sage-green-embroidered-linen-coord-set', name: 'Sage Mint Green Embroidered Linen Shirt Co-ord Set', price: 2400, originalPrice: 3200, discount: '25% OFF', category: 'Summer Co-ord Sets', image: 'images/sage-green-embroidered-linen-coord-set-1.jpg' },
+  { id: 'denim-blue-lotus-embroidered-coord-set', name: 'Denim Blue Lotus Embroidered Tunic Co-ord Set', price: 1980, originalPrice: 2640, discount: '25% OFF', category: 'Summer Co-ord Sets', image: 'images/denim-blue-lotus-embroidered-coord-set-1.jpg' },
+  { id: 'ocean-teal-floral-embroidered-coord-set', name: 'Ocean Teal Blue Floral Embroidered Palazzo Co-ord Set', price: 3071, originalPrice: 4095, discount: '25% OFF', category: 'Summer Co-ord Sets', image: 'images/ocean-teal-floral-embroidered-coord-set-1.jpg' },
   { id: 'navy-blue-embroidered-kurta-pant-set', name: 'Navy Blue Floral Embroidered Kurta Pant Set', price: 2360, originalPrice: 2950, discount: '20% OFF', category: 'Kurta Pant Sets', image: 'images/navy-blue-embroidered-kurta-pant-set-3.png' }
 ];
 
